@@ -1,151 +1,67 @@
 {
   "id_users": [
     {
-      "id": "1",
-      "username": "admin",
-      "email": "admin@atelier.com",
+      "id": 1,
+      "username": "euromotors",
+      "email": "admin@euromotors.com.pe",
       "password_hash": "$2b$10$xyz...",
       "provider": "LOCAL",
       "provider_id": null,
-      "avatar_url": null,
+      "avatar_url": "https://api.dicebear.com/7.x/initials/svg?seed=EuroMotors",
       "role": "ADMIN",
-      "is_deleted": false,
-      "row_version": 1
-    },
-    {
-      "id": "2",
-      "username": "jdoe",
-      "email": "john.doe@email.com",
-      "password_hash": null,
-      "provider": "GOOGLE",
-      "provider_id": "1029384756",
-      "avatar_url": "https://lh3.googleusercontent.com/a/jdoe_photo",
-      "role": "USER",
-      "is_deleted": false,
-      "row_version": 1
-    },
-    {
-      "id": "3",
-      "username": "msmith",
-      "email": "mary.smith@email.com",
-      "password_hash": "$2b$10$def...",
-      "provider": "LOCAL",
-      "provider_id": null,
-      "avatar_url": null,
-      "role": "USER",
-      "is_deleted": false,
-      "row_version": 1
-    },
-    {
-      "id": "4",
-      "username": "rgarcia",
-      "email": "roberto.garcia@email.com",
-      "password_hash": null,
-      "provider": "GOOGLE",
-      "provider_id": "5647382910",
-      "avatar_url": "https://lh3.googleusercontent.com/a/rgarcia_photo",
-      "role": "MECHANIC",
-      "is_deleted": false,
-      "row_version": 1
-    },
-    {
-      "id": "5",
-      "username": "llee",
-      "email": "linda.lee@email.com",
-      "password_hash": "$2b$10$jkl...",
-      "provider": "LOCAL",
-      "provider_id": null,
-      "avatar_url": null,
-      "role": "MECHANIC",
-      "is_deleted": false,
-      "row_version": 1
-    },
-    {
-      "id": "6",
-      "username": "swright",
-      "email": "sam.wright@email.com",
-      "password_hash": "$2b$10$mno...",
-      "provider": "LOCAL",
-      "provider_id": null,
-      "avatar_url": null,
-      "role": "USER",
       "is_deleted": false,
       "row_version": 1
     }
   ],
   "wm_workshops": [
     {
-      "id": "1",
-      "name": "Atelier Central",
+      "id": 1,
+      "name": "EuroMotors Central - Miraflores",
       "tax_id": "20123456789",
-      "address": "Av. Principal 123",
+      "address": "Av. Manuel Bonilla 123, Miraflores",
       "phone": "+51 987654321"
     },
     {
-      "id": "2",
-      "name": "Atelier Norte",
+      "id": 2,
+      "name": "EuroMotors Norte - Los Olivos",
       "tax_id": "20987654321",
-      "address": "Calle Los Olivos 456",
+      "address": "Av. Carlos Izaguirre 456, Los Olivos",
       "phone": "+51 912345678"
     },
     {
-      "id": "3",
-      "name": "Atelier Sur",
+      "id": 3,
+      "name": "EuroMotors Sur - Surco",
       "tax_id": "20556677889",
-      "address": "Av. Benavides 789",
+      "address": "Av. Alfredo Benavides 789, Santiago de Surco",
       "phone": "+51 955443322"
     },
     {
-      "id": "4",
-      "name": "Atelier Este",
+      "id": 4,
+      "name": "EuroMotors Este - Ate",
       "tax_id": "20443322110",
-      "address": "Carr. Central Km 5",
+      "address": "Carretera Central Km 5.5, Ate",
       "phone": "+51 944332211"
     },
     {
-      "id": "5",
-      "name": "Atelier Oeste",
+      "id": 5,
+      "name": "EuroMotors Oeste - San Miguel",
       "tax_id": "20332211005",
-      "address": "Av. La Marina 101",
+      "address": "Av. La Marina 1011, San Miguel",
       "phone": "+51 933221100"
     }
   ],
   "wm_employees": [
     {
-      "id": "1",
+      "id": 1,
       "workshop_id": 1,
-      "user_id": 4,
-      "specialty": "Engine Specialist"
-    },
-    {
-      "id": "2",
-      "workshop_id": 2,
-      "user_id": 5,
-      "specialty": "Electronics"
-    },
-    {
-      "id": "3",
-      "workshop_id": 3,
       "user_id": 1,
-      "specialty": "Workshop Manager"
-    },
-    {
-      "id": "4",
-      "workshop_id": 1,
-      "user_id": 2,
-      "specialty": "Trainee"
-    },
-    {
-      "id": "5",
-      "workshop_id": 4,
-      "user_id": 3,
-      "specialty": "Bodywork"
+      "specialty": "Administrador de Taller"
     }
   ],
   "vh_vehicles": [
     {
-      "id": "1",
-      "user_id": 2,
+      "id": 1,
+      "user_id": 1,
       "vin": "1HGBH41JXMN109186",
       "plate": "ABC-123",
       "brand": "Honda",
@@ -153,8 +69,8 @@
       "year": 2022
     },
     {
-      "id": "2",
-      "user_id": 3,
+      "id": 2,
+      "user_id": 1,
       "vin": "2T1BU4EE1BC123456",
       "plate": "XYZ-789",
       "brand": "Toyota",
@@ -162,8 +78,8 @@
       "year": 2021
     },
     {
-      "id": "3",
-      "user_id": 6,
+      "id": 3,
+      "user_id": 1,
       "vin": "3FA6P0H75GR101010",
       "plate": "DEF-456",
       "brand": "Ford",
@@ -171,8 +87,8 @@
       "year": 2020
     },
     {
-      "id": "4",
-      "user_id": 2,
+      "id": 4,
+      "user_id": 1,
       "vin": "4S3BMAB61B3020202",
       "plate": "GHI-789",
       "brand": "Subaru",
@@ -180,8 +96,8 @@
       "year": 2023
     },
     {
-      "id": "5",
-      "user_id": 3,
+      "id": 5,
+      "user_id": 1,
       "vin": "5UXWX7C51CL030303",
       "plate": "JKL-012",
       "brand": "BMW",
@@ -191,192 +107,377 @@
   ],
   "vh_telemetry_batches": [
     {
-      "id": "1",
+      "id": 1,
       "vehicle_id": 1,
       "received_at": "2024-05-04T10:00:00Z",
       "raw_data": {
-        "speed": 60,
-        "fuel": 75
+        "engine_speed_rpm": 2450,
+        "vehicle_speed_kmh": 62.5,
+        "coolant_temp_c": 91,
+        "engine_load_pct": 34.2,
+        "fuel_level_pct": 74.0,
+        "throttle_position_pct": 15.6,
+        "ambient_temp_c": 22,
+        "battery_voltage": 14.1,
+        "fuel_trim_short_term_pct": -0.8,
+        "fuel_trim_long_term_pct": 1.2,
+        "odometer_km": 28450.2
       },
       "status": "PROCESSED"
     },
     {
-      "id": "2",
+      "id": 2,
       "vehicle_id": 2,
       "received_at": "2024-05-04T10:15:00Z",
       "raw_data": {
-        "speed": 45,
-        "fuel": 40
+        "engine_speed_rpm": 1820,
+        "vehicle_speed_kmh": 45.0,
+        "coolant_temp_c": 98,
+        "engine_load_pct": 52.1,
+        "fuel_level_pct": 38.5,
+        "throttle_position_pct": 22.1,
+        "ambient_temp_c": 24,
+        "battery_voltage": 13.8,
+        "fuel_trim_short_term_pct": 4.2,
+        "fuel_trim_long_term_pct": -2.1,
+        "odometer_km": 48120.7
       },
       "status": "PENDING"
     },
     {
-      "id": "3",
+      "id": 3,
       "vehicle_id": 3,
       "received_at": "2024-05-04T10:30:00Z",
       "raw_data": {
-        "speed": 0,
-        "fuel": 90
+        "engine_speed_rpm": 0,
+        "vehicle_speed_kmh": 0.0,
+        "coolant_temp_c": 35,
+        "engine_load_pct": 0.0,
+        "fuel_level_pct": 89.2,
+        "throttle_position_pct": 0.0,
+        "ambient_temp_c": 19,
+        "battery_voltage": 12.4,
+        "fuel_trim_short_term_pct": 0.0,
+        "fuel_trim_long_term_pct": 0.0,
+        "odometer_km": 72540.3
       },
       "status": "PROCESSED"
     },
     {
-      "id": "4",
+      "id": 4,
       "vehicle_id": 4,
       "received_at": "2024-05-04T10:45:00Z",
       "raw_data": {
-        "speed": 120,
-        "fuel": 20
+        "engine_speed_rpm": 3100,
+        "vehicle_speed_kmh": 118.0,
+        "coolant_temp_c": 89,
+        "engine_load_pct": 68.5,
+        "fuel_level_pct": 21.0,
+        "throttle_position_pct": 42.8,
+        "ambient_temp_c": 21,
+        "battery_voltage": 14.2,
+        "fuel_trim_short_term_pct": -2.3,
+        "fuel_trim_long_term_pct": 1.5,
+        "odometer_km": 12340.5
       },
       "status": "PROCESSED"
     },
     {
-      "id": "5",
+      "id": 5,
       "vehicle_id": 5,
       "received_at": "2024-05-04T11:00:00Z",
       "raw_data": {
-        "speed": 80,
-        "fuel": 55
+        "engine_speed_rpm": 2200,
+        "vehicle_speed_kmh": 80.0,
+        "coolant_temp_c": 105,
+        "engine_load_pct": 41.0,
+        "fuel_level_pct": 54.8,
+        "throttle_position_pct": 19.2,
+        "ambient_temp_c": 26,
+        "battery_voltage": 13.9,
+        "fuel_trim_short_term_pct": 5.8,
+        "fuel_trim_long_term_pct": 3.4,
+        "odometer_km": 94812.9
       },
       "status": "ERROR"
     }
   ],
   "vh_dtc_errors": [
     {
-      "id": "1",
+      "id": 1,
       "vehicle_id": 1,
-      "error_code": "P0101",
-      "description": "MAF Sensor Performance",
-      "is_active": true
-    },
-    {
-      "id": "2",
-      "vehicle_id": 2,
-      "error_code": "P0300",
-      "description": "Random Misfire Detected",
+      "error_code": "P0171",
+      "description": "System Too Lean (Bank 1) - Mezcla de combustible demasiado pobre (exceso de oxígeno)",
       "is_active": false
     },
     {
-      "id": "3",
-      "vehicle_id": 5,
-      "error_code": "P0420",
-      "description": "Catalyst Efficiency Low",
+      "id": 2,
+      "vehicle_id": 1,
+      "error_code": "P0442",
+      "description": "Evaporative Emission Control System Leak Detected (Small) - Fuga menor en el sistema EVAP (tapa del tanque suelta)",
+      "is_active": false
+    },
+    {
+      "id": 3,
+      "vehicle_id": 2,
+      "error_code": "P0301",
+      "description": "Cylinder 1 Misfire Detected - Falla de encendido detectada en el cilindro 1 (bujía o bobina defectuosa)",
+      "is_active": false
+    },
+    {
+      "id": 4,
+      "vehicle_id": 2,
+      "error_code": "P0101",
+      "description": "Mass Air Flow (MAF) Circuit Range/Performance - Rendimiento fuera de rango del sensor de flujo de masa de aire",
       "is_active": true
     },
     {
-      "id": "4",
+      "id": 5,
+      "vehicle_id": 2,
+      "error_code": "P0117",
+      "description": "Engine Coolant Temperature Circuit Low Input - Entrada baja en el circuito del sensor de temperatura del refrigerante",
+      "is_active": true
+    },
+    {
+      "id": 6,
       "vehicle_id": 3,
-      "error_code": "P0500",
-      "description": "Vehicle Speed Sensor",
+      "error_code": "P0420",
+      "description": "Catalyst System Efficiency Below Threshold (Bank 1) - Eficiencia del sistema de catalizador por debajo del límite mínimo",
       "is_active": true
     },
     {
-      "id": "5",
+      "id": 7,
+      "vehicle_id": 3,
+      "error_code": "C0035",
+      "description": "Left Front Wheel Speed Sensor Circuit - Circuito del sensor de velocidad de rueda delantera izquierda (Falla en módulo ABS)",
+      "is_active": false
+    },
+    {
+      "id": 8,
+      "vehicle_id": 3,
+      "error_code": "U0100",
+      "description": "Lost Communication with ECM/PCM - Pérdida esporádica de comunicación con el módulo de control del motor",
+      "is_active": true
+    },
+    {
+      "id": 9,
+      "vehicle_id": 3,
+      "error_code": "P0201",
+      "description": "Injector Circuit Malfunction - Cylinder 1 - Mal funcionamiento en el circuito eléctrico del inyector del cilindro 1",
+      "is_active": false
+    },
+    {
+      "id": 10,
       "vehicle_id": 4,
       "error_code": "B1234",
-      "description": "Airbag Sensor Malfunction",
+      "description": "Airbag Sensor Malfunction - Circuito o resistencia fuera de rango en el sensor de impacto frontal del Airbag",
+      "is_active": false
+    },
+    {
+      "id": 11,
+      "vehicle_id": 4,
+      "error_code": "C0040",
+      "description": "Right Front Wheel Speed Sensor Circuit - Circuito del sensor de velocidad de rueda delantera derecha",
+      "is_active": false
+    },
+    {
+      "id": 12,
+      "vehicle_id": 5,
+      "error_code": "P0300",
+      "description": "Random/Multiple Cylinder Misfire Detected - Fallas de encendido aleatorias detectadas en múltiples cilindros",
+      "is_active": false
+    },
+    {
+      "id": 13,
+      "vehicle_id": 5,
+      "error_code": "P0128",
+      "description": "Coolant Thermostat Coolant Temp Below Regulating Temp - Termostato trabado en posición abierta (motor no calienta)",
+      "is_active": false
+    },
+    {
+      "id": 14,
+      "vehicle_id": 5,
+      "error_code": "B1800",
+      "description": "Driver Side Airbag Inflator Circuit Open - Circuito del inflador de airbag del lado del conductor abierto (cinta del timón)",
+      "is_active": true
+    },
+    {
+      "id": 15,
+      "vehicle_id": 5,
+      "error_code": "U0121",
+      "description": "Lost Communication with ABS Control Module - Pérdida de comunicación con el módulo de control ABS/ESP",
+      "is_active": true
+    },
+    {
+      "id": 16,
+      "vehicle_id": 5,
+      "error_code": "P0700",
+      "description": "Transmission Control System Malfunction - Solicitud de encendido de testigo MIL por falla en módulo de transmisión",
+      "is_active": true
+    },
+    {
+      "id": 17,
+      "vehicle_id": 5,
+      "error_code": "P0172",
+      "description": "System Too Rich (Bank 1) - Mezcla de combustible demasiado rica en banco 1 (sensores de oxígeno saturados)",
+      "is_active": false
+    },
+    {
+      "id": 18,
+      "vehicle_id": 5,
+      "error_code": "P0303",
+      "description": "Cylinder 3 Misfire Detected - Falla de encendido detectada en el cilindro 3",
+      "is_active": false
+    },
+    {
+      "id": 19,
+      "vehicle_id": 5,
+      "error_code": "P0304",
+      "description": "Cylinder 4 Misfire Detected - Falla de encendido detectada en el cilindro 4",
+      "is_active": false
+    },
+    {
+      "id": 20,
+      "vehicle_id": 5,
+      "error_code": "P0455",
+      "description": "Evaporative Emission System Leak Detected (Gross Leak) - Fuga masiva detectada en el sistema de recuperación de gases EVAP",
+      "is_active": true
+    },
+    {
+      "id": 21,
+      "vehicle_id": 2,
+      "error_code": "P0500",
+      "description": "Vehicle Speed Sensor Malfunction - Mal funcionamiento del sensor de velocidad (señal ruidosa o ausente)",
+      "is_active": false
+    },
+    {
+      "id": 22,
+      "vehicle_id": 1,
+      "error_code": "P0113",
+      "description": "Intake Air Temperature Sensor 1 Circuit High Input - Señal alta en circuito de sensor de temperatura de aire de admisión",
+      "is_active": false
+    },
+    {
+      "id": 23,
+      "vehicle_id": 3,
+      "error_code": "C0045",
+      "description": "Left Rear Wheel Speed Sensor Circuit - Circuito del sensor de velocidad de rueda trasera izquierda",
+      "is_active": false
+    },
+    {
+      "id": 24,
+      "vehicle_id": 5,
+      "error_code": "P0507",
+      "description": "Idle Control System RPM Higher Than Expected - Sistema de control de ralentí de aire con RPM más altas de lo esperado",
+      "is_active": true
+    },
+    {
+      "id": 25,
+      "vehicle_id": 5,
+      "error_code": "U0101",
+      "description": "Lost Communication with TCM - Pérdida de comunicación con el módulo de control de la transmisión automática",
       "is_active": false
     }
   ],
   "so_work_orders": [
     {
-      "id": "1",
+      "id": 1,
       "vehicle_id": 1,
       "workshop_id": 1,
-      "status": "IN_PROGRESS",
-      "total_amount": 150,
+      "status": "COMPLETED",
+      "total_amount": 150.00,
       "created_at": "2024-05-04T09:00:00Z"
     },
     {
-      "id": "2",
+      "id": 2,
       "vehicle_id": 2,
-      "workshop_id": 2,
+      "workshop_id": 1,
       "status": "IN_PROGRESS",
-      "total_amount": 450,
+      "total_amount": 450.00,
       "created_at": "2024-05-04T09:30:00Z"
     },
     {
-      "id": "3",
+      "id": 3,
       "vehicle_id": 3,
       "workshop_id": 3,
       "status": "COMPLETED",
-      "total_amount": 200,
+      "total_amount": 200.00,
       "created_at": "2024-05-04T10:00:00Z"
     },
     {
-      "id": "4",
+      "id": 4,
       "vehicle_id": 5,
       "workshop_id": 1,
       "status": "CANCELLED",
-      "total_amount": 0,
+      "total_amount": 0.00,
       "created_at": "2024-05-04T10:30:00Z"
     },
     {
-      "id": "5",
+      "id": 5,
       "vehicle_id": 4,
       "workshop_id": 4,
       "status": "OPEN",
-      "total_amount": 300,
+      "total_amount": 300.00,
       "created_at": "2024-05-04T11:00:00Z"
     }
   ],
   "so_tasks": [
     {
-      "id": "1",
+      "id": 1,
       "order_id": 1,
-      "description": "Oil Change",
-      "price": 50
+      "description": "Cambio de Aceite Sintético Mobil 1 5W-30 y Filtro de Aceite Bosch",
+      "price": 50.00
     },
     {
-      "id": "2",
+      "id": 2,
       "order_id": 1,
-      "description": "Brake Check",
-      "price": 100
+      "description": "Diagnóstico y Ajuste de Pastillas de Freno Delanteras Brembo",
+      "price": 100.00
     },
     {
-      "id": "3",
+      "id": 3,
       "order_id": 2,
-      "description": "Engine Tune-up",
-      "price": 300
+      "description": "Afinamiento Electrónico Completo (Limpieza de cuerpo de aceleración, inyectores y cambio de bujías NGK de Iridio)",
+      "price": 300.00
     },
     {
-      "id": "4",
+      "id": 4,
       "order_id": 2,
-      "description": "Filter Replacement",
-      "price": 150
+      "description": "Reemplazo de Filtro de Aire de Motor y Filtro de Cabina de Aire Acondicionado Bosch",
+      "price": 150.00
     },
     {
-      "id": "5",
+      "id": 5,
       "order_id": 3,
-      "description": "Tire Rotation",
-      "price": 200
+      "description": "Rotación, Balanceo Computarizado y Alineación de Dirección 3D de Llantas",
+      "price": 200.00
     }
   ],
   "iv_parts": [
     {
-      "id": "1",
-      "name": "Synthetic Oil 5W-30",
-      "sku": "OIL-SYN-530"
+      "id": 1,
+      "name": "Aceite Sintético Mobil 1 5W-30 (1 Galón)",
+      "sku": "OIL-MOB-530-G"
     },
     {
-      "id": "2",
-      "name": "Brake Pads Front",
-      "sku": "BRK-PAD-F10"
+      "id": 2,
+      "name": "Pastillas de Freno Brembo Delanteras (Set)",
+      "sku": "BRK-BRE-F10-SET"
     },
     {
-      "id": "3",
-      "name": "Air Filter",
-      "sku": "FIL-AIR-101"
+      "id": 3,
+      "name": "Filtro de Aire Bosch de Alto Flujo",
+      "sku": "FIL-BOS-AIR-101"
     },
     {
-      "id": "4",
-      "name": "Spark Plug",
-      "sku": "SPK-PLG-NJK"
+      "id": 4,
+      "name": "Bujía de Iridio NGK Laser Iridium (Unidad)",
+      "sku": "SPK-NGK-IR-L"
     },
     {
-      "id": "5",
-      "name": "Wiper Blade",
-      "sku": "WPR-BLD-22"
+      "id": 5,
+      "name": "Pluma Limpiaparabrisas Bosch Aerotwin (Par)",
+      "sku": "WPR-BOS-AERO-22"
     }
   ],
   "iv_stocks": [
@@ -418,81 +519,81 @@
   ],
   "bl_invoices": [
     {
-      "id": "1",
+      "id": 1,
       "order_id": 1,
-      "invoice_number": "INV-2024-001",
-      "total": 150,
+      "invoice_number": "FFF1-0002045",
+      "total": 150.00,
       "sunat_validated": true
     },
     {
-      "id": "2",
+      "id": 2,
       "order_id": 2,
-      "invoice_number": "INV-2024-002",
-      "total": 450,
+      "invoice_number": "FFF1-0002046",
+      "total": 450.00,
       "sunat_validated": true
     },
     {
-      "id": "3",
+      "id": 3,
       "order_id": 3,
-      "invoice_number": "INV-2024-003",
-      "total": 200,
+      "invoice_number": "FFF1-0002047",
+      "total": 200.00,
       "sunat_validated": false
     },
     {
-      "id": "4",
+      "id": 4,
       "order_id": 5,
-      "invoice_number": "INV-2024-004",
-      "total": 300,
+      "invoice_number": "FFF4-0001201",
+      "total": 300.00,
       "sunat_validated": true
     },
     {
-      "id": "5",
+      "id": 5,
       "order_id": 1,
-      "invoice_number": "INV-2024-005",
-      "total": 50,
+      "invoice_number": "FFF1-0002048",
+      "total": 50.00,
       "sunat_validated": true
     }
   ],
   "bl_payments": [
     {
-      "id": "1",
+      "id": 1,
       "invoice_id": 1,
-      "amount": 150,
+      "amount": 150.00,
       "method": "CREDIT_CARD",
-      "transaction_ref": "TXN-998877"
+      "transaction_ref": "NIUBIZ-998877"
     },
     {
-      "id": "2",
+      "id": 2,
       "invoice_id": 2,
-      "amount": 200,
+      "amount": 200.00,
       "method": "CASH",
-      "transaction_ref": "TXN-000000"
+      "transaction_ref": "CAJA-MIRAF-01"
     },
     {
-      "id": "3",
+      "id": 3,
       "invoice_id": 3,
-      "amount": 200,
+      "amount": 200.00,
       "method": "BANK_TRANSFER",
-      "transaction_ref": "TXN-112233"
+      "transaction_ref": "BCP-112233"
     },
     {
-      "id": "4",
+      "id": 4,
       "invoice_id": 4,
-      "amount": 300,
+      "amount": 300.00,
       "method": "DEBIT_CARD",
-      "transaction_ref": "TXN-445566"
+      "transaction_ref": "IZIPAY-445566"
     },
     {
-      "id": "5",
+      "id": 5,
       "invoice_id": 2,
-      "amount": 250,
+      "amount": 250.00,
       "method": "CREDIT_CARD",
-      "transaction_ref": "TXN-778899"
+      "transaction_ref": "NIUBIZ-778899"
     }
   ],
   "sys_outbox": [
     {
-      "id": "1",
+      "id": 1,
       "event_type": "ORDER_CREATED",
       "payload": {
         "id": 1
@@ -501,7 +602,7 @@
       "processed": true
     },
     {
-      "id": "2",
+      "id": 2,
       "event_type": "VEHICLE_REGISTERED",
       "payload": {
         "id": 5
@@ -510,7 +611,7 @@
       "processed": true
     },
     {
-      "id": "3",
+      "id": 3,
       "event_type": "INVOICE_GENERATED",
       "payload": {
         "id": 2
@@ -519,7 +620,7 @@
       "processed": false
     },
     {
-      "id": "4",
+      "id": 4,
       "event_type": "PAYMENT_RECEIVED",
       "payload": {
         "id": 1
@@ -528,7 +629,7 @@
       "processed": true
     },
     {
-      "id": "5",
+      "id": 5,
       "event_type": "DTC_ERROR_DETECTED",
       "payload": {
         "code": "P0300"
