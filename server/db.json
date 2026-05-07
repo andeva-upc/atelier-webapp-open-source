@@ -593,7 +593,7 @@
       "vehicle_id": "v3de1f64-0a32-5b3a-dfca-be21c9fa20cc",
       "mechanic_id": "0bd36128-4c8d-4aee-b204-765f04ef31aa",
       "diagnosis": "El motor presenta pérdida de potencia y testigo de Check Engine encendido (Catalizador deficiente).",
-      "status": "DRAFT",
+      "status": "DIAGNOSING",
       "version": 0,
       "created_at": "2026-05-06T15:00:00Z",
       "updated_at": "2026-05-06T15:00:00Z",
@@ -814,7 +814,7 @@
     {
       "id": 3,
       "product_id": "p3c50hdf-34fh-6453-dfdf-2h31dec034aa",
-      "movement_type": "INBOUND",
+      "movement_type": "ADJUSTMENT",
       "quantity": 15,
       "created_at": "2026-05-06T10:00:00Z",
       "created_by": "7ac2e9bc-1b32-4f11-9a99-dc0aef48721c"
@@ -851,7 +851,7 @@
       "id": "v2cd8f8f-51bc-42f2-bdca-fbca8312bbdd",
       "workshop_id": "f89d42c3-92bf-4632-bd88-0f19c99d21be",
       "work_order_id": "wo4ba38c-ef12-4f3d-be23-df129bca23ee",
-      "type": "INVOICE",
+      "type": "RECEIPT",
       "subtotal_amount": 300.00,
       "subtotal_currency": "PEN",
       "tax_percentage": 18.00,
