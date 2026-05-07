@@ -44,7 +44,7 @@ export abstract class BaseApiEndpoint<
   /**
    * Retrieves a single item by its ID.
    */
-  getById(id: number): Observable<TEntity> {
+  getById(id: string | number): Observable<TEntity> {
     return this.http.get<TResource>(`${this.endpointUrl}/${id}`).pipe(
       map(resource => this.assembler.toEntityFromResource(resource)),
       catchError(this.handleError(`Failed to fetch entity with id ${id}`))
@@ -80,7 +80,7 @@ export abstract class BaseApiEndpoint<
   /**
    * Updates an existing resource completely (PUT).
    */
-  update(entity: TEntity, id: number): Observable<TEntity> {
+  update(entity: TEntity, id: string | number): Observable<TEntity> {
     const resource = this.assembler.toResourceFromEntity(entity);
     return this.http.put<TResource>(`${this.endpointUrl}/${id}`, resource).pipe(
       map(updated => this.assembler.toEntityFromResource(updated)),
@@ -91,7 +91,7 @@ export abstract class BaseApiEndpoint<
   /**
    * Performs a partial update on a resource (PATCH).
    */
-  patch(id: number, partialResource: Partial<TResource>): Observable<TEntity> {
+  patch(id: string | number, partialResource: Partial<TResource>): Observable<TEntity> {
     return this.http.patch<TResource>(`${this.endpointUrl}/${id}`, partialResource).pipe(
       map(updated => this.assembler.toEntityFromResource(updated)),
       catchError(this.handleError(`Failed to patch entity with id ${id}`))
@@ -101,7 +101,7 @@ export abstract class BaseApiEndpoint<
   /**
    * Deletes a resource by its identifier.
    */
-  delete(id: number): Observable<void> {
+  delete(id: string | number): Observable<void> {
     return this.http.delete<void>(`${this.endpointUrl}/${id}`).pipe(
       catchError(this.handleError(`Failed to delete entity with id ${id}`))
     );

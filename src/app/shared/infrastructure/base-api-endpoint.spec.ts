@@ -11,9 +11,9 @@ import { BaseApiEndpoint } from './base-api-endpoint';
 // --- MOCK DEFINITIONS FOR TESTING ---
 
 class TestProduct implements BaseEntity {
-  id: number;
+  id: string | number;
   name: string;
-  constructor(id: number, name: string) {
+  constructor(id: string | number, name: string) {
     this.id = id;
     this.name = name;
   }

@@ -5,7 +5,7 @@
  * @public
  */
 export interface BaseResource {
-  id: number;
+  id: string | number;
 }
 
 /**

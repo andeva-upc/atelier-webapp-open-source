@@ -19,5 +19,5 @@ export interface BaseEntity {
    * This ID is immutable and persists throughout the entity's lifecycle.
    * It uniquely identifies this entity within its bounded context.
    */
-  id: number;
+  id: string | number;
 }
