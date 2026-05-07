@@ -11,7 +11,7 @@ import { describe, it, expect, beforeAll } from 'vitest';
  * Run 'npm run dev:api' or 'npm run backend' in another terminal window first.
  */
 describe('Fake API (json-server) Integration Test', () => {
-  const API_URL = 'http://localhost:3000/api/v1/wm_workshops';
+  const API_URL = 'http://localhost:3000/api/v1/workshops';
 
   // Pre-check: Ensure the server is online before running the integration suite
   beforeAll(async () => {
@@ -45,16 +45,23 @@ describe('Fake API (json-server) Integration Test', () => {
     
     // Verificamos propiedades reales de la base de datos simulada
     expect(workshops[0]).toHaveProperty('id');
-    expect(workshops[0]).toHaveProperty('name');
+    expect(workshops[0]).toHaveProperty('business_name');
     expect(workshops[0]).toHaveProperty('tax_id');
   });
 
   it('should physically CREATE, READ, and DELETE a workshop in server/db.json', async () => {
     const tempWorkshop = {
-      name: 'Taller de Pruebas de Integración',
-      tax_id: 'RUC20999999999',
-      address: 'Calle de Integración Real 456',
-      phone: '+51 900000000'
+      id: 'a7c2e9bc-1b32-4f11-9a99-dc0aef48722d',
+      tax_id: '20999999999',
+      business_name: 'Taller de Pruebas de Integración',
+      subscription_plan: 'PRO',
+      is_active: true,
+      version: 1,
+      created_at: '2026-05-06T10:15:00Z',
+      updated_at: '2026-05-06T10:15:00Z',
+      deleted_at: null,
+      created_by: 'system',
+      updated_by: 'system'
     };
 
     // 1. CREATE (POST) - Inserta físicamente en db.json
@@ -67,14 +74,14 @@ describe('Fake API (json-server) Integration Test', () => {
 
     const created = await createResponse.json();
     expect(created.id).toBeDefined();
-    expect(created.name).toBe(tempWorkshop.name);
+    expect(created.business_name).toBe(tempWorkshop.business_name);
 
     // 2. READ (GET by ID) - Lee el registro recién insertado
     const getResponse = await fetch(`${API_URL}/${created.id}`);
     expect(getResponse.status).toBe(200);
     
     const fetched = await getResponse.json();
-    expect(fetched.name).toBe(tempWorkshop.name);
+    expect(fetched.business_name).toBe(tempWorkshop.business_name);
     expect(fetched.tax_id).toBe(tempWorkshop.tax_id);
 
     // 3. DELETE (DELETE) - Remueve físicamente el registro de db.json
