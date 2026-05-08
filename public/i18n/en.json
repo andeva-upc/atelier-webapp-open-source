@@ -1,3 +1,11 @@
 {
-
+  "option": {
+    "home": "Home",
+    "work-orders": "Orders",
+    "appointments": "Appointments",
+    "staff": "Staff",
+    "inventory": "Inventory",
+    "billing": "Billing",
+    "customers": "Customers"
+  }
 }

@@ -1,3 +1,11 @@
 {
-
+  "option": {
+    "home": "Inicio",
+    "work-orders": "Órdenes",
+    "appointments": "Citas",
+    "staff": "Personal",
+    "inventory": "Inventario",
+    "billing": "Facturación",
+    "customers": "Clientes"
+  }
 }
