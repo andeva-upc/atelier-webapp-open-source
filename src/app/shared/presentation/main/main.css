@@ -1,0 +1,16 @@
+.main-content {
+  background: #ffffff;
+  height: 100vh;
+  margin: 1.5vh 1vh 0 18rem;
+  border-radius: 12px 12px 0 0;
+  overflow: auto;
+  transition: margin-left 0.5s ease;
+}
+
+.main-content-collapsed {
+  margin-left: 5.5rem;
+}
+
+.main-body {
+  padding: 1rem 2rem 1rem 2rem;
+}

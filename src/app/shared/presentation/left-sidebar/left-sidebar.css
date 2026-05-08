@@ -1,0 +1,106 @@
+.sidenav {
+  background: #0071EB;
+  transition: all 0.5s ease;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 18rem;
+  height: 100vh;
+}
+.sidenav-collapsed {
+  width: 5.4rem;
+}
+.sidenav .logo-container {
+  display: flex;
+  align-items: center;
+  padding: 0.938rem 0.938rem 0 0.938rem;
+  width: 100%;
+}
+.sidenav .logo-container .arrow {
+  background: transparent;
+  text-align: center;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  border: 2px solid #0071EB;
+}
+
+.sidenav .logo-container .arrow img {
+  transition: transform 0.3s ease;
+}
+
+.sidenav .logo-container .arrow img.rotated {
+  transform: rotate(180deg);
+}
+
+.sidenav .logo-container .logo-text {
+  margin: 0 0 0 0.5rem;
+  font-size: 48px;
+  font-family: "Zizou Slab Medium", serif;
+  color: #fff;
+  transform: translateY(-6px);
+}
+
+.sidenav-nav-upper {
+  list-style: none;
+  padding: 0.938rem 0.938rem 0 0.938rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100% - 3.65rem);
+}
+.sidenav-nav-upper .sidenav-nav-item {
+  width: 100%;
+  margin-bottom: 1rem;
+  border: 1px solid #ffffff;
+  border-radius: 14px;
+  cursor: pointer;
+}
+.sidenav-nav-upper .sidenav-nav-item .sidenav-nav-link {
+  font-family: "Mona Sans", sans-serif;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  height: 3.5rem;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 13px;
+  transition: all 0.3s ease;
+}
+.sidenav-nav-upper .sidenav-nav-item .sidenav-nav-link .sidenav-link-icon {
+  padding: 12px;
+}
+.sidenav-nav-upper .sidenav-nav-item .sidenav-nav-link .sidenav-link-text {
+  margin-left: 0.5rem;
+}
+
+.sidenav-nav-upper .sidenav-nav-item:hover {
+  border: 1px solid #B3D4F8;
+}
+
+.sidenav-nav-upper .sidenav-nav-item:hover .sidenav-nav-link {
+  background-color: #B3D4F8;
+  color: #0071EB;
+}
+
+.sidenav-nav-upper .sidenav-nav-item:hover .sidenav-nav-icon {
+
+}
+
+.sidenav-nav-upper .sidenav-nav-item:hover .sidenav-link-icon {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(72%) saturate(7199%) hue-rotate(201deg) brightness(99%) contrast(101%);
+}
+
+.active {
+  background-color: #B3D4F8;
+  color: #0071EB;
+}
+.active .sidenav-link-icon {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(72%) saturate(7199%) hue-rotate(201deg) brightness(99%) contrast(101%);
+}
+.active .sidenav-link-text {
+  color: #0071EB;
+}
+
+.active .sidenav-nav-item {
+  border: 1px solid #B3D4F8;
+}
