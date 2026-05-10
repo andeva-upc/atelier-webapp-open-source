@@ -102,7 +102,7 @@ describe('CustomerAssembler', () => {
     const entity = assembler.toEntityFromResource(dtoListWithAppointments);
 
     expect(entity.servicesCount).toBe(3);
-    expect(entity.lastVisitDate).toBe('2026-05-10'); // Must select the latest appointment date
+    expect(entity.lastVisitDate).toBe('2026-05-10'); /** Must select the latest appointment date */
   });
 
   it('should map array from response correctly', () => {

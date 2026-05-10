@@ -57,7 +57,7 @@ export class CustomerApiService
     }).pipe(
       map(({ customers, vehicles, appointments }) => {
         return customers.map(customer => {
-          // Filter vehicles associated with the customer ID
+          /** Filter vehicles associated with the customer ID */
           const customerVehicles = vehicles.filter(v => v.customer_id === customer.id);
           
           let vehiclesSummary = 'Sin vehículos registrados';
@@ -66,15 +66,15 @@ export class CustomerApiService
               .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
               .join(', ');
           } else if (customer.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
-            // Family relationship for Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles)
+            /** Family relationship for Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles) */
             vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
           }
 
-          // Filter appointments associated with the customer ID
+          /** Filter appointments associated with the customer ID */
           const customerAppointments = appointments.filter(a => a.customer_id === customer.id);
           const servicesCount = customerAppointments.length;
 
-          // Find the latest appointment date
+          /** Find the latest appointment date */
           let lastVisitDate = 'Sin visitas registradas';
           if (customerAppointments.length > 0) {
             const sorted = [...customerAppointments].sort(

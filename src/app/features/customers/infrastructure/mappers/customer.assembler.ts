@@ -22,25 +22,25 @@ export class CustomerAssembler implements BaseAssembler<Customer, CustomerDto, a
    * @returns A new instance of the {@link Customer} Domain entity.
    */
   toEntityFromResource(resource: CustomerDto): Customer {
-    // 1. Dynamically calculate the vehicles summary
+    /** Dynamically calculate the vehicles summary */
     let vehiclesSummary = 'Sin vehículos registrados';
     if (resource.vehicles && resource.vehicles.length > 0) {
       vehiclesSummary = resource.vehicles
         .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
         .join(', ');
     } else if (resource.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
-      // Family relationship of Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles)
+      /** Family relationship of Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles) */
       vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
     } else if (resource.vehicles_summary) {
       vehiclesSummary = resource.vehicles_summary;
     }
 
-    // 2. Dynamically calculate the services count from appointments
+    /** Dynamically calculate the services count from appointments */
     const servicesCount = resource.appointments && resource.appointments.length > 0
       ? resource.appointments.length
       : (resource.services_count ?? 0);
 
-    // 3. Extract the last visit date from registered appointments
+    /** Extract the last visit date from registered appointments */
     let lastVisitDate = 'Sin visitas registradas';
     if (resource.appointments && resource.appointments.length > 0) {
       const sortedAppointments = [...resource.appointments].sort(

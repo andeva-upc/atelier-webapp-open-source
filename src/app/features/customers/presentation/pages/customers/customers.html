@@ -1,0 +1,85 @@
+<div class="customers-container">
+  <!-- Header Area -->
+  <header class="customers-header">
+    <div class="header-text">
+      <h1>Clientes</h1>
+      <p class="subtitle" *ngIf="!isLoading()">{{ totalCustomersCount() }} clientes registrados</p>
+      <p class="subtitle" *ngIf="isLoading()">Cargando clientes registrados...</p>
+    </div>
+    
+    <!-- New Customer Primary Button -->
+    <button class="btn-new-customer">
+      <span class="btn-icon">+</span> Nuevo cliente
+    </button>
+  </header>
+
+  <!-- Filter & Search Section -->
+  <section class="filter-section">
+    <div class="search-bar-wrapper">
+      <ng-icon name="matSearch" class="search-icon"></ng-icon>
+      <input 
+        type="text" 
+        (input)="onSearchInput($event)" 
+        placeholder="Buscar por nombre, email o teléfono..." 
+        class="custom-search-input"
+      />
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div class="loading-wrapper" *ngIf="isLoading()">
+    <div class="loader-spinner"></div>
+    <p>Cargando registros...</p>
+  </div>
+
+  <!-- Main Grid Section -->
+  <section class="customers-grid" *ngIf="!isLoading() && customers().length > 0">
+    <mat-card class="customer-card" *ngFor="let customer of customers()">
+      <mat-card-content class="card-content">
+        <!-- Top Row: Avatar & Name + Services -->
+        <div class="avatar-row">
+          <div class="avatar-circle">
+            {{ customer.getAvatarInitial() }}
+          </div>
+          <div class="identity-info">
+            <h2 class="customer-name">{{ customer.fullName }}</h2>
+            <span class="services-sub">{{ customer.servicesCount }} servicios realizados</span>
+          </div>
+        </div>
+
+        <!-- Middle Row: Contact & Vehicles Info -->
+        <div class="info-section">
+          <div class="info-item">
+            <ng-icon name="matMailOutline" class="info-icon"></ng-icon>
+            <span class="info-text">{{ customer.email }}</span>
+          </div>
+          <div class="info-item">
+            <ng-icon name="matPhoneAndroid" class="info-icon"></ng-icon>
+            <span class="info-text">{{ customer.phone }}</span>
+          </div>
+          <div class="info-item">
+            <ng-icon name="matDirectionsCar" class="info-icon"></ng-icon>
+            <span class="info-text" [class.no-vehicles]="customer.vehiclesSummary === 'Sin vehículos registrados'">
+              {{ customer.vehiclesSummary }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Separator & Last Visit -->
+        <div class="card-footer">
+          <span class="visit-lbl">Última visita</span>
+          <span class="visit-val">{{ customer.lastVisitDate }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <!-- Empty State -->
+  <section class="empty-state" *ngIf="!isLoading() && customers().length === 0">
+    <div class="empty-illustration">
+      <ng-icon name="matPersonSearch" class="empty-icon"></ng-icon>
+    </div>
+    <h2>No se encontraron clientes</h2>
+    <p>Intenta realizar otra búsqueda con un término diferente.</p>
+  </section>
+</div>

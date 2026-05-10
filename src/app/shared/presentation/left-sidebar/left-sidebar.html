@@ -4,19 +4,19 @@
       <img src="/keyboard-arrow.svg" [class.rotated]="isLeftSidebarCollapsed()" />
     </button>
     @if (!isLeftSidebarCollapsed()) {
-      <p class="logo-text">atelier</p>
+    <p class="logo-text">atelier</p>
     }
   </div>
   <div class="sidenav-nav-upper">
     @for (option of options(); track option.label) {
-      <li class="sidenav-nav-item">
-        <a class="sidenav-nav-link" [routerLink]="option.link" routerLinkActive="active">
-          <img class="sidenav-link-icon" [src]="option.icon" alt="{{ option.label }} icon" />
-          @if (!isLeftSidebarCollapsed()) {
-            <span class="sidenav-link-text">{{ option.label | translate }}</span>
-          }
-        </a>
-       </li>
+    <li class="sidenav-nav-item">
+      <a class="sidenav-nav-link" [routerLink]="option.link" routerLinkActive="active">
+        <img class="sidenav-link-icon" [src]="option.icon" alt="{{ option.label }} icon" />
+        @if (!isLeftSidebarCollapsed()) {
+        <span class="sidenav-link-text">{{ option.label | translate }}</span>
+        }
+      </a>
+    </li>
     }
   </div>
 </div>
