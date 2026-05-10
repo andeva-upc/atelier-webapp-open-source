@@ -46,3 +46,6 @@ Thumbs.db
 # Package Lock
 package-lock.json
 
+
+.agents
+skills-lock.json
