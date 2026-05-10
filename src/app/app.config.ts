@@ -5,6 +5,8 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { routes } from './app.routes';
+import { CustomerRepository } from './features/customers/domain/repositories/customer.repository';
+import { CustomerApiService } from './features/customers/infrastructure/services/customer-api.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +16,8 @@ export const appConfig: ApplicationConfig = {
       loader: provideTranslateHttpLoader({prefix: './i18n/', suffix: '.json',}),
       fallbackLang: 'en'
     }),
-    provideRouter(routes)
+    provideRouter(routes),
+    { provide: CustomerRepository, useClass: CustomerApiService }
   ]
 };
+
