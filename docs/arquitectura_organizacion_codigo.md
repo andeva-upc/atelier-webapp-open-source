@@ -86,9 +86,57 @@ Las respuestas JSON de la base de datos o APIs suelen usar formatos de red espec
 ### D. Capa de Presentación (`presentation/`)
 Es la capa gráfica e interactiva en Angular.
 
-* **`views/` (Vistas/Páginas):** Representa las páginas completas accesibles por enrutamiento (ej. `customers-list/customers-list.ts`).
-* **`components/` (Componentes):** Bloques de construcción visuales reutilizables internos del contexto.
-* **Desacoplamiento Estricto:** Los componentes de presentación **nunca** deben importar directamente clases de la capa de infraestructura (como Endpoints o Assemblers). En su lugar, inyectan el contrato abstracto del dominio (`CustomerRepository`) que Angular proveerá automáticamente.
+* **`views/` (Vistas/Páginas/Formularios):** Representa las páginas principales accesibles directamente por enrutamiento (ej. `customers-list/`) así como los sub-escenarios, formularios complejos o sub-vistas del contexto (ej. `customer-form/`). 
+  > [!NOTE]
+  > Para asegurar simetría y legibilidad, tanto los listados principales como sus formularios se alojan bajo `views/` de forma independiente (ej. `course-list/` y `course-form/`). Esto mantiene un estándar homogéneo en todos los módulos de la aplicación.
+* **`components/` (Componentes):** Bloques de construcción visuales reutilizables y atómicos internos del contexto que no representan flujos o páginas por sí mismos (ej. botones especiales, tarjetas de un item, alertas customizadas).
+* **Desacoplamiento Estricto:** Los componentes de presentación **nunca** deben importar directamente clases de la capa de infraestructura (como Endpoints o Assemblers). En su lugar, inyectan el contrato abstracto del dominio (`CustomerRepository`) que Angular proveerá automáticamente en runtime.
+
+#### Patrón de Enrutamiento Modular Diferido (Lazy Loading Delegado)
+Para maximizar la eficiencia en la carga inicial y el aislamiento del código, el enrutador global de la aplicación (`app.routes.ts`) **nunca** carga directamente componentes de presentación individuales. En su lugar:
+1. El enrutador de nivel raíz delega la resolución de rutas al Bounded Context mediante `loadChildren()`:
+   ```typescript
+   // app.routes.ts
+   {
+     path: 'customers',
+     loadChildren: () => import('./customers/presentation/customers.routes').then(m => m.customersRoutes)
+   }
+   ```
+2. Cada contexto define autónomamente su árbol de navegación interno (`*.routes.ts`), cargando de forma perezosa (`loadComponent`) únicamente los componentes controladores necesarios:
+   ```typescript
+   // customers.routes.ts
+   const customersList = () => import('./views/customers-list/customers-list').then(m => m.CustomersList);
+
+   export const customersRoutes: Routes = [
+     { path: '', loadComponent: customersList }
+   ];
+   ```
+
+#### Patrón de Integración Desacoplada vía Variables de Plantilla (`#form`)
+Cuando una vista principal (como `customers-list`) utiliza un modal para realizar flujos transaccionales (como registrar un cliente), adoptamos un patrón de delegación visual basado en variables de plantilla Angular:
+* **Responsabilidad de Negocio Encapsulada:** El formulario (ej. `<app-customer-form>`) mantiene el 100% de sus validaciones, estados de carga y envío de datos en su propia clase controladora de forma auto-contenida.
+* **Orquestación Visual Desacoplada:** La vista contenedora utiliza una variable de plantilla (`#form`) en su HTML para consultar reactivamente las propiedades del formulario e integrarlas en los contenedores compartidos (como barras inferiores de botones o títulos del modal) sin que el componente padre necesite declarar variables del formulario o conocer su lógica de validación interna.
+
+```html
+<!-- customers-list.html (Componente Contenedor) -->
+<app-modal [isOpen]="isModalOpen()">
+  <!-- Acceso directo al estado interno del formulario hijo para pintar títulos dinámicos -->
+  <h2 modal-title>
+    @if (form.modalStep() === 'SEARCH') { {{ 'customers.title.search' | translate }} }
+  </h2>
+
+  <!-- Instanciación limpia del formulario hijo -->
+  <app-customer-form modal-body #form (saved)="onCustomerSaved()"></app-customer-form>
+
+  <!-- Control de habilitación de botones y spinners directamente de las señales de #form -->
+  <div modal-actions>
+    <button (click)="form.onSubmit()" [disabled]="form.customerForm.invalid || form.isSaving()">
+      <span *ngIf="form.isSaving()" class="spinner"></span>
+      Guardar
+    </button>
+  </div>
+</app-modal>
+```
 
 ---
 
