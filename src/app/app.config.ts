@@ -5,8 +5,8 @@ import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { routes } from './app.routes';
-import { CustomerRepository } from './features/customers/domain/repositories/customer.repository';
-import { CustomerApiService } from './features/customers/infrastructure/services/customer-api.service';
+import { CustomerRepository } from './customers/domain/repositories/customer.repository';
+import { CustomersApi } from './customers/infrastructure/customers-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'en'
     }),
     provideRouter(routes),
-    { provide: CustomerRepository, useClass: CustomerApiService }
+    { provide: CustomerRepository, useClass: CustomersApi }
   ]
 };
 

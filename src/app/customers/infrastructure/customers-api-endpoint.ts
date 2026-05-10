@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, forkJoin, map } from 'rxjs';
-import { BaseApiEndpoint } from '../../../../shared/infrastructure/base-api-endpoint';
-import { Customer } from '../../domain/models/customer.entity';
-import { CustomerDto } from '../dto/customer.dto';
-import { CustomerAssembler } from '../mappers/customer.assembler';
-import { CustomerRepository } from '../../domain/repositories/customer.repository';
-import { environment } from '../../../../../environments/environment';
+import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
+import { BaseResponse } from '../../shared/infrastructure/base-response';
+import { Customer } from '../domain/models/customer.entity';
+import { CustomerResponse } from './customers-response';
+import { CustomerAssembler } from './customer-assembler';
+import { CustomerRepository } from '../domain/repositories/customer.repository';
+import { environment } from '../../../environments/environment';
 
 /**
  * Infrastructure service for customer management (Customers).
@@ -23,12 +24,12 @@ import { environment } from '../../../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class CustomerApiService
-  extends BaseApiEndpoint<Customer, CustomerDto, any, CustomerAssembler>
+export class CustomersApiEndpoint
+  extends BaseApiEndpoint<Customer, CustomerResponse, BaseResponse, CustomerAssembler>
   implements CustomerRepository
 {
   /**
-   * Creates an instance of `CustomerApiService`.
+   * Creates an instance of `CustomersApiEndpoint`.
    * Injects native dependencies and defines the base endpoint for the Customers API using environments.
    */
   constructor() {
@@ -159,4 +160,81 @@ export class CustomerApiService
       })
     );
   }
+
+  /**
+   * Searches for any pending online pre-registrations matching the document credentials or phone number,
+   * or checks if the customer is already registered in the system.
+   * 
+   * @param documentType - The document type (DNI, RUC, etc.).
+   * @param documentNumber - The document identification string.
+   * @param phone - The customer contact phone number.
+   * @returns An {@link Observable} emitting check results (existing customer, pre-registered appointment, or null).
+   */
+  findPreRegistration(documentType: string, documentNumber: string, phone: string): Observable<any> {
+    const rootBaseUrl = environment.platformProviderApiBaseUrl.replace('/api/v1', '');
+    const appointmentsUrl = `${rootBaseUrl}${environment.platformProviderAppointmentsEndpointPath}`;
+    
+    return forkJoin({
+      existingCustomers: this.find(), // Get all to filter in-memory with flexible doc/phone matches
+      appointments: this.http.get<any[]>(appointmentsUrl)
+    }).pipe(
+      map(({ existingCustomers, appointments }) => {
+        /** 1. Check existing customers */
+        const matchedCustomer = existingCustomers.find(cust => {
+          const docMatch = documentNumber && 
+            cust.documentType === documentType && 
+            cust.documentNumber === documentNumber;
+            
+          const phoneMatch = phone && (
+            cust.phone === phone || 
+            cust.phone === `+51${phone}` || 
+            cust.phone.replace('+51', '').trim() === phone
+          );
+          
+          return docMatch || phoneMatch;
+        });
+
+        if (matchedCustomer) {
+          return {
+            type: 'EXISTING',
+            customer: matchedCustomer
+          };
+        }
+
+        /** 2. Check pending online pre-registrations */
+        const pending = appointments.find(appt => {
+          if (appt.status !== 'PENDING_APPROVAL') {
+            return false;
+          }
+
+          const docMatch = documentNumber && 
+            appt.pre_registered_document_type === documentType && 
+            appt.pre_registered_document_number === documentNumber;
+            
+          const phoneMatch = phone && (
+            appt.pre_registered_phone === phone || 
+            appt.pre_registered_phone === `+51${phone}` || 
+            (appt.pre_registered_phone && appt.pre_registered_phone.replace('+51', '').trim() === phone)
+          );
+          
+          return docMatch || phoneMatch;
+        });
+
+        if (pending) {
+          return {
+            type: 'PRE_REGISTERED',
+            appointmentId: pending.id,
+            fullName: pending.pre_registered_full_name,
+            email: pending.pre_registered_email,
+            phone: pending.pre_registered_phone,
+            vehiclePlate: pending.pre_registered_vehicle_plate,
+            vehicleBrandModel: pending.pre_registered_vehicle_brand_model
+          };
+        }
+
+        return null;
+      })
+    );
+  }
 }
+

@@ -1,27 +1,28 @@
 import { Injectable } from '@angular/core';
-import { BaseAssembler } from '../../../../shared/infrastructure/base-assembler';
-import { Customer } from '../../domain/models/customer.entity';
-import { CustomerDto } from '../dto/customer.dto';
+import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
+import { BaseResponse } from '../../shared/infrastructure/base-response';
+import { Customer } from '../domain/models/customer.entity';
+import { CustomerResponse } from './customers-response';
 
 /**
  * Bidirectional assembler and data mapper for the Customer entity.
  * 
- * Acts as an Anti-Corruption Layer (ACL) translating infrastructure-level representation DTO {@link CustomerDto}
+ * Acts as an Anti-Corruption Layer (ACL) translating infrastructure-level representation DTO {@link CustomerResponse}
  * to pure Domain {@link Customer} entities, and vice versa.
  */
 @Injectable({
   providedIn: 'root',
 })
-export class CustomerAssembler implements BaseAssembler<Customer, CustomerDto, any> {
+export class CustomerAssembler implements BaseAssembler<Customer, CustomerResponse, BaseResponse> {
   /**
    * Converts an infrastructure-level DTO resource into a pure Domain entity.
    * Dynamically computes vehicle summaries, services count, and latest visit dates when embedded resources
    * are present, or gracefully falls back to legacy/default parameters.
    *
-   * @param resource - The input DTO resource {@link CustomerDto}.
+   * @param resource - The input DTO resource {@link CustomerResponse}.
    * @returns A new instance of the {@link Customer} Domain entity.
    */
-  toEntityFromResource(resource: CustomerDto): Customer {
+  toEntityFromResource(resource: CustomerResponse): Customer {
     /** Dynamically calculate the vehicles summary */
     let vehiclesSummary = 'Sin vehículos registrados';
     if (resource.vehicles && resource.vehicles.length > 0) {
@@ -71,9 +72,9 @@ export class CustomerAssembler implements BaseAssembler<Customer, CustomerDto, a
    * Converts a pure Domain entity into an infrastructure-level DTO resource for network transport or persistent storage.
    *
    * @param entity - The Domain {@link Customer} entity.
-   * @returns The mapped output DTO {@link CustomerDto}.
+   * @returns The mapped output DTO {@link CustomerResponse}.
    */
-  toResourceFromEntity(entity: Customer): CustomerDto {
+  toResourceFromEntity(entity: Customer): CustomerResponse {
     return {
       id: entity.id,
       workshop_id: entity.workshopId,
@@ -93,15 +94,16 @@ export class CustomerAssembler implements BaseAssembler<Customer, CustomerDto, a
    * Transforms a generic raw backend response (such as a list or custom paginated response wrapper)
    * into a clean collection of Domain entities.
    *
-   * @param response - The generic raw response returned by the HTTP service.
+   * @param response - The generic raw response returned by the HTTP service {@link BaseResponse}.
    * @returns An array of {@link Customer} Domain entities.
    */
-  toEntitiesFromResponse(response: any): Customer[] {
-    if (Array.isArray(response)) {
-      return response.map(res => this.toEntityFromResource(res));
+  toEntitiesFromResponse(response: BaseResponse): Customer[] {
+    const raw = response as any;
+    if (Array.isArray(raw)) {
+      return raw.map(res => this.toEntityFromResource(res));
     }
-    if (response && Array.isArray(response.data)) {
-      return response.data.map((res: CustomerDto) => this.toEntityFromResource(res));
+    if (raw && Array.isArray(raw.data)) {
+      return raw.data.map((res: CustomerResponse) => this.toEntityFromResource(res));
     }
     return [];
   }

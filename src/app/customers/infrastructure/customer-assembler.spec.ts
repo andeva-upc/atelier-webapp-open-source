@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { CustomerAssembler } from './customer.assembler';
-import { CustomerDto } from '../dto/customer.dto';
-import { Customer } from '../../domain/models/customer.entity';
+import { CustomerAssembler } from './customer-assembler';
+import { CustomerResponse } from './customers-response';
+import { Customer } from '../domain/models/customer.entity';
 
 describe('CustomerAssembler', () => {
   const assembler = new CustomerAssembler();
 
-  const mockDto: CustomerDto = {
+  const mockDto: CustomerResponse = {
     id: 'c1a938be-23ef-4f1b-a9f8-be31faee01bc',
     workshop_id: 'e26b1580-b3b0-466d-8c10-ca7f62d1c9ef',
     document_number: '45678912',
@@ -57,7 +57,7 @@ describe('CustomerAssembler', () => {
   });
 
   it('should resolve family member car correctly for Maria Fe Torres Ugarte ID', () => {
-    const mariaDto: CustomerDto = {
+    const mariaDto: CustomerResponse = {
       id: 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd',
       workshop_id: 'e26b1580-b3b0-466d-8c10-ca7f62d1c9ef',
       document_number: '09876543',
@@ -76,7 +76,7 @@ describe('CustomerAssembler', () => {
   });
 
   it('should dynamically aggregate embedded vehicles list correctly', () => {
-    const dtoListWithVehicles: CustomerDto = {
+    const dtoListWithVehicles: CustomerResponse = {
       ...mockDto,
       vehicles: [
         { id: 'v1', plate_number: 'ABC-123', brand: 'Toyota', model: 'Corolla', year: 2022 },
@@ -90,7 +90,7 @@ describe('CustomerAssembler', () => {
   });
 
   it('should dynamically sort and aggregate embedded appointments list correctly', () => {
-    const dtoListWithAppointments: CustomerDto = {
+    const dtoListWithAppointments: CustomerResponse = {
       ...mockDto,
       appointments: [
         { id: 'a1', appointment_date: '2026-05-01T10:00:00Z', status: 'COMPLETED' },

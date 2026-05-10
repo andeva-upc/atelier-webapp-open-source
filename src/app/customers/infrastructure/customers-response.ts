@@ -1,4 +1,4 @@
-import { BaseResource } from '../../../../shared/infrastructure/base-response';
+import { BaseResource } from '../../shared/infrastructure/base-response';
 
 /**
  * Data Transfer Object (DTO) representing the raw Customer network model.
@@ -6,7 +6,7 @@ import { BaseResource } from '../../../../shared/infrastructure/base-response';
  * Contains optional properties to support side-loaded embedded relations
  * from relational models in the backend database.
  */
-export interface CustomerDto extends BaseResource {
+export interface CustomerResponse extends BaseResource {
   id: string;
   workshop_id: string;
   document_number: string;

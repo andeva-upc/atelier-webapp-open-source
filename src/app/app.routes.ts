@@ -4,7 +4,7 @@ export const routes: Routes = [
   {
     path: 'customers',
     loadComponent: () =>
-      import('./features/customers/presentation/pages/customers/customers').then(
+      import('./customers/presentation/views/customers').then(
         (m) => m.Customers
       ),
   },

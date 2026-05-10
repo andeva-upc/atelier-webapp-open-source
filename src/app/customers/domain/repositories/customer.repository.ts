@@ -29,4 +29,15 @@ export abstract class CustomerRepository {
    * @returns An {@link Observable} emitting the successfully created {@link Customer} entity.
    */
   abstract create(customer: Customer): Observable<Customer>;
+
+  /**
+   * Searches for any pending online pre-registrations matching the document credentials or phone number.
+   * 
+   * @param documentType - The document type (DNI, RUC, etc.).
+   * @param documentNumber - The document identification string.
+   * @param phone - The customer contact phone number.
+   * @returns An {@link Observable} emitting a pre-registration data object if found, or null.
+   */
+  abstract findPreRegistration(documentType: string, documentNumber: string, phone: string): Observable<any>;
 }
+
