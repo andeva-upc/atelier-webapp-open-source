@@ -48,13 +48,13 @@
       "not-found": {
         "badge": "Sin Registros Previos",
         "description": "No se encontró ningún pre-registro ni cliente activo para este número de documento.",
-        "card-title": "📲 Auto-registro Móvil (Fricción Cero)",
+        "card-title": "Auto-registro Móvil (Fricción Cero)",
         "card-description": "Para evitar errores, ingrese el celular del conductor y le enviaremos un enlace interactivo para que llene sus datos desde su teléfono:",
         "phone-error": "Debe tener exactamente 9 dígitos.",
         "sms-success": "¡Enlace enviado con éxito al WhatsApp del cliente!"
       },
       "manual": {
-        "badge": "⚠️ Modo Contingencia Manual Activado"
+        "badge": "Modo Contingencia Manual Activado"
       },
       "form": {
         "document-type": "Tipo de documento",

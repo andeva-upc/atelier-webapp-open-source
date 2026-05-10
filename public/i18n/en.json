@@ -48,13 +48,13 @@
       "not-found": {
         "badge": "No Previous Records",
         "description": "No pre-registration or active customer was found for this document number.",
-        "card-title": "📲 Mobile Self-registration (Zero Friction)",
+        "card-title": "Mobile Self-registration (Zero Friction)",
         "card-description": "To avoid errors, enter the driver's mobile number and we will send an interactive link to fill out details from their phone:",
         "phone-error": "Must have exactly 9 digits.",
         "sms-success": "Link successfully sent to the customer's WhatsApp!"
       },
       "manual": {
-        "badge": "⚠️ Manual Contingency Mode Active"
+        "badge": "Manual Contingency Mode Active"
       },
       "form": {
         "document-type": "Document type",
