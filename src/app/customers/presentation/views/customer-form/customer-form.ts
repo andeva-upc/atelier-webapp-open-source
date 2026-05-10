@@ -113,7 +113,7 @@ export class CustomerForm implements OnInit {
   /** Computed signal evaluating if the current search criteria has a valid format for submission */
   readonly isSearchValid = computed(() => {
     // Access formValue to establish reactive dependency on form edits
-    const _ = this.formValue();
+    this.formValue();
     
     const documentNumberControl = this.customerForm.get('documentNumber');
     const phoneControl = this.customerForm.get('phone');
@@ -121,22 +121,11 @@ export class CustomerForm implements OnInit {
     const hasDocument = !!(documentNumberControl && documentNumberControl.value && documentNumberControl.value.trim().length > 0);
     const hasPhone = !!(phoneControl && phoneControl.value && phoneControl.value.trim().length > 0);
 
-    // Disabled if both fields are empty
     if (!hasDocument && !hasPhone) {
       return false;
     }
 
-    // Disabled if document is present but has an invalid pattern for its selected type
-    if (hasDocument && documentNumberControl?.invalid) {
-      return false;
-    }
-
-    // Disabled if phone is present but has an invalid pattern
-    if (hasPhone && phoneControl?.invalid) {
-      return false;
-    }
-
-    return true;
+    return !(hasDocument && documentNumberControl?.invalid) && !(hasPhone && phoneControl?.invalid);
   });
 
   /**
@@ -303,12 +292,5 @@ export class CustomerForm implements OnInit {
     this.store.createCustomer(newCustomer, () => {
       this.saved.emit();
     });
-  }
-
-  /**
-   * Cancels the form flow.
-   */
-  onCancel(): void {
-    this.cancel.emit();
   }
 }

@@ -56,49 +56,9 @@ export class CustomersApiEndpoint
       vehicles: this.http.get<any[]>(vehiclesUrl),
       appointments: this.http.get<any[]>(appointmentsUrl)
     }).pipe(
-      map(({ customers, vehicles, appointments }) => {
-        return customers.map(customer => {
-          /** Filter vehicles associated with the customer ID */
-          const customerVehicles = vehicles.filter(v => v.customer_id === customer.id);
-          
-          let vehiclesSummary = 'Sin vehículos registrados';
-          if (customerVehicles.length > 0) {
-            vehiclesSummary = customerVehicles
-              .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
-              .join(', ');
-          } else if (customer.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
-            /** Family relationship for Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles) */
-            vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
-          }
-
-          /** Filter appointments associated with the customer ID */
-          const customerAppointments = appointments.filter(a => a.customer_id === customer.id);
-          const servicesCount = customerAppointments.length;
-
-          /** Find the latest appointment date */
-          let lastVisitDate = 'Sin visitas registradas';
-          if (customerAppointments.length > 0) {
-            const sorted = [...customerAppointments].sort(
-              (a, b) => new Date(b.appointment_date).getTime() - new Date(a.appointment_date).getTime()
-            );
-            lastVisitDate = new Date(sorted[0].appointment_date).toISOString().split('T')[0];
-          }
-
-          return new Customer(
-            customer.id,
-            customer.workshopId,
-            customer.documentNumber,
-            customer.documentType,
-            customer.fullName,
-            customer.email,
-            customer.phone,
-            servicesCount,
-            vehiclesSummary,
-            lastVisitDate,
-            customer.version
-          );
-        });
-      })
+      map(({ customers, vehicles, appointments }) => 
+        this.aggregateCustomerData(customers, vehicles, appointments)
+      )
     );
   }
 
@@ -119,46 +79,67 @@ export class CustomersApiEndpoint
       vehicles: this.http.get<any[]>(vehiclesUrl),
       appointments: this.http.get<any[]>(appointmentsUrl)
     }).pipe(
-      map(({ customers, vehicles, appointments }) => {
-        return customers.map(customer => {
-          const customerVehicles = vehicles.filter(v => v.customer_id === customer.id);
-          
-          let vehiclesSummary = 'Sin vehículos registrados';
-          if (customerVehicles.length > 0) {
-            vehiclesSummary = customerVehicles
-              .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
-              .join(', ');
-          } else if (customer.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
-            vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
-          }
-
-          const customerAppointments = appointments.filter(a => a.customer_id === customer.id);
-          const servicesCount = customerAppointments.length;
-
-          let lastVisitDate = 'Sin visitas registradas';
-          if (customerAppointments.length > 0) {
-            const sorted = [...customerAppointments].sort(
-              (a, b) => new Date(b.appointment_date).getTime() - new Date(a.appointment_date).getTime()
-            );
-            lastVisitDate = new Date(sorted[0].appointment_date).toISOString().split('T')[0];
-          }
-
-          return new Customer(
-            customer.id,
-            customer.workshopId,
-            customer.documentNumber,
-            customer.documentType,
-            customer.fullName,
-            customer.email,
-            customer.phone,
-            servicesCount,
-            vehiclesSummary,
-            lastVisitDate,
-            customer.version
-          );
-        });
-      })
+      map(({ customers, vehicles, appointments }) => 
+        this.aggregateCustomerData(customers, vehicles, appointments)
+      )
     );
+  }
+
+  /**
+   * Relationally aggregates raw customer records with vehicles and appointments.
+   * Prevents duplication between getAll() and search() queries.
+   *
+   * @param customers - The raw customer responses.
+   * @param vehicles - The complete vehicle collection list.
+   * @param appointments - The complete appointment list.
+   * @returns Mapped customer domain entities.
+   */
+  private aggregateCustomerData(
+    customers: Customer[],
+    vehicles: any[],
+    appointments: any[]
+  ): Customer[] {
+    return customers.map(customer => {
+      /** Filter vehicles associated with the customer ID */
+      const customerVehicles = vehicles.filter(v => v.customer_id === customer.id);
+      
+      let vehiclesSummary = 'Sin vehículos registrados';
+      if (customerVehicles.length > 0) {
+        vehiclesSummary = customerVehicles
+          .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
+          .join(', ');
+      } else if (customer.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
+        /** Family relationship for Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles) */
+        vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
+      }
+
+      /** Filter appointments associated with the customer ID */
+      const customerAppointments = appointments.filter(a => a.customer_id === customer.id);
+      const servicesCount = customerAppointments.length;
+
+      /** Find the latest appointment date */
+      let lastVisitDate = 'Sin visitas registradas';
+      if (customerAppointments.length > 0) {
+        const sorted = [...customerAppointments].sort(
+          (a, b) => new Date(b.appointment_date).getTime() - new Date(a.appointment_date).getTime()
+        );
+        lastVisitDate = new Date(sorted[0].appointment_date).toISOString().split('T')[0];
+      }
+
+      return new Customer(
+        customer.id,
+        customer.workshopId,
+        customer.documentNumber,
+        customer.documentType,
+        customer.fullName,
+        customer.email,
+        customer.phone,
+        servicesCount,
+        vehiclesSummary,
+        lastVisitDate,
+        customer.version
+      );
+    });
   }
 
   /**
