@@ -2,14 +2,14 @@
   <!-- Header Area -->
   <header class="customers-header">
     <div class="header-text">
-      <h1>Clientes</h1>
-      <p class="subtitle" *ngIf="!isLoading()">{{ totalCustomersCount() }} clientes registrados</p>
-      <p class="subtitle" *ngIf="isLoading()">Cargando clientes registrados...</p>
+      <h1>{{ 'customers.title' | translate }}</h1>
+      <p class="subtitle" *ngIf="!isLoading()">{{ 'customers.subtitle-count' | translate: { count: totalCustomersCount() } }}</p>
+      <p class="subtitle" *ngIf="isLoading()">{{ 'customers.subtitle-loading' | translate }}</p>
     </div>
     
     <!-- New Customer Primary Button -->
     <button class="btn-new-customer" (click)="openModal()">
-      <span class="btn-icon">+</span> Nuevo cliente
+      <span class="btn-icon">+</span> {{ 'customers.new-customer' | translate }}
     </button>
   </header>
 
@@ -20,7 +20,7 @@
       <input 
         type="text" 
         (input)="onSearchInput($event)" 
-        placeholder="Buscar por nombre, email o teléfono..." 
+        placeholder="{{ 'customers.search-placeholder' | translate }}" 
         class="custom-search-input"
       />
     </div>
@@ -29,7 +29,7 @@
   <!-- Loading State -->
   <div class="loading-wrapper" *ngIf="isLoading()">
     <div class="loader-spinner"></div>
-    <p>Cargando registros...</p>
+    <p>{{ 'customers.loading-records' | translate }}</p>
   </div>
 
   <!-- Main Grid Section -->
@@ -43,7 +43,7 @@
           </div>
           <div class="identity-info">
             <h2 class="customer-name">{{ customer.fullName }}</h2>
-            <span class="services-sub">{{ customer.servicesCount }} servicios realizados</span>
+            <span class="services-sub">{{ 'customers.services-performed' | translate: { count: customer.servicesCount } }}</span>
           </div>
         </div>
 
@@ -67,7 +67,7 @@
 
         <!-- Bottom Row: Separator & Last Visit -->
         <div class="card-footer">
-          <span class="visit-lbl">Última visita</span>
+          <span class="visit-lbl">{{ 'customers.last-visit' | translate }}</span>
           <span class="visit-val">{{ customer.lastVisitDate }}</span>
         </div>
       </mat-card-content>
@@ -79,8 +79,8 @@
     <div class="empty-illustration">
       <ng-icon name="matPersonSearch" class="empty-icon"></ng-icon>
     </div>
-    <h2>No se encontraron clientes</h2>
-    <p>Intenta realizar otra búsqueda con un término diferente.</p>
+    <h2>{{ 'customers.empty.title' | translate }}</h2>
+    <p>{{ 'customers.empty.description' | translate }}</p>
   </section>
 
   <!-- Smart Customer Registration Modal -->
@@ -89,15 +89,15 @@
     <!-- Title Area (Dynamic steps) -->
     <h2 modal-title>
       @if (modalStep() === 'SEARCH') {
-        Comprobar pre-registro
+        {{ 'customers.modal.title.search' | translate }}
       } @else if (modalStep() === 'EXISTING') {
-        Cliente ya registrado
+        {{ 'customers.modal.title.existing' | translate }}
       } @else if (modalStep() === 'PRE_REGISTERED') {
-        ¡Pre-registro online encontrado!
+        {{ 'customers.modal.title.pre-registered' | translate }}
       } @else if (modalStep() === 'NOT_FOUND') {
-        Registro no encontrado
+        {{ 'customers.modal.title.not-found' | translate }}
       } @else if (modalStep() === 'MANUAL_BYPASS') {
-        Registro manual (Contingencia)
+        {{ 'customers.modal.title.manual-bypass' | translate }}
       }
     </h2>
     
@@ -106,11 +106,11 @@
       
       <!-- STEP 1: Search Form -->
       <div *ngIf="modalStep() === 'SEARCH'" [formGroup]="customerForm" class="smart-modal-search animate-fade">
-        <p class="search-helper-text">Ingrese las credenciales del conductor (por documento o número de teléfono) para verificar coincidencias pasivas o citas agendadas por la web.</p>
+        <p class="search-helper-text">{{ 'customers.modal.search.description' | translate }}</p>
         
         <div class="form-row-grid">
           <div class="form-field-group">
-            <label for="documentType" class="field-label">Tipo de documento</label>
+            <label for="documentType" class="field-label">{{ 'customers.modal.form.document-type' | translate }}</label>
             <div class="input-icon-wrapper">
               <select id="documentType" formControlName="documentType" class="custom-select">
                 <option value="DNI">DNI</option>
@@ -122,7 +122,7 @@
           </div>
 
           <div class="form-field-group">
-            <label for="documentNumber" class="field-label">Número de documento</label>
+            <label for="documentNumber" class="field-label">{{ 'customers.modal.form.document-number' | translate }}</label>
             <div class="input-icon-wrapper">
               <ng-icon name="matFingerprint" class="field-icon"></ng-icon>
               <input 
@@ -136,17 +136,17 @@
               />
             </div>
             <span class="error-msg" *ngIf="customerForm.get('documentNumber')?.touched && customerForm.get('documentNumber')?.invalid">
-              Formato de número inválido para el tipo seleccionado.
+              {{ 'customers.modal.form.document-error' | translate }}
             </span>
           </div>
         </div>
 
         <div class="search-or-separator">
-          <span class="separator-text">O alternativamente</span>
+          <span class="separator-text">{{ 'customers.modal.search.or-alternatively' | translate }}</span>
         </div>
 
         <div class="form-field-group" style="margin-top: 1rem;">
-          <label for="searchPhone" class="field-label">Teléfono celular</label>
+          <label for="searchPhone" class="field-label">{{ 'customers.modal.form.phone' | translate }}</label>
           <div class="input-icon-wrapper">
             <ng-icon name="matPhoneAndroid" class="field-icon"></ng-icon>
             <input 
@@ -160,7 +160,7 @@
             />
           </div>
           <span class="error-msg" *ngIf="customerForm.get('phone')?.touched && customerForm.get('phone')?.invalid">
-            Debe tener exactamente 9 dígitos de celular.
+            {{ 'customers.modal.form.phone-error' | translate }}
           </span>
         </div>
       </div>
@@ -169,9 +169,9 @@
       <div *ngIf="modalStep() === 'EXISTING' && existingCustomerData()" class="smart-modal-existing animate-fade">
         <div class="status-badge warning">
           <ng-icon name="matWarning" class="status-badge-icon"></ng-icon>
-          <span>Cliente Registrado en el Taller</span>
+          <span>{{ 'customers.modal.existing.badge' | translate }}</span>
         </div>
-        <p class="helper-text">Este número de documento ya está asociado a una cuenta comercial inmutable:</p>
+        <p class="helper-text">{{ 'customers.modal.existing.description' | translate }}</p>
         
         <div class="summary-card">
           <div class="summary-avatar">
@@ -192,16 +192,16 @@
             </p>
           </div>
         </div>
-        <p class="confirmation-text">No es necesario duplicar el perfil. El sistema asocia automáticamente todos sus autos históricos.</p>
+        <p class="confirmation-text">{{ 'customers.modal.existing.footer' | translate }}</p>
       </div>
 
       <!-- STEP 3: Pre-registration Found (Convert appointment data) -->
       <div *ngIf="modalStep() === 'PRE_REGISTERED' && preRegisteredData()" class="smart-modal-pre-registered animate-fade">
         <div class="status-badge success">
           <ng-icon name="matCheckCircle" class="status-badge-icon"></ng-icon>
-          <span>Pre-registro Online Listo</span>
+          <span>{{ 'customers.modal.pre-registered.badge' | translate }}</span>
         </div>
-        <p class="helper-text">Se encontraron datos válidos cargados por el cliente en la landing page del taller:</p>
+        <p class="helper-text">{{ 'customers.modal.pre-registered.description' | translate }}</p>
         
         <div class="summary-card">
           <div class="summary-avatar pre">
@@ -209,7 +209,7 @@
           </div>
           <div class="summary-details">
             <h3 class="summary-title">{{ preRegisteredData().fullName }}</h3>
-            <p class="summary-subtitle">Documento: {{ customerForm.get('documentNumber')?.value }}</p>
+            <p class="summary-subtitle">{{ 'customers.modal.pre-registered.document-label' | translate }}: {{ customerForm.get('documentNumber')?.value }}</p>
             <p class="summary-info-item">
               <ng-icon name="matMailOutline" class="info-icon"></ng-icon>
               <span>{{ preRegisteredData().email }}</span>
@@ -220,24 +220,24 @@
             </p>
             <div class="vehicle-tag" *ngIf="preRegisteredData().vehiclePlate">
               <ng-icon name="matDirectionsCar" class="info-icon"></ng-icon>
-              <span>Vehículo: {{ preRegisteredData().vehicleBrandModel }} ({{ preRegisteredData().vehiclePlate }})</span>
+              <span>{{ 'customers.modal.pre-registered.vehicle' | translate: { vehicle: preRegisteredData().vehicleBrandModel, plate: preRegisteredData().vehiclePlate } }}</span>
             </div>
           </div>
         </div>
-        <p class="confirmation-text">Al presionar "Oficializar", se creará el perfil comercial definitivo en base a sus datos verificados.</p>
+        <p class="confirmation-text">{{ 'customers.modal.pre-registered.footer' | translate }}</p>
       </div>
 
       <!-- STEP 4: No Records Found (Trigger self-registration Link via WhatsApp) -->
       <div *ngIf="modalStep() === 'NOT_FOUND'" class="smart-modal-not-found animate-fade" [formGroup]="customerForm">
         <div class="status-badge info">
           <ng-icon name="matSearch" class="status-badge-icon"></ng-icon>
-          <span>Sin Registros Previos</span>
+          <span>{{ 'customers.modal.not-found.badge' | translate }}</span>
         </div>
-        <p class="helper-text">No se encontró ningún pre-registro ni cliente activo para este número de documento.</p>
+        <p class="helper-text">{{ 'customers.modal.not-found.description' | translate }}</p>
         
         <div class="action-card">
-          <h4>📲 Auto-registro Móvil (Fricción Cero)</h4>
-          <p class="card-desc">Para evitar errores, ingrese el celular del conductor y le enviaremos un enlace interactivo para que llene sus datos desde su teléfono:</p>
+          <h4>{{ 'customers.modal.not-found.card-title' | translate }}</h4>
+          <p class="card-desc">{{ 'customers.modal.not-found.card-description' | translate }}</p>
           
           <div class="form-field-group">
             <div class="input-icon-wrapper">
@@ -252,13 +252,13 @@
               />
             </div>
             <span class="error-msg" *ngIf="customerForm.get('phone')?.touched && customerForm.get('phone')?.invalid">
-              Debe tener exactamente 9 dígitos.
+              {{ 'customers.modal.not-found.phone-error' | translate }}
             </span>
           </div>
 
           <div class="link-sent-alert animate-fade" *ngIf="smsSent()">
             <ng-icon name="matCheckCircle" class="alert-icon"></ng-icon>
-            <span>¡Enlace enviado con éxito al WhatsApp del cliente!</span>
+            <span>{{ 'customers.modal.not-found.sms-success' | translate }}</span>
           </div>
         </div>
       </div>
@@ -266,13 +266,13 @@
       <!-- STEP 5: Manual Bypass (Backup Contingency Form) -->
       <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" *ngIf="modalStep() === 'MANUAL_BYPASS'" class="create-customer-form animate-fade">
         <div class="manual-bypass-header">
-          <span class="warning-text">⚠️ Modo Contingencia Manual Activado</span>
+          <span class="warning-text">{{ 'customers.modal.manual.badge' | translate }}</span>
         </div>
         
         <!-- Document Type & Number Row -->
         <div class="form-row-grid" style="margin-bottom: 0.75rem;">
           <div class="form-field-group">
-            <label for="manualDocumentType" class="field-label">Tipo de documento</label>
+            <label for="manualDocumentType" class="field-label">{{ 'customers.modal.form.document-type' | translate }}</label>
             <div class="input-icon-wrapper">
               <select id="manualDocumentType" formControlName="documentType" class="custom-select">
                 <option value="DNI">DNI</option>
@@ -284,7 +284,7 @@
           </div>
 
           <div class="form-field-group">
-            <label for="manualDocumentNumber" class="field-label">Número de documento</label>
+            <label for="manualDocumentNumber" class="field-label">{{ 'customers.modal.form.document-number' | translate }}</label>
             <div class="input-icon-wrapper">
               <ng-icon name="matFingerprint" class="field-icon"></ng-icon>
               <input 
@@ -297,14 +297,14 @@
               />
             </div>
             <span class="error-msg" *ngIf="customerForm.get('documentNumber')?.touched && customerForm.get('documentNumber')?.invalid">
-              Formato de número inválido para el tipo seleccionado.
+              {{ 'customers.modal.form.document-error' | translate }}
             </span>
           </div>
         </div>
 
         <!-- Full Name Field -->
         <div class="form-field-group">
-          <label for="fullName" class="field-label">Nombre completo / Razón social</label>
+          <label for="fullName" class="field-label">{{ 'customers.modal.form.full-name' | translate }}</label>
           <div class="input-icon-wrapper">
             <ng-icon name="matPersonSearch" class="field-icon"></ng-icon>
             <input 
@@ -318,9 +318,9 @@
           </div>
           <span class="error-msg" *ngIf="customerForm.get('fullName')?.touched && customerForm.get('fullName')?.invalid">
             @if (customerForm.get('fullName')?.errors?.['required']) {
-              El nombre es obligatorio.
+              {{ 'customers.modal.form.name-required' | translate }}
             } @else if (customerForm.get('fullName')?.errors?.['minlength']) {
-              Debe tener un mínimo de 3 caracteres.
+              {{ 'customers.modal.form.name-minlength' | translate }}
             }
           </span>
         </div>
@@ -328,7 +328,7 @@
         <!-- Contact Info Grid (Email and Phone) -->
         <div class="form-row-grid">
           <div class="form-field-group">
-            <label for="email" class="field-label">Correo electrónico</label>
+            <label for="email" class="field-label">{{ 'customers.modal.form.email' | translate }}</label>
             <div class="input-icon-wrapper">
               <ng-icon name="matMailOutline" class="field-icon"></ng-icon>
               <input 
@@ -342,15 +342,15 @@
             </div>
             <span class="error-msg" *ngIf="customerForm.get('email')?.touched && customerForm.get('email')?.invalid">
               @if (customerForm.get('email')?.errors?.['required']) {
-                Correo electrónico obligatorio.
+                {{ 'customers.modal.form.email-required' | translate }}
               } @else if (customerForm.get('email')?.errors?.['email']) {
-                Formato de correo inválido (ej. usuario@dominio.com).
+                {{ 'customers.modal.form.email-invalid' | translate }}
               }
             </span>
           </div>
 
           <div class="form-field-group">
-            <label for="phone" class="field-label">Teléfono celular</label>
+            <label for="phone" class="field-label">{{ 'customers.modal.form.phone' | translate }}</label>
             <div class="input-icon-wrapper">
               <ng-icon name="matPhoneAndroid" class="field-icon"></ng-icon>
               <input 
@@ -364,9 +364,9 @@
             </div>
             <span class="error-msg" *ngIf="customerForm.get('phone')?.touched && customerForm.get('phone')?.invalid">
               @if (customerForm.get('phone')?.errors?.['required']) {
-                El número de celular es obligatorio.
+                {{ 'customers.modal.form.phone-required' | translate }}
               } @else if (customerForm.get('phone')?.errors?.['pattern']) {
-                Debe tener exactamente 9 dígitos.
+                {{ 'customers.modal.form.phone-error' | translate }}
               }
             </span>
           </div>
@@ -380,54 +380,54 @@
       <!-- SEARCH STEP -->
       <ng-container *ngIf="modalStep() === 'SEARCH'">
         <button type="button" class="btn-cancel" (click)="closeModal()">
-          Cancelar
+          {{ 'customers.modal.actions.cancel' | translate }}
         </button>
         <button type="button" class="btn-save" (click)="onSearchRecord()" [disabled]="isSearchingRecord()">
           <span *ngIf="isSearchingRecord()" class="btn-save-spinner"></span>
-          {{ isSearchingRecord() ? 'Buscando...' : 'Buscar registro' }}
+          {{ isSearchingRecord() ? ('customers.modal.actions.searching' | translate) : ('customers.modal.actions.search' | translate) }}
         </button>
       </ng-container>
 
       <!-- EXISTING STEP -->
       <ng-container *ngIf="modalStep() === 'EXISTING'">
         <button type="button" class="btn-save" (click)="closeModal()">
-          Cerrar y Ver Perfil
+          {{ 'customers.modal.actions.close' | translate }}
         </button>
       </ng-container>
 
       <!-- PRE_REGISTERED STEP -->
       <ng-container *ngIf="modalStep() === 'PRE_REGISTERED'">
         <button type="button" class="btn-cancel" (click)="openModal()" [disabled]="isSaving()">
-          Atrás
+          {{ 'customers.modal.actions.back' | translate }}
         </button>
         <button type="button" class="btn-save" (click)="onSubmit()" [disabled]="isSaving()">
           <span *ngIf="isSaving()" class="btn-save-spinner"></span>
-          {{ isSaving() ? 'Oficializando...' : 'Oficializar Cliente' }}
+          {{ isSaving() ? ('customers.modal.actions.officializing' | translate) : ('customers.modal.actions.officialize' | translate) }}
         </button>
       </ng-container>
 
       <!-- NOT_FOUND STEP -->
       <ng-container *ngIf="modalStep() === 'NOT_FOUND'">
         <button type="button" class="btn-cancel" (click)="enableManualBypass()" *ngIf="!smsSent()">
-          Registro manual (Bypass)
+          {{ 'customers.modal.actions.manual-bypass' | translate }}
         </button>
         <button type="button" class="btn-save" (click)="sendRegisterLink()" [disabled]="customerForm.get('phone')?.invalid || isSaving()" *ngIf="!smsSent()">
           <span *ngIf="isSaving()" class="btn-save-spinner"></span>
-          {{ isSaving() ? 'Enviando...' : 'Enviar link' }}
+          {{ isSaving() ? ('customers.modal.actions.sending' | translate) : ('customers.modal.actions.send-link' | translate) }}
         </button>
         <button type="button" class="btn-save" (click)="closeModal()" *ngIf="smsSent()">
-          Terminar
+          {{ 'customers.modal.actions.finish' | translate }}
         </button>
       </ng-container>
 
       <!-- MANUAL_BYPASS STEP -->
       <ng-container *ngIf="modalStep() === 'MANUAL_BYPASS'">
         <button type="button" class="btn-cancel" (click)="openModal()" [disabled]="isSaving()">
-          Atrás
+          {{ 'customers.modal.actions.back' | translate }}
         </button>
         <button type="button" class="btn-save" (click)="onSubmit()" [disabled]="customerForm.invalid || isSaving()">
           <span *ngIf="isSaving()" class="btn-save-spinner"></span>
-          {{ isSaving() ? 'Guardando...' : 'Registrar cliente' }}
+          {{ isSaving() ? ('customers.modal.actions.saving' | translate) : ('customers.modal.actions.register' | translate) }}
         </button>
       </ng-container>
     </div>

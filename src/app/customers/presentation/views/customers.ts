@@ -20,6 +20,7 @@ import {
 } from '@ng-icons/material-icons/baseline';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { CustomersStore } from '../../application/customers.store';
 import { Customer } from '../../domain/models/customer.entity';
 import { Modal } from '../../../shared/presentation/modal/modal';
@@ -41,7 +42,8 @@ import { Modal } from '../../../shared/presentation/modal/modal';
     MatFormFieldModule,
     MatInputModule,
     NgIcon,
-    Modal
+    Modal,
+    TranslateModule
   ],
   providers: [
     provideIcons({ 
