@@ -21,4 +21,12 @@ export abstract class CustomerRepository {
    * @returns An {@link Observable} emitting matching {@link Customer} entities.
    */
   abstract search(query: string): Observable<Customer[]>;
+
+  /**
+   * Persists a new customer in the storage layer.
+   * 
+   * @param customer - The customer instance to create.
+   * @returns An {@link Observable} emitting the successfully created {@link Customer} entity.
+   */
+  abstract create(customer: Customer): Observable<Customer>;
 }
