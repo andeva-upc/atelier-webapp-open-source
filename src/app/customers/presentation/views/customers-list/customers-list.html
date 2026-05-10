@@ -1,0 +1,170 @@
+<div class="customers-container">
+  <!-- Header Area -->
+  <header class="customers-header">
+    <div class="header-text">
+      <h1>{{ 'customers.title' | translate }}</h1>
+      <p class="subtitle" *ngIf="!isLoading()">{{ 'customers.subtitle-count' | translate: { count: totalCustomersCount() } }}</p>
+      <p class="subtitle" *ngIf="isLoading()">{{ 'customers.subtitle-loading' | translate }}</p>
+    </div>
+    
+    <!-- New Customer Primary Button -->
+    <button class="btn-new-customer" (click)="openModal()">
+      <span class="btn-icon">+</span> {{ 'customers.new-customer' | translate }}
+    </button>
+  </header>
+
+  <!-- Filter & Search Section -->
+  <section class="filter-section">
+    <div class="search-bar-wrapper">
+      <ng-icon name="matSearch" class="search-icon"></ng-icon>
+      <input 
+        type="text" 
+        (input)="onSearchInput($event)" 
+        placeholder="{{ 'customers.search-placeholder' | translate }}" 
+        class="custom-search-input"
+      />
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div class="loading-wrapper" *ngIf="isLoading()">
+    <div class="loader-spinner"></div>
+    <p>{{ 'customers.loading-records' | translate }}</p>
+  </div>
+
+  <!-- Main Grid Section -->
+  <section class="customers-grid" *ngIf="!isLoading() && customers().length > 0">
+    <mat-card class="customer-card" *ngFor="let customer of customers()">
+      <mat-card-content class="card-content">
+        <!-- Top Row: Avatar & Name + Services -->
+        <div class="avatar-row">
+          <div class="avatar-circle">
+            {{ customer.getAvatarInitial() }}
+          </div>
+          <div class="identity-info">
+            <h2 class="customer-name">{{ customer.fullName }}</h2>
+            <span class="services-sub">{{ 'customers.services-performed' | translate: { count: customer.servicesCount } }}</span>
+          </div>
+        </div>
+
+        <!-- Middle Row: Contact & Vehicles Info -->
+        <div class="info-section">
+          <div class="info-item">
+            <ng-icon name="matMailOutline" class="info-icon"></ng-icon>
+            <span class="info-text">{{ customer.email }}</span>
+          </div>
+          <div class="info-item">
+            <ng-icon name="matPhoneAndroid" class="info-icon"></ng-icon>
+            <span class="info-text">{{ customer.phone }}</span>
+          </div>
+          <div class="info-item">
+            <ng-icon name="matDirectionsCar" class="info-icon"></ng-icon>
+            <span class="info-text" [class.no-vehicles]="customer.vehiclesSummary === 'Sin vehículos registrados'">
+              {{ customer.vehiclesSummary }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Separator & Last Visit -->
+        <div class="card-footer">
+          <span class="visit-lbl">{{ 'customers.last-visit' | translate }}</span>
+          <span class="visit-val">{{ customer.lastVisitDate }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <!-- Empty State -->
+  <section class="empty-state" *ngIf="!isLoading() && customers().length === 0">
+    <div class="empty-illustration">
+      <ng-icon name="matPersonSearch" class="empty-icon"></ng-icon>
+    </div>
+    <h2>{{ 'customers.empty.title' | translate }}</h2>
+    <p>{{ 'customers.empty.description' | translate }}</p>
+  </section>
+
+  <!-- Smart Customer Registration Modal -->
+  <app-modal [isOpen]="isModalOpen()" (close)="closeModal()">
+    
+    <!-- Title Area (Dynamic steps accessed via #form reference) -->
+    <h2 modal-title>
+      @if (form.modalStep() === 'SEARCH') {
+        {{ 'customers.modal.title.search' | translate }}
+      } @else if (form.modalStep() === 'EXISTING') {
+        {{ 'customers.modal.title.existing' | translate }}
+      } @else if (form.modalStep() === 'PRE_REGISTERED') {
+        {{ 'customers.modal.title.pre-registered' | translate }}
+      } @else if (form.modalStep() === 'NOT_FOUND') {
+        {{ 'customers.modal.title.not-found' | translate }}
+      } @else if (form.modalStep() === 'MANUAL_BYPASS') {
+        {{ 'customers.modal.title.manual-bypass' | translate }}
+      }
+    </h2>
+    
+    <!-- Body Content: Modular Form Component -->
+    <app-customer-form 
+      modal-body 
+      #form 
+      (saved)="onCustomerSaved()" 
+      (cancel)="closeModal()"
+    ></app-customer-form>
+
+    <!-- Modal Form Actions Row (exposing the template ref #form) -->
+    <div modal-actions class="modal-form-actions">
+      
+      <!-- SEARCH STEP -->
+      <ng-container *ngIf="form.modalStep() === 'SEARCH'">
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          {{ 'customers.modal.actions.cancel' | translate }}
+        </button>
+        <button type="button" class="btn-save" (click)="form.onSearchRecord()" [disabled]="!form.isSearchValid() || form.isSearchingRecord()">
+          <span *ngIf="form.isSearchingRecord()" class="btn-save-spinner"></span>
+          {{ form.isSearchingRecord() ? ('customers.modal.actions.searching' | translate) : ('customers.modal.actions.search' | translate) }}
+        </button>
+      </ng-container>
+
+      <!-- EXISTING STEP -->
+      <ng-container *ngIf="form.modalStep() === 'EXISTING'">
+        <button type="button" class="btn-save" (click)="closeModal()">
+          {{ 'customers.modal.actions.close' | translate }}
+        </button>
+      </ng-container>
+
+      <!-- PRE_REGISTERED STEP -->
+      <ng-container *ngIf="form.modalStep() === 'PRE_REGISTERED'">
+        <button type="button" class="btn-cancel" (click)="form.resetForm()" [disabled]="form.isSaving()">
+          {{ 'customers.modal.actions.back' | translate }}
+        </button>
+        <button type="button" class="btn-save" (click)="form.onSubmit()" [disabled]="form.isSaving()">
+          <span *ngIf="form.isSaving()" class="btn-save-spinner"></span>
+          {{ form.isSaving() ? ('customers.modal.actions.officializing' | translate) : ('customers.modal.actions.officialize' | translate) }}
+        </button>
+      </ng-container>
+
+      <!-- NOT_FOUND STEP -->
+      <ng-container *ngIf="form.modalStep() === 'NOT_FOUND'">
+        <button type="button" class="btn-cancel" (click)="form.enableManualBypass()" *ngIf="!form.smsSent()">
+          {{ 'customers.modal.actions.manual-bypass' | translate }}
+        </button>
+        <button type="button" class="btn-save" (click)="form.sendRegisterLink()" [disabled]="form.customerForm.get('phone')?.invalid || form.isSaving()" *ngIf="!form.smsSent()">
+          <span *ngIf="form.isSaving()" class="btn-save-spinner"></span>
+          {{ form.isSaving() ? ('customers.modal.actions.sending' | translate) : ('customers.modal.actions.send-link' | translate) }}
+        </button>
+        <button type="button" class="btn-save" (click)="closeModal()" *ngIf="form.smsSent()">
+          {{ 'customers.modal.actions.finish' | translate }}
+        </button>
+      </ng-container>
+
+      <!-- MANUAL_BYPASS STEP -->
+      <ng-container *ngIf="form.modalStep() === 'MANUAL_BYPASS'">
+        <button type="button" class="btn-cancel" (click)="form.resetForm()" [disabled]="form.isSaving()">
+          {{ 'customers.modal.actions.back' | translate }}
+        </button>
+        <button type="button" class="btn-save" (click)="form.onSubmit()" [disabled]="form.customerForm.invalid || form.isSaving()">
+          <span *ngIf="form.isSaving()" class="btn-save-spinner"></span>
+          {{ form.isSaving() ? ('customers.modal.actions.saving' | translate) : ('customers.modal.actions.register' | translate) }}
+        </button>
+      </ng-container>
+    </div>
+  </app-modal>
+</div>

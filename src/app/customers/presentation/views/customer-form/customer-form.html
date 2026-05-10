@@ -1,0 +1,271 @@
+<div class="smart-modal-body" [formGroup]="customerForm">
+  
+  <!-- STEP 1: Search Form -->
+  <div *ngIf="modalStep() === 'SEARCH'" class="smart-modal-search animate-fade">
+    <p class="search-helper-text">{{ 'customers.modal.search.description' | translate }}</p>
+    
+    <div class="form-row-grid">
+      <div class="form-field-group">
+        <label for="documentType" class="field-label">{{ 'customers.modal.form.document-type' | translate }}</label>
+        <div class="input-icon-wrapper">
+          <select id="documentType" formControlName="documentType" class="custom-select">
+            <option value="DNI">DNI</option>
+            <option value="RUC">RUC</option>
+            <option value="CE">C.E.</option>
+            <option value="PASSPORT">Passport</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-field-group">
+        <label for="documentNumber" class="field-label">{{ 'customers.modal.form.document-number' | translate }}</label>
+        <div class="input-icon-wrapper">
+          <ng-icon name="matFingerprint" class="field-icon"></ng-icon>
+          <input 
+            id="documentNumber" 
+            type="text" 
+            formControlName="documentNumber" 
+            placeholder="Ej. 77889900" 
+            class="custom-form-input icon-indent"
+            (keydown.enter)="onSearchRecord()"
+            autocomplete="off"
+          />
+        </div>
+        <span class="error-msg" *ngIf="customerForm.get('documentNumber')?.touched && customerForm.get('documentNumber')?.invalid">
+          {{ 'customers.modal.form.document-error' | translate }}
+        </span>
+      </div>
+    </div>
+
+    <div class="search-or-separator">
+      <span class="separator-text">{{ 'customers.modal.search.or-alternatively' | translate }}</span>
+    </div>
+
+    <div class="form-field-group" style="margin-top: 1rem;">
+      <label for="searchPhone" class="field-label">{{ 'customers.modal.form.phone' | translate }}</label>
+      <div class="input-icon-wrapper">
+        <ng-icon name="matPhoneAndroid" class="field-icon"></ng-icon>
+        <input 
+          id="searchPhone" 
+          type="text" 
+          formControlName="phone" 
+          placeholder="Ej. 999888777" 
+          class="custom-form-input icon-indent"
+          (keydown.enter)="onSearchRecord()"
+          autocomplete="off"
+        />
+      </div>
+      <span class="error-msg" *ngIf="customerForm.get('phone')?.touched && customerForm.get('phone')?.invalid">
+        {{ 'customers.modal.form.phone-error' | translate }}
+      </span>
+    </div>
+  </div>
+
+  <!-- STEP 2: Existing Customer (Duplicate profiles prevention) -->
+  <div *ngIf="modalStep() === 'EXISTING' && existingCustomerData()" class="smart-modal-existing animate-fade">
+    <div class="status-badge warning">
+      <ng-icon name="matWarning" class="status-badge-icon"></ng-icon>
+      <span>{{ 'customers.modal.existing.badge' | translate }}</span>
+    </div>
+    <p class="helper-text">{{ 'customers.modal.existing.description' | translate }}</p>
+    
+    <div class="summary-card">
+      <div class="summary-avatar">
+        {{ existingCustomerData().fullName.charAt(0).toUpperCase() }}
+      </div>
+      <div class="summary-details">
+        <h3 class="summary-title">{{ existingCustomerData().fullName }}</h3>
+        <p class="summary-subtitle">
+          {{ existingCustomerData().documentType }}: {{ existingCustomerData().documentNumber }}
+        </p>
+        <p class="summary-info-item">
+          <ng-icon name="matMailOutline" class="info-icon"></ng-icon>
+          <span>{{ existingCustomerData().email }}</span>
+        </p>
+        <p class="summary-info-item">
+          <ng-icon name="matPhoneAndroid" class="info-icon"></ng-icon>
+          <span>{{ existingCustomerData().phone }}</span>
+        </p>
+      </div>
+    </div>
+    <p class="confirmation-text">{{ 'customers.modal.existing.footer' | translate }}</p>
+  </div>
+
+  <!-- STEP 3: Pre-registration Found (Convert appointment data) -->
+  <div *ngIf="modalStep() === 'PRE_REGISTERED' && preRegisteredData()" class="smart-modal-pre-registered animate-fade">
+    <div class="status-badge success">
+      <ng-icon name="matCheckCircle" class="status-badge-icon"></ng-icon>
+      <span>{{ 'customers.modal.pre-registered.badge' | translate }}</span>
+    </div>
+    <p class="helper-text">{{ 'customers.modal.pre-registered.description' | translate }}</p>
+    
+    <div class="summary-card">
+      <div class="summary-avatar pre">
+        {{ preRegisteredData().fullName.charAt(0).toUpperCase() }}
+      </div>
+      <div class="summary-details">
+        <h3 class="summary-title">{{ preRegisteredData().fullName }}</h3>
+        <p class="summary-subtitle">{{ 'customers.modal.pre-registered.document-label' | translate }}: {{ customerForm.get('documentNumber')?.value }}</p>
+        <p class="summary-info-item">
+          <ng-icon name="matMailOutline" class="info-icon"></ng-icon>
+          <span>{{ preRegisteredData().email }}</span>
+        </p>
+        <p class="summary-info-item">
+          <ng-icon name="matPhoneAndroid" class="info-icon"></ng-icon>
+          <span>{{ preRegisteredData().phone }}</span>
+        </p>
+        <div class="vehicle-tag" *ngIf="preRegisteredData().vehiclePlate">
+          <ng-icon name="matDirectionsCar" class="info-icon"></ng-icon>
+          <span>{{ 'customers.modal.pre-registered.vehicle' | translate: { vehicle: preRegisteredData().vehicleBrandModel, plate: preRegisteredData().vehiclePlate } }}</span>
+        </div>
+      </div>
+    </div>
+    <p class="confirmation-text">{{ 'customers.modal.pre-registered.footer' | translate }}</p>
+  </div>
+
+  <!-- STEP 4: No Records Found (Trigger self-registration Link via WhatsApp) -->
+  <div *ngIf="modalStep() === 'NOT_FOUND'" class="smart-modal-not-found animate-fade">
+    <div class="status-badge info">
+      <ng-icon name="matSearch" class="status-badge-icon"></ng-icon>
+      <span>{{ 'customers.modal.not-found.badge' | translate }}</span>
+    </div>
+    <p class="helper-text">{{ 'customers.modal.not-found.description' | translate }}</p>
+    
+    <div class="action-card">
+      <h4>{{ 'customers.modal.not-found.card-title' | translate }}</h4>
+      <p class="card-desc">{{ 'customers.modal.not-found.card-description' | translate }}</p>
+      
+      <div class="form-field-group">
+        <div class="input-icon-wrapper">
+          <ng-icon name="matPhoneAndroid" class="field-icon"></ng-icon>
+          <input 
+            id="phone_link" 
+            type="text" 
+            formControlName="phone" 
+            placeholder="Ej. 999888777" 
+            class="custom-form-input icon-indent"
+            autocomplete="off"
+          />
+        </div>
+        <span class="error-msg" *ngIf="customerForm.get('phone')?.touched && customerForm.get('phone')?.invalid">
+          {{ 'customers.modal.not-found.phone-error' | translate }}
+        </span>
+      </div>
+
+      <div class="link-sent-alert animate-fade" *ngIf="smsSent()">
+        <ng-icon name="matCheckCircle" class="alert-icon"></ng-icon>
+        <span>{{ 'customers.modal.not-found.sms-success' | translate }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: Manual Bypass (Backup Contingency Form) -->
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" *ngIf="modalStep() === 'MANUAL_BYPASS'" class="create-customer-form animate-fade">
+    <div class="manual-bypass-header">
+      <span class="warning-text">{{ 'customers.modal.manual.badge' | translate }}</span>
+    </div>
+    
+    <!-- Document Type & Number Row -->
+    <div class="form-row-grid" style="margin-bottom: 0.75rem;">
+      <div class="form-field-group">
+        <label for="manualDocumentType" class="field-label">{{ 'customers.modal.form.document-type' | translate }}</label>
+        <div class="input-icon-wrapper">
+          <select id="manualDocumentType" formControlName="documentType" class="custom-select">
+            <option value="DNI">DNI</option>
+            <option value="RUC">RUC</option>
+            <option value="CE">C.E.</option>
+            <option value="PASSPORT">Passport</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-field-group">
+        <label for="manualDocumentNumber" class="field-label">{{ 'customers.modal.form.document-number' | translate }}</label>
+        <div class="input-icon-wrapper">
+          <ng-icon name="matFingerprint" class="field-icon"></ng-icon>
+          <input 
+            id="manualDocumentNumber" 
+            type="text" 
+            formControlName="documentNumber" 
+            placeholder="Ej. 77889900" 
+            class="custom-form-input icon-indent"
+            autocomplete="off"
+          />
+        </div>
+        <span class="error-msg" *ngIf="customerForm.get('documentNumber')?.touched && customerForm.get('documentNumber')?.invalid">
+          {{ 'customers.modal.form.document-error' | translate }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Full Name Field -->
+    <div class="form-field-group">
+      <label for="fullName" class="field-label">{{ 'customers.modal.form.full-name' | translate }}</label>
+      <div class="input-icon-wrapper">
+        <ng-icon name="matPersonSearch" class="field-icon"></ng-icon>
+        <input 
+          id="fullName" 
+          type="text" 
+          formControlName="fullName" 
+          placeholder="Ej. Juan Pérez Celis" 
+          class="custom-form-input icon-indent"
+          autocomplete="off"
+        />
+      </div>
+      <span class="error-msg" *ngIf="customerForm.get('fullName')?.touched && customerForm.get('fullName')?.invalid">
+        @if (customerForm.get('fullName')?.errors?.['required']) {
+          {{ 'customers.modal.form.name-required' | translate }}
+        } @else if (customerForm.get('fullName')?.errors?.['minlength']) {
+          {{ 'customers.modal.form.name-minlength' | translate }}
+        }
+      </span>
+    </div>
+
+    <!-- Contact Info Grid (Email and Phone) -->
+    <div class="form-row-grid">
+      <div class="form-field-group">
+        <label for="email" class="field-label">{{ 'customers.modal.form.email' | translate }}</label>
+        <div class="input-icon-wrapper">
+          <ng-icon name="matMailOutline" class="field-icon"></ng-icon>
+          <input 
+            id="email" 
+            type="email" 
+            formControlName="email" 
+            placeholder="correo@ejemplo.com" 
+            class="custom-form-input icon-indent"
+            autocomplete="off"
+          />
+        </div>
+        <span class="error-msg" *ngIf="customerForm.get('email')?.touched && customerForm.get('email')?.invalid">
+          @if (customerForm.get('email')?.errors?.['required']) {
+            {{ 'customers.modal.form.email-required' | translate }}
+          } @else if (customerForm.get('email')?.errors?.['email']) {
+            {{ 'customers.modal.form.email-invalid' | translate }}
+          }
+        </span>
+      </div>
+
+      <div class="form-field-group">
+        <label for="phone" class="field-label">{{ 'customers.modal.form.phone' | translate }}</label>
+        <div class="input-icon-wrapper">
+          <ng-icon name="matPhoneAndroid" class="field-icon"></ng-icon>
+          <input 
+            id="phone" 
+            type="text" 
+            formControlName="phone" 
+            placeholder="999888777" 
+            class="custom-form-input icon-indent"
+            autocomplete="off"
+          />
+        </div>
+        <span class="error-msg" *ngIf="customerForm.get('phone')?.touched && customerForm.get('phone')?.invalid">
+          @if (customerForm.get('phone')?.errors?.['required']) {
+            {{ 'customers.modal.form.phone-required' | translate }}
+          } @else if (customerForm.get('phone')?.errors?.['pattern']) {
+            {{ 'customers.modal.form.phone-error' | translate }}
+          }
+        </span>
+      </div>
+    </div>
+  </form>
+</div>

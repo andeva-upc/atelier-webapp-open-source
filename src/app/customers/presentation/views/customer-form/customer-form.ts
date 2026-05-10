@@ -1,9 +1,6 @@
-import { Component, OnInit, signal, computed, inject, DestroyRef } from '@angular/core';
+import { Component, OnInit, signal, computed, inject, DestroyRef, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matMailOutline } from '@ng-icons/material-icons/outline';
 import { 
@@ -11,38 +8,31 @@ import {
   matDirectionsCar, 
   matSearch, 
   matPersonSearch,
-  matBadge,
   matFingerprint,
   matCheckCircle,
   matSms,
   matWarning,
   matArrowForward
 } from '@ng-icons/material-icons/baseline';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
-import { CustomersStore } from '../../application/customers.store';
-import { Customer } from '../../domain/models/customer.entity';
-import { Modal } from '../../../shared/presentation/modal/modal';
+import { CustomersStore } from '../../../application/customers.store';
+import { Customer } from '../../../domain/models/customer.entity';
 
 /**
- * Presentation component representing the Customers overview page.
+ * Component managing the multi-step customer registration process.
  * 
- * Uses standard Angular 21 Standalone architecture and reactive Signals
- * to manage view state (customers list, loading state, search queries, and dynamic modal forms)
- * while optimizing rendering cycles with default reactive bindings.
+ * Includes verification of pre-registration appointments, validation 
+ * of various ID formats (DNI, RUC, CE, Passport) or phone numbers,
+ * sending of self-registration links, and manual backup entry.
  */
 @Component({
-  selector: 'app-customers',
+  selector: 'app-customer-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
     NgIcon,
-    Modal,
     TranslateModule
   ],
   providers: [
@@ -52,7 +42,6 @@ import { Modal } from '../../../shared/presentation/modal/modal';
       matDirectionsCar, 
       matSearch, 
       matPersonSearch,
-      matBadge,
       matFingerprint,
       matCheckCircle,
       matSms,
@@ -60,29 +49,20 @@ import { Modal } from '../../../shared/presentation/modal/modal';
       matArrowForward
     })
   ],
-  templateUrl: './customers.html',
-  styleUrl: './customers.css'
+  templateUrl: './customer-form.html',
+  styleUrl: './customer-form.css'
 })
-export class Customers implements OnInit {
+export class CustomerForm implements OnInit {
   private readonly store = inject(CustomersStore);
   private readonly destroyRef = inject(DestroyRef);
 
-  /** Signal containing the collection of retrieved customer entities */
-  readonly customers = this.store.customers;
+  /** Event emitted when the customer is successfully created */
+  @Output() readonly saved = new EventEmitter<void>();
 
-  /** Signal reflecting the loading/fetching progress */
-  readonly isLoading = this.store.loading;
+  /** Event emitted when the creation/searching is canceled */
+  @Output() readonly cancel = new EventEmitter<void>();
 
-  /** Signal storing the current search string */
-  readonly searchQuery = signal<string>('');
-
-  /** Computed signal determining the total number of customers */
-  readonly totalCustomersCount = this.store.customersCount;
-
-  /** Signal to toggle the new customer creation modal */
-  readonly isModalOpen = signal<boolean>(false);
-
-  /** Signal for the local link sending simulation state */
+  /** Signal reflecting the local link sending simulation state */
   private readonly isSendingLinkSignal = signal<boolean>(false);
 
   /** Signal displaying the save loader state (both for creation and link sending) */
@@ -127,24 +107,42 @@ export class Customers implements OnInit {
     })
   });
 
-  /** Debounce search stream for performance optimization */
-  private readonly searchSubject = new Subject<string>();
+  /** Signal reflecting the form value changes to trigger computed updates */
+  private readonly formValue = toSignal(this.customerForm.valueChanges, { initialValue: this.customerForm.value });
+
+  /** Computed signal evaluating if the current search criteria has a valid format for submission */
+  readonly isSearchValid = computed(() => {
+    // Access formValue to establish reactive dependency on form edits
+    const _ = this.formValue();
+    
+    const documentNumberControl = this.customerForm.get('documentNumber');
+    const phoneControl = this.customerForm.get('phone');
+    
+    const hasDocument = !!(documentNumberControl && documentNumberControl.value && documentNumberControl.value.trim().length > 0);
+    const hasPhone = !!(phoneControl && phoneControl.value && phoneControl.value.trim().length > 0);
+
+    // Disabled if both fields are empty
+    if (!hasDocument && !hasPhone) {
+      return false;
+    }
+
+    // Disabled if document is present but has an invalid pattern for its selected type
+    if (hasDocument && documentNumberControl?.invalid) {
+      return false;
+    }
+
+    // Disabled if phone is present but has an invalid pattern
+    if (hasPhone && phoneControl?.invalid) {
+      return false;
+    }
+
+    return true;
+  });
 
   /**
-   * Initializes the component.
-   * Sets up the debounced search stream listener, dynamic validators, and triggers the initial data load.
+   * Registers dynamic validators and resets state on init.
    */
   ngOnInit(): void {
-    /** Listen to search inputs, applying a 300ms debounce before querying the infrastructure layer */
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(query => {
-      this.searchQuery.set(query);
-      this.store.loadCustomers(query);
-    });
-
     /** Register dynamic validator updates when the selected document type changes */
     this.customerForm.get('documentType')?.valueChanges.pipe(
       takeUntilDestroyed(this.destroyRef)
@@ -167,25 +165,12 @@ export class Customers implements OnInit {
 
       documentNumberControl.updateValueAndValidity();
     });
-
-    /** Trigger initial load of customers */
-    this.store.loadCustomers('');
   }
 
   /**
-   * Triggers a debounced search query.
-   *
-   * @param event - The input keyboard event.
+   * Resets form inputs to default state.
    */
-  onSearchInput(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    this.searchSubject.next(inputElement.value.trim());
-  }
-
-  /**
-   * Opens the customer creation modal and resets form inputs to defaults.
-   */
-  openModal(): void {
+  resetForm(): void {
     this.customerForm.reset({
       documentType: 'DNI',
       documentNumber: '',
@@ -198,14 +183,6 @@ export class Customers implements OnInit {
     this.preRegisteredData.set(null);
     this.existingCustomerData.set(null);
     this.smsSent.set(false);
-    this.isModalOpen.set(true);
-  }
-
-  /**
-   * Closes the customer creation modal.
-   */
-  closeModal(): void {
-    this.isModalOpen.set(false);
   }
 
   /**
@@ -324,7 +301,14 @@ export class Customers implements OnInit {
     );
 
     this.store.createCustomer(newCustomer, () => {
-      this.closeModal();
+      this.saved.emit();
     });
+  }
+
+  /**
+   * Cancels the form flow.
+   */
+  onCancel(): void {
+    this.cancel.emit();
   }
 }

@@ -3,9 +3,9 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'customers',
-    loadComponent: () =>
-      import('./customers/presentation/views/customers').then(
-        (m) => m.Customers
+    loadChildren: () =>
+      import('./customers/presentation/customers.routes').then(
+        (m) => m.customersRoutes
       ),
   },
   {

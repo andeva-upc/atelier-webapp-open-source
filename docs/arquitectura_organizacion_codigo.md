@@ -86,7 +86,7 @@ Las respuestas JSON de la base de datos o APIs suelen usar formatos de red espec
 ### D. Capa de Presentación (`presentation/`)
 Es la capa gráfica e interactiva en Angular.
 
-* **`views/` (Vistas/Páginas):** Representa las páginas completas accesibles por enrutamiento (ej. `customers.ts`).
+* **`views/` (Vistas/Páginas):** Representa las páginas completas accesibles por enrutamiento (ej. `customers-list/customers-list.ts`).
 * **`components/` (Componentes):** Bloques de construcción visuales reutilizables internos del contexto.
 * **Desacoplamiento Estricto:** Los componentes de presentación **nunca** deben importar directamente clases de la capa de infraestructura (como Endpoints o Assemblers). En su lugar, inyectan el contrato abstracto del dominio (`CustomerRepository`) que Angular proveerá automáticamente.
 
