@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-left-sidebar',
-  imports: [RouterLink, RouterLinkActive, TranslatePipe, CommonModule, RouterLink],
+  imports: [RouterLink, RouterLinkActive, TranslatePipe, CommonModule],
   templateUrl: './left-sidebar.html',
   styleUrl: './left-sidebar.css',
 })

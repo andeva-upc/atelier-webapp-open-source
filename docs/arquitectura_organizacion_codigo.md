@@ -112,6 +112,43 @@ Para mantener un estándar limpio y profesional, se define una única regla de c
   ```
 * **Prohibido:** El uso de comentarios de línea genéricos (`//`) o bloques visuales decorativos extensos en los archivos TypeScript.
 
+### III. Internacionalización (i18n) en Vistas Standalone
+
+Para asegurar que la plataforma pueda ser consumida en múltiples idiomas de forma ágil (español e inglés por defecto), se establece el uso mandatorio del servicio de traducción reactiva `ngx-translate`.
+
+* **Prohibido textos hardcoded:** Todas las cadenas de texto legibles por el usuario en las plantillas HTML o mensajes dinámicos en archivos TS deben usar llaves de traducción estructuradas, cargadas desde archivos JSON independientes ubicados en [es.json](file:///home/aldodev/OpenSource/atelier-webapp-open-source/public/i18n/es.json) y [en.json](file:///home/aldodev/OpenSource/atelier-webapp-open-source/public/i18n/en.json).
+* **Registrar en componentes standalone:** Para habilitar la directiva o el pipe de traducción en cualquier vista o componente autónomo, se debe importar de forma explícita el módulo de traducción:
+  ```typescript
+  import { TranslateModule } from '@ngx-translate/core';
+
+  @Component({
+    // ...
+    imports: [TranslateModule, CommonModule]
+  })
+  ```
+* **Uso del pipe de traducción en plantillas HTML:**
+  * *Texto estático:* `<h1>{{ 'customers.title' | translate }}</h1>`
+  * *Texto dinámico con variables:* `<span>{{ 'customers.services-performed' | translate: { count: customer.servicesCount } }}</span>`
+
+### IV. Enrutamiento Moderno de Angular (Signals Link Binding)
+
+Con el fin de evitar inyectar de manera repetitiva el servicio `ActivatedRoute` dentro de los componentes controladores para leer parámetros de URL o de consulta (Query Params), adoptamos el estándar reactivo más moderno de Angular.
+
+* **Habilitación de Component Input Binding:** Se debe configurar siempre el enrutador principal en [app.config.ts](file:///home/aldodev/OpenSource/atelier-webapp-open-source/src/app/app.config.ts) utilizando la bandera `withComponentInputBinding()`:
+  ```typescript
+  provideRouter(routes, withComponentInputBinding())
+  ```
+* **Lectura de parámetros de URL vía Signal Inputs (`input()`):** Los componentes visuales que carguen mediante enrutamiento dinámico leen de forma reactiva y síncrona los parámetros del path o query params usando la función `input()` nativa de Angular:
+  ```typescript
+  import { Component, input } from '@angular/core';
+
+  @Component({ ... })
+  export class DetailComponent {
+    // Parámetro de ruta 'id' (ej. /detail/:id) mapeado automáticamente como un Signal de solo lectura
+    id = input.required<string>();
+  }
+  ```
+
 ---
 
 ## 5. Ejemplo de Flujo de Datos Completo (DDD)
