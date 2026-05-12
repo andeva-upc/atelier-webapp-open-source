@@ -5,6 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
 import { BillingStore } from '../../../application/billing.store';
 
 
@@ -24,7 +26,9 @@ import { BillingStore } from '../../../application/billing.store';
     TranslateModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatChipsModule
   ],
   templateUrl: './billing-list.html',
   styleUrl: './billing-list.css',
@@ -46,6 +50,17 @@ export class BillingList implements OnInit {
   /** Computed count of pending quotations */
   readonly pendingQuotesCount = this.store.pendingQuotesCount;
 
+  /** Reactive signal from store — full list of quotes */
+  readonly quotes = this.store.quotes;
+
+  /** Loading state for quotes */
+  readonly quotesLoading = this.store.quotesLoading;
+
+  /** Columns to display in the quotes table */
+  readonly quoteColumns: string[] = [
+    'quoteNumber', 'customerName', 'vehicle', 'items', 'totalAmount', 'status', 'createdAt', 'actions'
+  ];
+
   /** Currently selected tab index (0 = Ingresos y gastos, 1 = Cotizaciones) */
   readonly selectedTab = signal<number>(0);
 
@@ -57,6 +72,29 @@ export class BillingList implements OnInit {
     { month: 'Abr', ingresos: 11200, gastos: 4100 },
     { month: 'May', ingresos: 10500, gastos: 3800 },
   ];
+
+  /** Columns to display in the monthly details table */
+  readonly detailColumns: string[] = ['month', 'ingresos', 'gastos', 'rentabilidad', 'variacion'];
+
+  /** Computed monthly details with rentabilidad and variacion */
+  readonly monthlyDetails = computed(() => {
+    let prevRentabilidad: number | null = null;
+    return this.monthlyRows.map(row => {
+      const rentabilidad = row.ingresos - row.gastos;
+      let variacion: number | null = null;
+      if (prevRentabilidad !== null && prevRentabilidad !== 0) {
+        variacion = ((rentabilidad - prevRentabilidad) / prevRentabilidad) * 100;
+      }
+      prevRentabilidad = rentabilidad;
+      return {
+        month: `${row.month} 2026`,
+        ingresos: row.ingresos,
+        gastos: row.gastos,
+        rentabilidad,
+        variacion
+      };
+    });
+  });
 
   // ── SVG Chart geometry ────────────────────────────────────────────────────
 
@@ -104,5 +142,50 @@ export class BillingList implements OnInit {
   ngOnInit(): void {
     this.store.loadVouchers();
     this.store.loadQuotes();
+  }
+
+  /**
+   * Maps a Quote status to a human readable label.
+   */
+  getQuoteStatusLabel(status: string): string {
+    const map: Record<string, string> = {
+      APPROVED: 'Aprobada',
+      DRAFT: 'Pendiente',
+      SENT: 'Enviada',
+      REJECTED: 'Rechazada',
+      EXPIRED: 'Expirada',
+    };
+    return map[status] ?? status;
+  }
+
+  /**
+   * Maps a Quote status to a CSS class for the pill.
+   */
+  getQuoteStatusClass(status: string): string {
+    const map: Record<string, string> = {
+      APPROVED: 'chip-success',
+      DRAFT: 'chip-warning',
+      SENT: 'chip-info',
+      REJECTED: 'chip-error',
+      EXPIRED: 'chip-error',
+    };
+    return map[status] ?? 'chip-default';
+  }
+
+  /**
+   * Formats variacion percentage.
+   */
+  formatVariacion(variacion: number | null): string {
+    if (variacion === null) return '---';
+    const sign = variacion > 0 ? '+' : '';
+    return `${sign}${variacion.toFixed(1)}%`;
+  }
+
+  /**
+   * Returns CSS class based on variacion value.
+   */
+  getVariacionClass(variacion: number | null): string {
+    if (variacion === null) return 'gray-text';
+    return variacion > 0 ? 'text-green' : 'text-red';
   }
 }

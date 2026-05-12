@@ -51,6 +51,7 @@ export class QuoteAssembler implements BaseAssembler<Quote, QuoteResponse, BaseR
       resource.created_at,
       resource.approved_at,
       resource.notes,
+      resource.vehicle,
       resource.version
     );
   }
@@ -83,6 +84,7 @@ export class QuoteAssembler implements BaseAssembler<Quote, QuoteResponse, BaseR
       created_at: entity.createdAt,
       approved_at: entity.approvedAt,
       notes: entity.notes,
+      vehicle: entity.vehicle,
       version: entity.version,
     };
   }

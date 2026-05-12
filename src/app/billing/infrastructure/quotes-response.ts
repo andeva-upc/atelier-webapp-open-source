@@ -32,6 +32,7 @@ export interface QuoteResponse extends BaseResource {
   created_at: string;
   approved_at: string | null;
   notes: string | null;
+  vehicle: string | null;
   version: number;
   updated_at?: string;
 }

@@ -44,6 +44,7 @@ export class Quote implements BaseEntity {
     public readonly createdAt: string,
     public readonly approvedAt: string | null,
     public readonly notes: string | null,
+    public readonly vehicle: string | null,
     public readonly version: number
   ) {}
 

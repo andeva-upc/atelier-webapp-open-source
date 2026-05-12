@@ -6,6 +6,9 @@
       <h1>{{ 'billing.title' | translate }}</h1>
       <p class="subtitle">{{ 'billing.subtitle' | translate }}</p>
     </div>
+    <button class="btn-primary">
+      <mat-icon class="icon-small">add</mat-icon> Nueva cotización
+    </button>
   </header>
 
   <!-- ── KPI Summary Cards ────────────────────────────────────────────── -->
@@ -105,9 +108,118 @@
             }
           </svg>
         </div>
+
         <div class="chart-legend">
           <span class="legend-item"><span class="legend-dot ingresos"></span> Ingresos</span>
           <span class="legend-item"><span class="legend-dot gastos"></span> Gastos</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Monthly Detail Table ─────────────────────────────────────── -->
+    <mat-card class="table-card">
+      <mat-card-header>
+        <mat-card-title>Detalle por mes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="table-card-content">
+        <div class="table-container">
+          <table mat-table [dataSource]="monthlyDetails()" class="quotes-table">
+            
+            <ng-container matColumnDef="month">
+              <th mat-header-cell *matHeaderCellDef>Mes</th>
+              <td mat-cell *matCellDef="let row" class="bold-text">{{ row.month }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="ingresos">
+              <th mat-header-cell *matHeaderCellDef>Ingresos</th>
+              <td mat-cell *matCellDef="let row" class="text-green">S/ {{ row.ingresos }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="gastos">
+              <th mat-header-cell *matHeaderCellDef>Gastos</th>
+              <td mat-cell *matCellDef="let row" class="text-red">S/ {{ row.gastos }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="rentabilidad">
+              <th mat-header-cell *matHeaderCellDef>Rentabilidad</th>
+              <td mat-cell *matCellDef="let row" class="bold-text">S/ {{ row.rentabilidad }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="variacion">
+              <th mat-header-cell *matHeaderCellDef>Variación</th>
+              <td mat-cell *matCellDef="let row" [ngClass]="getVariacionClass(row.variacion)">
+                {{ formatVariacion(row.variacion) }}
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="detailColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: detailColumns"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+
+  @if (selectedTab() === 1) {
+    <!-- ── Quotes Table ────────────────────────────────────────────────── -->
+    <mat-card class="table-card">
+      <mat-card-content class="table-card-content">
+        <div class="table-container">
+          <table mat-table [dataSource]="quotes()" class="quotes-table">
+            
+            <ng-container matColumnDef="quoteNumber">
+              <th mat-header-cell *matHeaderCellDef>#Cotización</th>
+              <td mat-cell *matCellDef="let quote">
+                <span class="quote-number-text">{{ quote.quoteNumber || 'COT-001' }}</span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="customerName">
+              <th mat-header-cell *matHeaderCellDef>Cliente</th>
+              <td mat-cell *matCellDef="let quote">{{ quote.customerName || 'Juan Pérez' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="vehicle">
+              <th mat-header-cell *matHeaderCellDef>Vehículo</th>
+              <td mat-cell *matCellDef="let quote" class="gray-text">{{ quote.vehicle || 'Toyota Corolla ABX-432' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="items">
+              <th mat-header-cell *matHeaderCellDef>Ítems</th>
+              <td mat-cell *matCellDef="let quote" class="gray-text">{{ quote.items?.length || 4 }} ítems</td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalAmount">
+              <th mat-header-cell *matHeaderCellDef>Total</th>
+              <td mat-cell *matCellDef="let quote" class="bold-text">S/ {{ quote.totalAmount }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let quote">
+                <span class="status-pill" [ngClass]="getQuoteStatusClass(quote.status)">
+                  {{ getQuoteStatusLabel(quote.status) }}
+                </span>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+              <th mat-header-cell *matHeaderCellDef>Fecha</th>
+              <td mat-cell *matCellDef="let quote" class="gray-text">{{ quote.createdAt | date:'yyyy-MM-dd' }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Acciones</th>
+              <td mat-cell *matCellDef="let quote">
+                <button class="btn-action-pdf">
+                  <mat-icon class="icon-small">download</mat-icon> PDF
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="quoteColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: quoteColumns"></tr>
+          </table>
         </div>
       </mat-card-content>
     </mat-card>
