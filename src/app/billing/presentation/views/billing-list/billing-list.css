@@ -1,45 +1,73 @@
-.billing-page {
-  padding: 24px;
-  background-color: #f8fafc;
-  min-height: 100vh;
+/* Variables and Theme Tokens */
+:host {
+  --bg-primary: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --primary-color: #0071EB;
+  --border-radius-card: 16px;
+  --transition-speed: 0.2s;
+}
+
+.billing-container {
+  padding: 2.5rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
   font-family: 'Mona Sans', system-ui, -apple-system, sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-primary);
+  min-height: 100vh;
 }
 
+/* Header Area Style - Matching mockup layout */
 .billing-header {
-  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
-.billing-header__title {
-  font-size: 28px;
+.header-text h1 {
+  font-size: 2.25rem;
   font-weight: 800;
-  color: #1e293b;
   margin: 0;
+  color: #111827;
   letter-spacing: -0.03em;
 }
 
-.billing-header__subtitle {
-  color: #64748b;
-  font-size: 14px;
-  margin: 4px 0 0;
+.header-text .subtitle {
+  font-size: 1.05rem;
+  color: #9ca3af;
+  margin: 0.35rem 0 0 0;
+  font-weight: 400;
   font-family: 'Arimo', sans-serif;
 }
 
-/* KPI Cards */
+/* KPI Cards matching customer cards */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-bottom: 32px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .kpi-card {
-  border-radius: 16px !important;
-  border: 1px solid #f1f5f9;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
-  transition: transform 0.2s;
+  background: var(--card-bg) !important;
+  border-radius: var(--border-radius-card) !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+  cursor: pointer;
+  transition: 
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s !important;
 }
 
 .kpi-card:hover {
+  box-shadow: 
+    0 10px 25px rgba(0, 113, 235, 0.12), 
+    0 3px 10px rgba(0, 113, 235, 0.05) !important;
+  border-color: rgba(0, 113, 235, 0.25) !important;
   transform: translateY(-2px);
 }
 
@@ -47,7 +75,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .kpi-card__label {
@@ -88,144 +116,4 @@
 .kpi-card__value--blue { color: #3b82f6; }
 .kpi-card__value--orange { color: #f97316; }
 
-/* Navigation */
-.billing-nav {
-  margin-bottom: 24px;
-}
 
-.nav-links {
-  display: flex;
-  gap: 8px;
-}
-
-.nav-links button {
-  border-radius: 8px;
-  font-weight: 600;
-  padding: 0 20px;
-}
-
-.active-stroked {
-  background-color: white !important;
-  border-color: #e2e8f0 !important;
-  color: #64748b !important;
-}
-
-/* Chart */
-.chart-card, .detail-card, .billing-content-card {
-  border-radius: 16px !important;
-  margin-bottom: 24px;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
-  border: 1px solid #f1f5f9;
-}
-
-.chart-card mat-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-}
-
-.chart-card mat-card-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1e293b;
-}
-
-.export-button {
-  border-radius: 8px;
-  font-size: 13px;
-  color: #64748b;
-  border-color: #e2e8f0;
-}
-
-.chart-container {
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
-  overflow-x: auto;
-}
-
-.axis-label {
-  font-size: 11px;
-  fill: #94a3b8;
-  font-weight: 500;
-  font-family: 'Arimo', sans-serif;
-}
-
-.chart-legend {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  padding: 16px 0;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: #64748b;
-  font-weight: 500;
-  font-family: 'Arimo', sans-serif;
-}
-
-.legend-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-}
-
-.legend-dot.ingresos { background-color: #90caf9; }
-.legend-dot.gastos { background-color: #bbdefb; }
-
-/* Tables */
-.detail-table, .billing-table {
-  width: 100%;
-}
-
-.detail-table th, .billing-table th {
-  color: #94a3b8;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid #f1f5f9;
-  padding: 16px;
-  font-family: 'Arimo', sans-serif;
-}
-
-.detail-table td, .billing-table td {
-  padding: 16px;
-  font-size: 14px;
-  color: #334155;
-  border-bottom: 1px solid #f8fafc;
-}
-
-.bold-cell {
-  font-weight: 700;
-}
-
-.ingresos-cell { color: #22c55e; font-weight: 500; }
-.gastos-cell { color: #ef4444; font-weight: 500; }
-
-.positive { color: #22c55e; font-weight: 700; }
-.negative { color: #ef4444; font-weight: 700; }
-
-.mono-text {
-  font-family: 'Roboto Mono', monospace;
-  font-weight: 600;
-  background: #f1f5f9;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-/* Status Chips */
-.chip-paid { background-color: #f0fdf4 !important; color: #166534 !important; }
-.chip-pending { background-color: #fff7ed !important; color: #9a3412 !important; }
-.chip-cancelled { background-color: #fef2f2 !important; color: #991b1b !important; }
-.chip-overdue { background-color: #fff1f2 !important; color: #9f1239 !important; }
-
-.table-container {
-  overflow-x: auto;
-}

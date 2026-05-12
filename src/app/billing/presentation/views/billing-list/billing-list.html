@@ -1,10 +1,10 @@
-<section class="billing-page">
+<section class="billing-container">
 
   <!-- ── Page Header ──────────────────────────────────────────────────── -->
   <header class="billing-header">
-    <div class="billing-header__text">
-      <h1 class="billing-header__title">{{ 'billing.title' | translate }}</h1>
-      <p class="billing-header__subtitle">{{ 'billing.subtitle' | translate }}</p>
+    <div class="header-text">
+      <h1>{{ 'billing.title' | translate }}</h1>
+      <p class="subtitle">{{ 'billing.subtitle' | translate }}</p>
     </div>
   </header>
 
@@ -20,7 +20,7 @@
           </div>
         </div>
         <p class="kpi-card__value kpi-card__value--green">
-          S/ {{ totalIncomeValue | number:'1.3-3' }}
+          S/ {{ totalIncomeValue | number:'1.0-0' }}
         </p>
       </mat-card-content>
     </mat-card>
@@ -34,7 +34,7 @@
           </div>
         </div>
         <p class="kpi-card__value kpi-card__value--red">
-          S/ {{ totalExpensesValue | number:'1.3-3' }}
+          S/ {{ totalExpensesValue | number:'1.0-0' }}
         </p>
       </mat-card-content>
     </mat-card>
@@ -56,7 +56,7 @@
         <div class="kpi-card__header">
           <span class="kpi-card__label">{{ 'billing.kpi.pending-quotes' | translate }}</span>
           <div class="kpi-card__icon-container kpi-card__icon-container--orange">
-            <mat-icon class="kpi-card__icon">pending_actions</mat-icon>
+            <mat-icon class="kpi-card__icon">schedule</mat-icon>
           </div>
         </div>
         <p class="kpi-card__value kpi-card__value--orange">{{ pendingQuotesCount() }}</p>
@@ -64,201 +64,4 @@
     </mat-card>
 
   </div>
-
-  <!-- ── Tab Navigation ───────────────────────────────────────────────── -->
-  <nav class="billing-nav">
-    <div class="nav-links">
-      <button mat-flat-button [color]="selectedTab() === 0 ? 'primary' : ''" (click)="selectedTab.set(0)">
-        {{ 'billing.tabs.income-expenses' | translate }}
-      </button>
-      <button mat-stroked-button [class.active-stroked]="selectedTab() === 1" (click)="selectedTab.set(1)">
-        {{ 'billing.tabs.quotes' | translate }}
-      </button>
-    </div>
-  </nav>
-
-  @if (selectedTab() === 0) {
-    <!-- ── Monthly Financial Chart ─────────────────────────────────────── -->
-    <mat-card class="chart-card">
-      <mat-card-header>
-        <mat-card-title>Resumen financiero mensual</mat-card-title>
-        <button mat-stroked-button class="export-button">
-          <mat-icon>download</mat-icon>
-          Exportar Excel
-        </button>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="chart-container">
-          <svg [attr.width]="svgW" [attr.height]="svgH" class="financial-chart">
-            <!-- Y-Axis Grid Lines and Labels -->
-            @for (label of yAxisLabels; track label.val) {
-              <line [attr.x1]="padLeft" [attr.y1]="label.y" [attr.x2]="svgW - 20" [attr.y2]="label.y" stroke="#eee" stroke-dasharray="2,2" />
-              <text [attr.x]="padLeft - 10" [attr.y]="label.y" text-anchor="end" alignment-baseline="middle" class="axis-label">{{ label.val }}</text>
-            }
-
-            <!-- Bars -->
-            @for (group of chartGroups(); track group.label) {
-              <!-- Ingresos -->
-              <rect [attr.x]="group.ingresosX" [attr.y]="group.ingresosY" [attr.width]="group.barWidth" [attr.height]="group.ingresosH" fill="#90caf9" rx="2" />
-              <!-- Gastos -->
-              <rect [attr.x]="group.gastosX" [attr.y]="group.gastosY" [attr.width]="group.barWidth" [attr.height]="group.gastosH" fill="#bbdefb" rx="2" />
-              <!-- X-Axis Label -->
-              <text [attr.x]="group.labelX" [attr.y]="svgH - 15" text-anchor="middle" class="axis-label">{{ group.label }}</text>
-            }
-          </svg>
-        </div>
-        <div class="chart-legend">
-          <span class="legend-item"><span class="legend-dot ingresos"></span> Ingresos</span>
-          <span class="legend-item"><span class="legend-dot gastos"></span> Gastos</span>
-        </div>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- ── Monthly Detail Table ────────────────────────────────────────── -->
-    <mat-card class="detail-card">
-      <mat-card-header>
-        <mat-card-title>Detalle por mes</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <table mat-table [dataSource]="monthlyRows" class="detail-table">
-          <ng-container matColumnDef="month">
-            <th mat-header-cell *matHeaderCellDef>Mes</th>
-            <td mat-cell *matCellDef="let row" class="bold-cell">{{ row.month }}</td>
-          </ng-container>
-          <ng-container matColumnDef="ingresos">
-            <th mat-header-cell *matHeaderCellDef>Ingresos</th>
-            <td mat-cell *matCellDef="let row" class="ingresos-cell">S/ {{ row.ingresos | number:'1.0-0' }}</td>
-          </ng-container>
-          <ng-container matColumnDef="gastos">
-            <th mat-header-cell *matHeaderCellDef>Gastos</th>
-            <td mat-cell *matCellDef="let row" class="gastos-cell">S/ {{ row.gastos | number:'1.0-0' }}</td>
-          </ng-container>
-          <ng-container matColumnDef="rentabilidad">
-            <th mat-header-cell *matHeaderCellDef>Rentabilidad</th>
-            <td mat-cell *matCellDef="let row" class="bold-cell">S/ {{ row.rentabilidad | number:'1.0-0' }}</td>
-          </ng-container>
-          <ng-container matColumnDef="variacion">
-            <th mat-header-cell *matHeaderCellDef>Variación</th>
-            <td mat-cell *matCellDef="let row" [ngClass]="row.variacion.startsWith('+') ? 'positive' : row.variacion.startsWith('-') ? 'negative' : ''">
-              {{ row.variacion }}
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="monthlyDetailColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: monthlyDetailColumns"></tr>
-        </table>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- ── Vouchers Table (Original List) ──────────────────────────────── -->
-    <mat-card class="billing-content-card">
-      <mat-card-header>
-        <mat-card-title>{{ 'billing.tabs.income-expenses' | translate }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        @if (vouchersLoading()) {
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        }
-        <div class="table-container">
-          <table mat-table [dataSource]="vouchers()" class="billing-table">
-            <ng-container matColumnDef="voucherNumber">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.voucher-number' | translate }}</th>
-              <td mat-cell *matCellDef="let voucher"><span class="mono-text">{{ voucher.voucherNumber }}</span></td>
-            </ng-container>
-            <ng-container matColumnDef="customerName">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.customer' | translate }}</th>
-              <td mat-cell *matCellDef="let voucher">{{ voucher.customerName }}</td>
-            </ng-container>
-            <ng-container matColumnDef="type">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.type' | translate }}</th>
-              <td mat-cell *matCellDef="let voucher">
-                <mat-chip>{{ 'billing.voucher.type.' + voucher.type.toLowerCase() | translate }}</mat-chip>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.status' | translate }}</th>
-              <td mat-cell *matCellDef="let voucher">
-                <mat-chip [ngClass]="getVoucherStatusClass(voucher.status)">{{ 'billing.status.' + voucher.status.toLowerCase() | translate }}</mat-chip>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="totalAmount">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.total' | translate }}</th>
-              <td mat-cell *matCellDef="let voucher">S/ {{ voucher.totalAmount | number:'1.2-2' }}</td>
-            </ng-container>
-            <ng-container matColumnDef="issuedAt">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.issued-at' | translate }}</th>
-              <td mat-cell *matCellDef="let voucher">{{ voucher.issuedAt | date:'dd/MM/yyyy' }}</td>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let voucher">
-                @if (voucher.status === 'PENDING') {
-                  <button mat-icon-button color="primary" (click)="markAsPaid(voucher)" [disabled]="vouchersSaving()">
-                    <mat-icon>check_circle</mat-icon>
-                  </button>
-                }
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="voucherColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: voucherColumns"></tr>
-          </table>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  }
-
-  @if (selectedTab() === 1) {
-    <!-- ── Quotes Table ────────────────────────────────────────────────── -->
-    <mat-card class="billing-content-card">
-      <mat-card-header>
-        <mat-card-title>{{ 'billing.tabs.quotes' | translate }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        @if (quotesLoading()) {
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        }
-        <div class="table-container">
-          <table mat-table [dataSource]="quotes()" class="billing-table">
-            <ng-container matColumnDef="quoteNumber">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.quote-number' | translate }}</th>
-              <td mat-cell *matCellDef="let quote"><span class="mono-text">{{ quote.quoteNumber }}</span></td>
-            </ng-container>
-            <ng-container matColumnDef="customerName">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.customer' | translate }}</th>
-              <td mat-cell *matCellDef="let quote">{{ quote.customerName }}</td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.status' | translate }}</th>
-              <td mat-cell *matCellDef="let quote">
-                <mat-chip [ngClass]="getQuoteStatusClass(quote.status)">{{ 'billing.quote.status.' + quote.status.toLowerCase() | translate }}</mat-chip>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="totalAmount">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.total' | translate }}</th>
-              <td mat-cell *matCellDef="let quote">S/ {{ quote.totalAmount | number:'1.2-2' }}</td>
-            </ng-container>
-            <ng-container matColumnDef="validUntil">
-              <th mat-header-cell *matHeaderCellDef>{{ 'billing.table.valid-until' | translate }}</th>
-              <td mat-cell *matCellDef="let quote">{{ quote.validUntil | date:'dd/MM/yyyy' }}</td>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let quote">
-                @if (quote.status === 'SENT') {
-                  <button mat-icon-button color="primary" (click)="approveQuote(quote)">
-                    <mat-icon>thumb_up</mat-icon>
-                  </button>
-                }
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="quoteColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: quoteColumns"></tr>
-          </table>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  }
-
 </section>
