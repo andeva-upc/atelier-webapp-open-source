@@ -1,0 +1,231 @@
+.billing-page {
+  padding: 24px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Mona Sans', system-ui, -apple-system, sans-serif;
+}
+
+.billing-header {
+  margin-bottom: 24px;
+}
+
+.billing-header__title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.billing-header__subtitle {
+  color: #64748b;
+  font-size: 14px;
+  margin: 4px 0 0;
+  font-family: 'Arimo', sans-serif;
+}
+
+/* KPI Cards */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.kpi-card {
+  border-radius: 16px !important;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  transition: transform 0.2s;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+}
+
+.kpi-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.kpi-card__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  font-family: 'Arimo', sans-serif;
+}
+
+.kpi-card__icon-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-card__icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.kpi-card__icon-container--green { background-color: #f0fdf4; color: #22c55e; }
+.kpi-card__icon-container--red { background-color: #fef2f2; color: #ef4444; }
+.kpi-card__icon-container--blue { background-color: #eff6ff; color: #3b82f6; }
+.kpi-card__icon-container--orange { background-color: #fffaf5; color: #f97316; }
+
+.kpi-card__value {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.kpi-card__value--green { color: #22c55e; }
+.kpi-card__value--red { color: #ef4444; }
+.kpi-card__value--blue { color: #3b82f6; }
+.kpi-card__value--orange { color: #f97316; }
+
+/* Navigation */
+.billing-nav {
+  margin-bottom: 24px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-links button {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0 20px;
+}
+
+.active-stroked {
+  background-color: white !important;
+  border-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+/* Chart */
+.chart-card, .detail-card, .billing-content-card {
+  border-radius: 16px !important;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
+  border: 1px solid #f1f5f9;
+}
+
+.chart-card mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+.chart-card mat-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.export-button {
+  border-radius: 8px;
+  font-size: 13px;
+  color: #64748b;
+  border-color: #e2e8f0;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  overflow-x: auto;
+}
+
+.axis-label {
+  font-size: 11px;
+  fill: #94a3b8;
+  font-weight: 500;
+  font-family: 'Arimo', sans-serif;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 16px 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+  font-family: 'Arimo', sans-serif;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legend-dot.ingresos { background-color: #90caf9; }
+.legend-dot.gastos { background-color: #bbdefb; }
+
+/* Tables */
+.detail-table, .billing-table {
+  width: 100%;
+}
+
+.detail-table th, .billing-table th {
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 16px;
+  font-family: 'Arimo', sans-serif;
+}
+
+.detail-table td, .billing-table td {
+  padding: 16px;
+  font-size: 14px;
+  color: #334155;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.bold-cell {
+  font-weight: 700;
+}
+
+.ingresos-cell { color: #22c55e; font-weight: 500; }
+.gastos-cell { color: #ef4444; font-weight: 500; }
+
+.positive { color: #22c55e; font-weight: 700; }
+.negative { color: #ef4444; font-weight: 700; }
+
+.mono-text {
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/* Status Chips */
+.chip-paid { background-color: #f0fdf4 !important; color: #166534 !important; }
+.chip-pending { background-color: #fff7ed !important; color: #9a3412 !important; }
+.chip-cancelled { background-color: #fef2f2 !important; color: #991b1b !important; }
+.chip-overdue { background-color: #fff1f2 !important; color: #9f1239 !important; }
+
+.table-container {
+  overflow-x: auto;
+}

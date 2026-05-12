@@ -86,5 +86,66 @@
         "register": "Registrar cliente"
       }
     }
+  },
+  "billing": {
+    "title": "Facturación",
+    "subtitle": "Gestión comercial y financiera del taller",
+    "export-excel": "Exportar Excel",
+    "kpi": {
+      "total-income": "Ingresos totales",
+      "total-expenses": "Gastos totales",
+      "approved-quotes": "Cotizaciones aprobadas",
+      "pending-quotes": "Cotizaciones pendientes"
+    },
+    "tabs": {
+      "income-expenses": "Ingresos y gastos",
+      "quotes": "Cotizaciones"
+    },
+    "table": {
+      "voucher-number": "N° Comprobante",
+      "quote-number": "N° Cotización",
+      "customer": "Cliente",
+      "type": "Tipo",
+      "status": "Estado",
+      "total": "Total",
+      "issued-at": "Fecha emisión",
+      "valid-until": "Válido hasta"
+    },
+    "status": {
+      "paid": "Pagado",
+      "pending": "Pendiente",
+      "cancelled": "Cancelado",
+      "overdue": "Vencido"
+    },
+    "voucher": {
+      "type": {
+        "invoice": "Factura",
+        "receipt": "Boleta",
+        "credit_note": "Nota crédito"
+      }
+    },
+    "quote": {
+      "status": {
+        "draft": "Borrador",
+        "sent": "Enviada",
+        "approved": "Aprobada",
+        "rejected": "Rechazada",
+        "expired": "Expirada"
+      }
+    },
+    "action": {
+      "mark-paid": "Marcar como pagado",
+      "approve": "Aprobar cotización"
+    },
+    "empty": {
+      "vouchers": "No hay comprobantes registrados.",
+      "quotes": "No hay cotizaciones registradas."
+    },
+    "error": {
+      "load-vouchers": "Error al cargar comprobantes",
+      "update-voucher": "Error al actualizar comprobante",
+      "load-quotes": "Error al cargar cotizaciones",
+      "approve-quote": "Error al aprobar cotización"
+    }
   }
 }

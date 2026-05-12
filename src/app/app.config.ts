@@ -7,6 +7,9 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { CustomerRepository } from './customers/domain/repositories/customer.repository';
 import { CustomersApi } from './customers/infrastructure/customers-api';
+import { VoucherRepository } from './billing/domain/repositories/voucher.repository';
+import { QuoteRepository } from './billing/domain/repositories/quote.repository';
+import { BillingApi } from './billing/infrastructure/billing-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +20,9 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'en'
     }),
     provideRouter(routes, withComponentInputBinding()),
-    { provide: CustomerRepository, useClass: CustomersApi }
+    { provide: CustomerRepository, useClass: CustomersApi },
+    { provide: VoucherRepository, useClass: BillingApi },
+    { provide: QuoteRepository, useClass: BillingApi }
   ]
 };
 

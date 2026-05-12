@@ -86,5 +86,66 @@
         "register": "Register customer"
       }
     }
+  },
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Commercial and financial management of the workshop",
+    "export-excel": "Export Excel",
+    "kpi": {
+      "total-income": "Total income",
+      "total-expenses": "Total expenses",
+      "approved-quotes": "Approved quotes",
+      "pending-quotes": "Pending quotes"
+    },
+    "tabs": {
+      "income-expenses": "Income & Expenses",
+      "quotes": "Quotations"
+    },
+    "table": {
+      "voucher-number": "Voucher No.",
+      "quote-number": "Quote No.",
+      "customer": "Customer",
+      "type": "Type",
+      "status": "Status",
+      "total": "Total",
+      "issued-at": "Issue date",
+      "valid-until": "Valid until"
+    },
+    "status": {
+      "paid": "Paid",
+      "pending": "Pending",
+      "cancelled": "Cancelled",
+      "overdue": "Overdue"
+    },
+    "voucher": {
+      "type": {
+        "invoice": "Invoice",
+        "receipt": "Receipt",
+        "credit_note": "Credit Note"
+      }
+    },
+    "quote": {
+      "status": {
+        "draft": "Draft",
+        "sent": "Sent",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "expired": "Expired"
+      }
+    },
+    "action": {
+      "mark-paid": "Mark as paid",
+      "approve": "Approve quotation"
+    },
+    "empty": {
+      "vouchers": "No vouchers registered.",
+      "quotes": "No quotations registered."
+    },
+    "error": {
+      "load-vouchers": "Failed to load vouchers",
+      "update-voucher": "Failed to update voucher",
+      "load-quotes": "Failed to load quotations",
+      "approve-quote": "Failed to approve quotation"
+    }
   }
 }
