@@ -10,9 +10,4 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './layout.css',
 })
 export class Layout {
-  isLeftSidebarCollapsed = signal<boolean>(false);
-
-  changeIsLeftSidebarCollapsed(isLeftSidebarCollapsed: boolean) {
-    this.isLeftSidebarCollapsed.set(isLeftSidebarCollapsed);
-  }
 }

@@ -26,6 +26,7 @@
     "@ngx-translate/http-loader": "^17.0.0",
     "hex-to-css-filter": "^6.0.0",
     "json-server": "^0.17.4",
+    "primeicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

@@ -1,11 +1,12 @@
 {
   "option": {
     "home": "Home",
-    "work-orders": "Orders",
-    "appointments": "Appointments",
-    "staff": "Staff",
+    "work-orders": "Work Orders",
     "inventory": "Inventory",
+    "customers": "Customers",
+    "appointments": "Appointments",
+    "telemetry": "Telemetry",
     "billing": "Billing",
-    "customers": "Customers"
+    "configuration": "Configuration"
   }
 }
