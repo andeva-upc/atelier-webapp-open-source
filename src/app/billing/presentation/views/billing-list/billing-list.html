@@ -64,4 +64,52 @@
     </mat-card>
 
   </div>
+
+  <!-- ── Tab Navigation ───────────────────────────────────────────────── -->
+  <div class="segmented-control">
+    <button class="segmented-btn" [class.active]="selectedTab() === 0" (click)="selectedTab.set(0)">
+      Ingresos y gastos
+    </button>
+    <button class="segmented-btn" [class.active]="selectedTab() === 1" (click)="selectedTab.set(1)">
+      Cotizaciones
+    </button>
+  </div>
+
+  @if (selectedTab() === 0) {
+    <!-- ── Monthly Financial Chart ─────────────────────────────────────── -->
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Resumen financiero mensual</mat-card-title>
+        <button class="export-button">
+          <mat-icon>download</mat-icon>
+          Exportar Excel
+        </button>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container">
+          <svg [attr.width]="svgW" [attr.height]="svgH" class="financial-chart">
+            <!-- Y-Axis Grid Lines and Labels -->
+            @for (label of yAxisLabels; track label.val) {
+              <line [attr.x1]="padLeft" [attr.y1]="label.y" [attr.x2]="svgW - 20" [attr.y2]="label.y" stroke="#f1f5f9" stroke-dasharray="2,2" />
+              <text [attr.x]="padLeft - 10" [attr.y]="label.y" text-anchor="end" alignment-baseline="middle" class="axis-label">{{ label.val }}</text>
+            }
+
+            <!-- Bars -->
+            @for (group of chartGroups(); track group.label) {
+              <!-- Ingresos -->
+              <rect [attr.x]="group.ingresosX" [attr.y]="group.ingresosY" [attr.width]="group.barWidth" [attr.height]="group.ingresosH" fill="#0071EB" rx="4" />
+              <!-- Gastos -->
+              <rect [attr.x]="group.gastosX" [attr.y]="group.gastosY" [attr.width]="group.barWidth" [attr.height]="group.gastosH" fill="#bfdbfe" rx="4" />
+              <!-- X-Axis Label -->
+              <text [attr.x]="group.labelX" [attr.y]="svgH - 25" text-anchor="middle" class="axis-label">{{ group.label }}</text>
+            }
+          </svg>
+        </div>
+        <div class="chart-legend">
+          <span class="legend-item"><span class="legend-dot ingresos"></span> Ingresos</span>
+          <span class="legend-item"><span class="legend-dot gastos"></span> Gastos</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
 </section>
