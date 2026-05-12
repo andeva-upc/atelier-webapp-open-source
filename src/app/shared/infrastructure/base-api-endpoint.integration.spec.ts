@@ -24,7 +24,7 @@ describe('Fake API (json-server) Integration Test', () => {
       throw new Error(
         '\n\n' +
         '=========================================================================================\n' +
-        '⚠️  ERROR DE INTEGRACIÓN: El servidor Fake API (json-server) NO está encendido.\n' +
+        'ERROR DE INTEGRACIÓN: El servidor Fake API (json-server) NO está encendido.\n' +
         '-----------------------------------------------------------------------------------------\n' +
         'Para ejecutar este test de integración real, debes encender el backend simulado:\n' +
         '1. Abre una nueva terminal externa.\n' +

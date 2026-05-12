@@ -1,0 +1,25 @@
+@if (isOpen()) {
+  <div class="modal-backdrop" (click)="onClose()">
+    <div class="modal-window" (click)="stopPropagation($event)">
+      <!-- Modal Header -->
+      <header class="modal-header">
+        <div class="modal-title-area">
+          <ng-content select="[modal-title]"></ng-content>
+        </div>
+        <button class="btn-close" (click)="onClose()" aria-label="Cerrar modal">
+          <ng-icon name="matClose" class="close-icon"></ng-icon>
+        </button>
+      </header>
+
+      <!-- Modal Scrollable Content -->
+      <main class="modal-body-wrapper">
+        <ng-content select="[modal-body]"></ng-content>
+      </main>
+
+      <!-- Modal Footer Actions -->
+      <footer class="modal-footer-wrapper">
+        <ng-content select="[modal-actions]"></ng-content>
+      </footer>
+    </div>
+  </div>
+}
