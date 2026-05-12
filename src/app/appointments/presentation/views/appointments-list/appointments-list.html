@@ -1,0 +1,212 @@
+<section class="appointments-page">
+  <header class="appointments-header">
+    <div>
+      <h1>Citas</h1>
+      <p>
+        {{ totalAppointments() }} citas agendadas ·
+        {{ todayAppointments() }} para hoy
+      </p>
+    </div>
+
+    <button type="button" class="primary-button" (click)="openModal()">
+      <span>+</span>
+      Nueva cita
+    </button>
+  </header>
+
+  <section class="summary-grid">
+    <article class="summary-card total">
+      <strong>{{ totalAppointments() }}</strong>
+      <span>Total citas</span>
+    </article>
+
+    <article class="summary-card confirmed">
+      <strong>{{ confirmedAppointments() }}</strong>
+      <span>Confirmadas</span>
+    </article>
+
+    <article class="summary-card pending">
+      <strong>{{ pendingAppointments() }}</strong>
+      <span>Pendientes</span>
+    </article>
+  </section>
+
+  <nav class="appointments-tabs">
+    <button
+      type="button"
+      [class.active]="activeFilter() === 'all'"
+      (click)="setFilter('all')"
+    >
+      Todas
+    </button>
+
+    <button
+      type="button"
+      [class.active]="activeFilter() === 'confirmed'"
+      (click)="setFilter('confirmed')"
+    >
+      Confirmadas
+    </button>
+
+    <button
+      type="button"
+      [class.active]="activeFilter() === 'pending'"
+      (click)="setFilter('pending')"
+    >
+      Pendientes
+    </button>
+
+    <button
+      type="button"
+      [class.active]="activeFilter() === 'cancelled'"
+      (click)="setFilter('cancelled')"
+    >
+      Canceladas
+    </button>
+  </nav>
+
+  <section class="appointments-list">
+    @for (appointment of filteredAppointments(); track appointment.id) {
+      <article
+        class="appointment-card"
+        [class.today-card]="appointment.isToday"
+      >
+        <div class="time-box" [class.today]="appointment.isToday">
+          <span class="calendar-icon">▣</span>
+          <strong>{{ appointment.time }}</strong>
+        </div>
+
+        <div class="appointment-info">
+          <div class="client-row">
+            <h2>{{ appointment.client }}</h2>
+
+            @if (appointment.isToday) {
+              <span class="today-badge">Hoy</span>
+            }
+          </div>
+
+          <div class="metadata-row">
+            <span> {{ appointment.vehicle }}</span>
+            <span> {{ appointment.date }} · {{ appointment.time }}</span>
+            <span> {{ appointment.mechanic }}</span>
+          </div>
+
+          <span class="service-badge">{{ appointment.service }}</span>
+        </div>
+
+        <div class="appointment-actions">
+          <span class="status-badge" [class]="appointment.status">
+            {{ getStatusLabel(appointment.status) }}
+          </span>
+
+          <button type="button" class="more-button" aria-label="Más opciones">
+            ⋯
+          </button>
+        </div>
+      </article>
+    }
+  </section>
+
+  @if (isModalOpen()) {
+    <div class="modal-backdrop">
+      <section class="appointment-modal">
+        <header class="modal-header">
+          <h2>Nueva Cita</h2>
+          <button type="button" class="close-button" (click)="closeModal()">
+            ×
+          </button>
+        </header>
+
+        <form class="appointment-form" (ngSubmit)="addAppointment()">
+          <label class="full-field">
+            Cliente *
+            <input
+              type="text"
+              name="client"
+              [(ngModel)]="newAppointment.client"
+              placeholder="Nombre del cliente"
+              required
+            />
+          </label>
+
+          <div class="form-row">
+            <label>
+              Teléfono *
+              <input
+                type="text"
+                name="phone"
+                [(ngModel)]="newAppointment.phone"
+                placeholder="9xx xxx xxx"
+              />
+            </label>
+
+            <label>
+              Vehículo *
+              <input
+                type="text"
+                name="vehicle"
+                [(ngModel)]="newAppointment.vehicle"
+                placeholder="Marca Modelo Placa"
+                required
+              />
+            </label>
+          </div>
+
+          <label class="full-field">
+            Servicio *
+            <input
+              type="text"
+              name="service"
+              [(ngModel)]="newAppointment.service"
+              placeholder="Tipo de servicio"
+              required
+            />
+          </label>
+
+          <div class="form-row">
+            <label>
+              Fecha *
+              <input
+                type="date"
+                name="date"
+                [(ngModel)]="newAppointment.date"
+                required
+              />
+            </label>
+
+            <label>
+              Hora *
+              <input
+                type="time"
+                name="time"
+                [(ngModel)]="newAppointment.time"
+                required
+              />
+            </label>
+          </div>
+
+          <label class="full-field">
+            Mecánico asignado *
+            <input
+              type="text"
+              name="mechanic"
+              [(ngModel)]="newAppointment.mechanic"
+              placeholder="Nombre"
+              required
+            />
+          </label>
+
+          <div class="modal-actions">
+            <button type="button" class="secondary-button" (click)="closeModal()">
+              Cancelar
+            </button>
+
+            <button type="submit" class="primary-button">
+              Agendar cita
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  }
+</section>

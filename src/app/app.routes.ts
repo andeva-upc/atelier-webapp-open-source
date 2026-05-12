@@ -13,4 +13,11 @@ export const routes: Routes = [
     redirectTo: 'customers',
     pathMatch: 'full',
   },
+  {
+  path: 'appointments',
+  loadChildren: () =>
+    import('./appointments/presentation/appointments.routes').then(
+      (m) => m.appointmentsRoutes
+    ),
+  },
 ];
