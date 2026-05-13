@@ -3,6 +3,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 import { routes } from './app.routes';
 import { CustomerRepository } from './customers/domain/repositories/customer.repository';
@@ -20,9 +21,9 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'en'
     }),
     provideRouter(routes, withComponentInputBinding()),
+    provideCharts(withDefaultRegisterables()),
     { provide: CustomerRepository, useClass: CustomersApi },
     { provide: VoucherRepository, useClass: BillingApi },
     { provide: QuoteRepository, useClass: BillingApi }
   ]
 };
-
