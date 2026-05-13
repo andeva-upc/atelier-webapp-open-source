@@ -11,6 +11,8 @@ import { CustomersApi } from './customers/infrastructure/customers-api';
 import { VoucherRepository } from './billing/domain/repositories/voucher.repository';
 import { QuoteRepository } from './billing/domain/repositories/quote.repository';
 import { BillingApi } from './billing/infrastructure/billing-api';
+import { TelemetryRepository } from './telemetry/domain/repositories/telemetry.repository';
+import { TelemetryApi } from './telemetry/infrastructure/telemetry-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideCharts(withDefaultRegisterables()),
     { provide: CustomerRepository, useClass: CustomersApi },
     { provide: VoucherRepository, useClass: BillingApi },
-    { provide: QuoteRepository, useClass: BillingApi }
+    { provide: QuoteRepository, useClass: BillingApi },
+    { provide: TelemetryRepository, useClass: TelemetryApi }
   ]
 };
