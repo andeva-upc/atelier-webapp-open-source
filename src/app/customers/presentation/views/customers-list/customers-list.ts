@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matMailOutline } from '@ng-icons/material-icons/outline';
 import { 
@@ -34,6 +35,7 @@ import { CustomerForm } from '../customer-form/customer-form';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatChipsModule,
     NgIcon,
     Modal,
     CustomerForm,
