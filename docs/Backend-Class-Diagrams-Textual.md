@@ -325,11 +325,11 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
     *   **Atributos:** `- number: Integer`
     *   **Métodos:** `+ of(num: Integer): InternalNumber`
 *   **Clase: `WorkOrderTask`** `<<Entity>>`
-    *   **Atributos:** `- taskId: UUID`, `- description: String`, `- estimatedHours: BigDecimal`, `- status: TaskStatus`
-    *   **Métodos:** `+ startTask(): void`, `+ completeTask(realHours: BigDecimal): void`
+    *   **Atributos:** `- taskId: UUID`, `- description: String`, `- estimatedHours: BigDecimal`, `- unitPrice: Money`, `- status: TaskStatus`
+    *   **Métodos:** `+ startTask(): void`, `+ completeTask(realHours: BigDecimal): void`, `+ calculateTotal(): Money`
 *   **Clase: `WorkOrder`** `<<AggregateRoot>>`
-    *   **Atributos:** `- workOrderId: UUID`, `- workshopId: WorkshopId`, `- branchId: BranchId`, `- internalNumber: InternalNumber`, `- customerId: UUID`, `- billingCustomerId: UUID` *(Nullable, Caso Especial F)*, `- vehicleId: UUID`, `- assignedMechanicId: UUID`, `- driverName: String`, `- driverPhone: String`, `- diagnosis: String`, `- status: WorkOrderStatus`, `- tasks: List<WorkOrderTask>`
-    *   **Métodos:** `+ createDraft(branchId: BranchId, customerId: UUID, vehicleId: UUID, assignedMechanicId: UUID): WorkOrder`, `+ setBillingCustomer(billingCustomerId: UUID): void`, `+ addDriverDetails(name: String, phone: String): void`, `+ advanceStatus(newStatus: WorkOrderStatus): void`, `+ addTask(desc: String, estHours: Integer): void`, `+ assignMechanic(assignedMechanicId: UUID): void`, `+ addDiagnosis(diagnosis: String): void`
+    *   **Atributos:** `- workOrderId: UUID`, `- workshopId: WorkshopId`, `- branchId: BranchId`, `- internalNumber: InternalNumber`, `- customerId: UUID`, `- billingCustomerId: UUID` *(Nullable, Caso Especial F)*, `- vehicleId: UUID`, `- assignedMechanicId: UUID`, `- driverName: String`, `- driverPhone: String`, `- currentMileage: Integer` *(Captura el estado al entrar al taller)*, `- diagnosis: String`, `- status: WorkOrderStatus`, `- tasks: List<WorkOrderTask>`
+    *   **Métodos:** `+ createDraft(branchId: BranchId, customerId: UUID, vehicleId: UUID, assignedMechanicId: UUID, mileage: Integer): WorkOrder`, `+ setBillingCustomer(billingCustomerId: UUID): void`, `+ addDriverDetails(name: String, phone: String): void`, `+ advanceStatus(newStatus: WorkOrderStatus): void`, `+ addTask(desc: String, estHours: Integer, unitPrice: Money): void`, `+ assignMechanic(assignedMechanicId: UUID): void`, `+ addDiagnosis(diagnosis: String): void`
 *   **Interface: `IWorkOrderRepository`**
     *   **Métodos:** `+ findById(id: UUID): Optional<WorkOrder>`, `+ findByBranchId(branchId: BranchId): List<WorkOrder>`, `+ findByVehicleId(vehicleId: UUID): List<WorkOrder>`, `+ save(workOrder: WorkOrder): void`
 *   **Clase: `WorkOrderApplicationService`** `<<Service>>`
@@ -345,10 +345,23 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
         *   `- customerId: UUID`
         *   `- vehicleId: UUID`
         *   `- description: String`
+        *   `- currency: String`
         *   `- subtotal: Money`
-        *   `- tax: TaxRate`
+        *   `- discountAmount: Money`
+        *   `- taxRate: TaxRate`
         *   `- total: Money`
-    *   **Métodos:** `+ createQuote(subtotal: Money, tax: TaxRate): Quote`
+        *   `- items: List<QuoteItem>`
+    *   **Métodos:** `+ createQuote(subtotal: Money, tax: TaxRate): Quote`, `+ addItem(item: QuoteItem): void`, `+ applyDiscount(amount: Money): void`
+*   **Clase: `QuoteItem`** `<<Entity>>`
+    *   **Atributos:**
+        *   `- itemId: UUID`
+        *   `- type: String` *(PRODUCT | SERVICE)*
+        *   `- referenceId: UUID`
+        *   `- description: String`
+        *   `- quantity: BigDecimal`
+        *   `- unitPrice: Money`
+        *   `- totalPrice: Money`
+    *   **Métodos:** `+ calculateTotal(): Money`
 *   **Interface: `IQuoteRepository`**
     *   **Métodos:** `+ findById(id: UUID): Optional<Quote>`, `+ save(quote: Quote): void`
 *   **Clase: `QuoteApplicationService`** `<<Service>>`
@@ -648,8 +661,8 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
     *   **Atributos:** `- quantity: Integer`
     *   **Métodos:** `+ of(qty: Integer): StockQuantity`, `+ subtract(other: StockQuantity): StockQuantity`, `+ add(other: StockQuantity): StockQuantity`
 *   **Clase: `Product`** `<<AggregateRoot>>`
-    *   **Atributos:** `- productId: UUID`, `- workshopId: WorkshopId`, `- sku: String`, `- name: String`, `- category: String`, `- description: String`, `- currentStock: StockQuantity`, `- minimumStock: StockQuantity`
-    *   **Métodos:** `+ create(sku: String, name: String, category: String, description: String, minStock: StockQuantity): Product`, `+ registerMovement(type: MovementType, quantity: Integer): void`, `+ isStockBelowMinimum(): boolean`
+    *   **Atributos:** `- productId: UUID`, `- workshopId: WorkshopId`, `- sku: String`, `- name: String`, `- category: String`, `- description: String`, `- unitPrice: Money`, `- unitCost: Money`, `- currentStock: StockQuantity`, `- minimumStock: StockQuantity`
+    *   **Métodos:** `+ create(sku: String, name: String, category: String, unitPrice: Money, unitCost: Money, minStock: StockQuantity): Product`, `+ registerMovement(type: MovementType, quantity: Integer): void`, `+ updatePrices(price: Money, cost: Money): void`
 *   **Clase: `InventoryMovement`** `<<Entity>>`
     *   **Atributos:**
         *   `- movementId: Long`
@@ -735,11 +748,24 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
         *   `- workshopId: WorkshopId`
         *   `- workOrderId: UUID`
         *   `- type: VoucherType`
+        *   `- currency: String`
         *   `- subtotal: Money`
+        *   `- discountAmount: Money`
         *   `- tax: TaxRate`
         *   `- total: Money`
         *   `- sunatStatus: SunatStatus`
-    *   **Métodos:** `+ createInvoice(subtotal: Money, tax: TaxRate): Voucher`, `+ updateSunatStatus(status: SunatStatus): void`
+        *   `- items: List<VoucherItem>`
+    *   **Métodos:** `+ createInvoice(subtotal: Money, tax: TaxRate): Voucher`, `+ addItem(item: VoucherItem): void`, `+ updateSunatStatus(status: SunatStatus): void`
+*   **Clase: `VoucherItem`** `<<Entity>>`
+    *   **Atributos:**
+        *   `- itemId: UUID`
+        *   `- type: String`
+        *   `- referenceId: UUID`
+        *   `- description: String`
+        *   `- quantity: BigDecimal`
+        *   `- unitPrice: Money`
+        *   `- totalPrice: Money`
+    *   **Métodos:** `+ calculateTotal(): Money`
 *   **Interface: `IVoucherRepository`**
     *   **Métodos:** `+ findById(id: VoucherId): Optional<Voucher>`, `+ save(voucher: Voucher): void`
 *   **Enumeración: `PaymentMethod`**
@@ -750,7 +776,7 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
 *   **Interface: `IPaymentRepository`**
     *   **Métodos:** `+ save(payment: Payment): void`
 *   **Clase: `OutboxMessage`** `<<Entity>>`
-    *   **Atributos:** `- id: UUID`, `- eventType: String`, `- payload: String`, `- status: String`, `- createdAt: LocalDateTime`, `- processedAt: LocalDateTime`
+    *   **Atributos:** `- id: UUID`, `- workshopId: WorkshopId`, `- eventType: String`, `- payload: String`, `- status: String`, `- createdAt: LocalDateTime`, `- processedAt: LocalDateTime`
     *   **Métodos:** `+ markAsProcessed(): void`
 *   **Interface: `IOutboxRepository`**
     *   **Métodos:** `+ save(message: OutboxMessage): void`, `+ findPending(): List<OutboxMessage>`
