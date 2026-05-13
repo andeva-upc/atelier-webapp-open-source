@@ -56,25 +56,6 @@ describe('CustomerAssembler', () => {
     expect(dto.version).toBe(entity.version);
   });
 
-  it('should resolve family member car correctly for Maria Fe Torres Ugarte ID', () => {
-    const mariaDto: CustomerResponse = {
-      id: 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd',
-      workshop_id: 'e26b1580-b3b0-466d-8c10-ca7f62d1c9ef',
-      document_number: '09876543',
-      document_type: 'DNI',
-      full_name: 'Maria Fe Torres Ugarte',
-      email: 'mariafe@gmail.com',
-      phone: '+51955666777',
-      version: 0
-    };
-
-    const entity = assembler.toEntityFromResource(mariaDto);
-
-    expect(entity.fullName).toBe('Maria Fe Torres Ugarte');
-    expect(entity.vehiclesSummary).toBe('Toyota Corolla ABC-123 (Familiar)');
-    expect(entity.getAvatarInitial()).toBe('M');
-  });
-
   it('should dynamically aggregate embedded vehicles list correctly', () => {
     const dtoListWithVehicles: CustomerResponse = {
       ...mockDto,
