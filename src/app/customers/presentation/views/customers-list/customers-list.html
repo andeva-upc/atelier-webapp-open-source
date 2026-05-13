@@ -1,0 +1,196 @@
+<div class="customers-container">
+  <!-- Header Area -->
+  <header class="customers-header">
+    <div class="header-text">
+      <h1>{{ 'customers.title' | translate }}</h1>
+      @if (!isLoading()) {
+        <p class="subtitle">{{ 'customers.subtitle-count' | translate: { count: totalCustomersCount() } }}</p>
+      } @else {
+        <p class="subtitle">{{ 'customers.subtitle-loading' | translate }}</p>
+      }
+    </div>
+
+    <!-- New Customer Primary Button -->
+    <button class="btn-new-customer" (click)="openModal()">
+      <span class="btn-icon">+</span> {{ 'customers.new-customer' | translate }}
+    </button>
+  </header>
+
+  <!-- Filter & Search Section -->
+  <section class="filter-section">
+    <div class="search-bar-wrapper">
+      <ng-icon name="matSearch" class="search-icon"></ng-icon>
+      <input
+        type="text"
+        (input)="onSearchInput($event)"
+        placeholder="{{ 'customers.search-placeholder' | translate }}"
+        class="custom-search-input"
+      />
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-wrapper">
+      <div class="loader-spinner"></div>
+      <p>{{ 'customers.loading-records' | translate }}</p>
+    </div>
+  }
+
+  <!-- Main Grid Section -->
+  @if (!isLoading() && customers().length > 0) {
+    <section class="customers-grid">
+      @for (customer of customers(); track customer.id) {
+        <mat-card class="customer-card">
+          <mat-card-content class="card-content">
+            <!-- Top Row: Avatar & Name + Services -->
+            <div class="avatar-row">
+              <div class="avatar-circle">
+                {{ customer.getAvatarInitial() }}
+              </div>
+              <div class="identity-info">
+                <h2 class="customer-name">{{ customer.fullName }}</h2>
+                <span class="services-sub">{{ 'customers.services-performed' | translate: { count: customer.servicesCount } }}</span>
+              </div>
+              <button class="delete-btn" (click)="onDeleteCustomer($event, customer.id)" [title]="'Eliminar cliente'">
+                <ng-icon name="matDelete"></ng-icon>
+              </button>
+            </div>
+
+            <!-- Middle Row: Contact & Vehicles Info -->
+            <div class="info-section">
+              <div class="info-item">
+                <ng-icon name="matMailOutline" class="info-icon"></ng-icon>
+                <span class="info-text">{{ customer.email }}</span>
+              </div>
+              <div class="info-item">
+                <ng-icon name="matPhoneAndroid" class="info-icon"></ng-icon>
+                <span class="info-text">{{ customer.phone }}</span>
+              </div>
+              <div class="info-item">
+                <ng-icon name="matDirectionsCar" class="info-icon"></ng-icon>
+                <span class="info-text" [class.no-vehicles]="customer.vehiclesSummary === 'Sin vehículos registrados'">
+                  {{ customer.vehiclesSummary === 'Sin vehículos registrados' ? ('customers.no-vehicles' | translate) : customer.vehiclesSummary }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Bottom Row: Separator & Last Visit -->
+            <div class="card-footer">
+              <span class="visit-lbl">{{ 'customers.last-visit' | translate }}</span>
+              <span class="visit-val">{{ customer.lastVisitDate === 'Sin visitas registradas' ? ('customers.no-visits' | translate) : customer.lastVisitDate }}</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </section>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && customers().length === 0) {
+    <section class="empty-state">
+      <div class="empty-illustration">
+        <ng-icon name="matPersonSearch" class="empty-icon"></ng-icon>
+      </div>
+      <h2>{{ 'customers.empty.title' | translate }}</h2>
+      <p>{{ 'customers.empty.description' | translate }}</p>
+    </section>
+  }
+
+  <!-- Smart Customer Registration Modal -->
+  <app-modal [isOpen]="isModalOpen()" (close)="closeModal()">
+
+    <!-- Title Area (Dynamic steps accessed via #form reference) -->
+    <h2 modal-title>
+      @if (form.modalStep() === 'SEARCH') {
+        {{ 'customers.modal.title.search' | translate }}
+      } @else if (form.modalStep() === 'EXISTING') {
+        {{ 'customers.modal.title.existing' | translate }}
+      } @else if (form.modalStep() === 'PRE_REGISTERED') {
+        {{ 'customers.modal.title.pre-registered' | translate }}
+      } @else if (form.modalStep() === 'NOT_FOUND') {
+        {{ 'customers.modal.title.not-found' | translate }}
+      } @else if (form.modalStep() === 'MANUAL_BYPASS') {
+        {{ 'customers.modal.title.manual-bypass' | translate }}
+      }
+    </h2>
+
+    <!-- Body Content: Modular Form Component -->
+    <app-customer-form
+      modal-body
+      #form
+      (saved)="onCustomerSaved()"
+      (cancel)="closeModal()"
+    ></app-customer-form>
+
+    <!-- Modal Form Actions Row (exposing the template ref #form) -->
+    <div modal-actions class="modal-form-actions">
+
+      <!-- SEARCH STEP -->
+      @if (form.modalStep() === 'SEARCH') {
+        <button type="button" class="btn-cancel" (click)="closeModal()">
+          {{ 'customers.modal.actions.cancel' | translate }}
+        </button>
+        <button type="button" class="btn-save" (click)="form.onSearchRecord()" [disabled]="!form.isSearchValid() || form.isSearchingRecord()">
+          @if (form.isSearchingRecord()) {
+            <span class="btn-save-spinner"></span>
+          }
+          {{ form.isSearchingRecord() ? ('customers.modal.actions.searching' | translate) : ('customers.modal.actions.search' | translate) }}
+        </button>
+      }
+
+      <!-- EXISTING STEP -->
+      @if (form.modalStep() === 'EXISTING') {
+        <button type="button" class="btn-save" (click)="closeModal()">
+          {{ 'customers.modal.actions.close' | translate }}
+        </button>
+      }
+
+      <!-- PRE_REGISTERED STEP -->
+      @if (form.modalStep() === 'PRE_REGISTERED') {
+        <button type="button" class="btn-cancel" (click)="form.resetForm()" [disabled]="form.isSaving()">
+          {{ 'customers.modal.actions.back' | translate }}
+        </button>
+        <button type="button" class="btn-save" (click)="form.onSubmit()" [disabled]="form.isSaving()">
+          @if (form.isSaving()) {
+            <span class="btn-save-spinner"></span>
+          }
+          {{ form.isSaving() ? ('customers.modal.actions.officializing' | translate) : ('customers.modal.actions.officialize' | translate) }}
+        </button>
+      }
+
+      <!-- NOT_FOUND STEP -->
+      @if (form.modalStep() === 'NOT_FOUND') {
+        @if (!form.smsSent()) {
+          <button type="button" class="btn-cancel" (click)="form.enableManualBypass()">
+            {{ 'customers.modal.actions.manual-bypass' | translate }}
+          </button>
+          <button type="button" class="btn-save" (click)="form.sendRegisterLink()" [disabled]="form.customerForm.get('phone')?.invalid || form.isSaving()">
+            @if (form.isSaving()) {
+              <span class="btn-save-spinner"></span>
+            }
+            {{ form.isSaving() ? ('customers.modal.actions.sending' | translate) : ('customers.modal.actions.send-link' | translate) }}
+          </button>
+        }
+        @if (form.smsSent()) {
+          <button type="button" class="btn-save" (click)="closeModal()">
+            {{ 'customers.modal.actions.finish' | translate }}
+          </button>
+        }
+      }
+
+      <!-- MANUAL_BYPASS STEP -->
+      @if (form.modalStep() === 'MANUAL_BYPASS') {
+        <button type="button" class="btn-cancel" (click)="form.resetForm()" [disabled]="form.isSaving()">
+          {{ 'customers.modal.actions.back' | translate }}
+        </button>
+        <button type="button" class="btn-save" (click)="form.onSubmit()" [disabled]="form.customerForm.invalid || form.isSaving()">
+          @if (form.isSaving()) {
+            <span class="btn-save-spinner"></span>
+          }
+          {{ form.isSaving() ? ('customers.modal.actions.saving' | translate) : ('customers.modal.actions.register' | translate) }}
+        </button>
+      }
+    </div>
+  </app-modal>
+</div>

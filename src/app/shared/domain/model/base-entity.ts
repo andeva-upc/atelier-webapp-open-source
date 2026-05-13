@@ -21,4 +21,5 @@ export interface BaseEntity {
    */
   id: string | number;
   workshopId: string;
+  deletedAt?: string | Date;
 }

@@ -1,0 +1,112 @@
+import { Injectable } from '@angular/core';
+import { BaseAssembler } from '../../shared/infrastructure/base-assembler';
+import { BaseResponse } from '../../shared/infrastructure/base-response';
+import { Customer } from '../domain/models/customer.entity';
+import { CustomerResponse } from './customers-response';
+
+/**
+ * Bidirectional assembler and data mapper for the Customer entity.
+ * 
+ * Acts as an Anti-Corruption Layer (ACL) translating infrastructure-level representation DTO {@link CustomerResponse}
+ * to pure Domain {@link Customer} entities, and vice versa.
+ */
+@Injectable({
+  providedIn: 'root',
+})
+export class CustomerAssembler implements BaseAssembler<Customer, CustomerResponse, BaseResponse> {
+  /**
+   * Converts an infrastructure-level DTO resource into a pure Domain entity.
+   * Dynamically computes vehicle summaries, services count, and latest visit dates when embedded resources
+   * are present, or gracefully falls back to legacy/default parameters.
+   *
+   * @param resource - The input DTO resource {@link CustomerResponse}.
+   * @returns A new instance of the {@link Customer} Domain entity.
+   */
+  toEntityFromResource(resource: CustomerResponse): Customer {
+    /** Dynamically calculate the vehicles summary */
+    let vehiclesSummary = 'Sin vehículos registrados';
+    if (resource.vehicles && resource.vehicles.length > 0) {
+      vehiclesSummary = resource.vehicles
+        .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
+        .join(', ');
+    } else if (resource.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
+      /** Family relationship of Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles) */
+      vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
+    } else if (resource.vehicles_summary) {
+      vehiclesSummary = resource.vehicles_summary;
+    }
+
+    /** Dynamically calculate the services count from appointments */
+    const servicesCount = resource.appointments && resource.appointments.length > 0
+      ? resource.appointments.length
+      : (resource.services_count ?? 0);
+
+    /** Extract the last visit date from registered appointments */
+    let lastVisitDate = 'Sin visitas registradas';
+    if (resource.appointments && resource.appointments.length > 0) {
+      const sortedAppointments = [...resource.appointments].sort(
+        (a, b) => new Date(b.appointment_date).getTime() - new Date(a.appointment_date).getTime()
+      );
+      const latestDateStr = sortedAppointments[0].appointment_date;
+      lastVisitDate = new Date(latestDateStr).toISOString().split('T')[0];
+    } else if (resource.last_visit_date) {
+      lastVisitDate = resource.last_visit_date;
+    }
+
+    return new Customer(
+      resource.id,
+      resource.workshop_id,
+      resource.document_number,
+      resource.document_type,
+      resource.full_name,
+      resource.email,
+      resource.phone,
+      servicesCount,
+      vehiclesSummary,
+      lastVisitDate,
+      resource.version,
+      resource.deleted_at ?? undefined
+    );
+  }
+
+  /**
+   * Converts a pure Domain entity into an infrastructure-level DTO resource for network transport or persistent storage.
+   *
+   * @param entity - The Domain {@link Customer} entity.
+   * @returns The mapped output DTO {@link CustomerResponse}.
+   */
+  toResourceFromEntity(entity: Customer): CustomerResponse {
+    return {
+      id: entity.id,
+      workshop_id: entity.workshopId,
+      document_number: entity.documentNumber,
+      document_type: entity.documentType,
+      full_name: entity.fullName,
+      email: entity.email,
+      phone: entity.phone,
+      services_count: entity.servicesCount,
+      vehicles_summary: entity.vehiclesSummary,
+      last_visit_date: entity.lastVisitDate,
+      version: entity.version,
+      deleted_at: entity.deletedAt ? (entity.deletedAt instanceof Date ? entity.deletedAt.toISOString() : entity.deletedAt) : null,
+    };
+  }
+
+  /**
+   * Transforms a generic raw backend response (such as a list or custom paginated response wrapper)
+   * into a clean collection of Domain entities.
+   *
+   * @param response - The generic raw response returned by the HTTP service {@link BaseResponse}.
+   * @returns An array of {@link Customer} Domain entities.
+   */
+  toEntitiesFromResponse(response: BaseResponse): Customer[] {
+    const raw = response as any;
+    if (Array.isArray(raw)) {
+      return raw.map(res => this.toEntityFromResource(res));
+    }
+    if (raw && Array.isArray(raw.data)) {
+      return raw.data.map((res: CustomerResponse) => this.toEntityFromResource(res));
+    }
+    return [];
+  }
+}

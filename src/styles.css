@@ -1,1 +1,6 @@
+@import "primeicons/primeicons.css";
 
+@font-face {
+  font-family: "Zizou Slab";
+  src: url("assets/fonts/Zizou Slab-Medium.otf") format("opentype");
+}
