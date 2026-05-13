@@ -108,9 +108,6 @@ export class CustomersApiEndpoint
         vehiclesSummary = customerVehicles
           .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
           .join(', ');
-      } else if (customer.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
-        /** Family relationship for Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles) */
-        vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
       }
 
       /** Filter appointments associated with the customer ID */

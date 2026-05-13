@@ -29,9 +29,6 @@ export class CustomerAssembler implements BaseAssembler<Customer, CustomerRespon
       vehiclesSummary = resource.vehicles
         .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
         .join(', ');
-    } else if (resource.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
-      /** Family relationship of Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles) */
-      vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
     } else if (resource.vehicles_summary) {
       vehiclesSummary = resource.vehicles_summary;
     }
