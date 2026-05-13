@@ -1,9 +1,11 @@
+import { BaseEntity } from '../../../shared/domain/model/base-entity';
+
 /**
  * Domain model representing a Workshop Customer (the vehicle owner).
  * 
  * Follows Pure TypeScript implementation decoupled from any UI or infrastructure framework.
  */
-export class Customer {
+export class Customer implements BaseEntity {
   constructor(
     public readonly id: string,
     public readonly workshopId: string,

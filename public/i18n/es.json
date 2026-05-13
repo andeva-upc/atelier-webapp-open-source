@@ -19,7 +19,7 @@
     "last-visit": "Última visita",
     "empty": {
       "title": "No se encontraron clientes",
-      "description": "Intenta realizar otra búsqueda con un término diferente."
+      "description": "Intenta buscar nuevamente con un término diferente."
     },
     "modal": {
       "title": {
