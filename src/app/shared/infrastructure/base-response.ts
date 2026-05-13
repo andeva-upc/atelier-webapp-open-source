@@ -6,6 +6,7 @@
  */
 export interface BaseResource {
   id: string | number;
+  workshop_id: string;
 }
 
 /**
