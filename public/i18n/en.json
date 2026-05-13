@@ -152,5 +152,40 @@
       "load-quotes": "Failed to load quotations",
       "approve-quote": "Failed to approve quotation"
     }
+  },
+  "telemetry": {
+    "title": "OBD2 Telemetry",
+    "subtitle": "Real-time diagnosis - {{count}} active devices",
+    "actions": {
+      "link-obd": "Link OBD2",
+      "unlink": "Unlink"
+    },
+    "vehicles": {
+      "title": "Vehicles",
+      "active": "Active",
+      "inactive": "Unlinked"
+    },
+    "metrics": {
+      "rpm": "RPM",
+      "temp": "Temperature",
+      "voltage": "Voltage",
+      "engine-load": "Engine Load",
+      "fuel": "Fuel",
+      "speed": "Speed"
+    },
+    "history": {
+      "title": "Telemetry History",
+      "rpm-legend": "RPM",
+      "temp-legend": "Temp (°C)"
+    },
+    "alerts": {
+      "title": "Active DTC Alerts",
+      "severity": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      }
+    }
   }
 }

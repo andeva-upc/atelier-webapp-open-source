@@ -1,0 +1,45 @@
+<div class="telemetry-container">
+  <!-- Header Section -->
+  <header class="page-header">
+    <div class="header-info">
+      <h1>{{ 'telemetry.title' | translate }}</h1>
+      <p>{{ 'telemetry.subtitle' | translate }}</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-primary">
+        <ng-icon name="matLink"></ng-icon>
+        {{ 'telemetry.actions.link-obd' | translate }}
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <div class="telemetry-grid">
+    <!-- Left Sidebar: Vehicles List -->
+    <aside class="vehicles-sidebar">
+      <!-- TODO: Phase 5 - app-vehicle-telemetry-selector -->
+      <div class="placeholder-card">Vehicle Selector Placeholder</div>
+    </aside>
+
+    <!-- Right Content: Metrics & Charts -->
+    <main class="telemetry-main">
+      <!-- Metrics Grid -->
+      <section class="metrics-section">
+        <!-- TODO: Phase 5 - app-metrics-grid -->
+        <div class="placeholder-card">Metrics Grid Placeholder</div>
+      </section>
+
+      <!-- History Chart -->
+      <section class="history-section">
+        <!-- TODO: Phase 6 - app-history-chart -->
+        <div class="placeholder-card">History Chart Placeholder</div>
+      </section>
+
+      <!-- Active Alerts -->
+      <section class="alerts-section">
+        <!-- TODO: Phase 5 - app-dtc-alerts-list -->
+        <div class="placeholder-card">DTC Alerts Placeholder</div>
+      </section>
+    </main>
+  </div>
+</div>

@@ -152,5 +152,40 @@
       "load-quotes": "Error al cargar las cotizaciones",
       "approve-quote": "Error al aprobar la cotización"
     }
+  },
+  "telemetry": {
+    "title": "Telemetría OBD2",
+    "subtitle": "Diagnóstico en tiempo real - {{count}} dispositivos activos",
+    "actions": {
+      "link-obd": "Vincular OBD2",
+      "unlink": "Desvincular"
+    },
+    "vehicles": {
+      "title": "Vehículos",
+      "active": "Activo",
+      "inactive": "Sin vincular"
+    },
+    "metrics": {
+      "rpm": "RPM",
+      "temp": "Temperatura",
+      "voltage": "Voltaje",
+      "engine-load": "Carga Motor",
+      "fuel": "Combustible",
+      "speed": "Velocidad"
+    },
+    "history": {
+      "title": "Historial de Telemetría",
+      "rpm-legend": "RPM",
+      "temp-legend": "Temp (°C)"
+    },
+    "alerts": {
+      "title": "Alertas DTC Activas",
+      "severity": {
+        "low": "Baja",
+        "medium": "Media",
+        "high": "Alta",
+        "critical": "Crítica"
+      }
+    }
   }
 }
