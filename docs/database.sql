@@ -256,9 +256,10 @@ CREATE TABLE work_orders (
     billing_customer_id CHAR(36) NULL COMMENT 'Cliente pagador real (ej: aseguradora para siniestros) (Caso Especial F)',
     vehicle_id CHAR(36) NOT NULL,
     assigned_mechanic_id CHAR(36) NOT NULL,
-    driver_name VARCHAR(150) NULL COMMENT 'Nombre del conductor (para flotas o casos especiales)',
-    driver_phone VARCHAR(50) NULL COMMENT 'Teléfono del conductor (para flotas o casos especiales)',
-    diagnosis TEXT NULL COMMENT 'Diagnóstico técnico del mecánico (US016 exige esto)',
+    driver_name VARCHAR(150) NULL,
+    driver_phone VARCHAR(50) NULL,
+    current_mileage INT NOT NULL DEFAULT 0 COMMENT 'Kilometraje al momento de recepción (US032)',
+    diagnosis TEXT NULL,
     status VARCHAR(50) NOT NULL DEFAULT 'DRAFT' COMMENT 'Enum: DRAFT, DIAGNOSING, IN_PROGRESS, COMPLETED, INVOICED',
     
     version BIGINT NOT NULL DEFAULT 0,
@@ -273,7 +274,8 @@ CREATE TABLE work_orders (
     CONSTRAINT fk_wo_billing_customer FOREIGN KEY (billing_customer_id) REFERENCES customers(id) ON DELETE RESTRICT,
     CONSTRAINT fk_wo_vehicle FOREIGN KEY (vehicle_id) REFERENCES vehicles(id) ON DELETE RESTRICT,
     CONSTRAINT fk_wo_mechanic FOREIGN KEY (assigned_mechanic_id) REFERENCES users(id) ON DELETE RESTRICT,
-    CONSTRAINT chk_wo_number CHECK (internal_number > 0)
+    CONSTRAINT chk_wo_number CHECK (internal_number > 0),
+    CONSTRAINT chk_wo_mileage CHECK (current_mileage >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE INDEX idx_wo_tenant_status ON work_orders(workshop_id, status);
@@ -284,6 +286,7 @@ CREATE TABLE work_order_tasks (
     work_order_id CHAR(36) NOT NULL,
     description TEXT NOT NULL,
     estimated_hours DECIMAL(5,2) NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Precio de mano de obra por hora o por tarea',
     status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT 'Enum: PENDING, DOING, DONE',
     
     version BIGINT NOT NULL DEFAULT 0,
@@ -293,7 +296,8 @@ CREATE TABLE work_order_tasks (
     created_by CHAR(36) NULL,
     updated_by CHAR(36) NULL,
     CONSTRAINT fk_task_wo FOREIGN KEY (work_order_id) REFERENCES work_orders(id) ON DELETE RESTRICT,
-    CONSTRAINT chk_task_hours CHECK (estimated_hours > 0)
+    CONSTRAINT chk_task_hours CHECK (estimated_hours > 0),
+    CONSTRAINT chk_task_price CHECK (unit_price >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Tabla de Cotizaciones Digitales (US026, US027)
@@ -303,7 +307,9 @@ CREATE TABLE quotes (
     customer_id CHAR(36) NOT NULL,
     vehicle_id CHAR(36) NOT NULL,
     description TEXT NULL,
+    currency VARCHAR(3) NOT NULL DEFAULT 'PEN',
     subtotal_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    discount_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Monto de descuento aplicado (US029)',
     tax_percentage DECIMAL(5,2) NOT NULL DEFAULT 18.00,
     total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     
@@ -316,6 +322,20 @@ CREATE TABLE quotes (
     CONSTRAINT fk_quote_vehicle FOREIGN KEY (vehicle_id) REFERENCES vehicles(id) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Tabla de Detalle de Cotizaciones (US026)
+CREATE TABLE quote_items (
+    id CHAR(36) PRIMARY KEY,
+    quote_id CHAR(36) NOT NULL,
+    item_type VARCHAR(20) NOT NULL COMMENT 'Enum: PRODUCT, SERVICE',
+    reference_id CHAR(36) NULL COMMENT 'ID del producto o tarea base',
+    description VARCHAR(255) NOT NULL,
+    quantity DECIMAL(10,2) NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    
+    CONSTRAINT fk_qi_quote FOREIGN KEY (quote_id) REFERENCES quotes(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ==========================================
 -- 5. BOUNDED CONTEXT: INVENTORY (Warehouse)
 -- ==========================================
@@ -325,10 +345,12 @@ CREATE TABLE products (
     workshop_id CHAR(36) NOT NULL COMMENT 'Aislamiento Tenant',
     sku VARCHAR(50) NOT NULL,
     name VARCHAR(150) NOT NULL,
-    category VARCHAR(50) NULL COMMENT 'Categoría de repuesto (US017 exige esto)',
+    category VARCHAR(50) NULL COMMENT 'Categoría de repuesto (US017)',
     description TEXT,
+    unit_price DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Precio de venta al público (US026)',
+    unit_cost DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Costo de adquisición para calcular rentabilidad (US030)',
     current_stock INT NOT NULL DEFAULT 0,
-    minimum_stock INT NOT NULL DEFAULT 0 COMMENT 'Stock mínimo para alertas preventivas (US010 exige esto)',
+    minimum_stock INT NOT NULL DEFAULT 0 COMMENT 'Stock mínimo para alertas (US010)',
     
     version BIGINT NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -338,6 +360,8 @@ CREATE TABLE products (
     updated_by CHAR(36) NULL,
     CONSTRAINT fk_products_workshop FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE RESTRICT,
     CONSTRAINT chk_product_stock CHECK (current_stock >= 0),
+    CONSTRAINT chk_product_price CHECK (unit_price >= 0),
+    CONSTRAINT chk_product_cost CHECK (unit_cost >= 0),
     UNIQUE (workshop_id, sku)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -363,10 +387,10 @@ CREATE TABLE vouchers (
     work_order_id CHAR(36) NOT NULL,
     type VARCHAR(20) NOT NULL COMMENT 'Enum: INVOICE, RECEIPT, CREDIT_NOTE',
     subtotal_amount DECIMAL(10,2) NOT NULL,
-    subtotal_currency VARCHAR(3) NOT NULL DEFAULT 'PEN',
+    discount_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Descuento aplicado (US029)',
     tax_percentage DECIMAL(5,2) NOT NULL,
     total_amount DECIMAL(10,2) NOT NULL,
-    total_currency VARCHAR(3) NOT NULL DEFAULT 'PEN',
+    currency VARCHAR(3) NOT NULL DEFAULT 'PEN',
     sunat_status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT 'Enum: PENDING, ACCEPTED, REJECTED',
     
     version BIGINT NOT NULL DEFAULT 0,
@@ -378,6 +402,20 @@ CREATE TABLE vouchers (
     CONSTRAINT fk_voucher_workshop FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE RESTRICT,
     CONSTRAINT fk_voucher_wo FOREIGN KEY (work_order_id) REFERENCES work_orders(id) ON DELETE RESTRICT,
     CONSTRAINT chk_voucher_amounts CHECK (subtotal_amount >= 0 AND total_amount >= 0 AND tax_percentage >= 0)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Tabla de Detalle de Comprobantes (Reflejo de la US026 para facturación)
+CREATE TABLE voucher_items (
+    id CHAR(36) PRIMARY KEY,
+    voucher_id CHAR(36) NOT NULL,
+    item_type VARCHAR(20) NOT NULL,
+    reference_id CHAR(36) NULL,
+    description VARCHAR(255) NOT NULL,
+    quantity DECIMAL(10,2) NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    
+    CONSTRAINT fk_vi_voucher FOREIGN KEY (voucher_id) REFERENCES vouchers(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE INDEX idx_vouchers_tenant_sunat ON vouchers(workshop_id, sunat_status);
@@ -406,11 +444,13 @@ CREATE INDEX idx_payments_voucher ON payments(voucher_id);
 
 CREATE TABLE outbox_messages (
     id CHAR(36) PRIMARY KEY,
+    workshop_id CHAR(36) NOT NULL COMMENT 'Tenant que generó el evento (TS006)',
     event_type VARCHAR(100) NOT NULL,
     payload JSON NOT NULL,
     status VARCHAR(20) NOT NULL DEFAULT 'PENDING' COMMENT 'Enum: PENDING, SENT, FAILED',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    processed_at TIMESTAMP NULL
+    processed_at TIMESTAMP NULL,
+    CONSTRAINT fk_outbox_workshop FOREIGN KEY (workshop_id) REFERENCES workshops(id) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Patrón Outbox para consistencia eventual';
 
 

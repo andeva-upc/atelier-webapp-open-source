@@ -6,9 +6,15 @@
       "business_name": "EuroMotors - Miraflores",
       "subscription_plan": "PRO",
       "is_active": true,
-      "version": 1,
-      "created_at": "2026-01-15T08:00:00Z",
-      "updated_at": "2026-01-15T08:00:00Z"
+      "version": 1
+    },
+    {
+      "id": "w2-classic-cars-id",
+      "tax_id": "20998877665",
+      "business_name": "Classic Cars Lab - Surco",
+      "subscription_plan": "LITE",
+      "is_active": true,
+      "version": 1
     }
   ],
   "branches": [
@@ -17,320 +23,327 @@
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "name": "Sede Miraflores",
       "address": "Av. Larco 123, Miraflores",
-      "phone": "+5114445555",
-      "version": 1,
-      "created_at": "2026-01-15T08:00:00Z",
-      "updated_at": "2026-01-15T08:00:00Z"
+      "phone": "+5114445555"
     }
   ],
   "users": [
     {
-      "id": "7ac2e9bc-1b32-4f11-9a99-dc0aef48721c",
+      "id": "u-admin-1",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "branch_id": null,
-      "email": "admin.miraflores@euromotors.com",
-      "password_hash": "$2a$10$Xm8OQ9eB9zK.O5.aL239OeK2u.w6V1S8jD/79vG9sXf.zG2Bv4K1O",
-      "google_id": null,
+      "email": "admin@euromotors.com",
       "role": "ADMIN",
-      "version": 1,
-      "created_at": "2026-01-15T08:15:00Z",
-      "updated_at": "2026-01-15T08:15:00Z"
+      "full_name": "Carlos Admin"
     },
     {
-      "id": "3bd36128-4c8d-4aee-b204-765f04ef31dd",
-      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
-      "email": "ana.receptionist@euromotors.com",
-      "password_hash": "$2a$10$Xm8OQ9eB9zK.O5.aL239OeK2u.w6V1S8jD/79vG9sXf.zG2Bv4K1O",
-      "google_id": null,
-      "role": "RECEPTIONIST",
-      "version": 1,
-      "created_at": "2026-05-05T08:00:00Z",
-      "updated_at": "2026-05-05T08:00:00Z"
-    },
-    {
-      "id": "0bd36128-4c8d-4aee-b204-765f04ef31aa",
+      "id": "u-mechanic-1",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
       "email": "mario.mechanic@euromotors.com",
-      "password_hash": "$2a$10$Y1r7L6nN7aO4w.G3aZ56OeM2u.e6V8A1jP/99vQ1sZf.rE2Tv9K2M",
-      "google_id": null,
       "role": "MECHANIC",
       "specialty": "GENERAL_MECHANIC",
-      "version": 1,
-      "created_at": "2026-01-20T11:00:00Z",
-      "updated_at": "2026-01-20T11:00:00Z"
-    },
-    {
-      "id": "u1bc9d42-ef10-4318-be42-df10b9ef182c",
-      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "branch_id": null,
-      "email": "aldo.mendoza@outlook.com",
-      "password_hash": null,
-      "google_id": "google-oauth2|112233445566",
-      "role": "CUSTOMER",
-      "version": 0,
-      "created_at": "2026-05-01T10:00:00Z",
-      "updated_at": "2026-05-01T10:00:00Z"
-    },
-    {
-      "id": "u3de1f64-0a32-5b3a-dfca-be21c9fa20cd",
-      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "branch_id": null,
-      "email": "mariafe@gmail.com",
-      "password_hash": null,
-      "google_id": "google-oauth2|998877665544",
-      "role": "CUSTOMER",
-      "version": 0,
-      "created_at": "2026-05-02T12:00:00Z",
-      "updated_at": "2026-05-02T12:00:00Z"
+      "full_name": "Mario Rivas"
     }
   ],
   "customers": [
     {
-      "id": "c1a938be-23ef-4f1b-a9f8-be31faee01bc",
+      "id": "c1-aldo",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "document_number": "45678912",
       "document_type": "DNI",
       "full_name": "Aldo Mendoza Riva",
       "email": "aldo.mendoza@outlook.com",
-      "phone": "+51999888777",
-      "version": 1,
-      "created_at": "2026-01-25T10:00:00Z",
-      "updated_at": "2026-01-25T10:00:00Z"
+      "phone": "+51999888777"
     },
     {
-      "id": "c3c047ca-51ff-4c22-b9cf-ae08fbff34dd",
-      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "document_number": "09876543",
-      "document_type": "DNI",
-      "full_name": "Maria Fe Torres Ugarte",
-      "email": "mariafe@gmail.com",
-      "phone": "+51955666777",
-      "version": 0,
-      "created_at": "2026-01-20T10:15:00Z",
-      "updated_at": "2026-01-20T10:15:00Z"
-    },
-    {
-      "id": "c5e047ca-51ff-4c22-b9cf-ae08fbff56ff",
+      "id": "c2-distribuidora",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "document_number": "20888777665",
       "document_type": "RUC",
-      "full_name": "Distribuidora de Alimentos Lima S.A.",
+      "full_name": "Distribuidora Lima S.A.",
       "email": "logistica@distribuidoralima.com",
-      "phone": "+51944332211",
-      "version": 0,
-      "created_at": "2026-03-02T12:00:00Z",
-      "updated_at": "2026-03-02T12:00:00Z"
+      "phone": "+51944332211"
     }
   ],
   "vehicles": [
     {
-      "id": "v1bc9d42-ef10-4318-be42-df10b9ef182a",
-      "customer_id": "c1a938be-23ef-4f1b-a9f8-be31faee01bc",
+      "id": "v1-corolla",
+      "customer_id": "c1-aldo",
       "plate_number": "ABC-123",
       "brand": "Toyota",
       "model": "Corolla",
       "year": 2022,
-      "vin": "9T1FJ12FS80918",
       "usage_type": "PARTICULAR",
-      "version": 1,
-      "created_at": "2026-01-25T10:15:00Z",
-      "updated_at": "2026-01-25T10:15:00Z"
+      "current_mileage": 42150
     },
     {
-      "id": "v5ef2g75-1b43-6c4b-efdb-cf32da0131dd",
-      "customer_id": "c5e047ca-51ff-4c22-b9cf-ae08fbff56ff",
+      "id": "v2-volvo",
+      "customer_id": "c2-distribuidora",
       "plate_number": "B9R-432",
       "brand": "Volvo",
-      "model": "FH16 Heavy Duty",
+      "model": "FH16",
       "year": 2020,
-      "vin": "4V4NC9EJ2LAN1029",
       "usage_type": "HEAVY_DUTY",
-      "version": 1,
-      "created_at": "2026-03-02T12:30:00Z",
-      "updated_at": "2026-03-02T12:30:00Z"
-    }
-  ],
-  "customer_vehicles": [
-    {
-      "customer_id": "c1a938be-23ef-4f1b-a9f8-be31faee01bc",
-      "vehicle_id": "v1bc9d42-ef10-4318-be42-df10b9ef182a",
-      "association_type": "OWNER"
-    },
-    {
-      "customer_id": "c3c047ca-51ff-4c22-b9cf-ae08fbff34dd",
-      "vehicle_id": "v1bc9d42-ef10-4318-be42-df10b9ef182a",
-      "association_type": "FAMILY_MEMBER"
+      "current_mileage": 128500
     }
   ],
   "work_bays": [
     {
       "id": "wb1",
       "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
-      "name": "Bahía de Inspección Rápida 1",
-      "is_active": true
+      "name": "Bahía 1 - Elevador",
+      "status": "OCCUPIED",
+      "vehicle_id": "v1-corolla"
     },
     {
       "id": "wb2",
       "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
-      "name": "Bahía de Mecánica General 2",
-      "is_active": true
+      "name": "Bahía 2 - Escaneo",
+      "status": "VACANT",
+      "vehicle_id": null
     }
   ],
   "appointments": [
     {
-      "id": "a1ba938d-ef12-42da-bebe-0f192bca76ff",
+      "id": "a1",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
-      "customer_id": "c1a938be-23ef-4f1b-a9f8-be31faee01bc",
-      "vehicle_id": "v1bc9d42-ef10-4318-be42-df10b9ef182a",
-      "appointment_date": "2026-05-10T09:00:00Z",
-      "status": "SCHEDULED",
-      "version": 0,
-      "created_at": "2026-05-06T18:00:00Z",
-      "updated_at": "2026-05-06T18:00:00Z"
+      "customer_id": "c1-aldo",
+      "vehicle_id": "v1-corolla",
+      "appointment_date": "2026-05-15T09:00:00Z",
+      "status": "SCHEDULED"
     },
     {
-      "id": "a5fa938d-ef12-42da-bebe-0f192bca80dd",
+      "id": "a2-hybrid",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
-      "customer_id": null,
-      "vehicle_id": null,
-      "appointment_date": "2026-05-12T10:00:00Z",
       "status": "PENDING_APPROVAL",
-      "pre_registered_full_name": "Pedro Alcantara",
-      "pre_registered_document_type": "DNI",
-      "pre_registered_document_number": "77889900",
-      "pre_registered_email": "pedro.alcantara@gmail.com",
-      "pre_registered_phone": "+51987654321",
-      "pre_registered_vehicle_plate": "XYZ-789",
-      "pre_registered_vehicle_brand_model": "Toyota Corolla 2024",
-      "version": 0,
-      "created_at": "2026-05-07T12:00:00Z",
-      "updated_at": "2026-05-07T12:00:00Z"
+      "pre_registered_full_name": "Juan Perez",
+      "pre_registered_email": "juan.perez@gmail.com",
+      "pre_registered_phone": "988777666",
+      "pre_registered_vehicle_plate": "XYZ-999"
     }
   ],
   "obd2_devices": [
     {
-      "id": "d1ba289c-efef-42d1-9a9a-ea081bcf23ff",
+      "id": "d1",
       "mac_address": "AA:BB:CC:DD:EE:01",
-      "vehicle_id": "v1bc9d42-ef10-4318-be42-df10b9ef182a",
-      "last_ping": "2026-05-06T18:00:00Z",
+      "vehicle_id": "v1-corolla",
       "status": "ACTIVE"
     }
   ],
   "vehicle_dtc_alerts": [
     {
-      "id": "al1ba938d-ef12-42da-bebe-0f192bca99aa",
-      "vehicle_id": "v1bc9d42-ef10-4318-be42-df10b9ef182a",
+      "id": "al1",
+      "vehicle_id": "v1-corolla",
       "dtc_code": "P0301",
       "severity": "CRITICAL",
-      "description": "Cylinder 1 Misfire Detected",
-      "is_resolved": false,
-      "created_at": "2026-05-06T18:10:00Z"
-    }
-  ],
-  "telemetry_snapshots": [
-    {
-      "id": "t1ba289c-efef-42d1-9a9a-ea081bcf55ff",
-      "vehicle_id": "v1bc9d42-ef10-4318-be42-df10b9ef182a",
-      "odometer_km": 42150,
-      "fuel_level_percent": 65.5,
-      "coolant_temp_c": 92,
-      "battery_voltage": 13.8,
-      "rpm": 1800,
-      "speed_kmh": 85,
-      "timestamp": "2026-05-06T18:00:00Z"
+      "description": "Falla de encendido en cilindro 1",
+      "is_active": true
     }
   ],
   "work_orders": [
     {
-      "id": "wo1ba38c-ef12-4f3d-be23-df129bca23bb",
+      "id": "wo1",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
-      "vehicle_id": "v1bc9d42-ef10-4318-be42-df10b9ef182a",
-      "customer_id": "c1a938be-23ef-4f1b-a9f8-be31faee01bc",
-      "billing_customer_id": null,
-      "assigned_mechanic_id": "0bd36128-4c8d-4aee-b204-765f04ef31aa",
-      "status": "IN_PROGRESS",
-      "current_odometer": 42150,
-      "version": 1,
-      "created_at": "2026-05-06T18:30:00Z",
-      "updated_at": "2026-05-06T18:35:00Z"
-    },
-    {
-      "id": "wo3ba38c-ef12-4f3d-be23-df129bca23dd",
-      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
-      "vehicle_id": "v5ef2g75-1b43-6c4b-efdb-cf32da0131dd",
-      "customer_id": "c5e047ca-51ff-4c22-b9cf-ae08fbff56ff",
-      "billing_customer_id": "c5e047ca-51ff-4c22-b9cf-ae08fbff56ff",
-      "assigned_mechanic_id": "0bd36128-4c8d-4aee-b204-765f04ef31aa",
-      "status": "COMPLETED",
-      "current_odometer": 128500,
-      "version": 2,
-      "created_at": "2026-05-05T09:00:00Z",
-      "updated_at": "2026-05-05T17:00:00Z"
+      "internal_number": 1001,
+      "customer_id": "c1-aldo",
+      "vehicle_id": "v1-corolla",
+      "assigned_mechanic_id": "u-mechanic-1",
+      "current_mileage": 42150,
+      "status": "IN_PROGRESS"
     }
   ],
   "work_order_tasks": [
     {
-      "id": "wt1ba938d-ef12-42da-bebe-0f192bca76aa",
-      "work_order_id": "wo1ba38c-ef12-4f3d-be23-df129bca23bb",
-      "description": "Cambio de Bujías de Encendido y Limpieza de Inyectores",
-      "price": 180,
-      "status": "IN_PROGRESS"
+      "id": "wt1",
+      "work_order_id": "wo1",
+      "description": "Afinamiento Electrónico",
+      "estimated_hours": 2.5,
+      "unit_price": 80.00,
+      "status": "DOING"
     }
   ],
   "products": [
     {
-      "id": "p1ba938d-ef12-42da-bebe-0f192bca11aa",
+      "id": "p1-aceite",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
-      "sku": "ACE-SYN-5W30",
-      "name": "Aceite Sintético Castrol 5W-30",
-      "stock": 45
+      "sku": "CASTROL-5W30",
+      "name": "Aceite Castrol Sintético 5W30",
+      "category": "Lubricantes",
+      "unit_price": 55.00,
+      "unit_cost": 32.00,
+      "current_stock": 120,
+      "minimum_stock": 20
+    },
+    {
+      "id": "p2-filtro",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "sku": "FIL-TOY-001",
+      "name": "Filtro de Aceite Toyota Original",
+      "category": "Filtros",
+      "unit_price": 35.00,
+      "unit_cost": 15.00,
+      "current_stock": 45,
+      "minimum_stock": 10
     }
   ],
   "quotes": [
     {
-      "id": "q1ba938d-ef12-42da-bebe-0f192bca99bb",
-      "work_order_id": "wo1ba38c-ef12-4f3d-be23-df129bca23bb",
-      "total_amount": 250,
-      "status": "APPROVED",
-      "created_at": "2026-05-06T18:40:00Z"
+      "id": "q1",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "vehicle_id": "v1-corolla",
+      "currency": "PEN",
+      "subtotal_amount": 250.00,
+      "discount_amount": 20.00,
+      "tax_percentage": 18.00,
+      "total_amount": 271.40,
+      "status": "APPROVED"
     }
   ],
-  "inventory_movements": [
+  "quote_items": [
     {
-      "id": "im1",
-      "product_id": "p1ba938d-ef12-42da-bebe-0f192bca11aa",
-      "quantity": 50,
-      "type": "STOCK_IN",
-      "created_at": "2026-05-01T09:00:00Z"
+      "id": "qi1",
+      "quote_id": "q1",
+      "item_type": "SERVICE",
+      "description": "Mano de Obra Cambio de Aceite",
+      "quantity": 1,
+      "unit_price": 50.00,
+      "total_price": 50.00
+    },
+    {
+      "id": "qi2",
+      "quote_id": "q1",
+      "item_type": "PRODUCT",
+      "reference_id": "p1-aceite",
+      "description": "Aceite Castrol 5W30 (Galón)",
+      "quantity": 4,
+      "unit_price": 50.00,
+      "total_price": 200.00
     }
   ],
   "vouchers": [
     {
-      "id": "vo1ba38c-ef12-4f3d-be23-df129bca99aa",
-      "work_order_id": "wo3ba38c-ef12-4f3d-be23-df129bca23dd",
-      "invoice_number": "F001-00002132",
-      "subtotal": 1200,
-      "tax": 216,
-      "total": 1416,
+      "id": "vo-old-1",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "work_order_id": "wo-completed-old",
+      "type": "INVOICE",
+      "currency": "PEN",
+      "subtotal_amount": 1000.00,
+      "discount_amount": 0.00,
+      "tax_percentage": 18.00,
+      "total_amount": 1180.00,
+      "sunat_status": "ACCEPTED",
+      "created_at": "2026-04-10T15:00:00Z"
+    },
+    {
+      "id": "vo-old-2",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "work_order_id": "wo-completed-old-2",
+      "type": "INVOICE",
+      "currency": "PEN",
+      "subtotal_amount": 1500.00,
+      "discount_amount": 50.00,
+      "tax_percentage": 18.00,
+      "total_amount": 1711.00,
+      "sunat_status": "ACCEPTED",
+      "created_at": "2026-04-25T11:00:00Z"
+    },
+    {
+      "id": "vo1",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "work_order_id": "wo1",
+      "type": "INVOICE",
+      "currency": "PEN",
+      "subtotal_amount": 300.00,
+      "discount_amount": 30.00,
+      "tax_percentage": 18.00,
+      "total_amount": 318.60,
+      "sunat_status": "ACCEPTED",
       "created_at": "2026-05-05T17:15:00Z"
+    }
+  ],
+  "voucher_items": [
+    {
+      "id": "vi-old-1",
+      "voucher_id": "vo-old-1",
+      "item_type": "PRODUCT",
+      "reference_id": "p1-aceite",
+      "description": "Aceite Castrol 5W30",
+      "quantity": 10,
+      "unit_price": 100.00,
+      "total_price": 1000.00
+    },
+    {
+      "id": "vi1",
+      "voucher_id": "vo1",
+      "item_type": "SERVICE",
+      "description": "Mantenimiento Preventivo 40k",
+      "quantity": 1,
+      "unit_price": 100.00,
+      "total_price": 100.00
+    },
+    {
+      "id": "vi2",
+      "voucher_id": "vo1",
+      "item_type": "PRODUCT",
+      "reference_id": "p2-filtro",
+      "description": "Kit de Filtros",
+      "quantity": 2,
+      "unit_price": 100.00,
+      "total_price": 200.00
     }
   ],
   "payments": [
     {
-      "id": "pay1ba38c-ef12-4f3d-be23-df129bca99aa",
-      "voucher_id": "vo1ba38c-ef12-4f3d-be23-df129bca99aa",
-      "amount": 1416,
-      "payment_method": "BANK_TRANSFER",
-      "status": "PAID",
-      "created_at": "2026-05-05T17:30:00Z"
+      "id": "pay-old-1",
+      "voucher_id": "vo-old-1",
+      "amount": 1180.00,
+      "currency": "PEN",
+      "method": "CASH",
+      "paid_at": "2026-04-10T16:00:00Z"
+    },
+    {
+      "id": "pay-old-2",
+      "voucher_id": "vo-old-2",
+      "amount": 1711.00,
+      "currency": "PEN",
+      "method": "BANK_TRANSFER",
+      "paid_at": "2026-04-25T12:00:00Z"
+    },
+    {
+      "id": "pay1",
+      "voucher_id": "vo1",
+      "amount": 318.60,
+      "currency": "PEN",
+      "method": "BANK_TRANSFER",
+      "paid_at": "2026-05-12T10:00:00Z"
     }
   ],
-  "password_recovery_tokens": [],
-  "sessions": []
+  "outbox_messages": [
+    {
+      "id": "ob1",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "event_type": "VOUCHER_CREATED",
+      "payload": "{\"voucherId\":\"vo1\"}",
+      "status": "SENT"
+    }
+  ],
+  "inventory_movements": [
+    {
+      "id": 1,
+      "product_id": "p1-aceite",
+      "movement_type": "INBOUND",
+      "quantity": 100,
+      "created_at": "2026-05-01T08:00:00Z"
+    }
+  ],
+  "telemetry_snapshots": [
+    {
+      "id": 1,
+      "device_id": "d1",
+      "timestamp": "2026-05-13T08:00:00Z",
+      "rpm": 2200,
+      "temp": 94.2
+    }
+  ]
 }
