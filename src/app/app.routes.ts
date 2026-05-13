@@ -9,6 +9,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'billing',
+    loadChildren: () =>
+      import('./billing/presentation/billing.routes').then(
+        (m) => m.billingRoutes
+      ),
+  },
+  {
     path: '',
     redirectTo: 'customers',
     pathMatch: 'full',

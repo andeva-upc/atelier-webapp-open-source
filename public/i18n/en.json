@@ -1,12 +1,13 @@
 {
   "option": {
     "home": "Home",
-    "work-orders": "Orders",
-    "appointments": "Appointments",
-    "staff": "Staff",
+    "work-orders": "Work Orders",
     "inventory": "Inventory",
+    "customers": "Customers",
+    "appointments": "Appointments",
+    "telemetry": "Telemetry",
     "billing": "Billing",
-    "customers": "Customers"
+    "configuration": "Configuration"
   },
   "customers": {
     "title": "Customers",
@@ -17,6 +18,8 @@
     "loading-records": "Loading records...",
     "services-performed": "{{count}} services performed",
     "last-visit": "Last visit",
+    "no-visits": "No visits registered",
+    "no-vehicles": "No vehicles registered",
     "delete": "Delete customer",
     "delete-confirm": "Are you sure you want to delete this customer?",
     "empty": {
@@ -87,6 +90,67 @@
         "saving": "Saving...",
         "register": "Register customer"
       }
+    }
+  },
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Commercial and financial management of the workshop",
+    "export-excel": "Export Excel",
+    "kpi": {
+      "total-income": "Total income",
+      "total-expenses": "Total expenses",
+      "approved-quotes": "Approved quotes",
+      "pending-quotes": "Pending quotes"
+    },
+    "tabs": {
+      "income-expenses": "Income & Expenses",
+      "quotes": "Quotations"
+    },
+    "table": {
+      "voucher-number": "Voucher No.",
+      "quote-number": "Quote No.",
+      "customer": "Customer",
+      "type": "Type",
+      "status": "Status",
+      "total": "Total",
+      "issued-at": "Issue date",
+      "valid-until": "Valid until"
+    },
+    "status": {
+      "paid": "Paid",
+      "pending": "Pending",
+      "cancelled": "Cancelled",
+      "overdue": "Overdue"
+    },
+    "voucher": {
+      "type": {
+        "invoice": "Invoice",
+        "receipt": "Receipt",
+        "credit_note": "Credit Note"
+      }
+    },
+    "quote": {
+      "status": {
+        "draft": "Draft",
+        "sent": "Sent",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "expired": "Expired"
+      }
+    },
+    "action": {
+      "mark-paid": "Mark as paid",
+      "approve": "Approve quotation"
+    },
+    "empty": {
+      "vouchers": "No vouchers registered.",
+      "quotes": "No quotations registered."
+    },
+    "error": {
+      "load-vouchers": "Failed to load vouchers",
+      "update-voucher": "Failed to update voucher",
+      "load-quotes": "Failed to load quotations",
+      "approve-quote": "Failed to approve quotation"
     }
   }
 }
