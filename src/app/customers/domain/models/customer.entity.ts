@@ -17,7 +17,8 @@ export class Customer implements BaseEntity {
     public readonly servicesCount: number,
     public readonly vehiclesSummary: string,
     public readonly lastVisitDate: string,
-    public readonly version: number
+    public readonly version: number,
+    public readonly deletedAt?: string | Date
   ) {}
 
   /**

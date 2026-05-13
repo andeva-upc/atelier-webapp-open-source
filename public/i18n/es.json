@@ -17,6 +17,8 @@
     "loading-records": "Cargando registros...",
     "services-performed": "{{count}} servicios realizados",
     "last-visit": "Última visita",
+    "delete": "Eliminar cliente",
+    "delete-confirm": "¿Estás seguro de que deseas eliminar este cliente?",
     "empty": {
       "title": "No se encontraron clientes",
       "description": "Intenta buscar nuevamente con un término diferente."
