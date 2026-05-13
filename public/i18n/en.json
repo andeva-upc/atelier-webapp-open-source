@@ -86,5 +86,39 @@
         "register": "Register customer"
       }
     }
+  },
+  "inventory": {
+    "title": "Inventory",
+    "subtitle": "{{count}} registered parts",
+    "low-stock-alert": "{{count}} parts with low stock:",
+    "add-button": "Add part",
+    "search-placeholder": "Search by SKU, name, brand...",
+    "filter-all": "All categories",
+    "stock-actual": "Current stock",
+    "min-stock": "min: {{min}}",
+    "unit-price": "Unit price",
+    "status": {
+      "ok": "OK",
+      "low": "Low stock"
+    },
+    "modal": {
+      "title-add": "Register new part",
+      "sku": "SKU (unique code)",
+      "name": "Part name",
+      "category": "Category",
+      "brand": "Brand",
+      "quantity": "Initial quantity",
+      "min-stock": "Minimum stock",
+      "unit-price": "Unit price (S/)",
+      "sku-placeholder": "E.g: FIL-009",
+      "name-placeholder": "E.g: MANN oil filter",
+      "category-placeholder": "E.g: Filters",
+      "brand-placeholder": "E.g: MANN"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Register part",
+      "saving": "Saving..."
+    }
   }
 }

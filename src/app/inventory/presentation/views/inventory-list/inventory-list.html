@@ -1,0 +1,219 @@
+<div class="inventory-container">
+
+  <!-- ====== HEADER (US008) ====== -->
+  <header class="inventory-header">
+    <div class="header-text">
+      <h1>{{ 'inventory.title' | translate }}</h1>
+      @if (!isLoading()) {
+        <p class="subtitle">{{ 'inventory.subtitle' | translate: { count: totalItemsCount() } }}</p>
+      } @else {
+        <p class="subtitle">Cargando...</p>
+      }
+    </div>
+    <button class="btn-new-item" id="btn-add-inventory" (click)="openModal()">
+      <ng-icon name="matAddOutline"></ng-icon>
+      <span>{{ 'inventory.add-button' | translate }}</span>
+    </button>
+  </header>
+
+  <!-- ====== US010 – LOW STOCK ALERT BANNER ====== -->
+  @if (lowStockCount() > 0) {
+    <div class="low-stock-alert" role="alert">
+      <ng-icon name="matWarningAmberOutline" class="alert-icon"></ng-icon>
+      <span>
+        <strong>{{ 'inventory.low-stock-alert' | translate: { count: lowStockCount() } }}</strong>
+        {{ getLowStockNames() }}
+      </span>
+    </div>
+  }
+
+  <!-- ====== US017 – SEARCH + FILTER BAR ====== -->
+  <section class="filter-section">
+    <div class="search-bar-wrapper">
+      <ng-icon name="matSearchOutline" class="search-icon"></ng-icon>
+      <input
+        id="inventory-search"
+        type="text"
+        (input)="onSearchInput($event)"
+        [placeholder]="'inventory.search-placeholder' | translate"
+        class="custom-search-input"
+      />
+    </div>
+    <select
+      id="inventory-category-filter"
+      class="category-select"
+      (change)="onFilterChange($event)"
+    >
+      <option value="">{{ 'inventory.filter-all' | translate }}</option>
+      @for (cat of categories(); track cat) {
+        <option [value]="cat">{{ cat }}</option>
+      }
+    </select>
+  </section>
+
+  <!-- ====== LOADING STATE ====== -->
+  @if (isLoading()) {
+    <div class="loading-wrapper">
+      <div class="loader-spinner"></div>
+      <p>Cargando inventario...</p>
+    </div>
+  }
+
+  <!-- ====== US009/US010 – INVENTORY GRID ====== -->
+  @if (!isLoading() && items().length > 0) {
+    <section class="inventory-grid">
+      @for (item of items(); track item.id) {
+        <mat-card class="inventory-card" [class.card-low-stock]="item.isLowStock()">
+          <mat-card-content class="card-content">
+
+            <!-- Card Top Row -->
+            <div class="card-top">
+              <div class="icon-circle" [class.icon-low]="item.isLowStock()">
+                <ng-icon name="matInventory2Outline"></ng-icon>
+              </div>
+              <!-- US010 - Status badge -->
+              <span class="status-badge" [class.badge-low]="item.isLowStock()">
+                {{ item.isLowStock() ? ('inventory.status.low' | translate) : ('inventory.status.ok' | translate) }}
+              </span>
+            </div>
+
+            <!-- Item Info -->
+            <div class="item-info">
+              <span class="sku-category">{{ item.sku }} · {{ item.category }}</span>
+              <h2 class="item-name">{{ item.name }}</h2>
+              <span class="item-brand">{{ item.brand }}</span>
+            </div>
+
+            <!-- Stock + Price Row -->
+            <div class="stock-price-row">
+              <div class="stock-col">
+                <span class="data-label">{{ 'inventory.stock-actual' | translate }}</span>
+                <span class="data-value" [class.value-low]="item.isLowStock()">{{ item.quantity }}</span>
+                <span class="data-min">{{ 'inventory.min-stock' | translate: { min: item.minStock } }}</span>
+              </div>
+              <div class="price-col">
+                <span class="data-label">{{ 'inventory.unit-price' | translate }}</span>
+                <span class="data-value">S/ {{ item.unitPrice }}</span>
+              </div>
+            </div>
+
+            <!-- US009 - Quantity adjustment buttons -->
+            <div class="qty-actions">
+              <button
+                class="btn-qty btn-minus"
+                id="btn-decrease-{{ item.id }}"
+                (click)="decreaseStock(item.id)"
+                [disabled]="item.quantity <= 0"
+                aria-label="Reducir stock"
+              >
+                <ng-icon name="matRemoveOutline"></ng-icon>
+              </button>
+              <button
+                class="btn-qty btn-plus"
+                id="btn-increase-{{ item.id }}"
+                (click)="increaseStock(item.id)"
+                aria-label="Aumentar stock"
+              >
+                <ng-icon name="matAddOutline"></ng-icon>
+              </button>
+            </div>
+
+          </mat-card-content>
+        </mat-card>
+      }
+    </section>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && items().length === 0) {
+    <div class="empty-state">
+      <ng-icon name="matInventory2Outline" class="empty-icon"></ng-icon>
+      <p>No se encontraron repuestos</p>
+    </div>
+  }
+
+  <!-- ====== US008 – ADD PART MODAL ====== -->
+  <app-modal [isOpen]="isModalOpen()" (close)="closeModal()">
+    <h2 modal-title>{{ 'inventory.modal.title-add' | translate }}</h2>
+
+    <form modal-body [formGroup]="addForm" class="add-form" id="form-add-inventory">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="field-sku">{{ 'inventory.modal.sku' | translate }}</label>
+          <input
+            id="field-sku"
+            type="text"
+            formControlName="sku"
+            [class.invalid]="isFieldInvalid('sku')"
+            [placeholder]="'inventory.modal.sku-placeholder' | translate"
+          />
+          @if (isFieldInvalid('sku')) { <span class="error-msg">Requerido (mín. 2 caracteres)</span> }
+        </div>
+        <div class="form-group">
+          <label for="field-category">{{ 'inventory.modal.category' | translate }}</label>
+          <input
+            id="field-category"
+            type="text"
+            formControlName="category"
+            [class.invalid]="isFieldInvalid('category')"
+            [placeholder]="'inventory.modal.category-placeholder' | translate"
+          />
+          @if (isFieldInvalid('category')) { <span class="error-msg">Requerido</span> }
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label for="field-name">{{ 'inventory.modal.name' | translate }}</label>
+        <input
+          id="field-name"
+          type="text"
+          formControlName="name"
+          [class.invalid]="isFieldInvalid('name')"
+          [placeholder]="'inventory.modal.name-placeholder' | translate"
+        />
+        @if (isFieldInvalid('name')) { <span class="error-msg">Requerido (mín. 3 caracteres)</span> }
+      </div>
+
+      <div class="form-group full">
+        <label for="field-brand">{{ 'inventory.modal.brand' | translate }}</label>
+        <input
+          id="field-brand"
+          type="text"
+          formControlName="brand"
+          [class.invalid]="isFieldInvalid('brand')"
+          [placeholder]="'inventory.modal.brand-placeholder' | translate"
+        />
+        @if (isFieldInvalid('brand')) { <span class="error-msg">Requerido</span> }
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="field-qty">{{ 'inventory.modal.quantity' | translate }}</label>
+          <input id="field-qty" type="number" formControlName="quantity" min="0" [class.invalid]="isFieldInvalid('quantity')" />
+          @if (isFieldInvalid('quantity')) { <span class="error-msg">Mínimo 0</span> }
+        </div>
+        <div class="form-group">
+          <label for="field-minstock">{{ 'inventory.modal.min-stock' | translate }}</label>
+          <input id="field-minstock" type="number" formControlName="minStock" min="1" [class.invalid]="isFieldInvalid('minStock')" />
+          @if (isFieldInvalid('minStock')) { <span class="error-msg">Mínimo 1</span> }
+        </div>
+        <div class="form-group">
+          <label for="field-price">{{ 'inventory.modal.unit-price' | translate }}</label>
+          <input id="field-price" type="number" formControlName="unitPrice" min="0" [class.invalid]="isFieldInvalid('unitPrice')" />
+          @if (isFieldInvalid('unitPrice')) { <span class="error-msg">Mínimo 0</span> }
+        </div>
+      </div>
+    </form>
+
+    <div modal-actions class="modal-actions">
+      <button type="button" class="btn-cancel" (click)="closeModal()" [disabled]="isSaving()">
+        {{ 'inventory.actions.cancel' | translate }}
+      </button>
+      <button type="button" class="btn-save" id="btn-save-inventory" (click)="onSave()" [disabled]="isSaving()">
+        @if (isSaving()) { <span class="btn-spinner"></span> }
+        {{ isSaving() ? ('inventory.actions.saving' | translate) : ('inventory.actions.save' | translate) }}
+      </button>
+    </div>
+  </app-modal>
+
+</div>

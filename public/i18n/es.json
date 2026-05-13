@@ -86,5 +86,39 @@
         "register": "Registrar cliente"
       }
     }
+  },
+  "inventory": {
+    "title": "Inventario",
+    "subtitle": "{{count}} repuestos registrados",
+    "low-stock-alert": "{{count}} repuestos con stock bajo:",
+    "add-button": "Agregar repuesto",
+    "search-placeholder": "Buscar por SKU, nombre, marca...",
+    "filter-all": "Todas las categorías",
+    "stock-actual": "Stock actual",
+    "min-stock": "mín: {{min}}",
+    "unit-price": "Precio unit.",
+    "status": {
+      "ok": "OK",
+      "low": "Stock bajo"
+    },
+    "modal": {
+      "title-add": "Registrar nuevo repuesto",
+      "sku": "SKU (código único)",
+      "name": "Nombre del repuesto",
+      "category": "Categoría",
+      "brand": "Marca",
+      "quantity": "Cantidad inicial",
+      "min-stock": "Stock mínimo",
+      "unit-price": "Precio unitario (S/)",
+      "sku-placeholder": "Ej: FIL-009",
+      "name-placeholder": "Ej: Filtro de aceite MANN",
+      "category-placeholder": "Ej: Filtros",
+      "brand-placeholder": "Ej: MANN"
+    },
+    "actions": {
+      "cancel": "Cancelar",
+      "save": "Registrar repuesto",
+      "saving": "Guardando..."
+    }
   }
 }

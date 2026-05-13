@@ -20,4 +20,11 @@ export const routes: Routes = [
       (m) => m.appointmentsRoutes
     ),
   },
+  {
+    path: 'inventory',
+    loadChildren: () =>
+      import('./inventory/presentation/inventory.routes').then(
+        (m) => m.inventoryRoutes
+      ),
+  },
 ];
