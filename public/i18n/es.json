@@ -8,5 +8,147 @@
     "telemetry": "Telemetría",
     "billing": "Facturación",
     "configuration": "Configuración"
+  },
+  "customers": {
+    "title": "Clientes",
+    "subtitle-count": "{{count}} clientes registrados",
+    "subtitle-loading": "Cargando clientes registrados...",
+    "new-customer": "Nuevo cliente",
+    "search-placeholder": "Buscar por nombre, correo electrónico o teléfono...",
+    "loading-records": "Cargando registros...",
+    "services-performed": "{{count}} servicios realizados",
+    "last-visit": "Última visita",
+    "no-visits": "Sin visitas registradas",
+    "no-vehicles": "Sin vehículos registrados",
+    "empty": {
+      "title": "No se encontraron clientes",
+      "description": "Intenta buscar nuevamente con un término diferente."
+    },
+    "modal": {
+      "title": {
+        "search": "Verificar pre-registro",
+        "existing": "Cliente ya registrado",
+        "pre-registered": "¡Pre-registro online encontrado!",
+        "not-found": "Registro no encontrado",
+        "manual-bypass": "Registro manual (Contingencia)"
+      },
+      "search": {
+        "description": "Ingresa las credenciales del conductor (por documento o número de teléfono) para verificar coincidencias pasivas o citas online.",
+        "or-alternatively": "O alternativamente"
+      },
+      "existing": {
+        "badge": "Cliente Registrado en Taller",
+        "description": "Este número de documento ya está asociado con un perfil comercial inmutable:",
+        "footer": "No hay necesidad de duplicar el perfil. El sistema asocia automáticamente todos los vehículos históricos."
+      },
+      "pre-registered": {
+        "badge": "Pre-registro Online Listo",
+        "description": "Se encontraron detalles válidos proporcionados por el cliente en la página del taller:",
+        "document-label": "Documento",
+        "vehicle": "Vehículo: {{vehicle}} ({{plate}})",
+        "footer": "Al hacer clic en \"Oficializar\", se creará el perfil comercial definitivo en base a los detalles verificados."
+      },
+      "not-found": {
+        "badge": "Sin Registros Previos",
+        "description": "No se encontró ningún pre-registro o cliente activo para este número de documento.",
+        "card-title": "Auto-registro Móvil (Cero Fricción)",
+        "card-description": "Para evitar errores, ingresa el número de celular del conductor y enviaremos un enlace interactivo para que llene los detalles desde su teléfono:",
+        "phone-error": "Debe tener exactamente 9 dígitos.",
+        "sms-success": "¡Enlace enviado exitosamente al WhatsApp del cliente!"
+      },
+      "manual": {
+        "badge": "Modo de Contingencia Manual Activo"
+      },
+      "form": {
+        "document-type": "Tipo de documento",
+        "document-number": "Número de documento",
+        "document-error": "Formato de número inválido para el tipo seleccionado.",
+        "phone": "Teléfono móvil",
+        "phone-error": "Debe tener exactamente 9 dígitos móviles.",
+        "full-name": "Nombre completo / Razón social",
+        "name-required": "El nombre es obligatorio.",
+        "name-minlength": "Debe tener al menos 3 caracteres.",
+        "email": "Correo electrónico",
+        "email-required": "El correo electrónico es obligatorio.",
+        "email-invalid": "Formato de correo electrónico inválido (ej. usuario@dominio.com).",
+        "phone-required": "El número de teléfono móvil es obligatorio."
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "searching": "Buscando...",
+        "search": "Buscar registro",
+        "close": "Cerrar y Ver Perfil",
+        "back": "Atrás",
+        "officializing": "Oficializando...",
+        "officialize": "Oficializar Cliente",
+        "manual-bypass": "Registro manual (Omisión)",
+        "sending": "Enviando...",
+        "send-link": "Enviar enlace",
+        "finish": "Finalizar",
+        "saving": "Guardando...",
+        "register": "Registrar cliente"
+      }
+    }
+  },
+  "billing": {
+    "title": "Facturación",
+    "subtitle": "Gestión comercial y financiera del taller",
+    "export-excel": "Exportar Excel",
+    "kpi": {
+      "total-income": "Ingresos totales",
+      "total-expenses": "Gastos totales",
+      "approved-quotes": "Cotizaciones aprobadas",
+      "pending-quotes": "Cotizaciones pendientes"
+    },
+    "tabs": {
+      "income-expenses": "Ingresos y Gastos",
+      "quotes": "Cotizaciones"
+    },
+    "table": {
+      "voucher-number": "Nº de Comprobante",
+      "quote-number": "Nº de Cotización",
+      "customer": "Cliente",
+      "type": "Tipo",
+      "status": "Estado",
+      "total": "Total",
+      "issued-at": "Fecha de emisión",
+      "valid-until": "Válida hasta"
+    },
+    "status": {
+      "paid": "Pagado",
+      "pending": "Pendiente",
+      "cancelled": "Cancelado",
+      "overdue": "Vencido"
+    },
+    "voucher": {
+      "type": {
+        "invoice": "Factura",
+        "receipt": "Recibo",
+        "credit_note": "Nota de Crédito"
+      }
+    },
+    "quote": {
+      "status": {
+        "draft": "Borrador",
+        "sent": "Enviado",
+        "approved": "Aprobado",
+        "rejected": "Rechazado",
+        "expired": "Expirado"
+      }
+    },
+    "action": {
+      "mark-paid": "Marcar como pagado",
+      "approve": "Aprobar cotización"
+    },
+    "empty": {
+      "vouchers": "No hay comprobantes registrados.",
+      "quotes": "No hay cotizaciones registradas."
+    },
+    "error": {
+      "load-vouchers": "Error al cargar los comprobantes",
+      "update-voucher": "Error al actualizar el comprobante",
+      "load-quotes": "Error al cargar las cotizaciones",
+      "approve-quote": "Error al aprobar la cotización"
+    }
   }
 }

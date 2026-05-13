@@ -8,5 +8,147 @@
     "telemetry": "Telemetry",
     "billing": "Billing",
     "configuration": "Configuration"
+  },
+  "customers": {
+    "title": "Customers",
+    "subtitle-count": "{{count}} registered customers",
+    "subtitle-loading": "Loading registered customers...",
+    "new-customer": "New customer",
+    "search-placeholder": "Search by name, email, or phone...",
+    "loading-records": "Loading records...",
+    "services-performed": "{{count}} services performed",
+    "last-visit": "Last visit",
+    "no-visits": "No visits registered",
+    "no-vehicles": "No vehicles registered",
+    "empty": {
+      "title": "No customers found",
+      "description": "Try searching again with a different term."
+    },
+    "modal": {
+      "title": {
+        "search": "Verify pre-registration",
+        "existing": "Customer already registered",
+        "pre-registered": "Online pre-registration found!",
+        "not-found": "Registration not found",
+        "manual-bypass": "Manual registration (Contingency)"
+      },
+      "search": {
+        "description": "Enter the driver's credentials (by document or phone number) to verify passive matches or online appointments.",
+        "or-alternatively": "Or alternatively"
+      },
+      "existing": {
+        "badge": "Customer Registered in Workshop",
+        "description": "This document number is already associated with an immutable commercial profile:",
+        "footer": "There is no need to duplicate the profile. The system automatically associates all historical vehicles."
+      },
+      "pre-registered": {
+        "badge": "Online Pre-registration Ready",
+        "description": "Valid details uploaded by the customer on the workshop landing page were found:",
+        "document-label": "Document",
+        "vehicle": "Vehicle: {{vehicle}} ({{plate}})",
+        "footer": "By clicking \"Officialize\", the definitive commercial profile will be created based on verified details."
+      },
+      "not-found": {
+        "badge": "No Previous Records",
+        "description": "No pre-registration or active customer was found for this document number.",
+        "card-title": "Mobile Self-registration (Zero Friction)",
+        "card-description": "To avoid errors, enter the driver's mobile number and we will send an interactive link to fill out details from their phone:",
+        "phone-error": "Must have exactly 9 digits.",
+        "sms-success": "Link successfully sent to the customer's WhatsApp!"
+      },
+      "manual": {
+        "badge": "Manual Contingency Mode Active"
+      },
+      "form": {
+        "document-type": "Document type",
+        "document-number": "Document number",
+        "document-error": "Invalid number format for selected type.",
+        "phone": "Mobile phone",
+        "phone-error": "Must have exactly 9 mobile digits.",
+        "full-name": "Full name / Company name",
+        "name-required": "Name is required.",
+        "name-minlength": "Must have at least 3 characters.",
+        "email": "Email address",
+        "email-required": "Email address is required.",
+        "email-invalid": "Invalid email format (e.g., user@domain.com).",
+        "phone-required": "Mobile phone number is required."
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "searching": "Searching...",
+        "search": "Search record",
+        "close": "Close and View Profile",
+        "back": "Back",
+        "officializing": "Officializing...",
+        "officialize": "Officialize Customer",
+        "manual-bypass": "Manual registration (Bypass)",
+        "sending": "Sending...",
+        "send-link": "Send link",
+        "finish": "Finish",
+        "saving": "Saving...",
+        "register": "Register customer"
+      }
+    }
+  },
+  "billing": {
+    "title": "Billing",
+    "subtitle": "Commercial and financial management of the workshop",
+    "export-excel": "Export Excel",
+    "kpi": {
+      "total-income": "Total income",
+      "total-expenses": "Total expenses",
+      "approved-quotes": "Approved quotes",
+      "pending-quotes": "Pending quotes"
+    },
+    "tabs": {
+      "income-expenses": "Income & Expenses",
+      "quotes": "Quotations"
+    },
+    "table": {
+      "voucher-number": "Voucher No.",
+      "quote-number": "Quote No.",
+      "customer": "Customer",
+      "type": "Type",
+      "status": "Status",
+      "total": "Total",
+      "issued-at": "Issue date",
+      "valid-until": "Valid until"
+    },
+    "status": {
+      "paid": "Paid",
+      "pending": "Pending",
+      "cancelled": "Cancelled",
+      "overdue": "Overdue"
+    },
+    "voucher": {
+      "type": {
+        "invoice": "Invoice",
+        "receipt": "Receipt",
+        "credit_note": "Credit Note"
+      }
+    },
+    "quote": {
+      "status": {
+        "draft": "Draft",
+        "sent": "Sent",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "expired": "Expired"
+      }
+    },
+    "action": {
+      "mark-paid": "Mark as paid",
+      "approve": "Approve quotation"
+    },
+    "empty": {
+      "vouchers": "No vouchers registered.",
+      "quotes": "No quotations registered."
+    },
+    "error": {
+      "load-vouchers": "Failed to load vouchers",
+      "update-voucher": "Failed to update voucher",
+      "load-quotes": "Failed to load quotations",
+      "approve-quote": "Failed to approve quotation"
+    }
   }
 }
