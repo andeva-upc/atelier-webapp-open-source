@@ -32,7 +32,8 @@
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "email": "admin@euromotors.com",
       "role": "ADMIN",
-      "full_name": "Carlos Admin"
+      "full_name": "Carlos Admin",
+      "deleted_at": null
     },
     {
       "id": "u-mechanic-1",
@@ -41,7 +42,8 @@
       "email": "mario.mechanic@euromotors.com",
       "role": "MECHANIC",
       "specialty": "GENERAL_MECHANIC",
-      "full_name": "Mario Rivas"
+      "full_name": "Mario Rivas",
+      "deleted_at": null
     }
   ],
   "customers": [
