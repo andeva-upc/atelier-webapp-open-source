@@ -223,12 +223,36 @@
 }
 
 .info-text {
-  font-size: 0.875rem;
-  color: #4b5563;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
 }
 
 .info-text.no-vehicles {
   color: #9ca3af;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.delete-btn:hover {
+  background-color: #fef2f2;
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.delete-btn ng-icon {
+  font-size: 1.25rem;
 }
 
 /* Footer Section with separator line */

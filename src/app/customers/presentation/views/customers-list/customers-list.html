@@ -52,6 +52,9 @@
                 <h2 class="customer-name">{{ customer.fullName }}</h2>
                 <span class="services-sub">{{ 'customers.services-performed' | translate: { count: customer.servicesCount } }}</span>
               </div>
+              <button class="delete-btn" (click)="onDeleteCustomer($event, customer.id)" [title]="'Eliminar cliente'">
+                <ng-icon name="matDelete"></ng-icon>
+              </button>
             </div>
 
             <!-- Middle Row: Contact & Vehicles Info -->

@@ -64,7 +64,8 @@ export class CustomerAssembler implements BaseAssembler<Customer, CustomerRespon
       servicesCount,
       vehiclesSummary,
       lastVisitDate,
-      resource.version
+      resource.version,
+      resource.deleted_at ?? undefined
     );
   }
 
@@ -87,6 +88,7 @@ export class CustomerAssembler implements BaseAssembler<Customer, CustomerRespon
       vehicles_summary: entity.vehiclesSummary,
       last_visit_date: entity.lastVisitDate,
       version: entity.version,
+      deleted_at: entity.deletedAt ? (entity.deletedAt instanceof Date ? entity.deletedAt.toISOString() : entity.deletedAt) : null,
     };
   }
 

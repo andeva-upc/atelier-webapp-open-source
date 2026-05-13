@@ -7,6 +7,7 @@
 export interface BaseResource {
   id: string | number;
   workshop_id: string;
+  deleted_at?: string | null;
 }
 
 /**

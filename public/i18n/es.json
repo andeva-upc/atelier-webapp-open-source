@@ -20,6 +20,8 @@
     "last-visit": "Última visita",
     "no-visits": "Sin visitas registradas",
     "no-vehicles": "Sin vehículos registrados",
+    "delete": "Eliminar cliente",
+    "delete-confirm": "¿Estás seguro de que deseas eliminar este cliente?",
     "empty": {
       "title": "No se encontraron clientes",
       "description": "Intenta buscar nuevamente con un término diferente."

@@ -10,11 +10,12 @@ import {
   matDirectionsCar, 
   matSearch, 
   matPersonSearch,
-  matBadge
+  matBadge,
+  matDelete
 } from '@ng-icons/material-icons/baseline';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CustomersStore } from '../../../application/customers.store';
 import { Modal } from '../../../../shared/presentation/modal/modal';
 import { CustomerForm } from '../customer-form/customer-form';
@@ -45,7 +46,8 @@ import { CustomerForm } from '../customer-form/customer-form';
       matDirectionsCar, 
       matSearch, 
       matPersonSearch,
-      matBadge
+      matBadge,
+      matDelete
     })
   ],
   templateUrl: './customers-list.html',
@@ -53,10 +55,11 @@ import { CustomerForm } from '../customer-form/customer-form';
 })
 export class CustomersList implements OnInit {
   private readonly store = inject(CustomersStore);
+  private readonly translate = inject(TranslateService);
   private readonly destroyRef = inject(DestroyRef);
 
-  /** Signal containing the collection of retrieved customer entities */
-  readonly customers = this.store.customers;
+  /** Signal containing the collection of active retrieved customer entities */
+  readonly customers = this.store.activeCustomers;
 
   /** Signal reflecting the loading/fetching progress */
   readonly isLoading = this.store.loading;
@@ -122,5 +125,19 @@ export class CustomersList implements OnInit {
   onCustomerSaved(): void {
     this.closeModal();
     this.store.loadCustomers(this.searchQuery());
+  }
+
+  /**
+   * Handles the customer deletion request with a simple browser confirmation.
+   *
+   * @param event - The click event to prevent propagation.
+   * @param customerId - The ID of the customer to delete.
+   */
+  onDeleteCustomer(event: Event, customerId: string): void {
+    event.stopPropagation();
+    const confirmed = confirm(this.translate.instant('customers.delete-confirm'));
+    if (confirmed) {
+      this.store.deleteCustomer(customerId);
+    }
   }
 }

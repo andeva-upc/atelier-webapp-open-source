@@ -20,6 +20,8 @@
     "last-visit": "Last visit",
     "no-visits": "No visits registered",
     "no-vehicles": "No vehicles registered",
+    "delete": "Delete customer",
+    "delete-confirm": "Are you sure you want to delete this customer?",
     "empty": {
       "title": "No customers found",
       "description": "Try searching again with a different term."
