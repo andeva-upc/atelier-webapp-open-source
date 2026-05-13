@@ -43,7 +43,38 @@
       "role": "MECHANIC",
       "specialty": "GENERAL_MECHANIC",
       "full_name": "Mario Rivas",
-      "deleted_at": null
+      "deleted_at": null,
+      "version": 0
+    },
+    {
+      "id": "u-mechanic-2",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "email": "roberto.electronico@euromotors.com",
+      "role": "MECHANIC",
+      "specialty": "AUTOMOTIVE_ELECTRONIC",
+      "full_name": "Roberto Gómez",
+      "deleted_at": null,
+      "version": 0
+    },
+    {
+      "id": "u-receptionist-1",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "email": "lucia.recepcion@euromotors.com",
+      "role": "RECEPTIONIST",
+      "full_name": "Lucía Torres",
+      "deleted_at": null,
+      "version": 0
+    },
+    {
+      "id": "u-customer-1",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "email": "aldo.mendoza@outlook.com",
+      "role": "CUSTOMER",
+      "full_name": "Aldo Mendoza Riva",
+      "deleted_at": null,
+      "version": 0
     }
   ],
   "customers": [
@@ -85,28 +116,297 @@
       "deleted_at": null,
       "created_at": "2026-03-02T12:00:00Z",
       "updated_at": "2026-03-02T12:00:00Z"
+    },
+    {
+      "id": "c7-pedro",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "document_number": "12312312",
+      "document_type": "DNI",
+      "full_name": "Pedro Sanchez",
+      "email": "pedro.sanchez@gmail.com",
+      "phone": "+51988111222",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-01T10:00:00Z",
+      "updated_at": "2026-05-01T10:00:00Z"
+    },
+    {
+      "id": "c8-ana",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "document_number": "44332211",
+      "document_type": "DNI",
+      "full_name": "Ana Garcia",
+      "email": "ana.garcia@outlook.com",
+      "phone": "+51977222333",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-05T11:00:00Z",
+      "updated_at": "2026-05-05T11:00:00Z"
+    },
+    {
+      "id": "c9-constructora",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "document_number": "20555444332",
+      "document_type": "RUC",
+      "full_name": "Constructora Delta S.A.C",
+      "email": "logistica@delta.pe",
+      "phone": "+51966333444",
+      "version": 1,
+      "deleted_at": null,
+      "created_at": "2026-04-10T09:00:00Z",
+      "updated_at": "2026-04-10T09:00:00Z"
+    },
+    {
+      "id": "c10-roberto",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "document_number": "08080808",
+      "document_type": "DNI",
+      "full_name": "Roberto Gomez",
+      "email": "roberto.g@gmail.com",
+      "phone": "+51955444555",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-12T15:00:00Z",
+      "updated_at": "2026-05-12T15:00:00Z"
+    },
+    {
+      "id": "c11-elena",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "document_number": "77776666",
+      "document_type": "DNI",
+      "full_name": "Elena Ruiz",
+      "email": "elena.ruiz@gmail.com",
+      "phone": "+51944555666",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T10:00:00Z",
+      "updated_at": "2026-05-13T10:00:00Z"
     }
   ],
   "vehicles": [
     {
       "id": "v1-corolla",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "customer_id": "c1-aldo",
       "plate_number": "ABC-123",
       "brand": "Toyota",
       "model": "Corolla",
       "year": 2022,
+      "vin": "7T1-COROLLA-123456",
       "usage_type": "PARTICULAR",
-      "current_mileage": 42150
+      "current_mileage": 42150,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T08:00:00Z",
+      "updated_at": "2026-05-13T08:00:00Z"
     },
     {
-      "id": "v2-volvo",
+      "id": "v2-ford",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "customer_id": "c2-distribuidora",
-      "plate_number": "B9R-432",
-      "brand": "Volvo",
-      "model": "FH16",
+      "plate_number": "F15-RAP",
+      "brand": "Ford",
+      "model": "F-150 Raptor",
+      "year": 2023,
+      "vin": "1F1-FORD-F150-789012",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 12500,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T08:15:00Z",
+      "updated_at": "2026-05-13T08:15:00Z"
+    },
+    {
+      "id": "v3-nissan",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "plate_number": "BXY-456",
+      "brand": "Nissan",
+      "model": "Sentra",
+      "year": 2021,
+      "vin": "3N1-NISSAN-SENTRA-345678",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 35000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T08:30:00Z",
+      "updated_at": "2026-05-13T08:30:00Z"
+    },
+    {
+      "id": "v4-kia",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c3c047ca-51ff-4c22-b9cf-ae08fbff34dd",
+      "plate_number": "Z1A-789",
+      "brand": "Kia",
+      "model": "Sportage",
+      "year": 2023,
+      "vin": "KNA-KIA-SPORT-901234",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 8500,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T08:45:00Z",
+      "updated_at": "2026-05-13T08:45:00Z"
+    },
+    {
+      "id": "v5-hyundai",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c2-distribuidora",
+      "plate_number": "TUC-202",
+      "brand": "Hyundai",
+      "model": "Tucson",
+      "year": 2022,
+      "vin": "KM8-HYUNDAI-TUC-567890",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 18000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T09:00:00Z",
+      "updated_at": "2026-05-13T09:00:00Z"
+    },
+    {
+      "id": "v6-civic",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c7-pedro",
+      "plate_number": "CIV-990",
+      "brand": "Honda",
+      "model": "Civic",
       "year": 2020,
-      "usage_type": "HEAVY_DUTY",
-      "current_mileage": 128500
+      "vin": "1HG-HONDA-CIVIC-112233",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 45000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T09:15:00Z",
+      "updated_at": "2026-05-13T09:15:00Z"
+    },
+    {
+      "id": "v7-rav4",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c8-ana",
+      "plate_number": "RAV-777",
+      "brand": "Toyota",
+      "model": "RAV4",
+      "year": 2021,
+      "vin": "JTM-TOYOTA-RAV4-445566",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 32000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T09:30:00Z",
+      "updated_at": "2026-05-13T09:30:00Z"
+    },
+    {
+      "id": "v8-hilux",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c9-constructora",
+      "plate_number": "HIL-202",
+      "brand": "Toyota",
+      "model": "Hilux",
+      "year": 2022,
+      "vin": "8AJ-TOYOTA-HILUX-778899",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 55000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T09:45:00Z",
+      "updated_at": "2026-05-13T09:45:00Z"
+    },
+    {
+      "id": "v9-amarok",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c9-constructora",
+      "plate_number": "AMA-101",
+      "brand": "Volkswagen",
+      "model": "Amarok",
+      "year": 2021,
+      "vin": "WV1-VW-AMAROK-990011",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 68000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T10:00:00Z",
+      "updated_at": "2026-05-13T10:00:00Z"
+    },
+    {
+      "id": "v10-spark",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c10-roberto",
+      "plate_number": "SPA-333",
+      "brand": "Chevrolet",
+      "model": "Spark",
+      "year": 2018,
+      "vin": "KL1-CHEVY-SPARK-223344",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 82000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T10:15:00Z",
+      "updated_at": "2026-05-13T10:15:00Z"
+    },
+    {
+      "id": "v11-yaris",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c11-elena",
+      "plate_number": "YAR-111",
+      "brand": "Toyota",
+      "model": "Yaris",
+      "year": 2023,
+      "vin": "9BR-TOYOTA-YARIS-556677",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 5000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T10:30:00Z",
+      "updated_at": "2026-05-13T10:30:00Z"
+    },
+    {
+      "id": "v12-cx5",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c7-pedro",
+      "plate_number": "MAZ-555",
+      "brand": "Mazda",
+      "model": "CX-5",
+      "year": 2022,
+      "vin": "JM1-MAZDA-CX5-889900",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 12000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T10:45:00Z",
+      "updated_at": "2026-05-13T10:45:00Z"
+    },
+    {
+      "id": "v13-etios",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c3c047ca-51ff-4c22-b9cf-ae08fbff34dd",
+      "plate_number": "ETI-444",
+      "brand": "Toyota",
+      "model": "Etios",
+      "year": 2019,
+      "vin": "8AJ-TOYOTA-ETIOS-111222",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 60000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T11:00:00Z",
+      "updated_at": "2026-05-13T11:00:00Z"
+    },
+    {
+      "id": "v14-frontier",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c2-distribuidora",
+      "plate_number": "FRO-888",
+      "brand": "Nissan",
+      "model": "Frontier",
+      "year": 2021,
+      "vin": "1N6-NISSAN-FRONT-333444",
+      "usage_type": "PARTICULAR",
+      "current_mileage": 42000,
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T11:15:00Z",
+      "updated_at": "2026-05-13T11:15:00Z"
     }
   ],
   "work_bays": [
@@ -129,19 +429,94 @@
     {
       "id": "a1",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
       "customer_id": "c1-aldo",
       "vehicle_id": "v1-corolla",
       "appointment_date": "2026-05-15T09:00:00Z",
-      "status": "SCHEDULED"
+      "status": "SCHEDULED",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T08:00:00Z",
+      "updated_at": "2026-05-13T08:00:00Z"
     },
     {
       "id": "a2-hybrid",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
       "status": "PENDING_APPROVAL",
       "pre_registered_full_name": "Juan Perez",
       "pre_registered_email": "juan.perez@gmail.com",
       "pre_registered_phone": "988777666",
-      "pre_registered_vehicle_plate": "XYZ-999"
+      "pre_registered_vehicle_plate": "XYZ-999",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T08:00:00Z",
+      "updated_at": "2026-05-13T08:00:00Z"
+    },
+    {
+      "id": "a3-pedro",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "customer_id": "c7-pedro",
+      "vehicle_id": "v6-civic",
+      "appointment_date": "2026-05-14T10:30:00Z",
+      "status": "SCHEDULED",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T10:00:00Z",
+      "updated_at": "2026-05-13T10:00:00Z"
+    },
+    {
+      "id": "a4-ana",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "customer_id": "c8-ana",
+      "vehicle_id": "v7-rav4",
+      "appointment_date": "2026-05-14T14:00:00Z",
+      "status": "SCHEDULED",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T11:00:00Z",
+      "updated_at": "2026-05-13T11:00:00Z"
+    },
+    {
+      "id": "a5-constructora",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "customer_id": "c9-constructora",
+      "vehicle_id": "v8-hilux",
+      "appointment_date": "2026-05-12T08:00:00Z",
+      "status": "COMPLETED",
+      "version": 1,
+      "deleted_at": null,
+      "created_at": "2026-05-11T15:00:00Z",
+      "updated_at": "2026-05-12T08:00:00Z"
+    },
+    {
+      "id": "a6-roberto",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "customer_id": "c10-roberto",
+      "vehicle_id": "v10-spark",
+      "appointment_date": "2026-05-16T09:00:00Z",
+      "status": "SCHEDULED",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T12:00:00Z",
+      "updated_at": "2026-05-13T12:00:00Z"
+    },
+    {
+      "id": "a7-elena",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "customer_id": "c11-elena",
+      "vehicle_id": "v11-yaris",
+      "appointment_date": "2026-05-13T11:00:00Z",
+      "status": "IN_PROGRESS",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T09:00:00Z",
+      "updated_at": "2026-05-13T09:00:00Z"
     }
   ],
   "obd2_devices": [
@@ -149,6 +524,84 @@
       "id": "d1",
       "mac_address": "AA:BB:CC:DD:EE:01",
       "vehicle_id": "v1-corolla",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d2",
+      "mac_address": "AA:BB:CC:DD:EE:02",
+      "vehicle_id": "v2-ford",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d3",
+      "mac_address": "AA:BB:CC:DD:EE:03",
+      "vehicle_id": "v3-nissan",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d4",
+      "mac_address": "AA:BB:CC:DD:EE:04",
+      "vehicle_id": "v4-kia",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d5",
+      "mac_address": "AA:BB:CC:DD:EE:05",
+      "vehicle_id": "v5-hyundai",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d6",
+      "mac_address": "AA:BB:CC:DD:EE:06",
+      "vehicle_id": "v6-civic",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d7",
+      "mac_address": "AA:BB:CC:DD:EE:07",
+      "vehicle_id": "v7-rav4",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d8",
+      "mac_address": "AA:BB:CC:DD:EE:08",
+      "vehicle_id": "v8-hilux",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d9",
+      "mac_address": "AA:BB:CC:DD:EE:09",
+      "vehicle_id": "v9-amarok",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d10",
+      "mac_address": "AA:BB:CC:DD:EE:10",
+      "vehicle_id": "v10-spark",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d11",
+      "mac_address": "AA:BB:CC:DD:EE:11",
+      "vehicle_id": "v11-yaris",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d12",
+      "mac_address": "AA:BB:CC:DD:EE:12",
+      "vehicle_id": "v12-cx5",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d13",
+      "mac_address": "AA:BB:CC:DD:EE:13",
+      "vehicle_id": "v13-etios",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "d14",
+      "mac_address": "AA:BB:CC:DD:EE:14",
+      "vehicle_id": "v14-frontier",
       "status": "ACTIVE"
     }
   ],
@@ -160,6 +613,174 @@
       "severity": "CRITICAL",
       "description": "Falla de encendido en cilindro 1",
       "is_active": true
+    },
+    {
+      "id": "al1-2",
+      "vehicle_id": "v1-corolla",
+      "dtc_code": "P0300",
+      "severity": "CRITICAL",
+      "description": "Falla de encendido aleatoria/múltiple detectada",
+      "is_active": true
+    },
+    {
+      "id": "al1-3",
+      "vehicle_id": "v1-corolla",
+      "dtc_code": "P0135",
+      "severity": "MEDIUM",
+      "description": "Circuito de calefacción del sensor de O2 (Banco 1 Sensor 1)",
+      "is_active": true
+    },
+    {
+      "id": "al1-4",
+      "vehicle_id": "v1-corolla",
+      "dtc_code": "P0442",
+      "severity": "LOW",
+      "description": "Fuga pequeña detectada en el sistema de emisiones evaporativas (EVAP)",
+      "is_active": true
+    },
+    {
+      "id": "al2",
+      "vehicle_id": "v2-ford",
+      "dtc_code": "P0420",
+      "severity": "MEDIUM",
+      "description": "Catalizador con baja eficiencia",
+      "is_active": true
+    },
+    {
+      "id": "al6",
+      "vehicle_id": "v2-ford",
+      "dtc_code": "P0507",
+      "severity": "MEDIUM",
+      "description": "Sistema de control de ralentí - RPM superiores a lo esperado",
+      "is_active": true
+    },
+    {
+      "id": "al2-3",
+      "vehicle_id": "v2-ford",
+      "dtc_code": "P0172",
+      "severity": "MEDIUM",
+      "description": "Sistema demasiado rico (Banco 1)",
+      "is_active": true
+    },
+    {
+      "id": "al2-4",
+      "vehicle_id": "v2-ford",
+      "dtc_code": "P0308",
+      "severity": "CRITICAL",
+      "description": "Falla de encendido detectada en el cilindro 8",
+      "is_active": true
+    },
+    {
+      "id": "al3",
+      "vehicle_id": "v5-hyundai",
+      "dtc_code": "C1202",
+      "severity": "MEDIUM",
+      "description": "Falla en sensor de velocidad ABS - Rueda trasera derecha",
+      "is_active": true
+    },
+    {
+      "id": "al3-2",
+      "vehicle_id": "v5-hyundai",
+      "dtc_code": "P2187",
+      "severity": "MEDIUM",
+      "description": "Sistema demasiado pobre en ralentí (Banco 1)",
+      "is_active": true
+    },
+    {
+      "id": "al3-3",
+      "vehicle_id": "v5-hyundai",
+      "dtc_code": "B1620",
+      "severity": "CRITICAL",
+      "description": "Falla interna de la unidad de control del Airbag (ECU)",
+      "is_active": true
+    },
+    {
+      "id": "al4",
+      "vehicle_id": "v3-nissan",
+      "dtc_code": "P0171",
+      "severity": "MEDIUM",
+      "description": "Mezcla aire-combustible demasiado pobre (Banco 1)",
+      "is_active": true
+    },
+    {
+      "id": "al4-2",
+      "vehicle_id": "v3-nissan",
+      "dtc_code": "P0327",
+      "severity": "MEDIUM",
+      "description": "Entrada baja en el circuito del sensor de detonación 1 (Banco 1)",
+      "is_active": true
+    },
+    {
+      "id": "al4-3",
+      "vehicle_id": "v3-nissan",
+      "dtc_code": "P0500",
+      "severity": "MEDIUM",
+      "description": "Falla en el sensor de velocidad del vehículo 'A'",
+      "is_active": true
+    },
+    {
+      "id": "al4-4",
+      "vehicle_id": "v3-nissan",
+      "dtc_code": "P0128",
+      "severity": "LOW",
+      "description": "Termostato del refrigerante - Temperatura por debajo del umbral",
+      "is_active": true
+    },
+    {
+      "id": "al5",
+      "vehicle_id": "v4-kia",
+      "dtc_code": "P0113",
+      "severity": "LOW",
+      "description": "Circuito del sensor de temperatura de aire de entrada (IAT) - Entrada alta",
+      "is_active": true
+    },
+    {
+      "id": "al5-2",
+      "vehicle_id": "v4-kia",
+      "dtc_code": "P0446",
+      "severity": "MEDIUM",
+      "description": "Mal funcionamiento del circuito de control de ventilación del sistema EVAP",
+      "is_active": true
+    },
+    {
+      "id": "al5-3",
+      "vehicle_id": "v4-kia",
+      "dtc_code": "P0700",
+      "severity": "MEDIUM",
+      "description": "Falla en el sistema de control de la transmisión (MIL Request)",
+      "is_active": true
+    },
+    {
+      "id": "al5-4",
+      "vehicle_id": "v4-kia",
+      "dtc_code": "P0121",
+      "severity": "MEDIUM",
+      "description": "Rango/rendimiento del circuito del sensor de posición del acelerador/pedal 'A'",
+      "is_active": true
+    },
+    {
+      "id": "al7",
+      "vehicle_id": "v6-civic",
+      "dtc_code": "P0131",
+      "severity": "MEDIUM",
+      "description": "Voltaje bajo en el circuito del sensor de O2 (Banco 1 Sensor 1)",
+      "is_active": true
+    },
+    {
+      "id": "al8",
+      "vehicle_id": "v8-hilux",
+      "dtc_code": "P0401",
+      "severity": "MEDIUM",
+      "description": "Flujo insuficiente detectado en el sistema de recirculación de gases de escape (EGR)",
+      "is_active": true
+    },
+    {
+      "id": "al9",
+      "vehicle_id": "v9-amarok",
+      "dtc_code": "P0234",
+      "severity": "CRITICAL",
+      "description": "Condición de sobrepresión del turbocompresor/supercargador",
+      "is_active": true
     }
   ],
   "work_orders": [
@@ -169,10 +790,94 @@
       "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
       "internal_number": 1001,
       "customer_id": "c1-aldo",
+      "billing_customer_id": null,
       "vehicle_id": "v1-corolla",
       "assigned_mechanic_id": "u-mechanic-1",
+      "driver_name": "Aldo Mendoza",
+      "driver_phone": "+51999888777",
       "current_mileage": 42150,
-      "status": "IN_PROGRESS"
+      "diagnosis": "Ruido en suspensión delantera y check engine encendido.",
+      "status": "IN_PROGRESS",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T09:00:00Z",
+      "updated_at": "2026-05-13T09:00:00Z"
+    },
+    {
+      "id": "wo2",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "internal_number": 1002,
+      "customer_id": "c9-constructora",
+      "billing_customer_id": "c9-constructora",
+      "vehicle_id": "v9-amarok",
+      "assigned_mechanic_id": "u-mechanic-1",
+      "driver_name": "Operador Delta 01",
+      "driver_phone": "+51988777666",
+      "current_mileage": 68000,
+      "diagnosis": "Mantenimiento preventivo de los 60,000 km según manual.",
+      "status": "COMPLETED",
+      "version": 1,
+      "deleted_at": null,
+      "created_at": "2026-05-11T08:30:00Z",
+      "updated_at": "2026-05-12T16:00:00Z"
+    },
+    {
+      "id": "wo3",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "internal_number": 1003,
+      "customer_id": "c7-pedro",
+      "billing_customer_id": null,
+      "vehicle_id": "v6-civic",
+      "assigned_mechanic_id": "u-mechanic-1",
+      "driver_name": "Pedro Sanchez",
+      "driver_phone": "+51988111222",
+      "current_mileage": 45000,
+      "diagnosis": "Afinamiento completo y revisión de frenos.",
+      "status": "SCHEDULED",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T10:30:00Z",
+      "updated_at": "2026-05-13T10:30:00Z"
+    },
+    {
+      "id": "wo4",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "internal_number": 1004,
+      "customer_id": "c2-distribuidora",
+      "billing_customer_id": "c2-distribuidora",
+      "vehicle_id": "v2-ford",
+      "assigned_mechanic_id": "u-mechanic-1",
+      "driver_name": "Chofer Distribuidora",
+      "driver_phone": "+51944332211",
+      "current_mileage": 12500,
+      "diagnosis": "Cambio de pastillas de freno por desgaste prematuro.",
+      "status": "IN_PROGRESS",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T08:15:00Z",
+      "updated_at": "2026-05-13T08:15:00Z"
+    },
+    {
+      "id": "wo5",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
+      "internal_number": 1005,
+      "customer_id": "c11-elena",
+      "billing_customer_id": null,
+      "vehicle_id": "v11-yaris",
+      "assigned_mechanic_id": "u-mechanic-1",
+      "driver_name": "Elena Ruiz",
+      "driver_phone": "+51944555666",
+      "current_mileage": 5000,
+      "diagnosis": "Primer mantenimiento preventivo de cortesía.",
+      "status": "IN_PROGRESS",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-13T11:00:00Z",
+      "updated_at": "2026-05-13T11:00:00Z"
     }
   ],
   "work_order_tasks": [
@@ -182,6 +887,30 @@
       "description": "Afinamiento Electrónico",
       "estimated_hours": 2.5,
       "unit_price": 80.00,
+      "status": "DOING"
+    },
+    {
+      "id": "wt2",
+      "work_order_id": "wo2",
+      "description": "Mantenimiento Mayor 60k",
+      "estimated_hours": 5.0,
+      "unit_price": 350.00,
+      "status": "COMPLETED"
+    },
+    {
+      "id": "wt3",
+      "work_order_id": "wo4",
+      "description": "Cambio de Pastillas de Freno",
+      "estimated_hours": 1.5,
+      "unit_price": 60.00,
+      "status": "DOING"
+    },
+    {
+      "id": "wt4",
+      "work_order_id": "wo5",
+      "description": "Revisión de Seguridad 5k",
+      "estimated_hours": 1.0,
+      "unit_price": 40.00,
       "status": "DOING"
     }
   ],
@@ -207,6 +936,50 @@
       "unit_cost": 15.00,
       "current_stock": 45,
       "minimum_stock": 10
+    },
+    {
+      "id": "p3-bujia",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "sku": "NGK-IRIDIUM-01",
+      "name": "Bujía NGK Iridium",
+      "category": "Encendido",
+      "unit_price": 45.00,
+      "unit_cost": 22.00,
+      "current_stock": 80,
+      "minimum_stock": 15
+    },
+    {
+      "id": "p4-pastillas",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "sku": "BRK-CERAMIC-02",
+      "name": "Pastillas de Freno Cerámicas",
+      "category": "Frenos",
+      "unit_price": 120.00,
+      "unit_cost": 65.00,
+      "current_stock": 12,
+      "minimum_stock": 5
+    },
+    {
+      "id": "p5-refrigerante",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "sku": "PRESTONE-EXT-01",
+      "name": "Refrigerante Prestone 1 Gal",
+      "category": "Líquidos",
+      "unit_price": 48.00,
+      "unit_cost": 28.00,
+      "current_stock": 35,
+      "minimum_stock": 8
+    },
+    {
+      "id": "p6-filtroaire",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "sku": "AIR-FIL-002",
+      "name": "Filtro de Aire Universal",
+      "category": "Filtros",
+      "unit_price": 40.00,
+      "unit_cost": 18.00,
+      "current_stock": 25,
+      "minimum_stock": 5
     }
   ],
   "quotes": [
@@ -282,7 +1055,26 @@
       "tax_percentage": 18.00,
       "total_amount": 318.60,
       "sunat_status": "ACCEPTED",
-      "created_at": "2026-05-05T17:15:00Z"
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-05T17:15:00Z",
+      "updated_at": "2026-05-05T17:15:00Z"
+    },
+    {
+      "id": "vo2",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "work_order_id": "wo2",
+      "type": "INVOICE",
+      "currency": "PEN",
+      "subtotal_amount": 1200.00,
+      "discount_amount": 100.00,
+      "tax_percentage": 18.00,
+      "total_amount": 1298.00,
+      "sunat_status": "ACCEPTED",
+      "version": 0,
+      "deleted_at": null,
+      "created_at": "2026-05-12T17:00:00Z",
+      "updated_at": "2026-05-12T17:00:00Z"
     }
   ],
   "voucher_items": [
@@ -323,7 +1115,9 @@
       "amount": 1180.00,
       "currency": "PEN",
       "method": "CASH",
-      "paid_at": "2026-04-10T16:00:00Z"
+      "paid_at": "2026-04-10T16:00:00Z",
+      "version": 0,
+      "deleted_at": null
     },
     {
       "id": "pay-old-2",
@@ -331,7 +1125,9 @@
       "amount": 1711.00,
       "currency": "PEN",
       "method": "BANK_TRANSFER",
-      "paid_at": "2026-04-25T12:00:00Z"
+      "paid_at": "2026-04-25T12:00:00Z",
+      "version": 0,
+      "deleted_at": null
     },
     {
       "id": "pay1",
@@ -339,7 +1135,19 @@
       "amount": 318.60,
       "currency": "PEN",
       "method": "BANK_TRANSFER",
-      "paid_at": "2026-05-12T10:00:00Z"
+      "paid_at": "2026-05-12T10:00:00Z",
+      "version": 0,
+      "deleted_at": null
+    },
+    {
+      "id": "pay2",
+      "voucher_id": "vo2",
+      "amount": 1298.00,
+      "currency": "PEN",
+      "method": "YAPE",
+      "paid_at": "2026-05-12T17:30:00Z",
+      "version": 0,
+      "deleted_at": null
     }
   ],
   "outbox_messages": [
@@ -358,6 +1166,36 @@
       "movement_type": "INBOUND",
       "quantity": 100,
       "created_at": "2026-05-01T08:00:00Z"
+    },
+    {
+      "id": 2,
+      "product_id": "p2-filtro",
+      "movement_type": "INBOUND",
+      "quantity": 50,
+      "created_at": "2026-05-01T08:00:00Z"
+    },
+    {
+      "id": 3,
+      "product_id": "p1-aceite",
+      "movement_type": "OUTBOUND",
+      "quantity": 5,
+      "reference_id": "wo2",
+      "created_at": "2026-05-11T10:00:00Z"
+    },
+    {
+      "id": 4,
+      "product_id": "p4-pastillas",
+      "movement_type": "INBOUND",
+      "quantity": 20,
+      "created_at": "2026-05-10T08:00:00Z"
+    },
+    {
+      "id": 5,
+      "product_id": "p4-pastillas",
+      "movement_type": "OUTBOUND",
+      "quantity": 2,
+      "reference_id": "wo4",
+      "created_at": "2026-05-13T09:00:00Z"
     }
   ],
   "telemetry_snapshots": [
@@ -366,7 +1204,180 @@
       "device_id": "d1",
       "timestamp": "2026-05-13T08:00:00Z",
       "rpm": 2200,
+      "speed_kmh": 65,
+      "odometer_km": 42140,
+      "fuel_level_percent": 45.5,
       "temp": 94.2
+    },
+    {
+      "id": 2,
+      "device_id": "d1",
+      "timestamp": "2026-05-13T08:05:00Z",
+      "rpm": 850,
+      "speed_kmh": 0,
+      "odometer_km": 42150,
+      "fuel_level_percent": 45.2,
+      "temp": 95.0
+    },
+    {
+      "id": 3,
+      "device_id": "d2",
+      "timestamp": "2026-05-13T09:15:00Z",
+      "rpm": 1800,
+      "speed_kmh": 40,
+      "odometer_km": 12490,
+      "fuel_level_percent": 80.2,
+      "temp": 88.5
+    },
+    {
+      "id": 4,
+      "device_id": "d2",
+      "timestamp": "2026-05-13T09:20:00Z",
+      "rpm": 850,
+      "speed_kmh": 0,
+      "odometer_km": 12500,
+      "fuel_level_percent": 80.0,
+      "temp": 89.2
+    },
+    {
+      "id": 5,
+      "device_id": "d3",
+      "timestamp": "2026-05-13T10:30:00Z",
+      "rpm": 2500,
+      "speed_kmh": 95,
+      "odometer_km": 34990,
+      "fuel_level_percent": 30.1,
+      "temp": 98.0
+    },
+    {
+      "id": 6,
+      "device_id": "d3",
+      "timestamp": "2026-05-13T10:35:00Z",
+      "rpm": 850,
+      "speed_kmh": 0,
+      "odometer_km": 35000,
+      "fuel_level_percent": 29.8,
+      "temp": 99.1
+    },
+    {
+      "id": 7,
+      "device_id": "d4",
+      "timestamp": "2026-05-13T11:45:00Z",
+      "rpm": 850,
+      "speed_kmh": 0,
+      "odometer_km": 8500,
+      "fuel_level_percent": 95.0,
+      "temp": 75.2
+    },
+    {
+      "id": 8,
+      "device_id": "d5",
+      "timestamp": "2026-05-13T12:00:00Z",
+      "rpm": 2100,
+      "speed_kmh": 55,
+      "odometer_km": 17990,
+      "fuel_level_percent": 60.5,
+      "temp": 92.1
+    },
+    {
+      "id": 9,
+      "device_id": "d5",
+      "timestamp": "2026-05-13T12:05:00Z",
+      "rpm": 850,
+      "speed_kmh": 0,
+      "odometer_km": 18000,
+      "fuel_level_percent": 60.3,
+      "temp": 93.0
+    },
+    {
+      "id": 10,
+      "device_id": "d6",
+      "timestamp": "2026-05-13T08:30:00Z",
+      "rpm": 2000,
+      "speed_kmh": 45,
+      "odometer_km": 44990,
+      "fuel_level_percent": 70.0,
+      "temp": 90.0
+    },
+    {
+      "id": 11,
+      "device_id": "d7",
+      "timestamp": "2026-05-13T09:45:00Z",
+      "rpm": 1500,
+      "speed_kmh": 30,
+      "odometer_km": 31995,
+      "fuel_level_percent": 85.5,
+      "temp": 85.2
+    },
+    {
+      "id": 12,
+      "device_id": "d8",
+      "timestamp": "2026-05-13T10:00:00Z",
+      "rpm": 2200,
+      "speed_kmh": 60,
+      "odometer_km": 54990,
+      "fuel_level_percent": 50.0,
+      "temp": 95.5
+    },
+    {
+      "id": 13,
+      "device_id": "d9",
+      "timestamp": "2026-05-13T11:20:00Z",
+      "rpm": 2400,
+      "speed_kmh": 85,
+      "odometer_km": 67990,
+      "fuel_level_percent": 40.2,
+      "temp": 97.8
+    },
+    {
+      "id": 14,
+      "device_id": "d10",
+      "timestamp": "2026-05-13T12:15:00Z",
+      "rpm": 1100,
+      "speed_kmh": 15,
+      "odometer_km": 81998,
+      "fuel_level_percent": 25.5,
+      "temp": 80.0
+    },
+    {
+      "id": 15,
+      "device_id": "d11",
+      "timestamp": "2026-05-13T13:00:00Z",
+      "rpm": 1900,
+      "speed_kmh": 40,
+      "odometer_km": 4995,
+      "fuel_level_percent": 90.0,
+      "temp": 88.4
+    },
+    {
+      "id": 16,
+      "device_id": "d12",
+      "timestamp": "2026-05-13T14:10:00Z",
+      "rpm": 2100,
+      "speed_kmh": 70,
+      "odometer_km": 11990,
+      "fuel_level_percent": 65.2,
+      "temp": 93.1
+    },
+    {
+      "id": 17,
+      "device_id": "d13",
+      "timestamp": "2026-05-13T15:20:00Z",
+      "rpm": 1600,
+      "speed_kmh": 25,
+      "odometer_km": 59990,
+      "fuel_level_percent": 55.0,
+      "temp": 86.7
+    },
+    {
+      "id": 18,
+      "device_id": "d14",
+      "timestamp": "2026-05-13T16:00:00Z",
+      "rpm": 2300,
+      "speed_kmh": 90,
+      "odometer_km": 41990,
+      "fuel_level_percent": 35.8,
+      "temp": 96.2
     }
   ]
 }
