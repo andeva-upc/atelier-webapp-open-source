@@ -74,7 +74,7 @@
           <!-- Card Header -->
           <div class="card-header">
             <div class="item-icon-wrapper" [class.icon-low]="item.isLowStock()">
-              <i class="pi pi-box"></i>
+              <i class="pi pi-box item-icon"></i>
             </div>
             <span class="status-badge" [class.status-low]="item.isLowStock()">
               {{ (item.isLowStock() ? 'inventory.status.low' : 'inventory.status.ok') | translate }}
@@ -109,13 +109,17 @@
               [disabled]="item.stock === 0"
               (click)="onAdjustStock(item.id, -1)"
               [title]="'inventory.actions.decrease' | translate"
-            ><i class="pi pi-minus"></i></button>
+            >
+              <i class="pi pi-minus"></i>
+            </button>
             <span class="stock-badge" [class.stock-badge-low]="item.isLowStock()">{{ item.stock }}</span>
             <button
               class="btn-adjust btn-increase"
               (click)="onAdjustStock(item.id, 1)"
               [title]="'inventory.actions.increase' | translate"
-            ><i class="pi pi-plus"></i></button>
+            >
+              <i class="pi pi-plus"></i>
+            </button>
           </div>
 
         </div>
@@ -140,7 +144,9 @@
 
       <div class="modal-header">
         <h2>{{ 'inventory.modal.title' | translate }}</h2>
-        <button class="modal-close" (click)="closeModal()"><i class="pi pi-times"></i></button>
+        <button class="modal-close" (click)="closeModal()">
+          <i class="pi pi-times"></i>
+        </button>
       </div>
 
       <form class="modal-form" (ngSubmit)="onSubmitForm()">
