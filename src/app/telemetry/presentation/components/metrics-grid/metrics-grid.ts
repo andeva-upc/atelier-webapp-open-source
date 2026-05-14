@@ -12,6 +12,9 @@ import {
   matTimeline
 } from '@ng-icons/material-icons/baseline';
 
+/**
+ * Component that displays a grid of real-time telemetry metrics.
+ */
 @Component({
   selector: 'app-metrics-grid',
   standalone: true,
@@ -146,5 +149,8 @@ import {
 })
 export class MetricsGrid {
   private readonly store = inject(TelemetryStore);
+  /**
+   * Most recent telemetry snapshot from the store.
+   */
   readonly latestSnapshot = this.store.latestSnapshot;
 }

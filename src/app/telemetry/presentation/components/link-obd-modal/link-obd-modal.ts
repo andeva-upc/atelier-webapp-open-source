@@ -5,6 +5,9 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Modal } from '../../../../shared/presentation/modal/modal';
 import { TelemetryStore } from '../../../application/telemetry.store';
 
+/**
+ * Modal component for linking an OBD2 device to a vehicle.
+ */
 @Component({
   selector: 'app-link-obd-modal',
   standalone: true,
@@ -127,7 +130,9 @@ export class LinkObdModal {
   private readonly fb = inject(FormBuilder);
   private readonly store = inject(TelemetryStore);
 
+  /** Input indicating if the modal is currently open */
   isOpen = input<boolean>(false);
+  /** Output emitted when the modal is closed */
   close = output<void>();
 
   readonly vehicles = this.store.vehicles;

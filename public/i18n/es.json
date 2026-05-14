@@ -168,14 +168,7 @@
       "active": "Activo",
       "inactive": "Sin vincular"
     },
-    "modals": {
-      "link": {
-        "title": "Vincular dispositivo OBD2",
-        "vehicle-label": "Vehículo",
-        "device-label": "ID del escáner OBD2",
-        "select-vehicle": "Selecciona un vehículo"
-      }
-    },
+
     "metrics": {
       "rpm": "RPM",
       "temp": "Temperatura",

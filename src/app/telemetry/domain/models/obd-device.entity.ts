@@ -3,6 +3,9 @@ import { BaseEntity } from '../../../shared/domain/model/base-entity';
 /**
  * Domain model representing an OBD2 telemetry device hardware.
  */
+/**
+ * Domain entity representing an OBD2 device.
+ */
 export class ObdDevice implements BaseEntity {
   constructor(
     public readonly id: string,

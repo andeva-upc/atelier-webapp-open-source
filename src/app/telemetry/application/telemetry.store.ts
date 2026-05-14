@@ -6,18 +6,27 @@ import { ObdDevice } from '../domain/models/obd-device.entity';
 import { DtcAlert } from '../domain/models/dtc-alert.entity';
 import { Vehicle } from '../domain/models/vehicle.entity';
 
+/**
+ * Interface representing the association between a vehicle and its OBD2 device.
+ */
 export interface VehicleTelemetry {
   vehicle: Vehicle;
   device?: ObdDevice;
   status: 'ACTIVE' | 'INACTIVE' | 'ERROR' | 'UNLINKED';
 }
 
+/**
+ * UI-specific model for displaying DTC alerts with associated vehicle data.
+ */
 export interface DtcAlertUI {
   alert: DtcAlert;
   vehicle?: Vehicle;
   timestamp: Date;
 }
 
+/**
+ * Reactive store for managing the state of the Telemetry Bounded Context.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -69,6 +78,9 @@ export class TelemetryStore {
     }));
   });
 
+  /**
+   * Loads initial data for the dashboard.
+   */
   loadInitialData(): void {
     this.loadingSignal.set(true);
     forkJoin({
@@ -92,11 +104,17 @@ export class TelemetryStore {
     });
   }
 
+  /**
+   * Selects a device and loads its data.
+   */
   selectDevice(device: ObdDevice): void {
     this.selectedDeviceSignal.set(device);
     this.loadTelemetryData(device);
   }
 
+  /**
+   * Links a device to a vehicle.
+   */
   linkDevice(deviceId: string, vehicleId: string): void {
     this.loadingSignal.set(true);
     this.repository.linkDevice(deviceId, vehicleId).subscribe({
@@ -108,6 +126,9 @@ export class TelemetryStore {
     });
   }
 
+  /**
+   * Unlinks a device.
+   */
   unlinkDevice(deviceId: string): void {
     this.loadingSignal.set(true);
     this.repository.unlinkDevice(deviceId).subscribe({
@@ -150,6 +171,9 @@ export class TelemetryStore {
     });
   }
 
+  /**
+   * Refreshes the latest snapshot.
+   */
   refreshLatestSnapshot(): void {
     const device = this.selectedDevice();
     if (!device) return;

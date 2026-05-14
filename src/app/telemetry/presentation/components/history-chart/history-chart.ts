@@ -5,6 +5,9 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions, ChartType } from 'chart.js';
 import { TelemetryStore } from '../../../application/telemetry.store';
 
+/**
+ * Component that renders a historical line chart for telemetry metrics.
+ */
 @Component({
   selector: 'app-history-chart',
   standalone: true,
@@ -55,6 +58,9 @@ export class HistoryChart {
 
   public lineChartType: ChartType = 'line';
 
+  /**
+   * Data configuration for the line chart, including labels and datasets for RPM and Temperature.
+   */
   readonly lineChartData = computed<ChartConfiguration['data']>(() => {
     const history = this.store.history();
     const rpmLabel = this.translate.instant('telemetry.history.rpm-legend');
@@ -94,6 +100,9 @@ export class HistoryChart {
     };
   });
 
+  /**
+   * Options configuration for the chart, including scales, legend, and tooltip settings.
+   */
   readonly lineChartOptions = computed<ChartOptions>(() => {
     const rpmTitle = this.translate.instant('telemetry.metrics.rpm');
     const tempTitle = this.translate.instant('telemetry.metrics.temp') + ' (°C)';

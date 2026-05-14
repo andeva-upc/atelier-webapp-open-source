@@ -12,6 +12,9 @@ import { Vehicle } from '../domain/models/vehicle.entity';
 import { VehicleResource, VehiclesResponse } from './telemetry-response';
 import { environment } from '../../../environments/environment';
 
+/**
+ * API Endpoint for Vehicles.
+ */
 @Injectable({ providedIn: 'root' })
 export class VehicleEndpoint extends BaseApiEndpoint<Vehicle, VehicleResource, VehiclesResponse, VehicleAssembler> {
   constructor() {
@@ -22,6 +25,9 @@ export class VehicleEndpoint extends BaseApiEndpoint<Vehicle, VehicleResource, V
   }
 }
 
+/**
+ * API Endpoint for Telemetry Snapshots.
+ */
 @Injectable({ providedIn: 'root' })
 export class TelemetrySnapshotEndpoint extends BaseApiEndpoint<TelemetrySnapshot, TelemetrySnapshotResource, TelemetrySnapshotsResponse, TelemetrySnapshotAssembler> {
   constructor() {
@@ -32,6 +38,9 @@ export class TelemetrySnapshotEndpoint extends BaseApiEndpoint<TelemetrySnapshot
   }
 }
 
+/**
+ * API Endpoint for OBD Devices.
+ */
 @Injectable({ providedIn: 'root' })
 export class ObdDeviceEndpoint extends BaseApiEndpoint<ObdDevice, ObdDeviceResource, ObdDevicesResponse, ObdDeviceAssembler> {
   constructor() {
@@ -42,6 +51,9 @@ export class ObdDeviceEndpoint extends BaseApiEndpoint<ObdDevice, ObdDeviceResou
   }
 }
 
+/**
+ * API Endpoint for DTC Alerts.
+ */
 @Injectable({ providedIn: 'root' })
 export class DtcAlertEndpoint extends BaseApiEndpoint<DtcAlert, DtcAlertResource, DtcAlertsResponse, DtcAlertAssembler> {
   constructor() {

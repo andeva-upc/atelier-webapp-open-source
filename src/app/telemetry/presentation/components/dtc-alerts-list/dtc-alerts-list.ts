@@ -5,6 +5,9 @@ import { TelemetryStore } from '../../../application/telemetry.store';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matErrorOutline } from '@ng-icons/material-icons/baseline';
 
+/**
+ * Component that displays a list of active Diagnostic Trouble Code (DTC) alerts.
+ */
 @Component({
   selector: 'app-dtc-alerts-list',
   standalone: true,
@@ -197,5 +200,8 @@ import { matErrorOutline } from '@ng-icons/material-icons/baseline';
 })
 export class DtcAlertsList {
   private readonly store = inject(TelemetryStore);
+  /**
+   * List of active alerts with associated vehicle data for UI display.
+   */
   readonly alertsUI = this.store.alertsWithVehicle;
 }
