@@ -5,7 +5,7 @@ const customersList = () =>
 
 /**
  * Route tree for customers presentation views.
- * 
+ *
  * Enables modular loading of customer-related lists, detail screens,
  * and forms inside independent chunks.
  */
