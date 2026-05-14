@@ -7,6 +7,7 @@ import { matLink } from '@ng-icons/material-icons/baseline';
 import { VehicleTelemetrySelector } from '../../components/vehicle-telemetry-selector/vehicle-telemetry-selector';
 import { MetricsGrid } from '../../components/metrics-grid/metrics-grid';
 import { DtcAlertsList } from '../../components/dtc-alerts-list/dtc-alerts-list';
+import { HistoryChart } from '../../components/history-chart/history-chart';
 
 /**
  * Main dashboard view for Telemetry.
@@ -21,7 +22,8 @@ import { DtcAlertsList } from '../../components/dtc-alerts-list/dtc-alerts-list'
     NgIcon,
     VehicleTelemetrySelector,
     MetricsGrid,
-    DtcAlertsList
+    DtcAlertsList,
+    HistoryChart
   ],
   providers: [
     provideIcons({ matLink })
@@ -40,7 +42,7 @@ export class TelemetryDashboard implements OnInit {
   readonly selectedDevice = this.store.selectedDevice;
 
   /** Total active devices count for subtitle */
-  readonly devicesCount = inject(TelemetryStore).activeDevices;
+  readonly devicesCount = this.store.activeDevices;
 
   /**
    * Initializes the view by loading available telemetry devices.
