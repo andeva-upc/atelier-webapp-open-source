@@ -2,7 +2,7 @@ import { Component, inject, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
-import { Modal } from '../../../shared/presentation/modal/modal';
+import { SharedModalComponent } from '../../../shared/presentation/modal/modal';
 import { TelemetryStore } from '../../application/telemetry.store';
 
 /**
@@ -11,7 +11,7 @@ import { TelemetryStore } from '../../application/telemetry.store';
 @Component({
   selector: 'app-link-obd-modal',
   standalone: true,
-  imports: [CommonModule, TranslateModule, ReactiveFormsModule, Modal],
+  imports: [CommonModule, TranslateModule, ReactiveFormsModule, SharedModalComponent],
   templateUrl: './link-obd-modal.html',
   styleUrl: './link-obd-modal.css'
 })

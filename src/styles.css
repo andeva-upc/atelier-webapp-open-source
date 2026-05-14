@@ -5,37 +5,42 @@
   src: url("assets/fonts/Zizou Slab-Medium.otf") format("opentype");
 }
 
-/* ── Global Material Rounding Overrides ─────────────────────────── */
-/* These rules are global to reach MatDialog and other overlays */
+/* ── Global Material Rounding Overrides (Ultra-Specific) ───────────────── */
 
-.mat-mdc-text-field-wrapper {
-  border-radius: 15px !important;
+/* 1. Target the main wrapper */
+.mat-mdc-form-field .mat-mdc-text-field-wrapper {
+  border-radius: 9px !important;
 }
 
-.mdc-text-field--outlined .mdc-notched-outline {
-  border-radius: 15px !important;
+/* 2. Target the notched outline container */
+.mat-mdc-form-field .mdc-notched-outline {
+  border-radius: 9px !important;
 }
 
-.mdc-notched-outline__leading {
-  border-radius: 15px 0 0 15px !important;
-  width: 15px !important;
+/* 3. Target the LEADING segment (Critical for left-side curve) */
+.mat-mdc-form-field .mdc-notched-outline__leading {
+  border-radius: 9px 0 0 9px !important;
+  width: 9px !important; /* Must match radius to show curve */
   border-left-width: 1px !important;
 }
 
-.mdc-notched-outline__trailing {
-  border-radius: 0 15px 15px 0 !important;
+/* 4. Target the TRAILING segment (Critical for right-side curve) */
+.mat-mdc-form-field .mdc-notched-outline__trailing {
+  border-radius: 0 9px 9px 0 !important;
   border-right-width: 1px !important;
 }
 
-.mdc-notched-outline__notch {
+/* 5. Ensure the NOTCH (middle) doesn't have stray rounding */
+.mat-mdc-form-field .mdc-notched-outline__notch {
   border-top-width: 1px !important;
   border-bottom-width: 1px !important;
 }
 
+/* 6. Overlays and Panels */
 .mat-mdc-select-panel {
-  border-radius: 15px !important;
+  border-radius: 9px !important;
 }
 
 .mat-mdc-option {
-  border-radius: 8px !important;
+  border-radius: 6px !important;
 }

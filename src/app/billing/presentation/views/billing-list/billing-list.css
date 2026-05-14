@@ -5,7 +5,7 @@
   --text-muted: #6b7280;
   --primary-color: #0071EB;
   --border-radius-card: 16px;
-  --border-radius-input: 15px;
+  --border-radius-input: 9px;
   --transition-speed: 0.2s;
   --font-main: 'Mona Sans', system-ui, -apple-system, sans-serif;
   --font-alt: 'Arimo', sans-serif;
@@ -703,7 +703,7 @@
 
 ::ng-deep .mdc-notched-outline__leading {
   border-radius: var(--border-radius-input) 0 0 var(--border-radius-input) !important;
-  width: 15px !important;
+  width: 9px !important;
 }
 
 ::ng-deep .mdc-notched-outline__trailing {
@@ -742,6 +742,7 @@
 
 ::ng-deep input[type=number] {
   -moz-appearance: textfield;
+  appearance: textfield;
   margin-bottom: 2px !important;
   border-radius: 8px !important;
   transition: all 0.2s ease !important;

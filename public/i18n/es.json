@@ -102,10 +102,6 @@
       "approved-quotes": "Cotizaciones aprobadas",
       "pending-quotes": "Cotizaciones pendientes"
     },
-    "tabs": {
-      "income-expenses": "Ingresos y Gastos",
-      "quotes": "Cotizaciones"
-    },
     "table": {
       "voucher-number": "Nº de Comprobante",
       "quote-number": "Nº de Cotización",
