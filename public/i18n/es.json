@@ -196,7 +196,32 @@
         "medium": "Media",
         "high": "Alta",
         "critical": "Crítica"
+      },
+      "empty": "No se detectaron fallas activas"
+    },
+    "modals": {
+      "link": {
+        "title": "Vincular Dispositivo OBD2",
+        "vehicle-label": "Vehículo",
+        "select-vehicle": "Selecciona un vehículo",
+        "device-label": "ID del Dispositivo",
+        "device-placeholder": "Ej: OBD-2024-XK9812"
       }
+    },
+    "empty": {
+      "no-selection": {
+        "title": "No hay vehículo seleccionado",
+        "description": "Selecciona un vehículo con OBD2 activo de la lista lateral para ver su telemetría."
+      }
+    },
+    "dtc": {
+      "P0301": "Falla de encendido en cilindro 1",
+      "P0300": "Falla de encendido aleatoria/múltiple detectada",
+      "P0135": "Circuito de calefacción del sensor de O2 (Banco 1 Sensor 1)",
+      "P0420": "Catalizador con baja eficiencia",
+      "P0507": "Sistema de control de ralentí - RPM superiores a lo esperado",
+      "P0172": "Sistema demasiado rico (Banco 1)",
+      "P0308": "Falla de encendido detectada en el cilindro 8"
     }
   }
 }

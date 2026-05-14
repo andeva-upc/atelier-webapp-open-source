@@ -15,7 +15,7 @@ export interface VehicleTelemetry {
 export interface DtcAlertUI {
   alert: DtcAlert;
   vehicle?: Vehicle;
-  timestamp: string;
+  timestamp: Date;
 }
 
 @Injectable({
@@ -65,7 +65,7 @@ export class TelemetryStore {
     return alerts.map(alert => ({
       alert,
       vehicle: vehicles.find(v => v.id === alert.vehicleId),
-      timestamp: '2026-05-13 09:32'
+      timestamp: new Date() // Fallback to current date if missing from backend
     }));
   });
 

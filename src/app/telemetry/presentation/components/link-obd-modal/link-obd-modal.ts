@@ -30,13 +30,13 @@ import { TelemetryStore } from '../../../application/telemetry.store';
 
         <div class="form-group">
           <label for="deviceId">{{ 'telemetry.modals.link.device-label' | translate }} *</label>
-          <input 
-            id="deviceId" 
-            type="text" 
-            formControlName="deviceId" 
-            class="form-control"
-            placeholder="Ej: OBD-2024-XK9812"
-          >
+            <input 
+              id="deviceId" 
+              type="text" 
+              formControlName="deviceId" 
+              class="form-control"
+              [placeholder]="'telemetry.modals.link.device-placeholder' | translate"
+            >
         </div>
       </form>
 

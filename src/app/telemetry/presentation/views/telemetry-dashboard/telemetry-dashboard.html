@@ -40,8 +40,8 @@
       } @else if (!isLoading()) {
         <div class="no-selection">
           <div class="selection-icon">🔍</div>
-          <h2>No hay vehículo seleccionado</h2>
-          <p>Selecciona un vehículo con OBD2 activo de la lista lateral para ver su telemetría.</p>
+          <h2>{{ 'telemetry.empty.no-selection.title' | translate }}</h2>
+          <p>{{ 'telemetry.empty.no-selection.description' | translate }}</p>
         </div>
       } @else {
          <div class="loading-state">

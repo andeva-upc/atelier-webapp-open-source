@@ -23,4 +23,13 @@ export class DtcAlert implements BaseEntity {
   getSeverityKey(): string {
     return `telemetry.alerts.severity.${this.severity.toLowerCase()}`;
   }
+
+  /**
+   * Returns a translation key based on the DTC code.
+   * 
+   * @returns The translation key for the DTC description.
+   */
+  getDescriptionKey(): string {
+    return `telemetry.dtc.${this.dtcCode}`;
+  }
 }

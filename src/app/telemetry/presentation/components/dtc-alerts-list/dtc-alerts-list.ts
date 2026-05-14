@@ -28,12 +28,18 @@ import { matErrorOutline } from '@ng-icons/material-icons/baseline';
                   <span class="severity-badge">{{ item.alert.getSeverityKey() | translate }}</span>
                 </div>
                 
-                <h4 class="alert-desc">{{ item.alert.description }}</h4>
+                <h4 class="alert-desc">
+                  @if ((item.alert.getDescriptionKey() | translate) !== item.alert.getDescriptionKey()) {
+                    {{ item.alert.getDescriptionKey() | translate }}
+                  } @else {
+                    {{ item.alert.description }}
+                  }
+                </h4>
                 
                 <div class="alert-footer">
                   {{ item.vehicle?.brand }} {{ item.vehicle?.model }} {{ item.vehicle?.plateNumber }} 
                   <span class="separator">·</span> 
-                  {{ item.timestamp }}
+                  {{ item.timestamp | date:'short' }}
                 </div>
               </div>
 
@@ -45,7 +51,7 @@ import { matErrorOutline } from '@ng-icons/material-icons/baseline';
         } @empty {
           <div class="empty-alerts">
             <div class="check-circle">✓</div>
-            <p>No se detectaron fallas activas</p>
+            <p>{{ 'telemetry.alerts.empty' | translate }}</p>
           </div>
         }
       </div>
