@@ -23,7 +23,7 @@
           </div>
         </div>
         <p class="kpi-card__value kpi-card__value--green">
-          S/ {{ totalIncomeValue | number:'1.0-0' }}
+          S/ {{ totalIncomeValue() | number:'1.0-0' }}
         </p>
       </mat-card-content>
     </mat-card>
@@ -37,7 +37,7 @@
           </div>
         </div>
         <p class="kpi-card__value kpi-card__value--red">
-          S/ {{ totalExpensesValue | number:'1.0-0' }}
+          S/ {{ totalExpensesValue() | number:'1.0-0' }}
         </p>
       </mat-card-content>
     </mat-card>
@@ -92,7 +92,7 @@
         <div class="chart-container">
           <svg [attr.width]="svgW" [attr.height]="svgH" class="financial-chart">
             <!-- Y-Axis Grid Lines and Labels -->
-            @for (label of yAxisLabels; track label.val) {
+            @for (label of yAxisLabels(); track label.val) {
               <line [attr.x1]="padLeft" [attr.y1]="label.y" [attr.x2]="svgW - 20" [attr.y2]="label.y" stroke="#f1f5f9" stroke-dasharray="2,2" />
               <text [attr.x]="padLeft - 10" [attr.y]="label.y" text-anchor="end" alignment-baseline="middle" class="axis-label">{{ label.val }}</text>
             }
@@ -148,7 +148,7 @@
             <ng-container matColumnDef="variacion">
               <th mat-header-cell *matHeaderCellDef>{{ 'billing.detail.columns.variation' | translate }}</th>
               <td mat-cell *matCellDef="let row" [ngClass]="getVariacionClass(row.variacion)">
-                {{ formatVariacion(row.variacion) }}
+                {{ row.variacion }}
               </td>
             </ng-container>
 

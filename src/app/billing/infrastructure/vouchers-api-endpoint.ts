@@ -38,4 +38,24 @@ export class VouchersApiEndpoint extends BaseApiEndpoint<Voucher, VoucherRespons
   updateStatus(id: string, status: string, version: number): Observable<Voucher> {
     return this.patch(id, { status, version } as Partial<VoucherResponse>);
   }
+
+  /**
+   * Registers a payment for a specific voucher.
+   * 
+   * @param voucherId - The voucher to pay.
+   * @param amount - The payment amount.
+   * @param method - The payment method (CASH, BANK_TRANSFER, etc.).
+   * @returns An {@link Observable} that completes on success.
+   */
+  registerPayment(voucherId: string, amount: number, method: string): Observable<void> {
+    const url = `${environment.platformProviderApiBaseUrl}${environment.platformProviderPaymentsEndpointPath}`;
+    return this.http.post<void>(url, {
+      voucher_id: voucherId,
+      amount,
+      method,
+      currency: 'PEN',
+      paid_at: new Date().toISOString(),
+      version: 0
+    });
+  }
 }

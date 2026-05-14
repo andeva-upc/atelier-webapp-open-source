@@ -36,11 +36,11 @@ import { BillingStore } from '../../../application/billing.store';
 export class BillingList implements OnInit {
   private readonly store = inject(BillingStore);
 
-  /** Simulated total income from screenshot */
-  readonly totalIncomeValue = 47100;
+  /** Computed total income from store */
+  readonly totalIncomeValue = this.store.totalIncome;
 
-  /** Simulated total expenses from screenshot */
-  readonly totalExpensesValue = 17500;
+  /** Computed total expenses (simulated as 40% of income for now since no expense data exists) */
+  readonly totalExpensesValue = computed(() => this.totalIncomeValue() * 0.4);
 
 
 
@@ -64,32 +64,50 @@ export class BillingList implements OnInit {
   /** Currently selected tab index (0 = Ingresos y gastos, 1 = Cotizaciones) */
   readonly selectedTab = signal<number>(0);
 
-  /** Simulated monthly financial data matching the user's screenshot */
-  readonly monthlyRows = [
-    { month: 'billing.months.jan', ingresos: 8400,  gastos: 3200 },
-    { month: 'billing.months.feb', ingresos: 9200,  gastos: 3500 },
-    { month: 'billing.months.mar', ingresos: 7800,  gastos: 2900 },
-    { month: 'billing.months.apr', ingresos: 11200, gastos: 4100 },
-    { month: 'billing.months.may', ingresos: 10500, gastos: 3800 },
-  ];
+  /** Computed monthly financial data derived from vouchers */
+  readonly monthlyRows = computed(() => {
+    const vouchers = this.store.vouchers();
+    const months = ['billing.months.jan', 'billing.months.feb', 'billing.months.mar', 'billing.months.apr', 'billing.months.may'];
+    
+    return months.map((monthKey, index) => {
+      // Month index is 0-based, so Jan=0, Feb=1, etc.
+      // Filter vouchers for this month (assuming 2026 for now as per user structure)
+      const monthVouchers = vouchers.filter(v => {
+        const date = new Date(v.issuedAt);
+        return date.getMonth() === index && date.getFullYear() === 2026;
+      });
+
+      const ingresos = monthVouchers.reduce((sum, v) => sum + v.totalAmount, 0);
+      // Simulate expenses as 40% of income for the month
+      const gastos = ingresos * 0.4;
+
+      return {
+        month: monthKey,
+        ingresos,
+        gastos,
+        rentabilidad: ingresos - gastos,
+        // Variation will be calculated in the table if needed, but here we just return the base data
+        variacion: '' 
+      };
+    });
+  });
 
   /** Columns to display in the monthly details table */
   readonly detailColumns: string[] = ['month', 'ingresos', 'gastos', 'rentabilidad', 'variacion'];
 
-  /** Computed monthly details with rentabilidad and variacion */
+  /** Computed monthly details with formatted rentabilidad and variacion */
   readonly monthlyDetails = computed(() => {
     let prevRentabilidad: number | null = null;
-    return this.monthlyRows.map(row => {
+    return this.monthlyRows().map(row => {
       const rentabilidad = row.ingresos - row.gastos;
-      let variacion: number | null = null;
+      let variacion = '—';
       if (prevRentabilidad !== null && prevRentabilidad !== 0) {
-        variacion = ((rentabilidad - prevRentabilidad) / prevRentabilidad) * 100;
+        const diff = ((rentabilidad - prevRentabilidad) / prevRentabilidad) * 100;
+        variacion = `${diff > 0 ? '+' : ''}${diff.toFixed(1)}%`;
       }
       prevRentabilidad = rentabilidad;
       return {
-        month: row.month,
-        ingresos: row.ingresos,
-        gastos: row.gastos,
+        ...row,
         rentabilidad,
         variacion
       };
@@ -105,10 +123,15 @@ export class BillingList implements OnInit {
   readonly padBottom = 60;
   readonly chartW = this.svgW - this.padLeft - 20;
   readonly chartH = this.svgH - this.padTop - this.padBottom;
-  readonly yMax = 12000;
+  /** Computed Y-axis maximum value based on data, with a minimum of 1000 */
+  readonly yMax = computed(() => {
+    const data = this.monthlyRows();
+    const maxVal = data.reduce((max, row) => Math.max(max, row.ingresos, row.gastos), 0);
+    return Math.max(maxVal * 1.2, 1000); // Add 20% margin
+  });
 
   readonly chartGroups = computed(() => {
-    const data = this.monthlyRows;
+    const data = this.monthlyRows();
     const groupWidth = this.chartW / data.length;
     // We will render two bars per month side by side
     const barWidth = (groupWidth * 0.4) / 2;
@@ -117,8 +140,9 @@ export class BillingList implements OnInit {
     return data.map((row, i) => {
       const groupCenterX = this.padLeft + (i + 0.5) * groupWidth;
       
-      const ingresosH = (row.ingresos / this.yMax) * this.chartH;
-      const gastosH = (row.gastos / this.yMax) * this.chartH;
+      const yMax = this.yMax();
+      const ingresosH = yMax > 0 ? (row.ingresos / yMax) * this.chartH : 0;
+      const gastosH = yMax > 0 ? (row.gastos / yMax) * this.chartH : 0;
 
       return {
         label: row.month,
@@ -134,10 +158,13 @@ export class BillingList implements OnInit {
     });
   });
 
-  readonly yAxisLabels = [0, 3000, 6000, 8000, 12000].map(val => ({
-    val: val === 0 ? 'S/0k' : `S/${val / 1000}k`,
-    y: this.padTop + this.chartH - (val / this.yMax) * this.chartH
-  }));
+  readonly yAxisLabels = computed(() => {
+    const max = this.yMax();
+    return [0, max * 0.25, max * 0.5, max * 0.75, max].map(val => ({
+      val: val === 0 ? 'S/0' : `S/${(val / 1000).toFixed(1)}k`,
+      y: this.padTop + this.chartH - (max > 0 ? (val / max) * this.chartH : 0)
+    }));
+  });
 
   ngOnInit(): void {
     this.store.loadVouchers();
@@ -166,19 +193,10 @@ export class BillingList implements OnInit {
   }
 
   /**
-   * Formats variacion percentage.
+   * Returns CSS class based on variacion string value.
    */
-  formatVariacion(variacion: number | null): string {
-    if (variacion === null) return '---';
-    const sign = variacion > 0 ? '+' : '';
-    return `${sign}${variacion.toFixed(1)}%`;
-  }
-
-  /**
-   * Returns CSS class based on variacion value.
-   */
-  getVariacionClass(variacion: number | null): string {
-    if (variacion === null) return 'gray-text';
-    return variacion > 0 ? 'text-green' : 'text-red';
+  getVariacionClass(variacion: string): string {
+    if (variacion === '—') return 'gray-text';
+    return variacion.startsWith('+') ? 'text-green' : 'text-red';
   }
 }

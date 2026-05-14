@@ -4,15 +4,12 @@ import { BaseEntity } from '../../../shared/domain/model/base-entity';
  * Represents a single line item within a quotation.
  */
 export interface QuoteItem {
-  /** Line item unique identifier */
   readonly id: string;
-  /** Description of the product or service quoted */
+  readonly type: 'PRODUCT' | 'SERVICE';
+  readonly referenceId: string | null;
   readonly description: string;
-  /** Quantity of units */
   readonly quantity: number;
-  /** Estimated unit price */
   readonly unitPrice: number;
-  /** Total for this line (quantity × unitPrice) */
   readonly total: number;
 }
 
@@ -38,6 +35,8 @@ export class Quote implements BaseEntity {
     public readonly status: QuoteStatus,
     public readonly items: QuoteItem[],
     public readonly subtotal: number,
+    public readonly discountAmount: number,
+    public readonly taxRate: number,
     public readonly taxAmount: number,
     public readonly totalAmount: number,
     public readonly validUntil: string,

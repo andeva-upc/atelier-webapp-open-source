@@ -143,6 +143,27 @@ export class BillingStore {
     });
   }
 
+  /**
+   * Registers a payment for a voucher and refreshes the voucher list.
+   * 
+   * @param voucherId - Target voucher ID.
+   * @param amount - Amount paid.
+   * @param method - Payment method.
+   */
+  registerPayment(voucherId: string, amount: number, method: string): void {
+    this.vouchersSavingSignal.set(true);
+    this.voucherRepository.registerPayment(voucherId, amount, method).subscribe({
+      next: () => {
+        // After payment, reload vouchers to get updated status (PAID)
+        this.loadVouchers();
+      },
+      error: err => {
+        this.vouchersSavingSignal.set(false);
+        this.vouchersErrorSignal.set(this.formatError(err, 'billing.error.register-payment'));
+      }
+    });
+  }
+
   // ── Use Cases: Quotes ──────────────────────────────────────────────────────
 
   /**
@@ -180,6 +201,24 @@ export class BillingStore {
       error: err => {
         this.quotesErrorSignal.set(this.formatError(err, 'billing.error.approve-quote'));
       },
+    });
+  }
+
+  /**
+   * Creates a new quotation and adds it to the reactive state.
+   * 
+   * @param quote - The quote to create.
+   * @param onSuccess - Optional success callback.
+   */
+  createQuote(quote: Quote, onSuccess?: () => void): void {
+    this.quoteRepository.createQuote(quote).subscribe({
+      next: created => {
+        this.quotesSignal.update(list => [created, ...list]);
+        onSuccess?.();
+      },
+      error: err => {
+        this.quotesErrorSignal.set(this.formatError(err, 'billing.error.create-quote'));
+      }
     });
   }
 }

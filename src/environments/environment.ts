@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  platformProviderApiBaseUrl: 'https://atelier-backend-mock.onrender.com/api/v1',
+  platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
   platformProviderWorkshopsEndpointPath: '/workshops',
   platformProviderUsersEndpointPath: '/users',
   platformProviderPasswordRecoveryTokensEndpointPath: '/password_recovery_token',

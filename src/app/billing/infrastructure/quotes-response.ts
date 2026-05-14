@@ -5,6 +5,8 @@ import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-res
  */
 export interface QuoteItemResponse {
   id: string;
+  type: 'PRODUCT' | 'SERVICE';
+  reference_id: string | null;
   description: string;
   quantity: number;
   unit_price: number;
@@ -26,6 +28,8 @@ export interface QuoteResponse extends BaseResource {
   status: 'DRAFT' | 'SENT' | 'APPROVED' | 'REJECTED' | 'EXPIRED';
   items: QuoteItemResponse[];
   subtotal: number;
+  discount_amount: number;
+  tax_rate: number;
   tax_amount: number;
   total_amount: number;
   valid_until: string;
