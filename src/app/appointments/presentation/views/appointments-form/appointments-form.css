@@ -1,0 +1,138 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+:host *,
+:host *::before,
+:host *::after {
+  box-sizing: border-box;
+}
+
+.appointment-form {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-x: hidden;
+}
+
+.form-grid {
+  width: 100%;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.form-field,
+.form-field-full {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field-full {
+  grid-column: 1 / -1;
+}
+
+.form-field span,
+.form-field-full span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea,
+.form-field-full input,
+.form-field-full select,
+.form-field-full textarea {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #d6dbe3;
+  border-radius: 14px;
+  background: #f7faff;
+  color: #0f172a;
+  font-size: 14px;
+  outline: none;
+}
+
+.form-field textarea,
+.form-field-full textarea {
+  height: 72px;
+  padding-top: 12px;
+  resize: none;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus,
+.form-field-full input:focus,
+.form-field-full select:focus,
+.form-field-full textarea:focus {
+  border-color: #0b74f1;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(11, 116, 241, 0.12);
+}
+
+.form-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.form-actions button {
+  width: 100%;
+  height: 46px;
+  border-radius: 14px;
+}
+
+@media (max-width: 720px) {
+  .form-grid,
+  .form-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn-secondary,
+.btn-primary {
+  width: 100%;
+  height: 46px;
+  border-radius: 14px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: #4b5563;
+  border: 1px solid #d9dee7;
+}
+
+.btn-primary {
+  background: #0875f5;
+  color: #ffffff;
+}
+
+.btn-secondary:hover,
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}

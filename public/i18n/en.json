@@ -213,6 +213,70 @@
       "P0308": "Cylinder 8 Misfire Detected"
     }
   },
+  "appointments": {
+  "title": "Appointments",
+  "scheduledCount": "scheduled appointments",
+  "loading": "Loading appointments...",
+  "today": "Today",
+  "stats": {
+    "total": "Total",
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "completed": "Completed"
+  },
+  "filters": {
+    "all": "All",
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+  },
+  "search": {
+    "placeholder": "Search customer, vehicle, mechanic"
+  },
+  "fields": {
+    "customer": "Customer",
+    "phone": "Phone",
+    "vehicle": "Vehicle",
+    "service": "Service",
+    "date": "Date",
+    "time": "Time",
+    "mechanic": "Assigned mechanic",
+    "status": "Status",
+    "notes": "Notes"
+  },
+  "placeholders": {
+    "customer": "Customer name",
+    "phone": "9xx xxx xxx",
+    "vehicle": "Brand Model Plate",
+    "service": "Service type",
+    "mechanic": "Mechanic name",
+    "notes": "Optional customer notes"
+  },
+  "status": {
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+  },
+  "actions": {
+    "new": "New appointment",
+    "edit": "Edit",
+    "editAppointment": "Edit appointment",
+    "cancel": "Cancel",
+    "schedule": "Schedule appointment",
+    "saveChanges": "Save changes"
+  },
+  "detail": {
+    "title": "Appointment details"
+  },
+  "empty": "No appointments found.",
+  "aria": {
+    "summary": "Appointments summary",
+    "filters": "Appointment filters",
+    "list": "Appointments list"
+  }
+  },
   "dashboard": {
     "greeting": "Good morning, {{name}}",
     "summary-date": "Here is today's summary — {{date}}",

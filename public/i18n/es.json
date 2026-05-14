@@ -217,6 +217,70 @@
       "P0308": "Falla de encendido detectada en el cilindro 8"
     }
   },
+  "appointments": {
+  "title": "Citas",
+  "scheduledCount": "citas agendadas",
+  "loading": "Cargando citas...",
+  "today": "Hoy",
+  "stats": {
+    "total": "Total",
+    "confirmed": "Confirmadas",
+    "pending": "Pendientes",
+    "completed": "Completadas"
+  },
+  "filters": {
+    "all": "Todas",
+    "confirmed": "Confirmadas",
+    "pending": "Pendientes",
+    "cancelled": "Canceladas",
+    "completed": "Completadas"
+  },
+  "search": {
+    "placeholder": "Buscar cliente, vehículo, mecánico"
+  },
+  "fields": {
+    "customer": "Cliente",
+    "phone": "Teléfono",
+    "vehicle": "Vehículo",
+    "service": "Servicio",
+    "date": "Fecha",
+    "time": "Hora",
+    "mechanic": "Mecánico asignado",
+    "status": "Estado",
+    "notes": "Observaciones"
+  },
+  "placeholders": {
+    "customer": "Nombre del cliente",
+    "phone": "9xx xxx xxx",
+    "vehicle": "Marca Modelo Placa",
+    "service": "Tipo de servicio",
+    "mechanic": "Nombre del mecánico",
+    "notes": "Notas del cliente opcional"
+  },
+  "status": {
+    "confirmed": "Confirmada",
+    "pending": "Pendiente",
+    "cancelled": "Cancelada",
+    "completed": "Completada"
+  },
+  "actions": {
+    "new": "Nueva cita",
+    "edit": "Editar",
+    "editAppointment": "Editar cita",
+    "cancel": "Cancelar",
+    "schedule": "Agendar cita",
+    "saveChanges": "Guardar cambios"
+  },
+  "detail": {
+    "title": "Detalle de cita"
+  },
+  "empty": "No se encontraron citas.",
+  "aria": {
+    "summary": "Resumen de citas",
+    "filters": "Filtros de citas",
+    "list": "Lista de citas"
+  }
+  },
   "dashboard": {
     "greeting": "Buenos días, {{name}}",
     "summary-date": "Aquí está el resumen de hoy — {{date}}",

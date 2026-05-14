@@ -6,31 +6,39 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 import { routes } from './app.routes';
+
 import { CustomerRepository } from './customers/domain/repositories/customer.repository';
 import { CustomersApi } from './customers/infrastructure/customers-api';
+
+import { AppointmentRepository } from './appointments/domain/repositories/appointments.repository';
+import { AppointmentsApi } from './appointments/infrastructure/appointments-api';
+
 import { VoucherRepository } from './billing/domain/repositories/voucher.repository';
 import { QuoteRepository } from './billing/domain/repositories/quote.repository';
 import { BillingApi } from './billing/infrastructure/billing-api';
+
 import { TelemetryRepository } from './telemetry/domain/repositories/telemetry.repository';
 import { TelemetryApi } from './telemetry/infrastructure/telemetry-api';
+
 import { DashboardRepository } from './home/domain/repositories/dashboard.repository';
 import { DashboardApi } from './home/infrastructure/dashboard-api';
-
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(),
     provideTranslateService({
-      loader: provideTranslateHttpLoader({prefix: './i18n/', suffix: '.json',}),
+      loader: provideTranslateHttpLoader({ prefix: './i18n/', suffix: '.json' }),
       fallbackLang: 'en'
     }),
     provideRouter(routes, withComponentInputBinding()),
     provideCharts(withDefaultRegisterables()),
+
     { provide: CustomerRepository, useClass: CustomersApi },
+    { provide: AppointmentRepository, useClass: AppointmentsApi },
     { provide: VoucherRepository, useClass: BillingApi },
     { provide: QuoteRepository, useClass: BillingApi },
     { provide: TelemetryRepository, useClass: TelemetryApi },
-    { provide: DashboardRepository, useClass: DashboardApi },
+    { provide: DashboardRepository, useClass: DashboardApi }
   ]
 };
