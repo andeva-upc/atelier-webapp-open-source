@@ -140,7 +140,34 @@
     },
     "action": {
       "mark-paid": "Mark as paid",
-      "approve": "Approve quotation"
+      "approve": "Approve quotation",
+      "new-quote": "New quotation",
+      "download-pdf": "PDF"
+    },
+    "monthly-summary": "Monthly financial summary",
+    "chart": {
+      "income": "Income",
+      "expenses": "Expenses"
+    },
+    "detail": {
+      "title": "Monthly detail",
+      "columns": {
+        "month": "Month",
+        "income": "Income",
+        "expenses": "Expenses",
+        "profitability": "Profitability",
+        "variation": "Variation",
+        "vehicle": "Vehicle",
+        "items": "Items",
+        "actions": "Actions"
+      }
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May"
     },
     "empty": {
       "vouchers": "No vouchers registered.",

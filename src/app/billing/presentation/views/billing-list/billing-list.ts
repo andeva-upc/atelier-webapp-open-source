@@ -66,11 +66,11 @@ export class BillingList implements OnInit {
 
   /** Simulated monthly financial data matching the user's screenshot */
   readonly monthlyRows = [
-    { month: 'Ene', ingresos: 8400,  gastos: 3200 },
-    { month: 'Feb', ingresos: 9200,  gastos: 3500 },
-    { month: 'Mar', ingresos: 7800,  gastos: 2900 },
-    { month: 'Abr', ingresos: 11200, gastos: 4100 },
-    { month: 'May', ingresos: 10500, gastos: 3800 },
+    { month: 'billing.months.jan', ingresos: 8400,  gastos: 3200 },
+    { month: 'billing.months.feb', ingresos: 9200,  gastos: 3500 },
+    { month: 'billing.months.mar', ingresos: 7800,  gastos: 2900 },
+    { month: 'billing.months.apr', ingresos: 11200, gastos: 4100 },
+    { month: 'billing.months.may', ingresos: 10500, gastos: 3800 },
   ];
 
   /** Columns to display in the monthly details table */
@@ -87,7 +87,7 @@ export class BillingList implements OnInit {
       }
       prevRentabilidad = rentabilidad;
       return {
-        month: `${row.month} 2026`,
+        month: row.month,
         ingresos: row.ingresos,
         gastos: row.gastos,
         rentabilidad,
@@ -148,14 +148,7 @@ export class BillingList implements OnInit {
    * Maps a Quote status to a human readable label.
    */
   getQuoteStatusLabel(status: string): string {
-    const map: Record<string, string> = {
-      APPROVED: 'Aprobada',
-      DRAFT: 'Pendiente',
-      SENT: 'Enviada',
-      REJECTED: 'Rechazada',
-      EXPIRED: 'Expirada',
-    };
-    return map[status] ?? status;
+    return `billing.quote.status.${status.toLowerCase()}`;
   }
 
   /**

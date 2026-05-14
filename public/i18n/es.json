@@ -140,7 +140,34 @@
     },
     "action": {
       "mark-paid": "Marcar como pagado",
-      "approve": "Aprobar cotización"
+      "approve": "Aprobar cotización",
+      "new-quote": "Nueva cotización",
+      "download-pdf": "PDF"
+    },
+    "monthly-summary": "Resumen financiero mensual",
+    "chart": {
+      "income": "Ingresos",
+      "expenses": "Gastos"
+    },
+    "detail": {
+      "title": "Detalle por mes",
+      "columns": {
+        "month": "Mes",
+        "income": "Ingresos",
+        "expenses": "Gastos",
+        "profitability": "Rentabilidad",
+        "variation": "Variación",
+        "vehicle": "Vehículo",
+        "items": "Ítems",
+        "actions": "Acciones"
+      }
+    },
+    "months": {
+      "jan": "Ene",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "May"
     },
     "empty": {
       "vouchers": "No hay comprobantes registrados.",
