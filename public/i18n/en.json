@@ -153,45 +153,64 @@
       "approve-quote": "Failed to approve quotation"
     }
   },
-  "dashboard": {
-    "greeting": "Good morning, {{name}}",
-    "summary-date": "Here is today's summary — {{date}}",
-    "kpi": {
-      "income": "Monthly income",
-      "vs-last-month": "+{{percent}}% vs last month",
-      "active-orders": "Active WOs",
-      "completed-today": "{{count}} completed today",
-      "vehicles-workshop": "Vehicles in workshop",
-      "with-telemetry": "{{count}} with active telemetry",
-      "pending-alerts": "Pending alerts",
-      "critical-medium": "{{critical}} critical, {{medium}} medium"
+  "telemetry": {
+    "title": "OBD2 Telemetry",
+    "subtitle": "Real-time diagnosis - {{count}} active devices",
+    "actions": {
+      "link-obd": "Link OBD2",
+      "unlink": "Unlink"
     },
-    "chart": {
-      "title": "Monthly income",
-      "subtitle": "Last 5 months"
+    "vehicles": {
+      "title": "Vehicles",
+      "active": "Active",
+      "inactive": "Unlinked"
+    },
+    "metrics": {
+      "rpm": "RPM",
+      "temp": "Temperature",
+      "voltage": "Voltage",
+      "engine-load": "Engine Load",
+      "fuel": "Fuel",
+      "speed": "Speed"
+    },
+    "history": {
+      "title": "Telemetry History",
+      "rpm-legend": "RPM",
+      "temp-legend": "Temp (°C)"
     },
     "alerts": {
-      "title": "DTC Alerts",
-      "view-all": "View all"
+      "title": "Active DTC Alerts",
+      "severity": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      },
+      "empty": "No active faults detected"
     },
-    "orders": {
-      "title": "Recent orders",
-      "view-all": "View all",
-      "table": {
-        "ot": "WO",
-        "customer": "Customer",
-        "vehicle": "Vehicle",
-        "mechanic": "Mechanic",
-        "status": "Status",
-        "amount": "Amount"
+    "modals": {
+      "link": {
+        "title": "Link OBD2 Device",
+        "vehicle-label": "Vehicle",
+        "select-vehicle": "Select a vehicle",
+        "device-label": "Device ID",
+        "device-placeholder": "Ex: OBD-2024-XK9812"
       }
     },
-    "status": {
-      "completed": "Completed",
-      "in-progress": "In progress",
-      "pending": "Pending",
-      "scheduled": "Scheduled"
+    "empty": {
+      "no-selection": {
+        "title": "No vehicle selected",
+        "description": "Select a vehicle with an active OBD2 from the sidebar to view its telemetry."
+      }
     },
-    "loading": "Loading dashboard..."
+    "dtc": {
+      "P0301": "Cylinder 1 Misfire Detected",
+      "P0300": "Random/Multiple Cylinder Misfire Detected",
+      "P0135": "O2 Sensor Heater Circuit (Bank 1 Sensor 1)",
+      "P0420": "Catalyst System Efficiency Below Threshold",
+      "P0507": "Idle Control System RPM Higher Than Expected",
+      "P0172": "System Too Rich (Bank 1)",
+      "P0308": "Cylinder 8 Misfire Detected"
+    }
   }
 }

@@ -1,0 +1,40 @@
+<app-modal [isOpen]="isOpen()" (close)="onClose()">
+  <!-- Modal Title -->
+  <h2 modal-title class="modal-title">
+    {{ 'telemetry.modals.link.title' | translate }}
+  </h2>
+  
+  <!-- Modal Body -->
+  <form modal-body [formGroup]="linkForm" (ngSubmit)="onSubmit()" class="link-form">
+    <div class="form-group">
+      <label for="vehicle">{{ 'telemetry.modals.link.vehicle-label' | translate }}</label>
+      <select id="vehicle" formControlName="vehicleId" class="form-control">
+        <option value="" disabled>{{ 'telemetry.modals.link.select-vehicle' | translate }}</option>
+        @for (v of vehicles(); track v.id) {
+          <option [value]="v.id">{{ v.plateNumber }} - {{ v.brand }} {{ v.model }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="deviceId">{{ 'telemetry.modals.link.device-label' | translate }} *</label>
+        <input 
+          id="deviceId" 
+          type="text" 
+          formControlName="deviceId" 
+          class="form-control"
+          [placeholder]="'telemetry.modals.link.device-placeholder' | translate"
+        >
+    </div>
+  </form>
+
+  <!-- Modal Actions -->
+  <div modal-actions class="modal-actions">
+    <button type="button" class="btn-secondary" (click)="onClose()">
+      {{ 'telemetry.actions.cancel' | translate }}
+    </button>
+    <button type="button" class="btn-primary" [disabled]="linkForm.invalid" (click)="onSubmit()">
+      {{ 'telemetry.actions.link' | translate }}
+    </button>
+  </div>
+</app-modal>

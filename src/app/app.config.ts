@@ -3,6 +3,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 import { routes } from './app.routes';
 import { CustomerRepository } from './customers/domain/repositories/customer.repository';
@@ -10,8 +11,8 @@ import { CustomersApi } from './customers/infrastructure/customers-api';
 import { VoucherRepository } from './billing/domain/repositories/voucher.repository';
 import { QuoteRepository } from './billing/domain/repositories/quote.repository';
 import { BillingApi } from './billing/infrastructure/billing-api';
-import { DashboardRepository } from './home/domain/repositories/dashboard.repository';
-import { DashboardApi } from './home/infrastructure/dashboard-api';
+import { TelemetryRepository } from './telemetry/domain/repositories/telemetry.repository';
+import { TelemetryApi } from './telemetry/infrastructure/telemetry-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,10 +23,10 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'en'
     }),
     provideRouter(routes, withComponentInputBinding()),
+    provideCharts(withDefaultRegisterables()),
     { provide: CustomerRepository, useClass: CustomersApi },
     { provide: VoucherRepository, useClass: BillingApi },
     { provide: QuoteRepository, useClass: BillingApi },
-    { provide: DashboardRepository, useClass: DashboardApi }
+    { provide: TelemetryRepository, useClass: TelemetryApi }
   ]
 };
-

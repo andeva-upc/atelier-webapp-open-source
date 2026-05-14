@@ -153,45 +153,68 @@
       "approve-quote": "Error al aprobar la cotización"
     }
   },
-  "dashboard": {
-    "greeting": "Buenos días, {{name}}",
-    "summary-date": "Aquí está el resumen de hoy — {{date}}",
-    "kpi": {
-      "income": "Ingresos del mes",
-      "vs-last-month": "+{{percent}}% vs mes anterior",
-      "active-orders": "OTs activas",
-      "completed-today": "{{count}} completadas hoy",
-      "vehicles-workshop": "Vehículos en taller",
-      "with-telemetry": "{{count}} con telemetría activa",
-      "pending-alerts": "Alertas pendientes",
-      "critical-medium": "{{critical}} crítica, {{medium}} media"
+  "telemetry": {
+    "title": "Telemetría OBD2",
+    "subtitle": "Diagnóstico en tiempo real - {{count}} dispositivos activos",
+    "loading-records": "Cargando telemetría...",
+    "actions": {
+      "link-obd": "Vincular OBD2",
+      "unlink": "Desvincular",
+      "cancel": "Cancelar",
+      "link": "Vincular"
     },
-    "chart": {
-      "title": "Ingresos del mes",
-      "subtitle": "Últimos 5 meses"
+    "vehicles": {
+      "title": "Vehículos",
+      "active": "Activo",
+      "inactive": "Sin vincular"
+    },
+
+    "metrics": {
+      "rpm": "RPM",
+      "temp": "Temperatura",
+      "voltage": "Voltaje",
+      "engine-load": "Carga Motor",
+      "fuel": "Combustible",
+      "speed": "Velocidad"
+    },
+    "history": {
+      "title": "Historial de Telemetría",
+      "rpm-legend": "RPM",
+      "temp-legend": "Temp (°C)"
     },
     "alerts": {
-      "title": "Alertas DTC",
-      "view-all": "Ver todas"
+      "title": "Alertas DTC Activas",
+      "severity": {
+        "low": "Baja",
+        "medium": "Media",
+        "high": "Alta",
+        "critical": "Crítica"
+      },
+      "empty": "No se detectaron fallas activas"
     },
-    "orders": {
-      "title": "Órdenes recientes",
-      "view-all": "Ver todas",
-      "table": {
-        "ot": "OT",
-        "customer": "Cliente",
-        "vehicle": "Vehículo",
-        "mechanic": "Mecánico",
-        "status": "Estado",
-        "amount": "Monto"
+    "modals": {
+      "link": {
+        "title": "Vincular Dispositivo OBD2",
+        "vehicle-label": "Vehículo",
+        "select-vehicle": "Selecciona un vehículo",
+        "device-label": "ID del Dispositivo",
+        "device-placeholder": "Ej: OBD-2024-XK9812"
       }
     },
-    "status": {
-      "completed": "Completado",
-      "in-progress": "En progreso",
-      "pending": "Pendiente",
-      "scheduled": "Programado"
+    "empty": {
+      "no-selection": {
+        "title": "No hay vehículo seleccionado",
+        "description": "Selecciona un vehículo con OBD2 activo de la lista lateral para ver su telemetría."
+      }
     },
-    "loading": "Cargando dashboard..."
+    "dtc": {
+      "P0301": "Falla de encendido en cilindro 1",
+      "P0300": "Falla de encendido aleatoria/múltiple detectada",
+      "P0135": "Circuito de calefacción del sensor de O2 (Banco 1 Sensor 1)",
+      "P0420": "Catalizador con baja eficiencia",
+      "P0507": "Sistema de control de ralentí - RPM superiores a lo esperado",
+      "P0172": "Sistema demasiado rico (Banco 1)",
+      "P0308": "Falla de encendido detectada en el cilindro 8"
+    }
   }
 }
