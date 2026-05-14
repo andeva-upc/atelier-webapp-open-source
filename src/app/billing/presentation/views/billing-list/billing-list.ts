@@ -8,6 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { BillingStore } from '../../../application/billing.store';
+import { Modal } from '../../../shared/presentation/modal/modal';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 
 /**
@@ -28,7 +33,12 @@ import { BillingStore } from '../../../application/billing.store';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    MatChipsModule
+    MatChipsModule,
+    Modal,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule
   ],
   templateUrl: './billing-list.html',
   styleUrl: './billing-list.css',
@@ -38,6 +48,101 @@ export class BillingList implements OnInit {
 
   /** Computed total income from store */
   readonly totalIncomeValue = this.store.totalIncome;
+
+  /** Signal to control the visibility of the new quote modal */
+  readonly isQuoteModalOpen = signal(false);
+
+  /** Form group for the new quote */
+  quoteForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.initQuoteForm();
+  }
+
+  private initQuoteForm(): void {
+    this.quoteForm = this.fb.group({
+      customerId: ['', Validators.required],
+      customerName: ['', Validators.required],
+      vehicle: [''],
+      discountAmount: [0, [Validators.min(0)]],
+      items: this.fb.array([])
+    });
+  }
+
+  get items(): FormArray {
+    return this.quoteForm.get('items') as FormArray;
+  }
+
+  openQuoteModal(): void {
+    this.isQuoteModalOpen.set(true);
+    this.initQuoteForm();
+    this.addItem(); // Start with one empty item
+  }
+
+  closeQuoteModal(): void {
+    this.isQuoteModalOpen.set(false);
+  }
+
+  addItem(): void {
+    const itemForm = this.fb.group({
+      type: ['SERVICE', Validators.required],
+      description: ['', Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      unitPrice: [0, [Validators.required, Validators.min(0)]]
+    });
+    this.items.push(itemForm);
+  }
+
+  removeItem(index: number): void {
+    this.items.removeAt(index);
+  }
+
+  onSubmitQuote(): void {
+    if (this.quoteForm.valid) {
+      const formValue = this.quoteForm.value;
+      
+      // Calculate totals
+      const subtotal = formValue.items.reduce((sum: number, item: any) => sum + (item.quantity * item.unitPrice), 0);
+      const discount = formValue.discountAmount || 0;
+      const taxableAmount = Math.max(0, subtotal - discount);
+      const taxRate = 18; // 18% IGV
+      const taxAmount = Math.round(taxableAmount * (taxRate / 100) * 100) / 100;
+      const totalAmount = taxableAmount + taxAmount;
+
+      const newQuote: any = {
+        id: crypto.randomUUID(),
+        workshopId: 'e26b1580-b3b0-466d-8c10-ca7f62d1c9ef', // Mock workshop ID
+        customerId: formValue.customerId,
+        customerName: formValue.customerName,
+        quoteNumber: `COT-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`,
+        status: 'DRAFT',
+        items: formValue.items.map((item: any) => ({
+          id: crypto.randomUUID(),
+          type: item.type,
+          referenceId: null,
+          description: item.description,
+          quantity: item.quantity,
+          unitPrice: item.unitPrice,
+          total: item.quantity * item.unitPrice
+        })),
+        subtotal,
+        discountAmount: discount,
+        taxRate,
+        taxAmount,
+        totalAmount,
+        validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days validity
+        createdAt: new Date().toISOString(),
+        approvedAt: null,
+        notes: '',
+        vehicle: formValue.vehicle,
+        version: 0
+      };
+
+      this.store.createQuote(newQuote, () => {
+        this.closeQuoteModal();
+      });
+    }
+  }
 
   /** Computed total expenses (simulated as 40% of income for now since no expense data exists) */
   readonly totalExpensesValue = computed(() => this.totalIncomeValue() * 0.4);
@@ -52,6 +157,9 @@ export class BillingList implements OnInit {
 
   /** Reactive signal from store — full list of quotes */
   readonly quotes = this.store.quotes;
+
+  /** Reactive signal from store — inventory products */
+  readonly availableProducts = this.store.products;
 
   /** Loading state for quotes */
   readonly quotesLoading = this.store.quotesLoading;
@@ -169,6 +277,42 @@ export class BillingList implements OnInit {
   ngOnInit(): void {
     this.store.loadVouchers();
     this.store.loadQuotes();
+    this.store.loadProducts();
+  }
+
+  /**
+   * Checks if a product has sufficient stock.
+   * 
+   * @param description - Item description to match.
+   * @param quantity - Requested quantity.
+   * @returns True if stock is sufficient or if it's a service.
+   */
+  hasSufficientStock(description: string, quantity: number, type: string): boolean {
+    if (type === 'SERVICE') return true;
+    const product = this.availableProducts().find(p => 
+      p.name.toLowerCase() === description.toLowerCase() || 
+      p.id === description
+    );
+    return product ? product.stock >= quantity : false;
+  }
+
+  calculateSubtotal(): number {
+    const items = this.quoteForm.get('items')?.value || [];
+    return items.reduce((sum: number, item: any) => sum + (item.quantity * item.unitPrice), 0);
+  }
+
+  calculateTax(): number {
+    const subtotal = this.calculateSubtotal();
+    const discount = this.quoteForm.get('discountAmount')?.value || 0;
+    const taxableAmount = Math.max(0, subtotal - discount);
+    return Math.round(taxableAmount * 0.18 * 100) / 100;
+  }
+
+  calculateTotal(): number {
+    const subtotal = this.calculateSubtotal();
+    const discount = this.quoteForm.get('discountAmount')?.value || 0;
+    const taxableAmount = Math.max(0, subtotal - discount);
+    return taxableAmount + this.calculateTax();
   }
 
   /**

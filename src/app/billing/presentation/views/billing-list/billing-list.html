@@ -6,7 +6,7 @@
       <h1>{{ 'billing.title' | translate }}</h1>
       <p class="subtitle">{{ 'billing.subtitle' | translate }}</p>
     </div>
-    <button class="btn-primary">
+    <button class="btn-primary" (click)="openQuoteModal()">
       <mat-icon class="icon-small">add</mat-icon> {{ 'billing.action.new-quote' | translate }}
     </button>
   </header>
@@ -225,3 +225,100 @@
     </mat-card>
   }
 </section>
+
+<!-- ── New Quote Modal ────────────────────────────────────────────────── -->
+<app-modal [isOpen]="isQuoteModalOpen()" (close)="closeQuoteModal()">
+  <h2 modal-title>{{ 'billing.action.new-quote' | translate }}</h2>
+
+  <form modal-body [formGroup]="quoteForm" class="quote-form">
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="flex-2">
+        <mat-label>ID Cliente</mat-label>
+        <input matInput formControlName="customerId" placeholder="Ej: C-123">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="flex-3">
+        <mat-label>Nombre del Cliente</mat-label>
+        <input matInput formControlName="customerName" placeholder="Ej: Juan Pérez">
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="flex-full">
+        <mat-label>Vehículo (Placa / Modelo)</mat-label>
+        <input matInput formControlName="vehicle" placeholder="Ej: ABC-123 Toyota Corolla">
+      </mat-form-field>
+    </div>
+
+    <div class="items-section">
+      <h3>Ítems de la Cotización</h3>
+      <div formArrayName="items" class="items-list">
+        @for (item of items.controls; track $index) {
+          <div [formGroupName]="$index" class="item-row">
+            <mat-form-field appearance="outline" class="item-type">
+              <mat-select formControlName="type">
+                <mat-option value="PRODUCT">Repuesto</mat-option>
+                <mat-option value="SERVICE">Servicio</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="item-desc">
+              <mat-label>Descripción</mat-label>
+              <input matInput formControlName="description">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="item-qty">
+              <mat-label>Cant.</mat-label>
+              <input type="number" matInput formControlName="quantity">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="item-price">
+              <mat-label>Precio</mat-label>
+              <input type="number" matInput formControlName="unitPrice">
+            </mat-form-field>
+
+            <button type="button" class="btn-icon-delete" (click)="removeItem($index)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          @if (!hasSufficientStock(item.get('description')?.value, item.get('quantity')?.value, item.get('type')?.value)) {
+            <div class="stock-warning">
+              <mat-icon class="icon-small">warning</mat-icon> Desabastecimiento: No hay suficiente stock disponible.
+            </div>
+          }
+        }
+      </div>
+      <button type="button" class="btn-secondary-dashed" (click)="addItem()">
+        <mat-icon>add</mat-icon> Agregar ítem
+      </button>
+    </div>
+
+    <div class="form-row footer-row">
+      <mat-form-field appearance="outline" class="discount-field">
+        <mat-label>Descuento (S/)</mat-label>
+        <input type="number" matInput formControlName="discountAmount">
+      </mat-form-field>
+      
+      <div class="totals-summary">
+        <div class="summary-line">
+          <span>Subtotal:</span>
+          <span>S/ {{ calculateSubtotal() | number:'1.2-2' }}</span>
+        </div>
+        <div class="summary-line">
+          <span>IGV (18%):</span>
+          <span>S/ {{ calculateTax() | number:'1.2-2' }}</span>
+        </div>
+        <div class="summary-line total">
+          <span>Total:</span>
+          <span>S/ {{ calculateTotal() | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div modal-actions class="modal-actions">
+    <button mat-button (click)="closeQuoteModal()">Cancelar</button>
+    <button class="btn-primary" (click)="onSubmitQuote()" [disabled]="quoteForm.invalid">
+      {{ 'billing.action.new-quote' | translate }}
+    </button>
+  </div>
+</app-modal>

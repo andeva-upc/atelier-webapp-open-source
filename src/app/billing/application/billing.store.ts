@@ -1,4 +1,5 @@
 import { Injectable, computed, signal, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs';
 import { Voucher } from '../domain/models/voucher.entity';
 import { Quote } from '../domain/models/quote.entity';
@@ -18,6 +19,8 @@ import { QuoteRepository } from '../domain/repositories/quote.repository';
 export class BillingStore {
   private readonly voucherRepository = inject(VoucherRepository);
   private readonly quoteRepository = inject(QuoteRepository);
+  private readonly http = inject(HttpClient);
+
 
   // ── Voucher signals ────────────────────────────────────────────────────────
 
@@ -79,6 +82,12 @@ export class BillingStore {
   readonly pendingQuotesCount = computed(() =>
     this.quotes().filter(q => q.status === 'SENT').length
   );
+
+  // ── Product signals (for stock validation in quotes) ───────────────────────
+
+  private readonly productsSignal = signal<any[]>([]);
+  readonly products = this.productsSignal.asReadonly();
+
 
   // ── Private helpers ────────────────────────────────────────────────────────
 
@@ -219,6 +228,17 @@ export class BillingStore {
       error: err => {
         this.quotesErrorSignal.set(this.formatError(err, 'billing.error.create-quote'));
       }
+    });
+  }
+
+  /**
+   * Loads available products from the inventory for quote validation.
+   */
+  loadProducts(): void {
+    const url = `${environment.platformProviderApiBaseUrl}${environment.platformProviderProductsEndpointPath}`;
+    this.http.get<any[]>(url).subscribe({
+      next: data => this.productsSignal.set(data),
+      error: () => console.error('Failed to load products')
     });
   }
 }
