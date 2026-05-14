@@ -1,14 +1,14 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { TelemetryStore } from '../../../application/telemetry.store';
+import { TelemetryStore } from '../../application/telemetry.store';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLink } from '@ng-icons/material-icons/baseline';
-import { VehicleTelemetrySelector } from '../../components/vehicle-telemetry-selector/vehicle-telemetry-selector';
-import { MetricsGrid } from '../../components/metrics-grid/metrics-grid';
-import { DtcAlertsList } from '../../components/dtc-alerts-list/dtc-alerts-list';
-import { HistoryChart } from '../../components/history-chart/history-chart';
-import { LinkObdModal } from '../../components/link-obd-modal/link-obd-modal';
+import { VehicleTelemetrySelector } from '../vehicle-telemetry-selector/vehicle-telemetry-selector';
+import { MetricsGrid } from '../metrics-grid/metrics-grid';
+import { DtcAlertsList } from '../dtc-alerts-list/dtc-alerts-list';
+import { HistoryChart } from '../history-chart/history-chart';
+import { LinkObdModal } from '../link-obd-modal/link-obd-modal';
 
 /**
  * Main dashboard view for Telemetry.
