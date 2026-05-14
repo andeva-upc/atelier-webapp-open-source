@@ -3,44 +3,48 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { TelemetryStore } from '../../../application/telemetry.store';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matWarning, matError, matInfo } from '@ng-icons/material-icons/baseline';
+import { matErrorOutline } from '@ng-icons/material-icons/baseline';
 
 @Component({
   selector: 'app-dtc-alerts-list',
   standalone: true,
   imports: [CommonModule, TranslateModule, NgIcon],
-  providers: [provideIcons({ matWarning, matError, matInfo })],
+  providers: [provideIcons({ matErrorOutline })],
   template: `
     <div class="alerts-container">
       <div class="alerts-header">
         <h3>{{ 'telemetry.alerts.title' | translate }}</h3>
-        <span class="count-badge" *ngIf="alerts().length > 0">{{ alerts().length }}</span>
       </div>
 
       <div class="alerts-list">
-        @for (alert of alerts(); track alert.id) {
-          <div class="alert-item" [class]="alert.severity.toLowerCase()">
-            <div class="alert-icon">
-              @if (alert.severity === 'CRITICAL' || alert.severity === 'HIGH') {
-                <ng-icon name="matError"></ng-icon>
-              } @else if (alert.severity === 'MEDIUM') {
-                <ng-icon name="matWarning"></ng-icon>
-              } @else {
-                <ng-icon name="matInfo"></ng-icon>
-              }
-            </div>
-            
-            <div class="alert-content">
-              <div class="alert-top">
-                <span class="code">{{ alert.dtcCode }}</span>
-                <span class="severity-label">{{ alert.getSeverityKey() | translate }}</span>
+        @for (item of alertsUI(); track item.alert.id) {
+          <div class="alert-card" [class]="item.alert.severity.toLowerCase()">
+            <div class="alert-main">
+              <div class="status-dot"></div>
+              
+              <div class="alert-info">
+                <div class="alert-top-row">
+                  <span class="dtc-code">{{ item.alert.dtcCode }}</span>
+                  <span class="severity-badge">{{ item.alert.getSeverityKey() | translate }}</span>
+                </div>
+                
+                <h4 class="alert-desc">{{ item.alert.description }}</h4>
+                
+                <div class="alert-footer">
+                  {{ item.vehicle?.brand }} {{ item.vehicle?.model }} {{ item.vehicle?.plateNumber }} 
+                  <span class="separator">·</span> 
+                  {{ item.timestamp }}
+                </div>
               </div>
-              <p class="description">{{ alert.description }}</p>
+
+              <div class="alert-icon-end">
+                <ng-icon name="matErrorOutline"></ng-icon>
+              </div>
             </div>
           </div>
         } @empty {
           <div class="empty-alerts">
-            <div class="check-icon">✓</div>
+            <div class="check-circle">✓</div>
             <p>No se detectaron fallas activas</p>
           </div>
         }
@@ -49,101 +53,127 @@ import { matWarning, matError, matInfo } from '@ng-icons/material-icons/baseline
   `,
   styles: [`
     .alerts-container {
-      background: white;
-      border-radius: 1rem;
-      border: 1px solid #e2e8f0;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-    .alerts-header {
-      padding: 1.25rem 1.5rem;
       display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      border-bottom: 1px solid #f1f5f9;
+      flex-direction: column;
+      gap: 1.5rem;
     }
     .alerts-header h3 {
       margin: 0;
-      font-size: 1rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: #1e293b;
-    }
-    .count-badge {
-      background: #fee2e2;
-      color: #ef4444;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.1rem 0.5rem;
-      border-radius: 1rem;
     }
     .alerts-list {
       display: flex;
       flex-direction: column;
-    }
-    .alert-item {
-      display: flex;
-      padding: 1.25rem 1.5rem;
       gap: 1rem;
-      border-bottom: 1px solid #f1f5f9;
-      transition: background-color 0.2s;
     }
-    .alert-item:last-child {
-      border-bottom: none;
+    .alert-card {
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border-width: 1px;
+      border-style: solid;
+      transition: transform 0.2s;
     }
-    .alert-icon {
-      font-size: 1.5rem;
-      display: flex;
-      align-items: flex-start;
-      padding-top: 0.1rem;
+    .alert-card:hover {
+      transform: translateY(-2px);
     }
-    .alert-item.critical .alert-icon { color: #ef4444; }
-    .alert-item.high .alert-icon { color: #f97316; }
-    .alert-item.medium .alert-icon { color: #eab308; }
-    .alert-item.low .alert-icon { color: #3b82f6; }
 
-    .alert-content {
+    /* Severity Colors */
+    .alert-card.critical, .alert-card.high {
+      background-color: #fff1f2;
+      border-color: #fecaca;
+    }
+    .alert-card.medium {
+      background-color: #fff7ed;
+      border-color: #fed7aa;
+    }
+    .alert-card.low {
+      background-color: #f8fafc;
+      border-color: #e2e8f0;
+    }
+
+    .alert-main {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 0.5rem;
+    }
+    .critical .status-dot, .high .status-dot { background-color: #ef4444; }
+    .medium .status-dot { background-color: #f97316; }
+    .low .status-dot { background-color: #94a3b8; }
+
+    .alert-info {
       flex: 1;
     }
-    .alert-top {
+
+    .alert-top-row {
       display: flex;
       align-items: center;
       gap: 0.75rem;
       margin-bottom: 0.25rem;
     }
-    .code {
-      font-family: monospace;
-      font-weight: 700;
-      color: #1e293b;
-      font-size: 1rem;
-    }
-    .severity-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      padding: 0.1rem 0.4rem;
-      border-radius: 0.25rem;
-    }
-    .critical .severity-label { background: #fef2f2; color: #ef4444; }
-    .high .severity-label { background: #fff7ed; color: #f97316; }
-    .medium .severity-label { background: #fefce8; color: #854d0e; }
-    .low .severity-label { background: #eff6ff; color: #1d4ed8; }
 
-    .description {
-      margin: 0;
-      font-size: 0.875rem;
-      color: #64748b;
-      line-height: 1.4;
+    .dtc-code {
+      font-weight: 800;
+      font-size: 1.1rem;
     }
+    .critical .dtc-code, .high .dtc-code { color: #ef4444; }
+    .medium .dtc-code { color: #f97316; }
+    .low .dtc-code { color: #475569; }
+
+    .severity-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.1rem 0.6rem;
+      border-radius: 1rem;
+    }
+    .critical .severity-badge, .high .severity-badge { background: #fee2e2; color: #ef4444; }
+    .medium .severity-badge { background: #ffedd5; color: #f97316; }
+    .low .severity-badge { background: #f1f5f9; color: #475569; }
+
+    .alert-desc {
+      margin: 0.25rem 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    .alert-footer {
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+    .separator {
+      margin: 0 0.25rem;
+      font-weight: 900;
+    }
+
+    .alert-icon-end {
+      font-size: 1.75rem;
+      color: #94a3b8;
+    }
+    .critical .alert-icon-end, .high .alert-icon-end { color: #ef4444; }
+    .medium .alert-icon-end { color: #f97316; }
 
     .empty-alerts {
+      background: white;
+      border-radius: 1rem;
       padding: 3rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1rem;
+      border: 1px dashed #cbd5e1;
       color: #94a3b8;
     }
-    .check-icon {
+    .check-circle {
       width: 48px;
       height: 48px;
       background: #f0fdf4;
@@ -159,5 +189,5 @@ import { matWarning, matError, matInfo } from '@ng-icons/material-icons/baseline
 })
 export class DtcAlertsList {
   private readonly store = inject(TelemetryStore);
-  readonly alerts = this.store.alerts;
+  readonly alertsUI = this.store.alertsWithVehicle;
 }

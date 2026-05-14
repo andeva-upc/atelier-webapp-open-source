@@ -6,13 +6,16 @@ import { ObdDevice } from '../domain/models/obd-device.entity';
 import { DtcAlert } from '../domain/models/dtc-alert.entity';
 import { Vehicle } from '../domain/models/vehicle.entity';
 
-/**
- * Interface for the UI representation of a vehicle with its linked OBD device.
- */
 export interface VehicleTelemetry {
   vehicle: Vehicle;
   device?: ObdDevice;
   status: 'ACTIVE' | 'INACTIVE' | 'ERROR' | 'UNLINKED';
+}
+
+export interface DtcAlertUI {
+  alert: DtcAlert;
+  vehicle?: Vehicle;
+  timestamp: string;
 }
 
 @Injectable({
@@ -39,14 +42,8 @@ export class TelemetryStore {
   readonly loading = this.loadingSignal.asReadonly();
   readonly error = this.errorSignal.asReadonly();
 
-  /** 
-   * Computed: List of devices with status ACTIVE.
-   */
   readonly activeDevices = computed(() => this.devices().filter(d => d.status === 'ACTIVE'));
 
-  /** 
-   * Joins vehicles with their corresponding OBD devices for the UI list.
-   */
   readonly vehicleDevices = computed<VehicleTelemetry[]>(() => {
     const vehicles = this.vehicles();
     const devices = this.devices();
@@ -59,6 +56,20 @@ export class TelemetryStore {
         status: device ? device.status : 'UNLINKED'
       };
     });
+  });
+
+  /**
+   * Computed: Alerts with vehicle details and mocked timestamp.
+   */
+  readonly alertsWithVehicle = computed<DtcAlertUI[]>(() => {
+    const alerts = this.alerts();
+    const vehicles = this.vehicles();
+
+    return alerts.map(alert => ({
+      alert,
+      vehicle: vehicles.find(v => v.id === alert.vehicleId),
+      timestamp: '2026-05-13 09:32' // Mocked as not in db.json
+    }));
   });
 
   loadInitialData(): void {
