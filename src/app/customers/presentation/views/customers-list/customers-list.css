@@ -223,12 +223,36 @@
 }
 
 .info-text {
-  font-size: 0.875rem;
-  color: #4b5563;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
 }
 
 .info-text.no-vehicles {
   color: #9ca3af;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-left: auto;
+}
+
+.delete-btn:hover {
+  background-color: #fef2f2;
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.delete-btn ng-icon {
+  font-size: 1.25rem;
 }
 
 /* Footer Section with separator line */
@@ -419,3 +443,64 @@
   animation: spin 0.8s linear infinite;
   display: inline-block;
 }
+
+/* Vehicle Chips Styles */
+.align-top {
+  align-items: flex-start !important;
+}
+
+.mt-1 {
+  margin-top: 2px;
+}
+
+.vehicles-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.vehicle-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+::ng-deep mat-chip.custom-mat-chip {
+  --mdc-chip-outline-width: 0px !important;
+  --mdc-chip-outline-color: transparent !important;
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  border-radius: 16px !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2) !important;
+  transition: all 0.2s ease !important;
+  min-height: 24px !important;
+}
+
+::ng-deep mat-chip.custom-mat-chip * {
+  border-color: transparent !important;
+  outline-color: transparent !important;
+}
+
+::ng-deep mat-chip.custom-mat-chip::before,
+::ng-deep mat-chip.custom-mat-chip::after,
+::ng-deep mat-chip.custom-mat-chip .mdc-evolution-chip__action::before,
+::ng-deep mat-chip.custom-mat-chip .mdc-evolution-chip__action::after,
+::ng-deep mat-chip.custom-mat-chip .mat-mdc-focus-indicator::before {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+::ng-deep mat-chip.custom-mat-chip .mdc-evolution-chip__text-label {
+  color: #3b82f6 !important;
+}
+
+::ng-deep mat-chip.custom-mat-chip:hover {
+  background-color: rgba(59, 130, 246, 0.15) !important;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+

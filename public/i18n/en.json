@@ -1,12 +1,13 @@
 {
   "option": {
     "home": "Home",
-    "work-orders": "Orders",
-    "appointments": "Appointments",
-    "staff": "Staff",
+    "work-orders": "Work Orders",
     "inventory": "Inventory",
+    "customers": "Customers",
+    "appointments": "Appointments",
+    "telemetry": "Telemetry",
     "billing": "Billing",
-    "customers": "Customers"
+    "configuration": "Configuration"
   },
   "customers": {
     "title": "Customers",
@@ -17,6 +18,10 @@
     "loading-records": "Loading records...",
     "services-performed": "{{count}} services performed",
     "last-visit": "Last visit",
+    "no-visits": "No visits registered",
+    "no-vehicles": "No vehicles registered",
+    "delete": "Delete customer",
+    "delete-confirm": "Are you sure you want to delete this customer?",
     "empty": {
       "title": "No customers found",
       "description": "Try searching again with a different term."
@@ -147,5 +152,170 @@
       "load-quotes": "Failed to load quotations",
       "approve-quote": "Failed to approve quotation"
     }
+  },
+  "telemetry": {
+    "title": "OBD2 Telemetry",
+    "subtitle": "Real-time diagnosis - {{count}} active devices",
+    "actions": {
+      "link-obd": "Link OBD2",
+      "unlink": "Unlink"
+    },
+    "vehicles": {
+      "title": "Vehicles",
+      "active": "Active",
+      "inactive": "Unlinked"
+    },
+    "metrics": {
+      "rpm": "RPM",
+      "temp": "Temperature",
+      "voltage": "Voltage",
+      "engine-load": "Engine Load",
+      "fuel": "Fuel",
+      "speed": "Speed"
+    },
+    "history": {
+      "title": "Telemetry History",
+      "rpm-legend": "RPM",
+      "temp-legend": "Temp (°C)"
+    },
+    "alerts": {
+      "title": "Active DTC Alerts",
+      "severity": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      },
+      "empty": "No active faults detected"
+    },
+    "modals": {
+      "link": {
+        "title": "Link OBD2 Device",
+        "vehicle-label": "Vehicle",
+        "select-vehicle": "Select a vehicle",
+        "device-label": "Device ID",
+        "device-placeholder": "Ex: OBD-2024-XK9812"
+      }
+    },
+    "empty": {
+      "no-selection": {
+        "title": "No vehicle selected",
+        "description": "Select a vehicle with an active OBD2 from the sidebar to view its telemetry."
+      }
+    },
+    "dtc": {
+      "P0301": "Cylinder 1 Misfire Detected",
+      "P0300": "Random/Multiple Cylinder Misfire Detected",
+      "P0135": "O2 Sensor Heater Circuit (Bank 1 Sensor 1)",
+      "P0420": "Catalyst System Efficiency Below Threshold",
+      "P0507": "Idle Control System RPM Higher Than Expected",
+      "P0172": "System Too Rich (Bank 1)",
+      "P0308": "Cylinder 8 Misfire Detected"
+    }
+  },
+  "appointments": {
+  "title": "Appointments",
+  "scheduledCount": "scheduled appointments",
+  "loading": "Loading appointments...",
+  "today": "Today",
+  "stats": {
+    "total": "Total",
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "completed": "Completed"
+  },
+  "filters": {
+    "all": "All",
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+  },
+  "search": {
+    "placeholder": "Search customer, vehicle, mechanic"
+  },
+  "fields": {
+    "customer": "Customer",
+    "phone": "Phone",
+    "vehicle": "Vehicle",
+    "service": "Service",
+    "date": "Date",
+    "time": "Time",
+    "mechanic": "Assigned mechanic",
+    "status": "Status",
+    "notes": "Notes"
+  },
+  "placeholders": {
+    "customer": "Customer name",
+    "phone": "9xx xxx xxx",
+    "vehicle": "Brand Model Plate",
+    "service": "Service type",
+    "mechanic": "Mechanic name",
+    "notes": "Optional customer notes"
+  },
+  "status": {
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+  },
+  "actions": {
+    "new": "New appointment",
+    "edit": "Edit",
+    "editAppointment": "Edit appointment",
+    "cancel": "Cancel",
+    "schedule": "Schedule appointment",
+    "saveChanges": "Save changes"
+  },
+  "detail": {
+    "title": "Appointment details"
+  },
+  "empty": "No appointments found.",
+  "aria": {
+    "summary": "Appointments summary",
+    "filters": "Appointment filters",
+    "list": "Appointments list"
+  }
+  },
+  "dashboard": {
+    "greeting": "Good morning, {{name}}",
+    "summary-date": "Here is today's summary — {{date}}",
+    "kpi": {
+      "income": "Monthly income",
+      "vs-last-month": "+{{percent}}% vs last month",
+      "active-orders": "Active WOs",
+      "completed-today": "{{count}} completed today",
+      "vehicles-workshop": "Vehicles in workshop",
+      "with-telemetry": "{{count}} with active telemetry",
+      "pending-alerts": "Pending alerts",
+      "critical-medium": "{{critical}} critical, {{medium}} medium"
+    },
+    "chart": {
+      "title": "Monthly income",
+      "subtitle": "Last 5 months"
+    },
+    "alerts": {
+      "title": "DTC Alerts",
+      "view-all": "View all"
+    },
+    "orders": {
+      "title": "Recent orders",
+      "view-all": "View all",
+      "table": {
+        "ot": "WO",
+        "customer": "Customer",
+        "vehicle": "Vehicle",
+        "mechanic": "Mechanic",
+        "status": "Status",
+        "amount": "Amount"
+      }
+    },
+    "status": {
+      "completed": "Completed",
+      "in-progress": "In progress",
+      "pending": "Pending",
+      "scheduled": "Scheduled"
+    },
+    "loading": "Loading dashboard..."
   }
 }

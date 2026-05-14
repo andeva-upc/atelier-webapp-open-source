@@ -16,8 +16,22 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'telemetry',
+    loadChildren: () =>
+      import('./telemetry/presentation/telemetry.routes').then(
+        (m) => m.telemetryRoutes
+      ),
+  },
+  {
+    path: 'appointments',
+    loadChildren: () =>
+      import('./appointments/presentation/appointments.routes').then(
+        (m) => m.appointmentsRoutes
+      ),
+  },
+  {
     path: '',
-    redirectTo: 'customers',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
 ];

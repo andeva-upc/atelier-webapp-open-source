@@ -66,4 +66,14 @@ export class CustomersApi extends BaseApi implements CustomerRepository {
   ): Observable<any> {
     return this.customersEndpoint.findPreRegistration(documentType, documentNumber, phone);
   }
+
+  /**
+   * Performs a soft delete operation on a customer record.
+   * 
+   * @param id - The unique identifier of the customer.
+   * @returns An {@link Observable} that completes when the operation is done.
+   */
+  delete(id: string | number): Observable<void> {
+    return this.customersEndpoint.delete(id);
+  }
 }
