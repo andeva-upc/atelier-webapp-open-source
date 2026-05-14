@@ -152,5 +152,65 @@
       "load-quotes": "Failed to load quotations",
       "approve-quote": "Failed to approve quotation"
     }
+  },
+  "telemetry": {
+    "title": "OBD2 Telemetry",
+    "subtitle": "Real-time diagnosis - {{count}} active devices",
+    "actions": {
+      "link-obd": "Link OBD2",
+      "unlink": "Unlink"
+    },
+    "vehicles": {
+      "title": "Vehicles",
+      "active": "Active",
+      "inactive": "Unlinked"
+    },
+    "metrics": {
+      "rpm": "RPM",
+      "temp": "Temperature",
+      "voltage": "Voltage",
+      "engine-load": "Engine Load",
+      "fuel": "Fuel",
+      "speed": "Speed"
+    },
+    "history": {
+      "title": "Telemetry History",
+      "rpm-legend": "RPM",
+      "temp-legend": "Temp (°C)"
+    },
+    "alerts": {
+      "title": "Active DTC Alerts",
+      "severity": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      },
+      "empty": "No active faults detected"
+    },
+    "modals": {
+      "link": {
+        "title": "Link OBD2 Device",
+        "vehicle-label": "Vehicle",
+        "select-vehicle": "Select a vehicle",
+        "device-label": "Device ID",
+        "device-placeholder": "Ex: OBD-2024-XK9812"
+      }
+    },
+    "empty": {
+      "no-selection": {
+        "title": "No vehicle selected",
+        "description": "Select a vehicle with an active OBD2 from the sidebar to view its telemetry."
+      }
+    },
+    "dtc": {
+      "P0301": "Cylinder 1 Misfire Detected",
+      "P0300": "Random/Multiple Cylinder Misfire Detected",
+      "P0135": "O2 Sensor Heater Circuit (Bank 1 Sensor 1)",
+      "P0420": "Catalyst System Efficiency Below Threshold",
+      "P0507": "Idle Control System RPM Higher Than Expected",
+      "P0172": "System Too Rich (Bank 1)",
+      "P0308": "Cylinder 8 Misfire Detected"
+    }
   }
 }
