@@ -84,6 +84,7 @@ import {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1.5rem;
+      font-family: 'Mona Sans', sans-serif;
     }
     .metric-card {
       background: white;
@@ -125,6 +126,7 @@ import {
       font-weight: 700;
       color: #1e293b;
       line-height: 1.2;
+      font-family: 'Arimo', sans-serif;
     }
     .unit {
       font-size: 0.75rem;

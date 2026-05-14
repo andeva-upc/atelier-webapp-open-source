@@ -31,6 +31,7 @@ import { TelemetryStore } from '../../../application/telemetry.store';
       border: 1px solid #e2e8f0;
       padding: 1.5rem;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      font-family: 'Mona Sans', sans-serif;
     }
     .chart-header {
       margin-bottom: 1.5rem;
@@ -53,9 +54,6 @@ export class HistoryChart {
 
   public lineChartType: ChartType = 'line';
 
-  /**
-   * Reactive chart data computed from the store's history signal.
-   */
   readonly lineChartData = computed<ChartConfiguration['data']>(() => {
     const history = this.store.history();
     
@@ -103,8 +101,10 @@ export class HistoryChart {
         position: 'left',
         title: {
           display: true,
-          text: 'RPM'
+          text: 'RPM',
+          font: { family: 'Mona Sans' }
         },
+        ticks: { font: { family: 'Mona Sans' } },
         grid: {
           drawOnChartArea: true
         }
@@ -115,13 +115,18 @@ export class HistoryChart {
         position: 'right',
         title: {
           display: true,
-          text: 'Temp (°C)'
+          text: 'Temp (°C)',
+          font: { family: 'Mona Sans' }
         },
+        ticks: { font: { family: 'Mona Sans' } },
         grid: {
           drawOnChartArea: false
         },
         min: 0,
         max: 120
+      },
+      x: {
+        ticks: { font: { family: 'Mona Sans' } }
       }
     },
     plugins: {
@@ -131,12 +136,15 @@ export class HistoryChart {
         align: 'end',
         labels: {
           usePointStyle: true,
-          boxWidth: 8
+          boxWidth: 8,
+          font: { family: 'Mona Sans' }
         }
       },
       tooltip: {
         mode: 'index',
-        intersect: false
+        intersect: false,
+        bodyFont: { family: 'Mona Sans' },
+        titleFont: { family: 'Mona Sans' }
       }
     }
   };

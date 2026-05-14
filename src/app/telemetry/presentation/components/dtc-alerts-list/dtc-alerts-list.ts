@@ -56,6 +56,7 @@ import { matErrorOutline } from '@ng-icons/material-icons/baseline';
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      font-family: 'Mona Sans', sans-serif;
     }
     .alerts-header h3 {
       margin: 0;
@@ -123,6 +124,7 @@ import { matErrorOutline } from '@ng-icons/material-icons/baseline';
     .dtc-code {
       font-weight: 800;
       font-size: 1.1rem;
+      font-family: 'Arimo', sans-serif;
     }
     .critical .dtc-code, .high .dtc-code { color: #ef4444; }
     .medium .dtc-code { color: #f97316; }

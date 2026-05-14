@@ -57,6 +57,7 @@ import { TelemetryStore } from '../../../application/telemetry.store';
       font-weight: 700;
       color: #1e293b;
       margin: 0;
+      font-family: 'Mona Sans', sans-serif;
     }
     .link-form {
       padding: 0.5rem 0;
@@ -71,6 +72,7 @@ import { TelemetryStore } from '../../../application/telemetry.store';
       font-size: 0.875rem;
       font-weight: 500;
       color: #1e293b;
+      font-family: 'Arimo', sans-serif;
     }
     .form-control {
       padding: 0.75rem 1rem;
@@ -85,9 +87,9 @@ import { TelemetryStore } from '../../../application/telemetry.store';
     }
     .form-control:focus {
       outline: none;
-      border-color: #0066ff;
+      border-color: #0071EB;
       background: white;
-      box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+      box-shadow: 0 0 0 3px rgba(0, 113, 235, 0.1);
     }
     .modal-actions {
       display: flex;
@@ -96,7 +98,7 @@ import { TelemetryStore } from '../../../application/telemetry.store';
       width: 100%;
     }
     .btn-primary {
-      background: #0066ff;
+      background: #0071EB;
       color: white;
       border: none;
       padding: 0.75rem 2.5rem;

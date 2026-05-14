@@ -5,11 +5,12 @@ import { TelemetryStore, VehicleTelemetry } from '../../../application/telemetry
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matDirectionsCar, matLinkOff } from '@ng-icons/material-icons/baseline';
 import { ObdDevice } from '../../../domain/models/obd-device.entity';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-vehicle-telemetry-selector',
   standalone: true,
-  imports: [CommonModule, TranslateModule, NgIcon],
+  imports: [CommonModule, TranslateModule, NgIcon, MatButtonModule],
   providers: [provideIcons({ matDirectionsCar, matLinkOff })],
   template: `
     <div class="selector-container">
@@ -32,9 +33,14 @@ import { ObdDevice } from '../../../domain/models/obd-device.entity';
               <span class="model">{{ item.vehicle.getDisplayName() }}</span>
               
               @if (item.device) {
-                <a class="unlink-btn" (click)="onUnlink($event, item.device.id)">
+                <button 
+                  mat-button 
+                  color="warn" 
+                  class="unlink-btn-mat"
+                  (click)="onUnlink($event, item.device.id)"
+                >
                    {{ 'telemetry.actions.unlink' | translate }}
-                </a>
+                </button>
               }
             </div>
 
@@ -61,6 +67,7 @@ import { ObdDevice } from '../../../domain/models/obd-device.entity';
       border: 1px solid #e2e8f0;
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      font-family: 'Mona Sans', sans-serif;
     }
     .sidebar-title {
       padding: 1.5rem;
@@ -91,7 +98,7 @@ import { ObdDevice } from '../../../domain/models/obd-device.entity';
     }
     .vehicle-item.active {
       background-color: #f1f7ff;
-      border-left: 4px solid #0066ff;
+      border-left: 4px solid #0071EB;
     }
     .vehicle-item.disabled {
       cursor: not-allowed;
@@ -109,31 +116,32 @@ import { ObdDevice } from '../../../domain/models/obd-device.entity';
       font-size: 1.25rem;
     }
     .vehicle-item.active .vehicle-icon {
-      background: #0066ff;
+      background: #0071EB;
       color: white;
     }
     .vehicle-info {
       flex: 1;
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
     }
     .plate {
       font-weight: 700;
       color: #1e293b;
       font-size: 0.9rem;
+      font-family: 'Arimo', sans-serif;
     }
     .model {
       color: #64748b;
       font-size: 0.8rem;
     }
-    .unlink-btn {
-      font-size: 0.75rem;
-      color: #ef4444;
-      text-decoration: none;
-      margin-top: 0.25rem;
-    }
-    .unlink-btn:hover {
-      text-decoration: underline;
+    .unlink-btn-mat {
+      height: 28px !important;
+      line-height: 28px !important;
+      padding: 0 8px !important;
+      font-size: 0.75rem !important;
+      margin-top: 4px !important;
+      min-width: auto !important;
     }
     .vehicle-status {
       display: flex;
