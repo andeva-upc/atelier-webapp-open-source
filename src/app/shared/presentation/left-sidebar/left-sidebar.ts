@@ -10,22 +10,24 @@ import { CommonModule } from '@angular/common';
   styleUrl: './left-sidebar.css',
 })
 export class LeftSidebar {
-  isLeftSidebarCollapsed = input.required<boolean>();
-  changeIsLeftSidebarCollapsed = output<boolean>();
+  isExpanded = signal(false);
 
-  toggleCollapsed() {
-    this.changeIsLeftSidebarCollapsed.emit(!this.isLeftSidebarCollapsed());
+  toggleSidebar() {
+    this.isExpanded.update(val => !val);
   }
+
   /**
    * Array of navbar options for the atelier's sidebar.
    */
   options = signal([
-    { link: '/home', label: 'option.home', icon: '/home-icon.svg' },
-    { link: '/work-orders', label: 'option.work-orders', icon: '/order-icon.svg' },
-    { link: '/appointments', label: 'option.appointments', icon: '/appointment-icon.svg' },
-    { link: '/staff', label: 'option.staff', icon: '/staff-icon.svg' },
-    { link: '/inventory', label: 'option.inventory', icon: '/inventory-icon.svg' },
-    { link: '/billing', label: 'option.billing', icon: '/billing-icon.svg' },
-    { link: '/customers', label: 'option.customers', icon: '/customers-icon.svg' },
+    { link: '/home', label: 'option.home', icon: 'pi pi-objects-column' },
+    { link: '/work-orders', label: 'option.work-orders', icon: 'pi pi-wrench' },
+    { link: '/inventory', label: 'option.inventory', icon: 'pi pi-box' },
+    { link: '/customers', label: 'option.customers', icon: 'pi pi-users' },
+    { link: '/appointments', label: 'option.appointments', icon: 'pi pi-calendar' },
+    { link: '/telemetry', label: 'option.telemetry', icon: 'pi pi-chart-line' },
+    { link: '/billing', label: 'option.billing', icon: 'pi pi-receipt' },
+    { link: '/configuration', label: 'option.configuration', icon: 'pi pi-cog' },
   ]);
+
 }

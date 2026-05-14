@@ -1,74 +1,79 @@
 {
   "option": {
     "home": "Inicio",
-    "work-orders": "Órdenes",
-    "appointments": "Citas",
-    "staff": "Personal",
+    "work-orders": "Órdenes de Trabajo",
     "inventory": "Inventario",
+    "customers": "Clientes",
+    "appointments": "Citas",
+    "telemetry": "Telemetría",
     "billing": "Facturación",
-    "customers": "Clientes"
+    "configuration": "Configuración"
   },
   "customers": {
     "title": "Clientes",
     "subtitle-count": "{{count}} clientes registrados",
     "subtitle-loading": "Cargando clientes registrados...",
     "new-customer": "Nuevo cliente",
-    "search-placeholder": "Buscar por nombre, email o teléfono...",
+    "search-placeholder": "Buscar por nombre, correo electrónico o teléfono...",
     "loading-records": "Cargando registros...",
     "services-performed": "{{count}} servicios realizados",
     "last-visit": "Última visita",
+    "no-visits": "Sin visitas registradas",
+    "no-vehicles": "Sin vehículos registrados",
+    "delete": "Eliminar cliente",
+    "delete-confirm": "¿Estás seguro de que deseas eliminar este cliente?",
     "empty": {
       "title": "No se encontraron clientes",
-      "description": "Intenta realizar otra búsqueda con un término diferente."
+      "description": "Intenta buscar nuevamente con un término diferente."
     },
     "modal": {
       "title": {
-        "search": "Comprobar pre-registro",
+        "search": "Verificar pre-registro",
         "existing": "Cliente ya registrado",
         "pre-registered": "¡Pre-registro online encontrado!",
         "not-found": "Registro no encontrado",
         "manual-bypass": "Registro manual (Contingencia)"
       },
       "search": {
-        "description": "Ingrese las credenciales del conductor (por documento o número de teléfono) para verificar coincidencias pasivas o citas agendadas por la web.",
+        "description": "Ingresa las credenciales del conductor (por documento o número de teléfono) para verificar coincidencias pasivas o citas online.",
         "or-alternatively": "O alternativamente"
       },
       "existing": {
-        "badge": "Cliente Registrado en el Taller",
-        "description": "Este número de documento ya está asociado a una cuenta comercial inmutable:",
-        "footer": "No es necesario duplicar el perfil. El sistema asocia automáticamente todos sus autos históricos."
+        "badge": "Cliente Registrado en Taller",
+        "description": "Este número de documento ya está asociado con un perfil comercial inmutable:",
+        "footer": "No hay necesidad de duplicar el perfil. El sistema asocia automáticamente todos los vehículos históricos."
       },
       "pre-registered": {
         "badge": "Pre-registro Online Listo",
-        "description": "Se encontraron datos válidos cargados por el cliente en la landing page del taller:",
+        "description": "Se encontraron detalles válidos proporcionados por el cliente en la página del taller:",
         "document-label": "Documento",
         "vehicle": "Vehículo: {{vehicle}} ({{plate}})",
-        "footer": "Al presionar \"Oficializar\", se creará el perfil comercial definitivo en base a sus datos verificados."
+        "footer": "Al hacer clic en \"Oficializar\", se creará el perfil comercial definitivo en base a los detalles verificados."
       },
       "not-found": {
         "badge": "Sin Registros Previos",
-        "description": "No se encontró ningún pre-registro ni cliente activo para este número de documento.",
-        "card-title": "Auto-registro Móvil (Fricción Cero)",
-        "card-description": "Para evitar errores, ingrese el celular del conductor y le enviaremos un enlace interactivo para que llene sus datos desde su teléfono:",
+        "description": "No se encontró ningún pre-registro o cliente activo para este número de documento.",
+        "card-title": "Auto-registro Móvil (Cero Fricción)",
+        "card-description": "Para evitar errores, ingresa el número de celular del conductor y enviaremos un enlace interactivo para que llene los detalles desde su teléfono:",
         "phone-error": "Debe tener exactamente 9 dígitos.",
-        "sms-success": "¡Enlace enviado con éxito al WhatsApp del cliente!"
+        "sms-success": "¡Enlace enviado exitosamente al WhatsApp del cliente!"
       },
       "manual": {
-        "badge": "Modo Contingencia Manual Activado"
+        "badge": "Modo de Contingencia Manual Activo"
       },
       "form": {
         "document-type": "Tipo de documento",
         "document-number": "Número de documento",
         "document-error": "Formato de número inválido para el tipo seleccionado.",
-        "phone": "Teléfono celular",
-        "phone-error": "Debe tener exactamente 9 dígitos de celular.",
+        "phone": "Teléfono móvil",
+        "phone-error": "Debe tener exactamente 9 dígitos móviles.",
         "full-name": "Nombre completo / Razón social",
         "name-required": "El nombre es obligatorio.",
-        "name-minlength": "Debe tener un mínimo de 3 caracteres.",
+        "name-minlength": "Debe tener al menos 3 caracteres.",
         "email": "Correo electrónico",
-        "email-required": "Correo electrónico obligatorio.",
-        "email-invalid": "Formato de correo inválido (ej. usuario@dominio.com).",
-        "phone-required": "El número de celular es obligatorio."
+        "email-required": "El correo electrónico es obligatorio.",
+        "email-invalid": "Formato de correo electrónico inválido (ej. usuario@dominio.com).",
+        "phone-required": "El número de teléfono móvil es obligatorio."
       },
       "actions": {
         "cancel": "Cancelar",
@@ -78,13 +83,335 @@
         "back": "Atrás",
         "officializing": "Oficializando...",
         "officialize": "Oficializar Cliente",
-        "manual-bypass": "Registro manual (Bypass)",
+        "manual-bypass": "Registro manual (Omisión)",
         "sending": "Enviando...",
-        "send-link": "Enviar link",
-        "finish": "Terminar",
+        "send-link": "Enviar enlace",
+        "finish": "Finalizar",
         "saving": "Guardando...",
         "register": "Registrar cliente"
       }
     }
+  },
+  "billing": {
+    "title": "Facturación",
+    "subtitle": "Gestión comercial y financiera del taller",
+    "export-excel": "Exportar Excel",
+    "kpi": {
+      "total-income": "Ingresos totales",
+      "total-expenses": "Gastos totales",
+      "approved-quotes": "Cotizaciones aprobadas",
+      "pending-quotes": "Cotizaciones pendientes"
+    },
+    "table": {
+      "voucher-number": "Nº de Comprobante",
+      "quote-number": "Nº de Cotización",
+      "customer": "Cliente",
+      "type": "Tipo",
+      "status": "Estado",
+      "total": "Total",
+      "issued-at": "Fecha de emisión",
+      "valid-until": "Válida hasta"
+    },
+    "status": {
+      "paid": "Pagado",
+      "pending": "Pendiente",
+      "cancelled": "Cancelado",
+      "overdue": "Vencido"
+    },
+    "voucher": {
+      "type": {
+        "invoice": "Factura",
+        "receipt": "Recibo",
+        "credit_note": "Nota de Crédito"
+      }
+    },
+    "quote": {
+      "status": {
+        "draft": "Borrador",
+        "sent": "Enviado",
+        "approved": "Aprobado",
+        "rejected": "Rechazado",
+        "expired": "Expirado"
+      }
+    },
+    "action": {
+      "mark-paid": "Marcar como pagado",
+      "approve": "Aprobar cotización",
+      "new-quote": "Nueva cotización",
+      "download-pdf": "PDF",
+      "collect": "Cobrar",
+      "add-item": "Agregar ítem",
+      "confirm-payment": "Confirmar pago"
+    },
+    "tabs": {
+      "income-expenses": "Ingresos y Gastos",
+      "quotes": "Cotizaciones",
+      "vouchers": "Comprobantes"
+    },
+    "modal": {
+      "payment-title": "Registrar Cobro",
+      "quote": {
+        "customer-id": "ID Cliente",
+        "customer-name": "Nombre del Cliente",
+        "vehicle-label": "Vehículo (Placa / Modelo)",
+        "items-title": "Ítems de la Cotización",
+        "stock-warning": "Desabastecimiento: No hay suficiente stock disponible."
+      }
+    },
+    "financial": {
+      "subtotal": "Subtotal",
+      "tax": "IGV (18%)",
+      "total": "Total",
+      "discount": "Descuento"
+    },
+    "monthly-summary": "Resumen financiero mensual",
+    "chart": {
+      "income": "Ingresos",
+      "expenses": "Gastos"
+    },
+    "detail": {
+      "title": "Detalle por mes",
+      "columns": {
+        "month": "Mes",
+        "income": "Ingresos",
+        "expenses": "Gastos",
+        "profitability": "Rentabilidad",
+        "variation": "Variación",
+        "vehicle": "Vehículo",
+        "items": "Ítems",
+        "actions": "Acciones"
+      }
+    },
+    "months": {
+      "jan": "Ene",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "May"
+    },
+    "empty": {
+      "vouchers": "No hay comprobantes registrados.",
+      "quotes": "No hay cotizaciones registradas."
+    },
+    "error": {
+      "load-vouchers": "Error al cargar los comprobantes",
+      "update-voucher": "Error al actualizar el comprobante",
+      "load-quotes": "Error al cargar las cotizaciones",
+      "approve-quote": "Error al aprobar la cotización"
+    }
+  },
+  "telemetry": {
+    "title": "Telemetría OBD2",
+    "subtitle": "Diagnóstico en tiempo real - {{count}} dispositivos activos",
+    "loading-records": "Cargando telemetría...",
+    "actions": {
+      "link-obd": "Vincular OBD2",
+      "unlink": "Desvincular",
+      "cancel": "Cancelar",
+      "link": "Vincular"
+    },
+    "vehicles": {
+      "title": "Vehículos",
+      "active": "Activo",
+      "inactive": "Sin vincular"
+    },
+
+    "metrics": {
+      "rpm": "RPM",
+      "temp": "Temperatura",
+      "voltage": "Voltaje",
+      "engine-load": "Carga Motor",
+      "fuel": "Combustible",
+      "speed": "Velocidad"
+    },
+    "history": {
+      "title": "Historial de Telemetría",
+      "rpm-legend": "RPM",
+      "temp-legend": "Temp (°C)"
+    },
+    "alerts": {
+      "title": "Alertas DTC Activas",
+      "severity": {
+        "low": "Baja",
+        "medium": "Media",
+        "high": "Alta",
+        "critical": "Crítica"
+      },
+      "empty": "No se detectaron fallas activas"
+    },
+    "modals": {
+      "link": {
+        "title": "Vincular Dispositivo OBD2",
+        "vehicle-label": "Vehículo",
+        "select-vehicle": "Selecciona un vehículo",
+        "device-label": "ID del Dispositivo",
+        "device-placeholder": "Ej: OBD-2024-XK9812"
+      }
+    },
+    "empty": {
+      "no-selection": {
+        "title": "No hay vehículo seleccionado",
+        "description": "Selecciona un vehículo con OBD2 activo de la lista lateral para ver su telemetría."
+      }
+    },
+    "dtc": {
+      "P0301": "Falla de encendido en cilindro 1",
+      "P0300": "Falla de encendido aleatoria/múltiple detectada",
+      "P0135": "Circuito de calefacción del sensor de O2 (Banco 1 Sensor 1)",
+      "P0420": "Catalizador con baja eficiencia",
+      "P0507": "Sistema de control de ralentí - RPM superiores a lo esperado",
+      "P0172": "Sistema demasiado rico (Banco 1)",
+      "P0308": "Falla de encendido detectada en el cilindro 8"
+    }
+  },
+  "appointments": {
+  "title": "Citas",
+  "scheduledCount": "citas agendadas",
+  "loading": "Cargando citas...",
+  "today": "Hoy",
+  "stats": {
+    "total": "Total",
+    "confirmed": "Confirmadas",
+    "pending": "Pendientes",
+    "completed": "Completadas"
+  },
+  "filters": {
+    "all": "Todas",
+    "confirmed": "Confirmadas",
+    "pending": "Pendientes",
+    "cancelled": "Canceladas",
+    "completed": "Completadas"
+  },
+  "search": {
+    "placeholder": "Buscar cliente, vehículo, mecánico"
+  },
+  "fields": {
+    "customer": "Cliente",
+    "phone": "Teléfono",
+    "vehicle": "Vehículo",
+    "service": "Servicio",
+    "date": "Fecha",
+    "time": "Hora",
+    "mechanic": "Mecánico asignado",
+    "status": "Estado",
+    "notes": "Observaciones"
+  },
+  "placeholders": {
+    "customer": "Nombre del cliente",
+    "phone": "9xx xxx xxx",
+    "vehicle": "Marca Modelo Placa",
+    "service": "Tipo de servicio",
+    "mechanic": "Nombre del mecánico",
+    "notes": "Notas del cliente opcional"
+  },
+  "status": {
+    "confirmed": "Confirmada",
+    "pending": "Pendiente",
+    "cancelled": "Cancelada",
+    "completed": "Completada"
+  },
+  "actions": {
+    "new": "Nueva cita",
+    "edit": "Editar",
+    "editAppointment": "Editar cita",
+    "cancel": "Cancelar",
+    "schedule": "Agendar cita",
+    "saveChanges": "Guardar cambios"
+  },
+  "detail": {
+    "title": "Detalle de cita"
+  },
+  "empty": "No se encontraron citas.",
+  "aria": {
+    "summary": "Resumen de citas",
+    "filters": "Filtros de citas",
+    "list": "Lista de citas"
+  }
+  },
+  "inventory": {
+    "title": "Inventario",
+    "subtitle-count": "{{count}} repuestos registrados",
+    "subtitle-loading": "Cargando repuestos registrados...",
+    "search-placeholder": "Buscar por SKU, nombre, marca...",
+    "loading-records": "Cargando registros...",
+    "alerts": {
+      "low-stock-count": "{{count}} repuestos con stock bajo"
+    },
+    "fields": {
+      "name": "Nombre",
+      "sku": "SKU",
+      "category": "Categoría",
+      "stock-actual": "Stock actual",
+      "initial-stock": "Stock inicial",
+      "min-stock": "Stock mínimo",
+      "price-unit": "Precio unit."
+    },
+    "placeholders": {
+      "name": "Ej. Aceite Sintético 5W30",
+      "sku": "Ej. OIL-5W30-001",
+      "category": "Ej. Lubricantes"
+    },
+    "status": {
+      "ok": "OK",
+      "low": "Stock bajo"
+    },
+    "filters": {
+      "all-categories": "Todas las categorías"
+    },
+    "modal": {
+      "title": "Agregar nuevo repuesto"
+    },
+    "actions": {
+      "add": "Agregar repuesto",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "increase": "Aumentar stock",
+      "decrease": "Reducir stock"
+    },
+    "empty": {
+      "description": "No se encontraron repuestos registrados."
+    }
+  },
+  "dashboard": {
+
+    "greeting": "Buenos días, {{name}}",
+    "summary-date": "Aquí está el resumen de hoy — {{date}}",
+    "kpi": {
+      "income": "Ingresos del mes",
+      "vs-last-month": "+{{percent}}% vs mes anterior",
+      "active-orders": "OTs activas",
+      "completed-today": "{{count}} completadas hoy",
+      "vehicles-workshop": "Vehículos en taller",
+      "with-telemetry": "{{count}} con telemetría activa",
+      "pending-alerts": "Alertas pendientes",
+      "critical-medium": "{{critical}} crítica, {{medium}} media"
+    },
+    "chart": {
+      "title": "Ingresos del mes",
+      "subtitle": "Últimos 5 meses"
+    },
+    "alerts": {
+      "title": "Alertas DTC",
+      "view-all": "Ver todas"
+    },
+    "orders": {
+      "title": "Órdenes recientes",
+      "view-all": "Ver todas",
+      "table": {
+        "ot": "OT",
+        "customer": "Cliente",
+        "vehicle": "Vehículo",
+        "mechanic": "Mecánico",
+        "status": "Estado",
+        "amount": "Monto"
+      }
+    },
+    "status": {
+      "completed": "Completado",
+      "in-progress": "En progreso",
+      "pending": "Pendiente",
+      "scheduled": "Programado"
+    },
+    "loading": "Cargando dashboard..."
   }
 }
