@@ -142,7 +142,31 @@
       "mark-paid": "Mark as paid",
       "approve": "Approve quotation",
       "new-quote": "New quotation",
-      "download-pdf": "PDF"
+      "download-pdf": "PDF",
+      "collect": "Collect",
+      "add-item": "Add item",
+      "confirm-payment": "Confirm payment"
+    },
+    "tabs": {
+      "income-expenses": "Income & Expenses",
+      "quotes": "Quotations",
+      "vouchers": "Invoices"
+    },
+    "modal": {
+      "payment-title": "Register Payment",
+      "quote": {
+        "customer-id": "Customer ID",
+        "customer-name": "Customer Name",
+        "vehicle-label": "Vehicle (Plate / Model)",
+        "items-title": "Quote Items",
+        "stock-warning": "Stock out: Not enough stock available."
+      }
+    },
+    "financial": {
+      "subtotal": "Subtotal",
+      "tax": "IGV (18%)",
+      "total": "Total",
+      "discount": "Discount"
     },
     "monthly-summary": "Monthly financial summary",
     "chart": {

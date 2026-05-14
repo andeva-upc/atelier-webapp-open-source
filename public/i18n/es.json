@@ -142,7 +142,31 @@
       "mark-paid": "Marcar como pagado",
       "approve": "Aprobar cotización",
       "new-quote": "Nueva cotización",
-      "download-pdf": "PDF"
+      "download-pdf": "PDF",
+      "collect": "Cobrar",
+      "add-item": "Agregar ítem",
+      "confirm-payment": "Confirmar pago"
+    },
+    "tabs": {
+      "income-expenses": "Ingresos y Gastos",
+      "quotes": "Cotizaciones",
+      "vouchers": "Comprobantes"
+    },
+    "modal": {
+      "payment-title": "Registrar Cobro",
+      "quote": {
+        "customer-id": "ID Cliente",
+        "customer-name": "Nombre del Cliente",
+        "vehicle-label": "Vehículo (Placa / Modelo)",
+        "items-title": "Ítems de la Cotización",
+        "stock-warning": "Desabastecimiento: No hay suficiente stock disponible."
+      }
+    },
+    "financial": {
+      "subtotal": "Subtotal",
+      "tax": "IGV (18%)",
+      "total": "Total",
+      "discount": "Descuento"
     },
     "monthly-summary": "Resumen financiero mensual",
     "chart": {

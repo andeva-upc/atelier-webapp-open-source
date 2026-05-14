@@ -5,6 +5,7 @@ import { Voucher } from '../domain/models/voucher.entity';
 import { Quote } from '../domain/models/quote.entity';
 import { VoucherRepository } from '../domain/repositories/voucher.repository';
 import { QuoteRepository } from '../domain/repositories/quote.repository';
+import { environment } from '../../../environments/environment';
 
 /**
  * Application store centralizing the reactive state for the Billing bounded context.

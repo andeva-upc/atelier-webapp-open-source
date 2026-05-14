@@ -7,8 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BillingStore } from '../../../application/billing.store';
-import { Modal } from '../../../shared/presentation/modal/modal';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -34,17 +34,17 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatTableModule,
     MatChipsModule,
-    Modal,
-    ReactiveFormsModule,
-    MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   templateUrl: './billing-list.html',
   styleUrl: './billing-list.css',
 })
 export class BillingList implements OnInit {
   private readonly store = inject(BillingStore);
+  private readonly dialog = inject(MatDialog);
 
   /** Computed total income from store */
   readonly totalIncomeValue = this.store.totalIncome;
@@ -87,23 +87,29 @@ export class BillingList implements OnInit {
     return this.quoteForm.get('items') as FormArray;
   }
 
-  openQuoteModal(): void {
-    this.isQuoteModalOpen.set(true);
-    this.initQuoteForm();
-    this.addItem(); // Start with one empty item
+  @Component({ template: '' }) openQuoteModal(template: any): void {
+    this.initForms();
+    this.addItem();
+    this.dialog.open(template, {
+      width: '600px',
+      panelClass: 'custom-dialog-container'
+    });
   }
 
   closeQuoteModal(): void {
     this.isQuoteModalOpen.set(false);
   }
 
-  openPaymentModal(voucher: any): void {
+  openPaymentModal(voucher: any, template: any): void {
     this.selectedVoucher.set(voucher);
     this.paymentForm.patchValue({
       amount: voucher.totalAmount,
       method: 'CASH'
     });
-    this.isPaymentModalOpen.set(true);
+    this.dialog.open(template, {
+      width: '450px',
+      panelClass: 'custom-dialog-container'
+    });
   }
 
   closePaymentModal(): void {
@@ -117,7 +123,7 @@ export class BillingList implements OnInit {
       const voucherId = this.selectedVoucher().id;
       
       this.store.registerPayment(voucherId, amount, method);
-      this.closePaymentModal();
+      this.dialog.closeAll();
     }
   }
 
@@ -195,6 +201,9 @@ export class BillingList implements OnInit {
 
   /** Reactive signal from store — full list of quotes */
   readonly quotes = this.store.quotes;
+
+  /** Reactive signal from store — inventory products */
+  readonly availableProducts = this.store.products;
 
   /** Reactive signal from store — full list of vouchers */
   readonly vouchers = this.store.vouchers;
@@ -330,7 +339,7 @@ export class BillingList implements OnInit {
    */
   hasSufficientStock(description: string, quantity: number, type: string): boolean {
     if (type === 'SERVICE') return true;
-    const product = this.availableProducts().find(p => 
+    const product = this.availableProducts().find((p: any) => 
       p.name.toLowerCase() === description.toLowerCase() || 
       p.id === description
     );
