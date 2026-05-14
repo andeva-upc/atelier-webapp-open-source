@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions, ChartType } from 'chart.js';
-import { TelemetryStore } from '../../../application/telemetry.store';
+import { TelemetryStore } from '../../application/telemetry.store';
 
 /**
  * Component that renders a historical line chart for telemetry metrics.
@@ -12,45 +12,8 @@ import { TelemetryStore } from '../../../application/telemetry.store';
   selector: 'app-history-chart',
   standalone: true,
   imports: [CommonModule, TranslateModule, BaseChartDirective],
-  template: `
-    <div class="chart-container">
-      <div class="chart-header">
-        <h3>{{ 'telemetry.history.title' | translate }}</h3>
-      </div>
-      
-      <div class="canvas-wrapper">
-        <canvas baseChart
-                [data]="lineChartData()"
-                [options]="lineChartOptions()"
-                [type]="lineChartType">
-        </canvas>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .chart-container {
-      background: white;
-      border-radius: 1rem;
-      border: 1px solid #e2e8f0;
-      padding: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      font-family: 'Mona Sans', sans-serif;
-    }
-    .chart-header {
-      margin-bottom: 1.5rem;
-    }
-    .chart-header h3 {
-      margin: 0;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #1e293b;
-    }
-    .canvas-wrapper {
-      display: block;
-      height: 300px;
-      width: 100%;
-    }
-  `]
+  templateUrl: './history-chart.html',
+  styleUrl: './history-chart.css'
 })
 export class HistoryChart {
   private readonly store = inject(TelemetryStore);
