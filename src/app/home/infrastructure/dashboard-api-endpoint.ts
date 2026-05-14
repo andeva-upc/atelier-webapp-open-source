@@ -34,6 +34,7 @@ export class DashboardApiEndpoint {
     const quotesUrl = `${this.rootBaseUrl}${environment.platformProviderQuotesEndpointPath}`;
     const obd2DevicesUrl = `${this.rootBaseUrl}${environment.platformProviderObd2DevicesEndpointPath}`;
     const workOrderTasksUrl = `${this.rootBaseUrl}${environment.platformProviderWorkOrdersTasksEndpointPath}`;
+    const paymentsUrl = `${this.rootBaseUrl}${environment.platformProviderPaymentsEndpointPath}`;
 
     return forkJoin({
       workOrders: this.http.get<any[]>(workOrdersUrl),
@@ -43,10 +44,11 @@ export class DashboardApiEndpoint {
       users: this.http.get<any[]>(usersUrl),
       quotes: this.http.get<any[]>(quotesUrl),
       obd2Devices: this.http.get<any[]>(obd2DevicesUrl),
-      workOrderTasks: this.http.get<any[]>(workOrderTasksUrl)
+      workOrderTasks: this.http.get<any[]>(workOrderTasksUrl),
+      payments: this.http.get<any[]>(paymentsUrl)
     }).pipe(
-      map(({ workOrders, vehicles, alerts, customers, users, quotes, obd2Devices, workOrderTasks }) =>
-        this.aggregateDashboardData(workOrders, vehicles, alerts, customers, users, quotes, obd2Devices, workOrderTasks)
+      map(({ workOrders, vehicles, alerts, customers, users, quotes, obd2Devices, workOrderTasks, payments }) =>
+        this.aggregateDashboardData(workOrders, vehicles, alerts, customers, users, quotes, obd2Devices, workOrderTasks, payments)
       )
     );
   }
@@ -56,7 +58,7 @@ export class DashboardApiEndpoint {
    */
   private aggregateDashboardData(
     workOrders: any[], vehicles: any[], alerts: any[], 
-    customers: any[], users: any[], quotes: any[], obd2Devices: any[], workOrderTasks: any[]
+    customers: any[], users: any[], quotes: any[], obd2Devices: any[], workOrderTasks: any[], payments: any[]
   ): DashboardResponse {
 
     const activeWorkOrders = workOrders.filter(wo => wo.status === 'IN_PROGRESS' || wo.status === 'DIAGNOSING').length;
@@ -77,10 +79,13 @@ export class DashboardApiEndpoint {
     const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
     const monthlyRevenueMap = new Map<string, number>();
-    quotes.filter(q => q.status === 'APPROVED').forEach(q => {
-      const date = new Date(q.created_at);
-      const key = `${date.getFullYear()}-${date.getMonth()}`;
-      monthlyRevenueMap.set(key, (monthlyRevenueMap.get(key) || 0) + q.total_amount);
+    payments.forEach(p => {
+      // Use paid_at to determine the month of the payment
+      const date = new Date(p.paid_at);
+      if (!isNaN(date.getTime())) {
+        const key = `${date.getFullYear()}-${date.getMonth()}`;
+        monthlyRevenueMap.set(key, (monthlyRevenueMap.get(key) || 0) + Number(p.amount));
+      }
     });
 
     const revenueChart = [];
@@ -110,8 +115,9 @@ export class DashboardApiEndpoint {
     }
 
     // 5. Alertas Recientes
-    // In db.json, dtc_alerts don't have created_at, so we just take the first 3
-    const recentAlerts = pendingAlertsList.slice(0, 3).map(alert => {
+    // Filter to only include CRITICAL and MEDIUM severity
+    const relevantAlerts = pendingAlertsList.filter(a => a.severity === 'CRITICAL' || a.severity === 'MEDIUM');
+    const recentAlerts = relevantAlerts.map(alert => {
       const vehicle = vehicles.find(v => v.id === alert.vehicle_id);
       return {
         id: alert.id,

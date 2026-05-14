@@ -324,7 +324,52 @@
     "list": "Appointments list"
   }
   },
+  "inventory": {
+    "title": "Inventory",
+    "subtitle-count": "{{count}} spare parts registered",
+    "subtitle-loading": "Loading registered parts...",
+    "search-placeholder": "Search by SKU, name, brand...",
+    "loading-records": "Loading records...",
+    "alerts": {
+      "low-stock-count": "{{count}} parts with low stock"
+    },
+    "fields": {
+      "name": "Name",
+      "sku": "SKU",
+      "category": "Category",
+      "stock-actual": "Current stock",
+      "initial-stock": "Initial stock",
+      "min-stock": "Minimum stock",
+      "price-unit": "Unit price"
+    },
+    "placeholders": {
+      "name": "E.g. Synthetic Oil 5W30",
+      "sku": "E.g. OIL-5W30-001",
+      "category": "E.g. Lubricants"
+    },
+    "status": {
+      "ok": "OK",
+      "low": "Low stock"
+    },
+    "filters": {
+      "all-categories": "All categories"
+    },
+    "modal": {
+      "title": "Add new spare part"
+    },
+    "actions": {
+      "add": "Add spare part",
+      "save": "Save",
+      "cancel": "Cancel",
+      "increase": "Increase stock",
+      "decrease": "Decrease stock"
+    },
+    "empty": {
+      "description": "No registered parts found."
+    }
+  },
   "dashboard": {
+
     "greeting": "Good morning, {{name}}",
     "summary-date": "Here is today's summary — {{date}}",
     "kpi": {

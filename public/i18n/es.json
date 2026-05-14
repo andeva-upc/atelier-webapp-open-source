@@ -328,7 +328,52 @@
     "list": "Lista de citas"
   }
   },
+  "inventory": {
+    "title": "Inventario",
+    "subtitle-count": "{{count}} repuestos registrados",
+    "subtitle-loading": "Cargando repuestos registrados...",
+    "search-placeholder": "Buscar por SKU, nombre, marca...",
+    "loading-records": "Cargando registros...",
+    "alerts": {
+      "low-stock-count": "{{count}} repuestos con stock bajo"
+    },
+    "fields": {
+      "name": "Nombre",
+      "sku": "SKU",
+      "category": "Categoría",
+      "stock-actual": "Stock actual",
+      "initial-stock": "Stock inicial",
+      "min-stock": "Stock mínimo",
+      "price-unit": "Precio unit."
+    },
+    "placeholders": {
+      "name": "Ej. Aceite Sintético 5W30",
+      "sku": "Ej. OIL-5W30-001",
+      "category": "Ej. Lubricantes"
+    },
+    "status": {
+      "ok": "OK",
+      "low": "Stock bajo"
+    },
+    "filters": {
+      "all-categories": "Todas las categorías"
+    },
+    "modal": {
+      "title": "Agregar nuevo repuesto"
+    },
+    "actions": {
+      "add": "Agregar repuesto",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "increase": "Aumentar stock",
+      "decrease": "Reducir stock"
+    },
+    "empty": {
+      "description": "No se encontraron repuestos registrados."
+    }
+  },
   "dashboard": {
+
     "greeting": "Buenos días, {{name}}",
     "summary-date": "Aquí está el resumen de hoy — {{date}}",
     "kpi": {
