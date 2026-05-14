@@ -3,7 +3,7 @@
   <header class="page-header">
     <div class="header-info">
       <h1>{{ 'telemetry.title' | translate }}</h1>
-      <p>{{ 'telemetry.subtitle' | translate }}</p>
+      <p>{{ 'telemetry.subtitle' | translate:{ count: devicesCount().length } }}</p>
     </div>
     <div class="header-actions">
       <button class="btn-primary">
@@ -17,29 +17,38 @@
   <div class="telemetry-grid">
     <!-- Left Sidebar: Vehicles List -->
     <aside class="vehicles-sidebar">
-      <!-- TODO: Phase 5 - app-vehicle-telemetry-selector -->
-      <div class="placeholder-card">Vehicle Selector Placeholder</div>
+      <app-vehicle-telemetry-selector></app-vehicle-telemetry-selector>
     </aside>
 
     <!-- Right Content: Metrics & Charts -->
     <main class="telemetry-main">
-      <!-- Metrics Grid -->
-      <section class="metrics-section">
-        <!-- TODO: Phase 5 - app-metrics-grid -->
-        <div class="placeholder-card">Metrics Grid Placeholder</div>
-      </section>
+      @if (selectedDevice()) {
+        <!-- Metrics Grid -->
+        <section class="metrics-section">
+          <app-metrics-grid></app-metrics-grid>
+        </section>
 
-      <!-- History Chart -->
-      <section class="history-section">
-        <!-- TODO: Phase 6 - app-history-chart -->
-        <div class="placeholder-card">History Chart Placeholder</div>
-      </section>
+        <!-- History Chart -->
+        <section class="history-section">
+          <!-- TODO: Phase 6 - app-history-chart -->
+          <div class="placeholder-card">History Chart Placeholder</div>
+        </section>
 
-      <!-- Active Alerts -->
-      <section class="alerts-section">
-        <!-- TODO: Phase 5 - app-dtc-alerts-list -->
-        <div class="placeholder-card">DTC Alerts Placeholder</div>
-      </section>
+        <!-- Active Alerts -->
+        <section class="alerts-section">
+          <app-dtc-alerts-list></app-dtc-alerts-list>
+        </section>
+      } @else if (!isLoading()) {
+        <div class="no-selection">
+          <div class="selection-icon">🔍</div>
+          <h2>No hay vehículo seleccionado</h2>
+          <p>Selecciona un vehículo con OBD2 activo de la lista lateral para ver su telemetría.</p>
+        </div>
+      } @else {
+         <div class="loading-state">
+            <p>{{ 'telemetry.loading-records' | translate }}</p>
+         </div>
+      }
     </main>
   </div>
 </div>

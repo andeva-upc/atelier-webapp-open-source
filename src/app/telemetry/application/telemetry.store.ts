@@ -4,38 +4,33 @@ import { TelemetryRepository } from '../domain/repositories/telemetry.repository
 import { TelemetrySnapshot } from '../domain/models/telemetry-snapshot.entity';
 import { ObdDevice } from '../domain/models/obd-device.entity';
 import { DtcAlert } from '../domain/models/dtc-alert.entity';
+import { Vehicle } from '../domain/models/vehicle.entity';
 
 /**
- * Application service managing telemetry domain state and orchestration.
+ * Interface for the UI representation of a vehicle with its linked OBD device.
  */
+export interface VehicleTelemetry {
+  vehicle: Vehicle;
+  device?: ObdDevice;
+  status: 'ACTIVE' | 'INACTIVE' | 'ERROR' | 'UNLINKED';
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class TelemetryStore {
   private readonly repository = inject(TelemetryRepository);
 
-  /** Signal containing all registered OBD devices */
+  private readonly vehiclesSignal = signal<Vehicle[]>([]);
   private readonly devicesSignal = signal<ObdDevice[]>([]);
-
-  /** Signal containing the currently selected device */
   private readonly selectedDeviceSignal = signal<ObdDevice | null>(null);
-
-  /** Signal containing the latest telemetry snapshot for the selected device */
   private readonly latestSnapshotSignal = signal<TelemetrySnapshot | null>(null);
-
-  /** Signal containing historical snapshots for the selected device */
   private readonly historySignal = signal<TelemetrySnapshot[]>([]);
-
-  /** Signal containing active DTC alerts for the current vehicle */
   private readonly alertsSignal = signal<DtcAlert[]>([]);
-
-  /** Signal indicating data loading state */
   private readonly loadingSignal = signal<boolean>(false);
-
-  /** Signal for error messages */
   private readonly errorSignal = signal<string | null>(null);
 
-  // Readonly Signals for UI consumption
+  readonly vehicles = this.vehiclesSignal.asReadonly();
   readonly devices = this.devicesSignal.asReadonly();
   readonly selectedDevice = this.selectedDeviceSignal.asReadonly();
   readonly latestSnapshot = this.latestSnapshotSignal.asReadonly();
@@ -44,49 +39,58 @@ export class TelemetryStore {
   readonly loading = this.loadingSignal.asReadonly();
   readonly error = this.errorSignal.asReadonly();
 
-  /** Computed: Active devices list */
+  /** 
+   * Computed: List of devices with status ACTIVE.
+   */
   readonly activeDevices = computed(() => this.devices().filter(d => d.status === 'ACTIVE'));
 
-  /**
-   * Initializes the telemetry context by loading all devices.
+  /** 
+   * Joins vehicles with their corresponding OBD devices for the UI list.
    */
-  loadDevices(): void {
+  readonly vehicleDevices = computed<VehicleTelemetry[]>(() => {
+    const vehicles = this.vehicles();
+    const devices = this.devices();
+
+    return vehicles.map(vehicle => {
+      const device = devices.find(d => d.vehicleId === vehicle.id);
+      return {
+        vehicle,
+        device,
+        status: device ? device.status : 'UNLINKED'
+      };
+    });
+  });
+
+  loadInitialData(): void {
     this.loadingSignal.set(true);
-    this.repository.getDevices().subscribe({
-      next: (devices) => {
-        this.devicesSignal.set(devices);
-        if (devices.length > 0 && !this.selectedDevice()) {
-          this.selectDevice(devices[0]);
+    forkJoin({
+      vehicles: this.repository.getVehicles(),
+      devices: this.repository.getDevices()
+    }).subscribe({
+      next: (data) => {
+        this.vehiclesSignal.set(data.vehicles);
+        this.devicesSignal.set(data.devices);
+        
+        const activeDevices = data.devices.filter(d => d.status === 'ACTIVE');
+        if (activeDevices.length > 0 && !this.selectedDevice()) {
+          this.selectDevice(activeDevices[0]);
         }
         this.loadingSignal.set(false);
       },
       error: () => {
         this.loadingSignal.set(false);
-        this.errorSignal.set('Failed to load telemetry devices');
+        this.errorSignal.set('Failed to load initial telemetry data');
       }
     });
   }
 
-  /**
-   * Selects a device and triggers loading of its specific telemetry data.
-   * 
-   * @param device - The OBD device to select.
-   */
   selectDevice(device: ObdDevice): void {
     this.selectedDeviceSignal.set(device);
     this.loadTelemetryData(device);
   }
 
-  /**
-   * Orchestrates the loading of snapshots, history and alerts for a device.
-   * 
-   * @param device - The device context.
-   * @private
-   */
   private loadTelemetryData(device: ObdDevice): void {
     this.loadingSignal.set(true);
-    
-    // Define a standard range for history (e.g., last 24 hours or fixed mockup range)
     const to = new Date();
     const from = new Date(to.getTime() - (24 * 60 * 60 * 1000));
 
@@ -108,9 +112,6 @@ export class TelemetryStore {
     });
   }
 
-  /**
-   * Refreshes the latest snapshot for real-time monitoring.
-   */
   refreshLatestSnapshot(): void {
     const device = this.selectedDevice();
     if (!device) return;

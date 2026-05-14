@@ -6,6 +6,43 @@ import { ObdDevice } from '../domain/models/obd-device.entity';
 import { ObdDeviceResource, ObdDevicesResponse } from './telemetry-response';
 import { DtcAlert } from '../domain/models/dtc-alert.entity';
 import { DtcAlertResource, DtcAlertsResponse } from './telemetry-response';
+import { Vehicle } from '../domain/models/vehicle.entity';
+import { VehicleResource, VehiclesResponse } from './telemetry-response';
+
+@Injectable({ providedIn: 'root' })
+export class VehicleAssembler implements BaseAssembler<Vehicle, VehicleResource, VehiclesResponse> {
+  toEntityFromResource(resource: VehicleResource): Vehicle {
+    return new Vehicle(
+      resource.id,
+      resource.workshop_id,
+      resource.customer_id,
+      resource.plate_number,
+      resource.brand,
+      resource.model,
+      resource.year,
+      resource.current_mileage,
+      resource.deleted_at || undefined
+    );
+  }
+
+  toResourceFromEntity(entity: Vehicle): VehicleResource {
+    return {
+      id: entity.id,
+      workshop_id: entity.workshopId,
+      customer_id: entity.customerId,
+      plate_number: entity.plateNumber,
+      brand: entity.brand,
+      model: entity.model,
+      year: entity.year,
+      current_mileage: entity.currentMileage,
+      deleted_at: entity.deletedAt?.toString() || null
+    };
+  }
+
+  toEntitiesFromResponse(response: VehiclesResponse): Vehicle[] {
+    return response.vehicles.map(r => this.toEntityFromResource(r));
+  }
+}
 
 @Injectable({ providedIn: 'root' })
 export class TelemetrySnapshotAssembler implements BaseAssembler<TelemetrySnapshot, TelemetrySnapshotResource, TelemetrySnapshotsResponse> {

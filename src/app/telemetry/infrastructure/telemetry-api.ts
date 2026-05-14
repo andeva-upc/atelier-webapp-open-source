@@ -5,13 +5,19 @@ import { TelemetryRepository } from '../domain/repositories/telemetry.repository
 import { TelemetrySnapshot } from '../domain/models/telemetry-snapshot.entity';
 import { ObdDevice } from '../domain/models/obd-device.entity';
 import { DtcAlert } from '../domain/models/dtc-alert.entity';
-import { TelemetrySnapshotEndpoint, ObdDeviceEndpoint, DtcAlertEndpoint } from './telemetry-api-endpoint';
+import { Vehicle } from '../domain/models/vehicle.entity';
+import { TelemetrySnapshotEndpoint, ObdDeviceEndpoint, DtcAlertEndpoint, VehicleEndpoint } from './telemetry-api-endpoint';
 
 @Injectable({ providedIn: 'root' })
 export class TelemetryApi extends BaseApi implements TelemetryRepository {
   private readonly snapshotEndpoint = inject(TelemetrySnapshotEndpoint);
   private readonly deviceEndpoint = inject(ObdDeviceEndpoint);
   private readonly alertEndpoint = inject(DtcAlertEndpoint);
+  private readonly vehicleEndpoint = inject(VehicleEndpoint);
+
+  getVehicles(): Observable<Vehicle[]> {
+    return this.vehicleEndpoint.getAll();
+  }
 
   getDevices(): Observable<ObdDevice[]> {
     return this.deviceEndpoint.getAll();

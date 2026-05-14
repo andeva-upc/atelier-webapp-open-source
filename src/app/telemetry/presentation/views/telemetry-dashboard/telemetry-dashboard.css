@@ -64,6 +64,38 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.no-selection {
+  background: white;
+  border-radius: 1rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.selection-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.no-selection h2 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 1.25rem;
+}
+
+.no-selection p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+}
+
+.loading-state {
+  padding: 4rem;
+  text-align: center;
+  color: #64748b;
+}
+
 @media (max-width: 1024px) {
   .telemetry-grid {
     grid-template-columns: 1fr;
