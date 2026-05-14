@@ -1,212 +1,156 @@
 <section class="appointments-page">
-  <header class="appointments-header">
+  <header class="page-header">
     <div>
       <h1>Citas</h1>
-      <p>
-        {{ totalAppointments() }} citas agendadas ·
-        {{ todayAppointments() }} para hoy
-      </p>
+      <p>{{ totalCount() }} citas agendadas</p>
     </div>
 
-    <button type="button" class="primary-button" (click)="openModal()">
+    <button class="btn-new" type="button" (click)="openCreateForm()">
       <span>+</span>
       Nueva cita
     </button>
   </header>
 
-  <section class="summary-grid">
-    <article class="summary-card total">
-      <strong>{{ totalAppointments() }}</strong>
-      <span>Total citas</span>
+  <section class="summary-grid" aria-label="Resumen de citas">
+    <article class="summary-card summary-total">
+      <strong>{{ totalCount() }}</strong>
+      <span>Total</span>
     </article>
 
-    <article class="summary-card confirmed">
-      <strong>{{ confirmedAppointments() }}</strong>
+    <article class="summary-card summary-confirmed">
+      <strong>{{ confirmedCount() }}</strong>
       <span>Confirmadas</span>
     </article>
 
-    <article class="summary-card pending">
-      <strong>{{ pendingAppointments() }}</strong>
+    <article class="summary-card summary-pending">
+      <strong>{{ pendingCount() }}</strong>
       <span>Pendientes</span>
+    </article>
+
+    <article class="summary-card summary-completed">
+      <strong>{{ completedCount() }}</strong>
+      <span>Completadas</span>
     </article>
   </section>
 
-  <nav class="appointments-tabs">
-    <button
-      type="button"
-      [class.active]="activeFilter() === 'all'"
-      (click)="setFilter('all')"
-    >
-      Todas
-    </button>
+  <section class="toolbar">
+    <nav class="filter-tabs" aria-label="Filtros de citas">
+      <button [class.active]="selectedFilter() === 'ALL'" (click)="selectFilter('ALL')">Todas</button>
+      <button [class.active]="selectedFilter() === 'CONFIRMED'" (click)="selectFilter('CONFIRMED')">Confirmadas</button>
+      <button [class.active]="selectedFilter() === 'PENDING'" (click)="selectFilter('PENDING')">Pendientes</button>
+      <button [class.active]="selectedFilter() === 'CANCELLED'" (click)="selectFilter('CANCELLED')">Canceladas</button>
+      <button [class.active]="selectedFilter() === 'COMPLETED'" (click)="selectFilter('COMPLETED')">Completadas</button>
+    </nav>
 
-    <button
-      type="button"
-      [class.active]="activeFilter() === 'confirmed'"
-      (click)="setFilter('confirmed')"
-    >
-      Confirmadas
-    </button>
-
-    <button
-      type="button"
-      [class.active]="activeFilter() === 'pending'"
-      (click)="setFilter('pending')"
-    >
-      Pendientes
-    </button>
-
-    <button
-      type="button"
-      [class.active]="activeFilter() === 'cancelled'"
-      (click)="setFilter('cancelled')"
-    >
-      Canceladas
-    </button>
-  </nav>
-
-  <section class="appointments-list">
-    @for (appointment of filteredAppointments(); track appointment.id) {
-      <article
-        class="appointment-card"
-        [class.today-card]="appointment.isToday"
-      >
-        <div class="time-box" [class.today]="appointment.isToday">
-          <span class="calendar-icon">▣</span>
-          <strong>{{ appointment.time }}</strong>
-        </div>
-
-        <div class="appointment-info">
-          <div class="client-row">
-            <h2>{{ appointment.client }}</h2>
-
-            @if (appointment.isToday) {
-              <span class="today-badge">Hoy</span>
-            }
-          </div>
-
-          <div class="metadata-row">
-            <span> {{ appointment.vehicle }}</span>
-            <span> {{ appointment.date }} · {{ appointment.time }}</span>
-            <span> {{ appointment.mechanic }}</span>
-          </div>
-
-          <span class="service-badge">{{ appointment.service }}</span>
-        </div>
-
-        <div class="appointment-actions">
-          <span class="status-badge" [class]="appointment.status">
-            {{ getStatusLabel(appointment.status) }}
-          </span>
-
-          <button type="button" class="more-button" aria-label="Más opciones">
-            ⋯
-          </button>
-        </div>
-      </article>
-    }
+    <div class="search-box">
+      <span>⌕</span>
+      <input type="search" placeholder="Buscar cliente, vehículo, mecánico" (input)="onSearchInput($event)" />
+    </div>
   </section>
 
-  @if (isModalOpen()) {
-    <div class="modal-backdrop">
-      <section class="appointment-modal">
-        <header class="modal-header">
-          <h2>Nueva Cita</h2>
-          <button type="button" class="close-button" (click)="closeModal()">
-            ×
-          </button>
-        </header>
-
-        <form class="appointment-form" (ngSubmit)="addAppointment()">
-          <label class="full-field">
-            Cliente *
-            <input
-              type="text"
-              name="client"
-              [(ngModel)]="newAppointment.client"
-              placeholder="Nombre del cliente"
-              required
-            />
-          </label>
-
-          <div class="form-row">
-            <label>
-              Teléfono *
-              <input
-                type="text"
-                name="phone"
-                [(ngModel)]="newAppointment.phone"
-                placeholder="9xx xxx xxx"
-              />
-            </label>
-
-            <label>
-              Vehículo *
-              <input
-                type="text"
-                name="vehicle"
-                [(ngModel)]="newAppointment.vehicle"
-                placeholder="Marca Modelo Placa"
-                required
-              />
-            </label>
+  @if (loading()) {
+    <p class="empty-state">Cargando citas...</p>
+  } @else if (error()) {
+    <p class="empty-state error-state">{{ error() }}</p>
+  } @else if (filteredAppointments().length === 0) {
+    <p class="empty-state">No se encontraron citas.</p>
+  } @else {
+    <section class="appointments-list" aria-label="Lista de citas">
+      @for (appointment of filteredAppointments(); track appointment.id) {
+        <article class="appointment-card" [class.highlight]="appointment.isToday()" (click)="openDetail(appointment)">
+          <div class="time-box" [class.time-highlight]="appointment.isToday()">
+            <span class="calendar-icon">▣</span>
+            <strong>{{ appointment.getTimeLabel() }}</strong>
           </div>
 
-          <label class="full-field">
-            Servicio *
-            <input
-              type="text"
-              name="service"
-              [(ngModel)]="newAppointment.service"
-              placeholder="Tipo de servicio"
-              required
-            />
-          </label>
+          <div class="appointment-info">
+            <div class="title-row">
+              <h3>{{ appointment.customerName }}</h3>
+              @if (appointment.isToday()) {
+                <span class="today-chip">Hoy</span>
+              }
+            </div>
 
-          <div class="form-row">
-            <label>
-              Fecha *
-              <input
-                type="date"
-                name="date"
-                [(ngModel)]="newAppointment.date"
-                required
-              />
-            </label>
+            <div class="meta-row">
+              <span>⌁ {{ appointment.vehicleSummary }}</span>
+              <span>◷ {{ appointment.getDateLabel() }} · {{ appointment.getTimeLabel() }}</span>
+              <span>♙ {{ appointment.mechanicName }}</span>
+            </div>
 
-            <label>
-              Hora *
-              <input
-                type="time"
-                name="time"
-                [(ngModel)]="newAppointment.time"
-                required
-              />
-            </label>
+            <span class="service-chip">{{ appointment.serviceType }}</span>
           </div>
 
-          <label class="full-field">
-            Mecánico asignado *
-            <input
-              type="text"
-              name="mechanic"
-              [(ngModel)]="newAppointment.mechanic"
-              placeholder="Nombre"
-              required
-            />
-          </label>
-
-          <div class="modal-actions">
-            <button type="button" class="secondary-button" (click)="closeModal()">
-              Cancelar
-            </button>
-
-            <button type="submit" class="primary-button">
-              Agendar cita
-            </button>
-          </div>
-        </form>
-      </section>
-    </div>
+          <span class="status-chip" [ngClass]="getStatusClass(appointment.status)">
+            {{ getStatusLabel(appointment.status) }}
+          </span>
+        </article>
+      }
+    </section>
   }
 </section>
+
+<app-modal [isOpen]="isFormOpen()" (close)="closeForm()">
+  <h2 modal-title>{{ formMode() === 'edit' ? 'Editar cita' : 'Nueva cita' }}</h2>
+
+  <div modal-body>
+    <app-appointments-form
+      [mode]="formMode()"
+      [appointment]="selectedAppointment()"
+      [saving]="saving()"
+      (save)="saveAppointment($event)"
+      (cancel)="closeForm()" />
+  </div>
+</app-modal>
+
+<app-modal [isOpen]="isDetailOpen()" (close)="closeDetail()">
+  <h2 modal-title>Detalle de cita</h2>
+
+  <div modal-body>
+    @if (selectedAppointment(); as appointment) {
+      <section class="detail-grid">
+        <div>
+          <span>Cliente</span>
+          <strong>{{ appointment.customerName }}</strong>
+        </div>
+        <div>
+          <span>Teléfono</span>
+          <strong>{{ appointment.customerPhone }}</strong>
+        </div>
+        <div>
+          <span>Vehículo</span>
+          <strong>{{ appointment.vehicleSummary }}</strong>
+        </div>
+        <div>
+          <span>Servicio</span>
+          <strong>{{ appointment.serviceType }}</strong>
+        </div>
+        <div>
+          <span>Fecha</span>
+          <strong>{{ appointment.getDateLabel() }}</strong>
+        </div>
+        <div>
+          <span>Hora</span>
+          <strong>{{ appointment.getTimeLabel() }}</strong>
+        </div>
+        <div>
+          <span>Mecánico asignado</span>
+          <strong>{{ appointment.mechanicName }}</strong>
+        </div>
+        <div>
+          <span>Estado</span>
+          <strong class="status-chip detail-status" [ngClass]="getStatusClass(appointment.status)">
+            {{ getStatusLabel(appointment.status) }}
+          </strong>
+        </div>
+        <div class="detail-full">
+          <span>Observaciones</span>
+          <strong>{{ appointment.notes }}</strong>
+        </div>
+      </section>
+    }
+  </div>
+
+  <div modal-actions>
+    <button type="button" class="btn-edit" (click)="openEditForm()">✎ Editar</button>
+  </div>
+</app-modal>

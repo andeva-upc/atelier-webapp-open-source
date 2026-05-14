@@ -9,15 +9,15 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'appointments',
+    loadChildren: () =>
+      import('./appointments/presentation/appointments.routes').then(
+        (m) => m.appointmentsRoutes
+      ),
+  },
+  {
     path: '',
     redirectTo: 'customers',
     pathMatch: 'full',
-  },
-  {
-  path: 'appointments',
-  loadChildren: () =>
-    import('./appointments/presentation/appointments.routes').then(
-      (m) => m.appointmentsRoutes
-    ),
   },
 ];

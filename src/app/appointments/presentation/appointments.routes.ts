@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
-import { AppointmentsList } from './views/appointments-list/appointments-list';
+
+const appointmentsList = () =>
+  import('./views/appointments-list/appointments-list').then(
+    (m) => m.AppointmentsList
+  );
 
 export const appointmentsRoutes: Routes = [
-  {
-    path: '',
-    component: AppointmentsList
-  }
+  { path: '', loadComponent: appointmentsList },
 ];

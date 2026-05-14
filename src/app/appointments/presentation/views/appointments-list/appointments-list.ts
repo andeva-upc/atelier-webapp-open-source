@@ -1,183 +1,150 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { AppointmentsStore } from '../../../application/appointments.store';
+import { Appointment, AppointmentStatus } from '../../../domain/models/appointments.entity';
+import { Modal } from '../../../../shared/presentation/modal/modal';
+import { AppointmentsForm } from '../appointments-form/appointments-form';
 
-type AppointmentStatus = 'confirmed' | 'pending' | 'cancelled';
-type AppointmentFilter = 'all' | AppointmentStatus;
+type AppointmentFilter = 'ALL' | 'CONFIRMED' | 'PENDING' | 'CANCELLED' | 'COMPLETED';
 
-interface Appointment {
-  id: number;
-  client: string;
-  vehicle: string;
-  date: string;
-  time: string;
-  mechanic: string;
-  service: string;
-  status: AppointmentStatus;
-  isToday: boolean;
-}
-
+/**
+ * Main presentation component for the appointments bounded context.
+ */
 @Component({
   selector: 'app-appointments-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, Modal, AppointmentsForm],
   templateUrl: './appointments-list.html',
   styleUrl: './appointments-list.css',
 })
-export class AppointmentsList {
-  readonly activeFilter = signal<AppointmentFilter>('all');
-  readonly isModalOpen = signal<boolean>(false);
+export class AppointmentsList implements OnInit {
+  private readonly store = inject(AppointmentsStore);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly searchSubject = new Subject<string>();
 
-  readonly appointments = signal<Appointment[]>([
-    {
-      id: 1,
-      client: 'Ana Torres',
-      vehicle: 'Chevrolet Spark JKL-012',
-      date: '2026-05-08',
-      time: '09:00',
-      mechanic: 'Luis P.',
-      service: 'Revisión general',
-      status: 'confirmed',
-      isToday: true,
-    },
-    {
-      id: 2,
-      client: 'Luis Huanca',
-      vehicle: 'Honda Civic MNO-345',
-      date: '2026-05-08',
-      time: '14:00',
-      mechanic: 'Carlos R.',
-      service: 'Diagnóstico',
-      status: 'pending',
-      isToday: true,
-    },
-    {
-      id: 3,
-      client: 'María García',
-      vehicle: 'Hyundai Tucson XYZ-789',
-      date: '2026-05-09',
-      time: '10:00',
-      mechanic: 'Miguel T.',
-      service: 'Cambio de aceite',
-      status: 'confirmed',
-      isToday: false,
-    },
-    {
-      id: 4,
-      client: 'Juan Pérez',
-      vehicle: 'Toyota Corolla ABX-432',
-      date: '2026-05-10',
-      time: '11:00',
-      mechanic: 'Carlos R.',
-      service: 'Revisión de frenos',
-      status: 'pending',
-      isToday: false,
-    },
-    {
-      id: 5,
-      client: 'Carmen López',
-      vehicle: 'Ford Explorer GHI-789',
-      date: '2026-05-12',
-      time: '09:30',
-      mechanic: 'Luis P.',
-      service: 'Mantenimiento 20k km',
-      status: 'confirmed',
-      isToday: false,
-    },
-  ]);
+  readonly appointments = this.store.activeAppointments;
+  readonly loading = this.store.loading;
+  readonly saving = this.store.saving;
+  readonly error = this.store.error;
 
-  readonly totalAppointments = computed(() => this.appointments().length);
+  readonly totalCount = this.store.appointmentsCount;
+  readonly confirmedCount = this.store.confirmedCount;
+  readonly pendingCount = this.store.pendingCount;
+  readonly completedCount = this.store.completedCount;
 
-  readonly confirmedAppointments = computed(() =>
-    this.appointments().filter((appointment) => appointment.status === 'confirmed').length
-  );
-
-  readonly pendingAppointments = computed(() =>
-    this.appointments().filter((appointment) => appointment.status === 'pending').length
-  );
-
-  readonly todayAppointments = computed(() =>
-    this.appointments().filter((appointment) => appointment.isToday).length
-  );
+  readonly selectedFilter = signal<AppointmentFilter>('ALL');
+  readonly searchQuery = signal<string>('');
+  readonly isFormOpen = signal<boolean>(false);
+  readonly isDetailOpen = signal<boolean>(false);
+  readonly formMode = signal<'create' | 'edit'>('create');
+  readonly selectedAppointment = signal<Appointment | null>(null);
 
   readonly filteredAppointments = computed(() => {
-    const filter = this.activeFilter();
+    const filter = this.selectedFilter();
 
-    if (filter === 'all') {
-      return this.appointments();
-    }
-
-    return this.appointments().filter((appointment) => appointment.status === filter);
+    return this.appointments().filter(appointment => {
+      if (filter === 'ALL') {
+        return true;
+      }
+      if (filter === 'CONFIRMED') {
+        return appointment.isConfirmed();
+      }
+      if (filter === 'PENDING') {
+        return appointment.status === 'PENDING_APPROVAL';
+      }
+      if (filter === 'CANCELLED') {
+        return appointment.status === 'CANCELLED';
+      }
+      return appointment.status === 'COMPLETED';
+    });
   });
 
-  readonly newAppointment = {
-    client: '',
-    phone: '',
-    vehicle: '',
-    service: '',
-    date: '',
-    time: '',
-    mechanic: '',
-  };
+  ngOnInit(): void {
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(query => {
+      this.searchQuery.set(query);
+      this.store.loadAppointments(query);
+    });
 
-  setFilter(filter: AppointmentFilter): void {
-    this.activeFilter.set(filter);
+    this.store.loadAppointments();
   }
 
-  openModal(): void {
-    this.isModalOpen.set(true);
+  onSearchInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchSubject.next(input.value.trim());
   }
 
-  closeModal(): void {
-    this.isModalOpen.set(false);
-    this.resetForm();
+  selectFilter(filter: AppointmentFilter): void {
+    this.selectedFilter.set(filter);
   }
 
-  addAppointment(): void {
-    if (
-      !this.newAppointment.client ||
-      !this.newAppointment.vehicle ||
-      !this.newAppointment.service ||
-      !this.newAppointment.date ||
-      !this.newAppointment.time ||
-      !this.newAppointment.mechanic
-    ) {
+  openCreateForm(): void {
+    this.formMode.set('create');
+    this.selectedAppointment.set(null);
+    this.isFormOpen.set(true);
+  }
+
+  openDetail(appointment: Appointment): void {
+    this.selectedAppointment.set(appointment);
+    this.isDetailOpen.set(true);
+  }
+
+  openEditForm(appointment: Appointment | null = this.selectedAppointment()): void {
+    if (!appointment) {
       return;
     }
 
-    const appointment: Appointment = {
-      id: Date.now(),
-      client: this.newAppointment.client,
-      vehicle: this.newAppointment.vehicle,
-      date: this.newAppointment.date,
-      time: this.newAppointment.time,
-      mechanic: this.newAppointment.mechanic,
-      service: this.newAppointment.service,
-      status: 'pending',
-      isToday: this.newAppointment.date === '2026-05-08',
-    };
+    this.isDetailOpen.set(false);
+    this.formMode.set('edit');
+    this.selectedAppointment.set(appointment);
+    this.isFormOpen.set(true);
+  }
 
-    this.appointments.update((appointments) => [appointment, ...appointments]);
-    this.closeModal();
+  closeForm(): void {
+    this.isFormOpen.set(false);
+  }
+
+  closeDetail(): void {
+    this.isDetailOpen.set(false);
+  }
+
+  saveAppointment(appointment: Appointment): void {
+    if (this.formMode() === 'create') {
+      this.store.createAppointment(appointment, () => this.closeForm());
+      return;
+    }
+
+    this.store.updateAppointment(appointment, () => this.closeForm());
   }
 
   getStatusLabel(status: AppointmentStatus): string {
-    const labels: Record<AppointmentStatus, string> = {
-      confirmed: 'Confirmada',
-      pending: 'Pendiente',
-      cancelled: 'Cancelada',
+    const map: Record<AppointmentStatus, string> = {
+      SCHEDULED: 'Confirmada',
+      PENDING_APPROVAL: 'Pendiente',
+      IN_PROGRESS: 'Confirmada',
+      COMPLETED: 'Completada',
+      CANCELLED: 'Cancelada',
     };
-
-    return labels[status];
+    return map[status];
   }
 
-  private resetForm(): void {
-    this.newAppointment.client = '';
-    this.newAppointment.phone = '';
-    this.newAppointment.vehicle = '';
-    this.newAppointment.service = '';
-    this.newAppointment.date = '';
-    this.newAppointment.time = '';
-    this.newAppointment.mechanic = '';
+  getStatusClass(status: AppointmentStatus): string {
+    const map: Record<AppointmentStatus, string> = {
+      SCHEDULED: 'status-confirmed',
+      PENDING_APPROVAL: 'status-pending',
+      IN_PROGRESS: 'status-confirmed',
+      COMPLETED: 'status-completed',
+      CANCELLED: 'status-cancelled',
+    };
+    return map[status];
+  }
+
+  trackByAppointmentId(_: number, appointment: Appointment): string {
+    return appointment.id;
   }
 }
