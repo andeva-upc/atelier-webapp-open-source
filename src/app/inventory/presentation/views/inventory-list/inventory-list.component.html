@@ -15,7 +15,7 @@
       </p>
     </div>
     <button class="btn-primary" (click)="openModal()">
-      <span class="icon">+</span>
+      <i class="pi pi-plus"></i>
       {{ 'inventory.actions.add' | translate }}
     </button>
   </header>
@@ -25,7 +25,7 @@
   <!-- ═══════════════════════════════════════════ -->
   @if (store.lowStockItemsCount() > 0) {
     <div class="alert-bar low-stock-alert">
-      <span class="alert-icon">⚠️</span>
+      <i class="pi pi-exclamation-triangle alert-icon"></i>
       <span class="alert-message">
         <strong>{{ 'inventory.alerts.low-stock-count' | translate: { count: store.lowStockItemsCount() } }}:</strong>
         @for (item of store.lowStockItems(); track item.id; let last = $last) {
@@ -40,7 +40,7 @@
   <!-- ═══════════════════════════════════════════ -->
   <div class="search-filter-bar">
     <div class="search-input-wrapper">
-      <span class="search-icon">🔍</span>
+      <i class="pi pi-search search-icon"></i>
       <input
         id="inventory-search"
         type="text"
@@ -74,7 +74,7 @@
           <!-- Card Header -->
           <div class="card-header">
             <div class="item-icon-wrapper" [class.icon-low]="item.isLowStock()">
-              <span class="item-icon">📦</span>
+              <i class="pi pi-box"></i>
             </div>
             <span class="status-badge" [class.status-low]="item.isLowStock()">
               {{ (item.isLowStock() ? 'inventory.status.low' : 'inventory.status.ok') | translate }}
@@ -109,13 +109,13 @@
               [disabled]="item.stock === 0"
               (click)="onAdjustStock(item.id, -1)"
               [title]="'inventory.actions.decrease' | translate"
-            >−</button>
+            ><i class="pi pi-minus"></i></button>
             <span class="stock-badge" [class.stock-badge-low]="item.isLowStock()">{{ item.stock }}</span>
             <button
               class="btn-adjust btn-increase"
               (click)="onAdjustStock(item.id, 1)"
               [title]="'inventory.actions.increase' | translate"
-            >+</button>
+            ><i class="pi pi-plus"></i></button>
           </div>
 
         </div>
@@ -124,7 +124,7 @@
 
     @if (store.filteredItems().length === 0 && !store.loading()) {
       <div class="empty-state">
-        <span class="empty-icon">📭</span>
+        <i class="pi pi-inbox empty-icon"></i>
         <p>{{ 'inventory.empty.description' | translate }}</p>
       </div>
     }
@@ -140,7 +140,7 @@
 
       <div class="modal-header">
         <h2>{{ 'inventory.modal.title' | translate }}</h2>
-        <button class="modal-close" (click)="closeModal()">✕</button>
+        <button class="modal-close" (click)="closeModal()"><i class="pi pi-times"></i></button>
       </div>
 
       <form class="modal-form" (ngSubmit)="onSubmitForm()">
