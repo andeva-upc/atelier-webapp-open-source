@@ -75,6 +75,7 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
         *   `- googleId: String`
         *   `- role: RoleName`
         *   `- specialty: Specialty`
+        *   `- fullName: String`
     *   **Métodos:**
         *   `+ registerEmployee(email: Email, password: HashedPassword, role: RoleName, branchId: BranchId): void`
         *   `+ updateProfile(email: Email, specialty: Specialty): void`
@@ -232,6 +233,9 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
         *   `- timestamp: LocalDateTime`
         *   `- rpm: Integer`
         *   `- temp: Double`
+        *   `- speedKmh: Integer`
+        *   `- odometerKm: Integer`
+        *   `- fuelLevelPercent: Double`
     *   **Métodos:**
         *   `{static} + create(deviceId: UUID, rpm: Integer, temp: Double): TelemetrySnapshot`
         *   `+ getDeviceId(): UUID`
@@ -669,6 +673,7 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
         *   `- productId: UUID`
         *   `- type: MovementType`
         *   `- quantity: Integer`
+        *   `- referenceId: UUID`
         *   `- createdAt: LocalDateTime`
         *   `- createdBy: UUID`
     *   **Métodos:** `+ create(productId: UUID, type: MovementType, quantity: Integer, userId: UUID): InventoryMovement`
@@ -747,7 +752,9 @@ A continuación, se detalla formalmente el modelo de clases para el Backend (Web
         *   `- id: VoucherId`
         *   `- workshopId: WorkshopId`
         *   `- workOrderId: UUID`
+        *   `- voucherNumber: String`
         *   `- type: VoucherType`
+        *   `- status: String`
         *   `- currency: String`
         *   `- subtotal: Money`
         *   `- discountAmount: Money`
