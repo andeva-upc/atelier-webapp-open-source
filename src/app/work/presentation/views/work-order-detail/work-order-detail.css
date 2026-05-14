@@ -1,0 +1,112 @@
+.detail-container {
+  padding: 1.5rem;
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+header h2 {
+  margin: 0;
+  font-family: 'Mona Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #1e293b;
+}
+
+.close-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.close-icon-btn:hover {
+  color: #0f172a;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.value {
+  color: #1e293b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.status-item {
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  background-color: #f1f5f9;
+  color: #64748b;
+}
+
+.status-completed { background-color: #ecfdf5; border: 1px solid #d1fae5; color: #10b981; }
+.status-in-progress { background-color: #eff6ff; border: 1px solid #dbeafe; color: #3b82f6; }
+.status-pending { background-color: #fff7ed; border: 1px solid #ffedd5; color: #f97316; }
+.status-cancelled { background-color: #fef2f2; border: 1px solid #fee2e2; color: #ef4444; }
+
+footer {
+  margin-top: 2rem;
+}
+
+.footer-close-btn {
+  width: 100% !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  background-color: #007bff !important;
+  color: white !important;
+  font-family: 'Mona Sans', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  text-transform: none !important;
+}
+
+.footer-close-btn:hover {
+  background-color: #0056b3 !important;
+}

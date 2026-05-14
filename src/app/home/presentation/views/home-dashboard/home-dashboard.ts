@@ -1,5 +1,6 @@
 import { Component, OnInit, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
@@ -28,7 +29,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
     MatButtonModule,
     ChartModule,
     TranslateModule,
-    NgIcon
+    NgIcon,
+    RouterLink
   ],
   providers: [
     provideIcons({

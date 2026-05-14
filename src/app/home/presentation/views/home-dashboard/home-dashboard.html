@@ -110,7 +110,7 @@
     <mat-card-content>
       <div class="card-header">
         <h2>{{ 'dashboard.orders.title' | translate }}</h2>
-        <a href="#" class="link-action">{{ 'dashboard.orders.view-all' | translate }} &rarr;</a>
+        <a [routerLink]="'/work'" class="link-action">{{ 'dashboard.orders.view-all' | translate }} &rarr;</a>
       </div>
 
       <table mat-table [dataSource]="recentOrders()" class="orders-table">

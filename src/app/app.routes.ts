@@ -30,6 +30,20 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'work',
+    loadChildren: () =>
+      import('./work/presentation/work.routes').then(
+        (m) => m.workRoutes
+      ),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./home/presentation/home.routes').then(
+        (m) => m.homeRoutes
+      ),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
