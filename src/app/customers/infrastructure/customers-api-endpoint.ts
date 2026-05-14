@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, map } from 'rxjs';
+import { Observable, forkJoin, map, catchError } from 'rxjs';
 import { BaseApiEndpoint } from '../../shared/infrastructure/base-api-endpoint';
 import { BaseResponse } from '../../shared/infrastructure/base-response';
 import { Customer } from '../domain/models/customer.entity';
@@ -108,9 +108,6 @@ export class CustomersApiEndpoint
         vehiclesSummary = customerVehicles
           .map(v => `${v.brand} ${v.model} ${v.plate_number}`)
           .join(', ');
-      } else if (customer.id === 'c3c047ca-51ff-4c22-b9cf-ae08fbff34dd') {
-        /** Family relationship for Maria Fe Torres Ugarte with the Corolla in db.json (customer_vehicles) */
-        vehiclesSummary = 'Toyota Corolla ABC-123 (Familiar)';
       }
 
       /** Filter appointments associated with the customer ID */
@@ -137,7 +134,8 @@ export class CustomersApiEndpoint
         servicesCount,
         vehiclesSummary,
         lastVisitDate,
-        customer.version
+        customer.version,
+        customer.deletedAt
       );
     });
   }
@@ -215,6 +213,24 @@ export class CustomersApiEndpoint
 
         return null;
       })
+    );
+  }
+
+  /**
+   * Performs a Soft Delete on a customer by setting the `deleted_at` timestamp.
+   * Overrides the base physical delete to comply with business Soft Delete policies.
+   *
+   * @param id - The unique identifier of the customer to delete.
+   * @returns An Observable that completes when the patch is successful.
+   */
+  override delete(id: string | number): Observable<void> {
+    const softDeleteData = {
+      deleted_at: new Date().toISOString()
+    };
+    
+    return this.http.patch<any>(`${this.endpointUrl}/${id}`, softDeleteData).pipe(
+      map(() => { return; }),
+      catchError(this.handleError(`Failed to soft delete customer with id ${id}`))
     );
   }
 }

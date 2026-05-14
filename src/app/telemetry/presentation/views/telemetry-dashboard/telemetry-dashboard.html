@@ -1,0 +1,59 @@
+<div class="telemetry-container">
+  <!-- Header Section -->
+  <header class="page-header">
+    <div class="header-info">
+      <h1>{{ 'telemetry.title' | translate }}</h1>
+      <p>{{ 'telemetry.subtitle' | translate:{ count: devicesCount().length } }}</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-primary" (click)="openLinkModal()">
+        <ng-icon name="matLink"></ng-icon>
+        {{ 'telemetry.actions.link-obd' | translate }}
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <div class="telemetry-grid">
+    <!-- Left Sidebar: Vehicles List -->
+    <aside class="vehicles-sidebar">
+      <app-vehicle-telemetry-selector></app-vehicle-telemetry-selector>
+    </aside>
+
+    <!-- Right Content: Metrics & Charts -->
+    <main class="telemetry-main">
+      @if (selectedDevice()) {
+        <!-- Metrics Grid -->
+        <section class="metrics-section">
+          <app-metrics-grid></app-metrics-grid>
+        </section>
+
+        <!-- History Chart -->
+        <section class="history-section">
+          <app-history-chart></app-history-chart>
+        </section>
+
+        <!-- Active Alerts -->
+        <section class="alerts-section">
+          <app-dtc-alerts-list></app-dtc-alerts-list>
+        </section>
+      } @else if (!isLoading()) {
+        <div class="no-selection">
+          <div class="selection-icon">🔍</div>
+          <h2>{{ 'telemetry.empty.no-selection.title' | translate }}</h2>
+          <p>{{ 'telemetry.empty.no-selection.description' | translate }}</p>
+        </div>
+      } @else {
+         <div class="loading-state">
+            <p>{{ 'telemetry.loading-records' | translate }}</p>
+         </div>
+      }
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <app-link-obd-modal 
+    [isOpen]="isModalOpen()" 
+    (close)="closeLinkModal()">
+  </app-link-obd-modal>
+</div>
