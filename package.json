@@ -26,9 +26,11 @@
     "@ng-icons/material-icons": "^33.2.2",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
+    "chart.js": "^4.5.1",
     "hex-to-css-filter": "^6.0.0",
     "json-server": "^0.17.4",
     "primeicons": "^7.0.0",
+    "primeng": "^21.1.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

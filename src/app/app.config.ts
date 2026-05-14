@@ -10,6 +10,8 @@ import { CustomersApi } from './customers/infrastructure/customers-api';
 import { VoucherRepository } from './billing/domain/repositories/voucher.repository';
 import { QuoteRepository } from './billing/domain/repositories/quote.repository';
 import { BillingApi } from './billing/infrastructure/billing-api';
+import { DashboardRepository } from './home/domain/repositories/dashboard.repository';
+import { DashboardApi } from './home/infrastructure/dashboard-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,7 +24,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     { provide: CustomerRepository, useClass: CustomersApi },
     { provide: VoucherRepository, useClass: BillingApi },
-    { provide: QuoteRepository, useClass: BillingApi }
+    { provide: QuoteRepository, useClass: BillingApi },
+    { provide: DashboardRepository, useClass: DashboardApi }
   ]
 };
 

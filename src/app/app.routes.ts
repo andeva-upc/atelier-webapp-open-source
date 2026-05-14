@@ -2,6 +2,13 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'home',
+    loadChildren: () =>
+      import('./home/presentation/home.routes').then(
+        (m) => m.homeRoutes
+      ),
+  },
+  {
     path: 'customers',
     loadChildren: () =>
       import('./customers/presentation/customers.routes').then(
@@ -17,7 +24,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'customers',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
 ];
