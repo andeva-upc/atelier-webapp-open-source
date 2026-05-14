@@ -1,20 +1,20 @@
-<section class="billing-container">
+<section class="billing-container animate-fade">
 
   <!-- ── Page Header ──────────────────────────────────────────────────── -->
-  <header class="billing-header">
+  <header class="billing-header animate-reveal" style="animation-delay: 0.1s;">
     <div class="header-text">
       <h1>{{ 'billing.title' | translate }}</h1>
       <p class="subtitle">{{ 'billing.subtitle' | translate }}</p>
     </div>
-    <button class="btn-primary" (click)="openQuoteModal(quoteDialog)">
+    <button class="btn-primary-v2" (click)="openQuoteModal(quoteDialog)">
       <mat-icon class="icon-small">add</mat-icon> {{ 'billing.action.new-quote' | translate }}
     </button>
   </header>
 
   <!-- ── KPI Summary Cards ────────────────────────────────────────────── -->
-  <div class="kpi-grid">
+  <div class="kpi-grid animate-reveal" style="animation-delay: 0.2s;">
 
-    <mat-card class="kpi-card kpi-card--income">
+    <mat-card class="kpi-card kpi-card--income animate-float">
       <mat-card-content>
         <div class="kpi-card__header">
           <span class="kpi-card__label">{{ 'billing.kpi.total-income' | translate }}</span>
@@ -28,7 +28,7 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="kpi-card kpi-card--expense">
+    <mat-card class="kpi-card kpi-card--expense animate-float" style="animation-delay: 0.1s;">
       <mat-card-content>
         <div class="kpi-card__header">
           <span class="kpi-card__label">{{ 'billing.kpi.total-expenses' | translate }}</span>
@@ -42,7 +42,7 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="kpi-card">
+    <mat-card class="kpi-card animate-float" style="animation-delay: 0.2s;">
       <mat-card-content>
         <div class="kpi-card__header">
           <span class="kpi-card__label">{{ 'billing.kpi.approved-quotes' | translate }}</span>
@@ -54,7 +54,7 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="kpi-card">
+    <mat-card class="kpi-card animate-float" style="animation-delay: 0.3s;">
       <mat-card-content>
         <div class="kpi-card__header">
           <span class="kpi-card__label">{{ 'billing.kpi.pending-quotes' | translate }}</span>
@@ -140,12 +140,12 @@
 
             <ng-container matColumnDef="gastos">
               <th mat-header-cell *matHeaderCellDef>{{ 'billing.detail.columns.expenses' | translate }}</th>
-              <td mat-cell *matCellDef="let row" class="text-red">S/ {{ row.gastos }}</td>
+              <td mat-cell *matCellDef="let row" class="text-red">S/ {{ row.gastos | number:'1.3-3' }}</td>
             </ng-container>
 
             <ng-container matColumnDef="rentabilidad">
               <th mat-header-cell *matHeaderCellDef>{{ 'billing.detail.columns.profitability' | translate }}</th>
-              <td mat-cell *matCellDef="let row" class="bold-text">S/ {{ row.rentabilidad }}</td>
+              <td mat-cell *matCellDef="let row" class="bold-text">S/ {{ row.rentabilidad | number:'1.3-3' }}</td>
             </ng-container>
 
             <ng-container matColumnDef="variacion">
@@ -157,6 +157,43 @@
 
             <tr mat-header-row *matHeaderRowDef="detailColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: detailColumns"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ── Recent Quotes Preview on Dashboard ────────────────────────── -->
+    <mat-card class="table-card recent-quotes-card animate-reveal" style="animation-delay: 0.5s;">
+      <mat-card-header style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px 0;">
+        <mat-card-title style="margin: 0;">Cotizaciones Recientes</mat-card-title>
+        <button mat-button color="primary" (click)="selectedTab.set(1)">Ver todas</button>
+      </mat-card-header>
+      <mat-card-content style="padding: 16px 24px 24px;">
+        <div class="table-container">
+          <table mat-table [dataSource]="quotes().slice(0, 5)" class="quotes-table">
+            <ng-container matColumnDef="quoteNumber">
+              <th mat-header-cell *matHeaderCellDef>N°</th>
+              <td mat-cell *matCellDef="let q" class="bold-text">{{ q.quoteNumber }}</td>
+            </ng-container>
+            <ng-container matColumnDef="customerName">
+              <th mat-header-cell *matHeaderCellDef>Cliente</th>
+              <td mat-cell *matCellDef="let q">{{ q.customerName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="totalAmount">
+              <th mat-header-cell *matHeaderCellDef>Total</th>
+              <td mat-cell *matCellDef="let q" class="text-blue">S/ {{ q.totalAmount }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Estado</th>
+              <td mat-cell *matCellDef="let q">
+                <span class="status-pill" [ngClass]="getQuoteStatusClass(q.status)">
+                  {{ getQuoteStatusLabel(q.status) | translate }}
+                </span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="['quoteNumber', 'customerName', 'totalAmount', 'status']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['quoteNumber', 'customerName', 'totalAmount', 'status']"></tr>
           </table>
         </div>
       </mat-card-content>
@@ -301,21 +338,38 @@
 
   <mat-dialog-content>
     <form [formGroup]="quoteForm" class="quote-form">
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="flex-2">
-          <mat-label>{{ 'billing.modal.quote.customer-id' | translate }}</mat-label>
-          <input matInput formControlName="customerId">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="flex-3">
+      <div class="form-row-grid">
+        <mat-form-field appearance="outline" class="flex-full">
           <mat-label>{{ 'billing.modal.quote.customer-name' | translate }}</mat-label>
-          <input matInput formControlName="customerName">
+          <mat-icon matPrefix>person</mat-icon>
+          <input matInput formControlName="customerName" placeholder="Juan Pérez" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCustomerSelected($event)" class="premium-autocomplete">
+            @for (customer of filteredCustomers(); track customer.id) {
+              <mat-option [value]="customer" class="customer-option">
+                <div class="option-container">
+                  <div class="customer-avatar">{{ customer.fullName.charAt(0).toUpperCase() }}</div>
+                  <div class="customer-info">
+                    <span class="customer-name">{{ customer.fullName }}</span>
+                    <span class="customer-meta">{{ customer.documentNumber }} • {{ customer.email }}</span>
+                  </div>
+                </div>
+              </mat-option>
+            }
+            @if (filteredCustomers().length === 0 && quoteForm.get('customerName')?.value) {
+              <mat-option disabled class="no-results-option">
+                <mat-icon>search_off</mat-icon>
+                <span>No se encontraron clientes</span>
+              </mat-option>
+            }
+          </mat-autocomplete>
         </mat-form-field>
       </div>
 
-      <div class="form-row">
+      <div class="form-row-grid">
         <mat-form-field appearance="outline" class="flex-full">
           <mat-label>{{ 'billing.modal.quote.vehicle-label' | translate }}</mat-label>
-          <input matInput formControlName="vehicle">
+          <mat-icon matPrefix>directions_car</mat-icon>
+          <input matInput formControlName="vehicle" placeholder="ABC-123 Toyota Corolla">
         </mat-form-field>
       </div>
 
@@ -324,24 +378,25 @@
         <div formArrayName="items" class="items-list">
           @for (item of items.controls; track $index) {
             <div [formGroupName]="$index" class="item-row">
-              <mat-form-field appearance="outline" class="item-type">
+              <mat-form-field appearance="outline">
+                <mat-label>Inventario</mat-label>
                 <mat-select formControlName="type">
-                  <mat-option value="PRODUCT">{{ 'inventory.type.product' | translate }}</mat-option>
-                  <mat-option value="SERVICE">{{ 'inventory.type.service' | translate }}</mat-option>
+                  <mat-option value="PRODUCT">Producto</mat-option>
+                  <mat-option value="SERVICE">Servicio</mat-option>
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="item-desc">
+              <mat-form-field appearance="outline">
                 <mat-label>{{ 'billing.detail.columns.items' | translate }}</mat-label>
                 <input matInput formControlName="description">
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="item-qty">
+              <mat-form-field appearance="outline">
                 <mat-label>Cant.</mat-label>
                 <input type="number" matInput formControlName="quantity">
               </mat-form-field>
 
-              <mat-form-field appearance="outline" class="item-price">
+              <mat-form-field appearance="outline">
                 <mat-label>S/</mat-label>
                 <input type="number" matInput formControlName="unitPrice">
               </mat-form-field>
@@ -351,7 +406,7 @@
               </button>
             </div>
             @if (!hasSufficientStock(item.get('description')?.value, item.get('quantity')?.value, item.get('type')?.value)) {
-              <div class="stock-warning">
+              <div class="stock-warning animate-fade">
                 <mat-icon class="icon-small">warning</mat-icon> {{ 'billing.modal.quote.stock-warning' | translate }}
               </div>
             }
@@ -362,23 +417,26 @@
         </button>
       </div>
 
-      <div class="form-row footer-row">
-        <mat-form-field appearance="outline" class="discount-field">
-          <mat-label>{{ 'billing.financial.discount' | translate }} (S/)</mat-label>
-          <input type="number" matInput formControlName="discountAmount">
-        </mat-form-field>
+      <div class="totals-summary-card">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="discount-field">
+            <mat-label>{{ 'billing.financial.discount' | translate }} (S/)</mat-label>
+            <mat-icon matPrefix>discount</mat-icon>
+            <input type="number" matInput formControlName="discountAmount">
+          </mat-form-field>
+        </div>
         
-        <div class="totals-summary">
+        <div class="summary-lines">
           <div class="summary-line">
-            <span>{{ 'billing.financial.subtotal' | translate }}:</span>
+            <span>{{ 'billing.financial.subtotal' | translate }}</span>
             <span>S/ {{ calculateSubtotal() | number:'1.2-2' }}</span>
           </div>
           <div class="summary-line">
-            <span>{{ 'billing.financial.tax' | translate }}:</span>
+            <span>{{ 'billing.financial.tax' | translate }}</span>
             <span>S/ {{ calculateTax() | number:'1.2-2' }}</span>
           </div>
           <div class="summary-line total">
-            <span>{{ 'billing.financial.total' | translate }}:</span>
+            <span>{{ 'billing.financial.total' | translate }}</span>
             <span>S/ {{ calculateTotal() | number:'1.2-2' }}</span>
           </div>
         </div>
@@ -387,8 +445,8 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>{{ 'shared.action.cancel' | translate }}</button>
-    <button class="btn-primary" (click)="onSubmitQuote()" [disabled]="quoteForm.invalid">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-flat-button class="btn-primary-v2" (click)="onSubmitQuote()">
       {{ 'billing.action.new-quote' | translate }}
     </button>
   </mat-dialog-actions>
@@ -400,22 +458,24 @@
 
   <mat-dialog-content>
     <form [formGroup]="paymentForm" class="payment-form">
-      <div class="payment-info" *ngIf="selectedVoucher()">
+      <div class="payment-info-card" *ngIf="selectedVoucher()">
         <p>Comprobante: <strong>{{ selectedVoucher().voucherNumber }}</strong></p>
         <p>Cliente: <strong>{{ selectedVoucher().customerName }}</strong></p>
-        <p class="total-to-pay">{{ 'billing.financial.total' | translate }}: <span>S/ {{ selectedVoucher().totalAmount | number:'1.2-2' }}</span></p>
+        <div class="payment-total-highlight">
+          {{ 'billing.financial.total' | translate }}: <span>S/ {{ selectedVoucher().totalAmount | number:'1.2-2' }}</span>
+        </div>
       </div>
 
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="flex-full">
+      <div class="form-row-grid">
+        <mat-form-field appearance="outline">
           <mat-label>{{ 'billing.financial.total' | translate }} (S/)</mat-label>
+          <mat-icon matPrefix>attach_money</mat-icon>
           <input type="number" matInput formControlName="amount" readonly>
         </mat-form-field>
-      </div>
 
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="flex-full">
+        <mat-form-field appearance="outline">
           <mat-label>{{ 'billing.table.columns.actions' | translate }}</mat-label>
+          <mat-icon matPrefix>payments</mat-icon>
           <mat-select formControlName="method">
             <mat-option value="CASH">Efectivo</mat-option>
             <mat-option value="CREDIT_CARD">Tarjeta de Crédito</mat-option>
@@ -429,7 +489,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>{{ 'shared.action.cancel' | translate }}</button>
+    <button mat-button mat-dialog-close>Cancel</button>
     <button class="btn-primary" (click)="onRegisterPayment()" [disabled]="paymentForm.invalid">
       {{ 'billing.action.confirm-payment' | translate }}
     </button>

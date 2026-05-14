@@ -1,4 +1,5 @@
 import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -13,6 +14,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormArray } fr
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 /**
@@ -37,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
+    MatAutocompleteModule,
     ReactiveFormsModule
   ],
   templateUrl: './billing-list.html',
@@ -58,6 +61,10 @@ export class BillingList implements OnInit {
   /** Currently selected voucher for payment */
   readonly selectedVoucher = signal<any | null>(null);
 
+  readonly availableCustomers = this.store.customers;
+  private customerNameValue!: any;
+  filteredCustomers!: any;
+
   /** Form group for the new quote */
   quoteForm!: FormGroup;
 
@@ -66,6 +73,24 @@ export class BillingList implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.initForms();
+    
+    this.customerNameValue = toSignal(
+      this.quoteForm.get('customerName')!.valueChanges,
+      { initialValue: '' }
+    );
+
+    this.filteredCustomers = computed(() => {
+      const query = this.customerNameValue();
+      const all = this.availableCustomers();
+      
+      if (!query || typeof query !== 'string') return all.slice(0, 5);
+      
+      const lowQuery = query.toLowerCase();
+      return all.filter(c => 
+        c.fullName.toLowerCase().includes(lowQuery) || 
+        c.documentNumber.includes(lowQuery)
+      );
+    });
   }
 
   private initForms(): void {
@@ -87,16 +112,18 @@ export class BillingList implements OnInit {
     return this.quoteForm.get('items') as FormArray;
   }
 
-  @Component({ template: '' }) openQuoteModal(template: any): void {
-    this.initForms();
+  openQuoteModal(template: any): void {
+    this.quoteForm.reset();
+    this.items.clear();
     this.addItem();
     this.dialog.open(template, {
-      width: '600px',
+      width: '950px',
       panelClass: 'custom-dialog-container'
     });
   }
 
   closeQuoteModal(): void {
+    this.dialog.closeAll();
     this.isQuoteModalOpen.set(false);
   }
 
@@ -120,8 +147,15 @@ export class BillingList implements OnInit {
   onRegisterPayment(): void {
     if (this.paymentForm.valid && this.selectedVoucher()) {
       const { amount, method } = this.paymentForm.value;
+      const voucherTotal = this.selectedVoucher().totalAmount;
+
+      // US028: Reject if amount is less than total due
+      if (amount < voucherTotal) {
+        alert(`Error: El monto ingresado (S/ ${amount}) es insuficiente. El saldo total es S/ ${voucherTotal}.`);
+        return;
+      }
+
       const voucherId = this.selectedVoucher().id;
-      
       this.store.registerPayment(voucherId, amount, method);
       this.dialog.closeAll();
     }
@@ -141,13 +175,47 @@ export class BillingList implements OnInit {
     this.items.removeAt(index);
   }
 
+  onCustomerSelected(event: any): void {
+    const customer = event.option.value;
+    this._fillCustomerData(customer);
+  }
+
+  private _fillCustomerData(customer: any): void {
+    this.quoteForm.patchValue({
+      customerId: customer.id,
+      customerName: customer.fullName,
+      vehicle: customer.vehiclesSummary !== 'Sin vehículos registrados' ? customer.vehiclesSummary.split(', ')[0] : ''
+    });
+  }
+
   onSubmitQuote(): void {
-    if (this.quoteForm.valid) {
-      const formValue = this.quoteForm.value;
+    // If no customerId, try to find an exact match by name
+    if (!this.quoteForm.get('customerId')?.value) {
+      const name = this.quoteForm.get('customerName')?.value;
+      const match = this.availableCustomers().find(c => c.fullName.toLowerCase() === name?.toLowerCase());
+      if (match) {
+        this._fillCustomerData(match);
+      }
+    }
+
+    if (this.quoteForm.invalid) {
+      alert('Por favor, selecciona un cliente de la lista y asegúrate de que todos los campos obligatorios estén llenos.');
+      return;
+    }
+
+    const formValue = this.quoteForm.value;
       
       // Calculate totals
       const subtotal = formValue.items.reduce((sum: number, item: any) => sum + (item.quantity * item.unitPrice), 0);
       const discount = formValue.discountAmount || 0;
+
+      // US029: Reject if discount exceeds business limit (e.g., 30% of subtotal)
+      const maxDiscount = subtotal * 0.3;
+      if (discount > maxDiscount) {
+        alert(`Error: El descuento aplicado (S/ ${discount}) supera el límite máximo permitido (30% del subtotal: S/ ${maxDiscount.toFixed(2)}).`);
+        return;
+      }
+
       const taxableAmount = Math.max(0, subtotal - discount);
       const taxRate = 18; // 18% IGV
       const taxAmount = Math.round(taxableAmount * (taxRate / 100) * 100) / 100;
@@ -184,8 +252,8 @@ export class BillingList implements OnInit {
 
       this.store.createQuote(newQuote, () => {
         this.closeQuoteModal();
+        this.selectedTab.set(1); // Switch to Quotations tab to see the new quote
       });
-    }
   }
 
   /** Computed total expenses (simulated as 40% of income for now since no expense data exists) */
@@ -261,7 +329,7 @@ export class BillingList implements OnInit {
       let variacion = '—';
       if (prevRentabilidad !== null && prevRentabilidad !== 0) {
         const diff = ((rentabilidad - prevRentabilidad) / prevRentabilidad) * 100;
-        variacion = `${diff > 0 ? '+' : ''}${diff.toFixed(1)}%`;
+        variacion = `${diff > 0 ? '+' : ''}${diff.toFixed(3)}%`;
       }
       prevRentabilidad = rentabilidad;
       return {
@@ -328,6 +396,7 @@ export class BillingList implements OnInit {
     this.store.loadVouchers();
     this.store.loadQuotes();
     this.store.loadProducts();
+    this.store.loadCustomers();
   }
 
   /**
@@ -343,12 +412,12 @@ export class BillingList implements OnInit {
       p.name.toLowerCase() === description.toLowerCase() || 
       p.id === description
     );
-    return product ? product.stock >= quantity : false;
+    return product ? product.current_stock >= quantity : false;
   }
 
   calculateSubtotal(): number {
     const items = this.quoteForm.get('items')?.value || [];
-    return items.reduce((sum: number, item: any) => sum + (item.quantity * item.unitPrice), 0);
+    return items.reduce((sum: number, item: any) => sum + ((item.quantity || 0) * (item.unitPrice || 0)), 0);
   }
 
   calculateTax(): number {

@@ -5,6 +5,8 @@ import { Voucher } from '../domain/models/voucher.entity';
 import { Quote } from '../domain/models/quote.entity';
 import { VoucherRepository } from '../domain/repositories/voucher.repository';
 import { QuoteRepository } from '../domain/repositories/quote.repository';
+import { CustomerRepository } from '../../customers/domain/repositories/customer.repository';
+import { Customer } from '../../customers/domain/models/customer.entity';
 import { environment } from '../../../environments/environment';
 
 /**
@@ -20,6 +22,7 @@ import { environment } from '../../../environments/environment';
 export class BillingStore {
   private readonly voucherRepository = inject(VoucherRepository);
   private readonly quoteRepository = inject(QuoteRepository);
+  private readonly customerRepository = inject(CustomerRepository);
   private readonly http = inject(HttpClient);
 
 
@@ -41,6 +44,11 @@ export class BillingStore {
 
   /** Readonly signal exposing the latest voucher error message. */
   readonly vouchersError = this.vouchersErrorSignal.asReadonly();
+
+  // ── Customer signals ───────────────────────────────────────────────────────
+
+  private readonly customersSignal = signal<Customer[]>([]);
+  readonly customers = this.customersSignal.asReadonly();
 
   /** Computed total income from all PAID vouchers. */
   readonly totalIncome = computed(() =>
@@ -65,8 +73,12 @@ export class BillingStore {
   private readonly quotesLoadingSignal = signal<boolean>(false);
   private readonly quotesErrorSignal = signal<string | null>(null);
 
-  /** Readonly signal exposing all loaded quotations. */
-  readonly quotes = this.quotesSignal.asReadonly();
+  /** Readonly signal exposing all loaded quotations, sorted by date (newest first). */
+  readonly quotes = computed(() => {
+    return [...this.quotesSignal()].sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  });
 
   /** Readonly signal exposing the quotes data-loading state. */
   readonly quotesLoading = this.quotesLoadingSignal.asReadonly();
@@ -150,6 +162,16 @@ export class BillingStore {
         this.vouchersSavingSignal.set(false);
         this.vouchersErrorSignal.set(this.formatError(err, 'billing.error.update-voucher'));
       },
+    });
+  }
+
+  /**
+   * Loads all customers to enable search in quote creation.
+   */
+  loadCustomers(): void {
+    this.customerRepository.getAll().subscribe({
+      next: data => this.customersSignal.set(data),
+      error: () => console.error('Failed to load customers')
     });
   }
 

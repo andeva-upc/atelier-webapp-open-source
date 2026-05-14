@@ -4,3 +4,38 @@
   font-family: "Zizou Slab";
   src: url("assets/fonts/Zizou Slab-Medium.otf") format("opentype");
 }
+
+/* ── Global Material Rounding Overrides ─────────────────────────── */
+/* These rules are global to reach MatDialog and other overlays */
+
+.mat-mdc-text-field-wrapper {
+  border-radius: 15px !important;
+}
+
+.mdc-text-field--outlined .mdc-notched-outline {
+  border-radius: 15px !important;
+}
+
+.mdc-notched-outline__leading {
+  border-radius: 15px 0 0 15px !important;
+  width: 15px !important;
+  border-left-width: 1px !important;
+}
+
+.mdc-notched-outline__trailing {
+  border-radius: 0 15px 15px 0 !important;
+  border-right-width: 1px !important;
+}
+
+.mdc-notched-outline__notch {
+  border-top-width: 1px !important;
+  border-bottom-width: 1px !important;
+}
+
+.mat-mdc-select-panel {
+  border-radius: 15px !important;
+}
+
+.mat-mdc-option {
+  border-radius: 8px !important;
+}
