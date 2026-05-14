@@ -32,4 +32,14 @@ export abstract class TelemetryRepository {
    * Retrieves all active diagnostic alerts for a specific vehicle.
    */
   abstract getActiveAlerts(vehicleId: string): Observable<DtcAlert[]>;
+
+  /**
+   * Links an OBD2 device to a specific vehicle.
+   */
+  abstract linkDevice(deviceId: string, vehicleId: string): Observable<ObdDevice>;
+
+  /**
+   * Unlinks an OBD2 device from its current vehicle.
+   */
+  abstract unlinkDevice(deviceId: string): Observable<ObdDevice>;
 }

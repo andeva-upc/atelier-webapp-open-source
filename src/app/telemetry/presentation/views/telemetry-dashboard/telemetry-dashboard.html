@@ -6,7 +6,7 @@
       <p>{{ 'telemetry.subtitle' | translate:{ count: devicesCount().length } }}</p>
     </div>
     <div class="header-actions">
-      <button class="btn-primary">
+      <button class="btn-primary" (click)="openLinkModal()">
         <ng-icon name="matLink"></ng-icon>
         {{ 'telemetry.actions.link-obd' | translate }}
       </button>
@@ -50,4 +50,10 @@
       }
     </main>
   </div>
+
+  <!-- Modals -->
+  <app-link-obd-modal 
+    [isOpen]="isModalOpen()" 
+    (close)="closeLinkModal()">
+  </app-link-obd-modal>
 </div>

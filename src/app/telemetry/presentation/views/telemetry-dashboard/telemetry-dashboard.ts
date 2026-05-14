@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TelemetryStore } from '../../../application/telemetry.store';
@@ -8,6 +8,7 @@ import { VehicleTelemetrySelector } from '../../components/vehicle-telemetry-sel
 import { MetricsGrid } from '../../components/metrics-grid/metrics-grid';
 import { DtcAlertsList } from '../../components/dtc-alerts-list/dtc-alerts-list';
 import { HistoryChart } from '../../components/history-chart/history-chart';
+import { LinkObdModal } from '../../components/link-obd-modal/link-obd-modal';
 
 /**
  * Main dashboard view for Telemetry.
@@ -23,7 +24,8 @@ import { HistoryChart } from '../../components/history-chart/history-chart';
     VehicleTelemetrySelector,
     MetricsGrid,
     DtcAlertsList,
-    HistoryChart
+    HistoryChart,
+    LinkObdModal
   ],
   providers: [
     provideIcons({ matLink })
@@ -44,10 +46,27 @@ export class TelemetryDashboard implements OnInit {
   /** Total active devices count for subtitle */
   readonly devicesCount = this.store.activeDevices;
 
+  /** Modal state */
+  readonly isModalOpen = signal<boolean>(false);
+
   /**
    * Initializes the view by loading available telemetry devices.
    */
   ngOnInit(): void {
     this.store.loadInitialData();
+  }
+
+  /**
+   * Opens the Link OBD2 modal.
+   */
+  openLinkModal(): void {
+    this.isModalOpen.set(true);
+  }
+
+  /**
+   * Closes the Link OBD2 modal.
+   */
+  closeLinkModal(): void {
+    this.isModalOpen.set(false);
   }
 }

@@ -58,9 +58,6 @@ export class TelemetryStore {
     });
   });
 
-  /**
-   * Computed: Alerts with vehicle details and mocked timestamp.
-   */
   readonly alertsWithVehicle = computed<DtcAlertUI[]>(() => {
     const alerts = this.alerts();
     const vehicles = this.vehicles();
@@ -68,7 +65,7 @@ export class TelemetryStore {
     return alerts.map(alert => ({
       alert,
       vehicle: vehicles.find(v => v.id === alert.vehicleId),
-      timestamp: '2026-05-13 09:32' // Mocked as not in db.json
+      timestamp: '2026-05-13 09:32'
     }));
   });
 
@@ -98,6 +95,36 @@ export class TelemetryStore {
   selectDevice(device: ObdDevice): void {
     this.selectedDeviceSignal.set(device);
     this.loadTelemetryData(device);
+  }
+
+  linkDevice(deviceId: string, vehicleId: string): void {
+    this.loadingSignal.set(true);
+    this.repository.linkDevice(deviceId, vehicleId).subscribe({
+      next: () => this.loadInitialData(),
+      error: () => {
+        this.loadingSignal.set(false);
+        this.errorSignal.set('Error linking device');
+      }
+    });
+  }
+
+  unlinkDevice(deviceId: string): void {
+    this.loadingSignal.set(true);
+    this.repository.unlinkDevice(deviceId).subscribe({
+      next: () => {
+        if (this.selectedDevice()?.id === deviceId) {
+          this.selectedDeviceSignal.set(null);
+          this.latestSnapshotSignal.set(null);
+          this.historySignal.set([]);
+          this.alertsSignal.set([]);
+        }
+        this.loadInitialData();
+      },
+      error: () => {
+        this.loadingSignal.set(false);
+        this.errorSignal.set('Error unlinking device');
+      }
+    });
   }
 
   private loadTelemetryData(device: ObdDevice): void {

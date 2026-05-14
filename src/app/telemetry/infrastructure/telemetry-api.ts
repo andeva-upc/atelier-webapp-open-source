@@ -42,4 +42,12 @@ export class TelemetryApi extends BaseApi implements TelemetryRepository {
   getActiveAlerts(vehicleId: string): Observable<DtcAlert[]> {
     return this.alertEndpoint.find({ vehicle_id: vehicleId, is_active: true });
   }
+
+  linkDevice(deviceId: string, vehicleId: string): Observable<ObdDevice> {
+    return this.deviceEndpoint.patch(deviceId, { vehicle_id: vehicleId, status: 'ACTIVE' });
+  }
+
+  unlinkDevice(deviceId: string): Observable<ObdDevice> {
+    return this.deviceEndpoint.patch(deviceId, { vehicle_id: '', status: 'INACTIVE' });
+  }
 }

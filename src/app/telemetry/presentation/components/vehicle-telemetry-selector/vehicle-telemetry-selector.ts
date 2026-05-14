@@ -30,6 +30,12 @@ import { ObdDevice } from '../../../domain/models/obd-device.entity';
             <div class="vehicle-info">
               <span class="plate">{{ item.vehicle.plateNumber }}</span>
               <span class="model">{{ item.vehicle.getDisplayName() }}</span>
+              
+              @if (item.device) {
+                <a class="unlink-btn" (click)="onUnlink($event, item.device.id)">
+                   {{ 'telemetry.actions.unlink' | translate }}
+                </a>
+              }
             </div>
 
             <div class="vehicle-status">
@@ -37,9 +43,6 @@ import { ObdDevice } from '../../../domain/models/obd-device.entity';
                 <span class="status-badge" [class]="item.status.toLowerCase()">
                   {{ 'telemetry.vehicles.active' | translate }}
                 </span>
-                <a class="unlink-btn" (click)="$event.stopPropagation()">
-                   {{ 'telemetry.actions.unlink' | translate }}
-                </a>
               } @else {
                 <span class="status-badge unlinked">
                   {{ 'telemetry.vehicles.inactive' | translate }}
@@ -123,6 +126,15 @@ import { ObdDevice } from '../../../domain/models/obd-device.entity';
       color: #64748b;
       font-size: 0.8rem;
     }
+    .unlink-btn {
+      font-size: 0.75rem;
+      color: #ef4444;
+      text-decoration: none;
+      margin-top: 0.25rem;
+    }
+    .unlink-btn:hover {
+      text-decoration: underline;
+    }
     .vehicle-status {
       display: flex;
       flex-direction: column;
@@ -131,17 +143,29 @@ import { ObdDevice } from '../../../domain/models/obd-device.entity';
     }
     .status-badge {
       font-size: 0.7rem;
-      padding: 0.1rem 0.4rem;
+      padding: 0.1rem 0.5rem;
       border-radius: 1rem;
       font-weight: 600;
-      text-transform: uppercase;
+      text-transform: capitalize;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
     }
-    .status-badge.active { background: #dcfce7; color: #166534; }
-    .status-badge.unlinked { background: #f1f5f9; color: #64748b; }
-    .unlink-btn {
-      font-size: 0.7rem;
-      color: #ef4444;
-      text-decoration: underline;
+    .status-badge.active::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+    }
+    .status-badge.active { color: #22c55e; background: #f0fdf4; }
+    .status-badge.unlinked { color: #94a3b8; background: #f8fafc; }
+    .status-badge.unlinked::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #94a3b8;
+      border-radius: 50%;
     }
   `]
 })
@@ -153,5 +177,12 @@ export class VehicleTelemetrySelector {
 
   onSelect(device: ObdDevice): void {
     this.store.selectDevice(device);
+  }
+
+  onUnlink(event: MouseEvent, deviceId: string): void {
+    event.stopPropagation();
+    if (confirm('¿Estás seguro de que deseas desvincular este dispositivo?')) {
+      this.store.unlinkDevice(deviceId);
+    }
   }
 }
