@@ -1,0 +1,49 @@
+.form-container {
+  padding: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--mat-sys-on-surface);
+}
+
+header p {
+  margin: 0.5rem 0 0;
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.9rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

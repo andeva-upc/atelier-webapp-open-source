@@ -1,0 +1,237 @@
+.work-orders-container {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Arimo', sans-serif;
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.title-section h1 {
+  font-family: 'Mona Sans', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0;
+  color: #0f172a;
+}
+
+.title-section .subtitle {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.new-ot-btn {
+  background-color: #007bff !important;
+  color: white !important;
+  border-radius: 8px !important;
+  font-family: 'Mona Sans', sans-serif !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1.5rem !important;
+  text-transform: none !important;
+}
+
+/* Search Bar Section */
+.actions-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-field {
+  flex: 1;
+}
+
+
+::ng-deep .search-field .mat-mdc-text-field-wrapper {
+  background-color: #ffffff !important;
+  border-radius: 28px !important;
+  border: 1px solid #e2e8f0 !important;
+  transition: all 0.3s ease !important;
+}
+
+::ng-deep .search-field .mat-mdc-text-field-wrapper:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
+}
+
+::ng-deep .search-field .mat-mdc-form-field-flex {
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+}
+
+::ng-deep .search-field .mat-mdc-form-field-infix {
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+::ng-deep .search-field mat-icon {
+  color: #94a3b8 !important;
+  margin-right: 8px !important;
+}
+
+::ng-deep .search-field input::placeholder {
+  color: #94a3b8 !important;
+  font-size: 0.95rem !important;
+}
+
+::ng-deep .search-field .mdc-notched-outline__leading,
+::ng-deep .search-field .mdc-notched-outline__notch,
+::ng-deep .search-field .mdc-notched-outline__trailing {
+  border: none !important;
+}
+
+.filter-btn {
+  background-color: white !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  width: 48px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Table Section */
+.table-wrapper {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+}
+
+.ot-table {
+  width: 100%;
+  background: white;
+}
+
+.mat-mdc-header-row {
+  background-color: #f8fafc;
+  height: 56px;
+}
+
+.mat-mdc-header-cell {
+  font-family: 'Mona Sans', sans-serif;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: capitalize;
+  font-size: 0.75rem;
+  border-bottom: 1px solid #f1f5f9 !important;
+}
+
+.mat-mdc-row {
+  height: 72px;
+  transition: background-color 0.2s;
+}
+
+.mat-mdc-row:hover {
+  background-color: #f1f5f9;
+}
+
+.mat-mdc-cell {
+  border-bottom: 1px solid #f1f5f9 !important;
+  color: #334155;
+  font-size: 0.875rem;
+}
+
+/* Specific Column Styles */
+.internal-number {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.customer-cell {
+  font-weight: 500;
+}
+
+.vehicle-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.vehicle-text {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.plate-badge {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.service-desc {
+  color: #64748b;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amount-cell {
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-completed {
+  background-color: #ecfdf5;
+  color: #10b981;
+  border: 1px solid #d1fae5;
+}
+
+.status-in-progress {
+  background-color: #eff6ff;
+  color: #3b82f6;
+  border: 1px solid #dbeafe;
+}
+
+.status-pending {
+  background-color: #fff7ed;
+  color: #f97316;
+  border: 1px solid #ffedd5;
+}
+
+.status-cancelled {
+  background-color: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fee2e2;
+}
+
+/* Action Buttons */
+.view-btn {
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  height: 36px !important;
+  padding: 0 1rem !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.view-btn:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+.loading-spinner {
+  padding: 4rem;
+  text-align: center;
+  color: #64748b;
+}

@@ -317,5 +317,55 @@
       "scheduled": "Scheduled"
     },
     "loading": "Loading dashboard..."
+  },
+  "work": {
+    "title": "Work Orders",
+    "subtitle": "{{count}} registered orders",
+    "new-ot": "New WO",
+    "search-placeholder": "Search by name, plate, or diagnosis...",
+    "table": {
+      "id": "Order No.",
+      "customer": "Customer",
+      "vehicle": "Vehicle",
+      "service": "Service / Diagnosis",
+      "mechanic": "Mechanic",
+      "date": "Date",
+      "status": "Status",
+      "total": "Total",
+      "actions": "Actions",
+      "view-details": "View Details"
+    },
+    "detail": {
+      "title": "Order Detail",
+      "customer-info": "Customer Information",
+      "vehicle-info": "Vehicle Information",
+      "diagnosis": "Diagnosis & Reason",
+      "tasks": "Tasks & Services"
+    },
+    "status": {
+      "COMPLETED": "Completed",
+      "IN_PROGRESS": "In progress",
+      "SCHEDULED": "Pending",
+      "CANCELLED": "Cancelled"
+    },
+    "form": {
+      "title": "New Work Order",
+      "subtitle": "Enter technical details to start the service.",
+      "customer": "Customer",
+      "vehicle": "Vehicle",
+      "mechanic": "Assigned Mechanic",
+      "driver-name": "Driver Name",
+      "driver-phone": "Driver Phone",
+      "mileage": "Current Mileage",
+      "diagnosis": "Initial Diagnosis / Reason for Entry",
+      "errors": {
+        "required": "This field is required.",
+        "phone-invalid": "Invalid number (9 digits)."
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Create Work Order"
+      }
+    }
   }
 }

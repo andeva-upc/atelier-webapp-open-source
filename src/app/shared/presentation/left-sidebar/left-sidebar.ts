@@ -21,7 +21,7 @@ export class LeftSidebar {
    */
   options = signal([
     { link: '/home', label: 'option.home', icon: 'pi pi-objects-column' },
-    { link: '/work-orders', label: 'option.work-orders', icon: 'pi pi-wrench' },
+    { link: '/work', label: 'option.work-orders', icon: 'pi pi-wrench' },
     { link: '/telemetry', label: 'option.telemetry', icon: 'pi pi-chart-line' },
     { link: '/customers', label: 'option.customers', icon: 'pi pi-users' },
     { link: '/appointments', label: 'option.appointments', icon: 'pi pi-calendar' },
