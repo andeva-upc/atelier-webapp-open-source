@@ -52,20 +52,34 @@ export class BillingList implements OnInit {
   /** Signal to control the visibility of the new quote modal */
   readonly isQuoteModalOpen = signal(false);
 
+  /** Signal to control the visibility of the payment modal */
+  readonly isPaymentModalOpen = signal(false);
+
+  /** Currently selected voucher for payment */
+  readonly selectedVoucher = signal<any | null>(null);
+
   /** Form group for the new quote */
   quoteForm!: FormGroup;
 
+  /** Form group for payment registration */
+  paymentForm!: FormGroup;
+
   constructor(private fb: FormBuilder) {
-    this.initQuoteForm();
+    this.initForms();
   }
 
-  private initQuoteForm(): void {
+  private initForms(): void {
     this.quoteForm = this.fb.group({
       customerId: ['', Validators.required],
       customerName: ['', Validators.required],
       vehicle: [''],
       discountAmount: [0, [Validators.min(0)]],
       items: this.fb.array([])
+    });
+
+    this.paymentForm = this.fb.group({
+      amount: [0, [Validators.required, Validators.min(0.01)]],
+      method: ['CASH', Validators.required]
     });
   }
 
@@ -81,6 +95,30 @@ export class BillingList implements OnInit {
 
   closeQuoteModal(): void {
     this.isQuoteModalOpen.set(false);
+  }
+
+  openPaymentModal(voucher: any): void {
+    this.selectedVoucher.set(voucher);
+    this.paymentForm.patchValue({
+      amount: voucher.totalAmount,
+      method: 'CASH'
+    });
+    this.isPaymentModalOpen.set(true);
+  }
+
+  closePaymentModal(): void {
+    this.isPaymentModalOpen.set(false);
+    this.selectedVoucher.set(null);
+  }
+
+  onRegisterPayment(): void {
+    if (this.paymentForm.valid && this.selectedVoucher()) {
+      const { amount, method } = this.paymentForm.value;
+      const voucherId = this.selectedVoucher().id;
+      
+      this.store.registerPayment(voucherId, amount, method);
+      this.closePaymentModal();
+    }
   }
 
   addItem(): void {
@@ -158,8 +196,11 @@ export class BillingList implements OnInit {
   /** Reactive signal from store — full list of quotes */
   readonly quotes = this.store.quotes;
 
-  /** Reactive signal from store — inventory products */
-  readonly availableProducts = this.store.products;
+  /** Reactive signal from store — full list of vouchers */
+  readonly vouchers = this.store.vouchers;
+
+  /** Table columns for vouchers */
+  readonly voucherColumns = ['voucherNumber', 'customerName', 'issuedAt', 'totalAmount', 'status', 'actions'];
 
   /** Loading state for quotes */
   readonly quotesLoading = this.store.quotesLoading;
