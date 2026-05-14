@@ -281,7 +281,52 @@
     "list": "Lista de citas"
   }
   },
+  "inventory": {
+    "title": "Inventario",
+    "subtitle-count": "{{count}} repuestos registrados",
+    "subtitle-loading": "Cargando repuestos registrados...",
+    "search-placeholder": "Buscar por SKU, nombre, marca...",
+    "loading-records": "Cargando registros...",
+    "alerts": {
+      "low-stock-count": "{{count}} repuestos con stock bajo"
+    },
+    "fields": {
+      "name": "Nombre",
+      "sku": "SKU",
+      "category": "Categoría",
+      "stock-actual": "Stock actual",
+      "initial-stock": "Stock inicial",
+      "min-stock": "Stock mínimo",
+      "price-unit": "Precio unit."
+    },
+    "placeholders": {
+      "name": "Ej. Aceite Sintético 5W30",
+      "sku": "Ej. OIL-5W30-001",
+      "category": "Ej. Lubricantes"
+    },
+    "status": {
+      "ok": "OK",
+      "low": "Stock bajo"
+    },
+    "filters": {
+      "all-categories": "Todas las categorías"
+    },
+    "modal": {
+      "title": "Agregar nuevo repuesto"
+    },
+    "actions": {
+      "add": "Agregar repuesto",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "increase": "Aumentar stock",
+      "decrease": "Reducir stock"
+    },
+    "empty": {
+      "description": "No se encontraron repuestos registrados."
+    }
+  },
   "dashboard": {
+
     "greeting": "Buenos días, {{name}}",
     "summary-date": "Aquí está el resumen de hoy — {{date}}",
     "kpi": {
@@ -321,55 +366,5 @@
       "scheduled": "Programado"
     },
     "loading": "Cargando dashboard..."
-  },
-  "work": {
-    "title": "Órdenes de Trabajo",
-    "subtitle": "{{count}} órdenes registradas",
-    "new-ot": "Nueva OT",
-    "search-placeholder": "Buscar por nombre, placa o diagnóstico...",
-    "table": {
-      "id": "Nº de Orden",
-      "customer": "Cliente",
-      "vehicle": "Vehículo",
-      "service": "Servicio / Diagnóstico",
-      "mechanic": "Mecánico",
-      "date": "Fecha",
-      "status": "Estado",
-      "total": "Total",
-      "actions": "Acciones",
-      "view-details": "Ver detalles"
-    },
-    "detail": {
-      "title": "Detalle de Orden",
-      "customer-info": "Información del Cliente",
-      "vehicle-info": "Información del Vehículo",
-      "diagnosis": "Diagnóstico y Motivo",
-      "tasks": "Tareas y Servicios"
-    },
-    "status": {
-      "COMPLETED": "Completado",
-      "IN_PROGRESS": "En progreso",
-      "SCHEDULED": "Pendiente",
-      "CANCELLED": "Cancelado"
-    },
-    "form": {
-      "title": "Nueva Orden de Trabajo",
-      "subtitle": "Ingresa los detalles técnicos para iniciar el servicio.",
-      "customer": "Cliente",
-      "vehicle": "Vehículo",
-      "mechanic": "Mecánico Asignado",
-      "driver-name": "Nombre del Conductor",
-      "driver-phone": "Teléfono del Conductor",
-      "mileage": "Kilometraje Actual",
-      "diagnosis": "Diagnóstico Inicial / Motivo de Ingreso",
-      "errors": {
-        "required": "Este campo es obligatorio.",
-        "phone-invalid": "Número inválido (9 dígitos)."
-      },
-      "actions": {
-        "cancel": "Cancelar",
-        "save": "Crear Orden de Trabajo"
-      }
-    }
   }
 }

@@ -23,8 +23,8 @@ import { TelemetryApi } from './telemetry/infrastructure/telemetry-api';
 import { DashboardRepository } from './home/domain/repositories/dashboard.repository';
 import { DashboardApi } from './home/infrastructure/dashboard-api';
 
-import { WorkOrderRepository } from './work/domain/repositories/work-order.repository';
-import { WorkOrdersApi } from './work/infrastructure/work-orders-api';
+import { InventoryRepository } from './inventory/domain/repositories/inventory.repository';
+import { InventoryApi } from './inventory/infrastructure/inventory-api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -43,6 +43,6 @@ export const appConfig: ApplicationConfig = {
     { provide: QuoteRepository, useClass: BillingApi },
     { provide: TelemetryRepository, useClass: TelemetryApi },
     { provide: DashboardRepository, useClass: DashboardApi },
-    { provide: WorkOrderRepository, useClass: WorkOrdersApi }
+    { provide: InventoryRepository, useClass: InventoryApi }
   ]
-};
+};
