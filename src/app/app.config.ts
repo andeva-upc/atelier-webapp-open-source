@@ -13,6 +13,9 @@ import { QuoteRepository } from './billing/domain/repositories/quote.repository'
 import { BillingApi } from './billing/infrastructure/billing-api';
 import { TelemetryRepository } from './telemetry/domain/repositories/telemetry.repository';
 import { TelemetryApi } from './telemetry/infrastructure/telemetry-api';
+import { DashboardRepository } from './home/domain/repositories/dashboard.repository';
+import { DashboardApi } from './home/infrastructure/dashboard-api';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +30,7 @@ export const appConfig: ApplicationConfig = {
     { provide: CustomerRepository, useClass: CustomersApi },
     { provide: VoucherRepository, useClass: BillingApi },
     { provide: QuoteRepository, useClass: BillingApi },
-    { provide: TelemetryRepository, useClass: TelemetryApi }
+    { provide: TelemetryRepository, useClass: TelemetryApi },
+    { provide: DashboardRepository, useClass: DashboardApi },
   ]
 };

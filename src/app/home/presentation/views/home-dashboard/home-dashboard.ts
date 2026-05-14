@@ -7,10 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { ChartModule } from 'primeng/chart';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { 
-  matAttachMoney, 
-  matAssignment, 
-  matDirectionsCar, 
+import {
+  matAttachMoney,
+  matAssignment,
+  matDirectionsCar,
   matWarningAmber,
   matAdd
 } from '@ng-icons/material-icons/baseline';
@@ -46,8 +46,6 @@ export class HomeDashboard implements OnInit {
   private readonly store = inject(DashboardStore);
   private readonly translate = inject(TranslateService);
 
-  // Expose current language as a signal to trigger reactivity in computed properties
-  private readonly currentLang = toSignal(this.translate.onLangChange, { initialValue: this.translate.currentLang });
 
   readonly currentDate = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
 
@@ -60,8 +58,7 @@ export class HomeDashboard implements OnInit {
 
   readonly primeChartData = computed(() => {
     // Re-evaluate when language changes
-    this.currentLang(); 
-    
+
     const data = this.store.chartData();
     if (!data.length) return null;
 
@@ -112,8 +109,6 @@ export class HomeDashboard implements OnInit {
     maintainAspectRatio: false
   };
 
-  readonly currentDate = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-
   ngOnInit(): void {
     this.store.loadDashboardData();
   }
@@ -124,9 +119,9 @@ export class HomeDashboard implements OnInit {
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'COMPLETED': 
+      case 'COMPLETED':
       case 'DONE': return 'badge-completed';
-      case 'IN_PROGRESS': 
+      case 'IN_PROGRESS':
       case 'DOING': return 'badge-progress';
       case 'PENDING': return 'badge-pending';
       case 'SCHEDULED': return 'badge-default';
@@ -136,9 +131,9 @@ export class HomeDashboard implements OnInit {
 
   getStatusLabel(status: string): string {
     switch (status) {
-      case 'COMPLETED': 
+      case 'COMPLETED':
       case 'DONE': return 'dashboard.status.completed';
-      case 'IN_PROGRESS': 
+      case 'IN_PROGRESS':
       case 'DOING': return 'dashboard.status.in-progress';
       case 'PENDING': return 'dashboard.status.pending';
       case 'SCHEDULED': return 'dashboard.status.scheduled';

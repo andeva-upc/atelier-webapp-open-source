@@ -216,5 +216,46 @@
       "P0172": "Sistema demasiado rico (Banco 1)",
       "P0308": "Falla de encendido detectada en el cilindro 8"
     }
+  },
+  "dashboard": {
+    "greeting": "Buenos días, {{name}}",
+    "summary-date": "Aquí está el resumen de hoy — {{date}}",
+    "kpi": {
+      "income": "Ingresos del mes",
+      "vs-last-month": "+{{percent}}% vs mes anterior",
+      "active-orders": "OTs activas",
+      "completed-today": "{{count}} completadas hoy",
+      "vehicles-workshop": "Vehículos en taller",
+      "with-telemetry": "{{count}} con telemetría activa",
+      "pending-alerts": "Alertas pendientes",
+      "critical-medium": "{{critical}} crítica, {{medium}} media"
+    },
+    "chart": {
+      "title": "Ingresos del mes",
+      "subtitle": "Últimos 5 meses"
+    },
+    "alerts": {
+      "title": "Alertas DTC",
+      "view-all": "Ver todas"
+    },
+    "orders": {
+      "title": "Órdenes recientes",
+      "view-all": "Ver todas",
+      "table": {
+        "ot": "OT",
+        "customer": "Cliente",
+        "vehicle": "Vehículo",
+        "mechanic": "Mecánico",
+        "status": "Estado",
+        "amount": "Monto"
+      }
+    },
+    "status": {
+      "completed": "Completado",
+      "in-progress": "En progreso",
+      "pending": "Pendiente",
+      "scheduled": "Programado"
+    },
+    "loading": "Cargando dashboard..."
   }
 }

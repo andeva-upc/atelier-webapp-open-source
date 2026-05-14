@@ -212,5 +212,46 @@
       "P0172": "System Too Rich (Bank 1)",
       "P0308": "Cylinder 8 Misfire Detected"
     }
+  },
+  "dashboard": {
+    "greeting": "Good morning, {{name}}",
+    "summary-date": "Here is today's summary — {{date}}",
+    "kpi": {
+      "income": "Monthly income",
+      "vs-last-month": "+{{percent}}% vs last month",
+      "active-orders": "Active WOs",
+      "completed-today": "{{count}} completed today",
+      "vehicles-workshop": "Vehicles in workshop",
+      "with-telemetry": "{{count}} with active telemetry",
+      "pending-alerts": "Pending alerts",
+      "critical-medium": "{{critical}} critical, {{medium}} medium"
+    },
+    "chart": {
+      "title": "Monthly income",
+      "subtitle": "Last 5 months"
+    },
+    "alerts": {
+      "title": "DTC Alerts",
+      "view-all": "View all"
+    },
+    "orders": {
+      "title": "Recent orders",
+      "view-all": "View all",
+      "table": {
+        "ot": "WO",
+        "customer": "Customer",
+        "vehicle": "Vehicle",
+        "mechanic": "Mechanic",
+        "status": "Status",
+        "amount": "Amount"
+      }
+    },
+    "status": {
+      "completed": "Completed",
+      "in-progress": "In progress",
+      "pending": "Pending",
+      "scheduled": "Scheduled"
+    },
+    "loading": "Loading dashboard..."
   }
 }
