@@ -26,7 +26,7 @@ export class Appointment implements BaseEntity {
     public readonly version: number,
     public readonly customerId?: string,
     public readonly vehicleId?: string,
-    public readonly deletedAt?: string | Date | null
+    public readonly deletedAt?: string | Date
   ) {}
 
   getDateLabel(): string {

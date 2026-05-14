@@ -1,63 +1,85 @@
 <section class="appointments-page">
   <header class="page-header">
     <div>
-      <h1>Citas</h1>
-      <p>{{ totalCount() }} citas agendadas</p>
+      <h1>{{ 'appointments.title' | translate }}</h1>
+      <p>{{ totalCount() }} {{ 'appointments.scheduledCount' | translate }}</p>
     </div>
 
     <button class="btn-new" type="button" (click)="openCreateForm()">
       <span>+</span>
-      Nueva cita
+      {{ 'appointments.actions.new' | translate }}
     </button>
   </header>
 
-  <section class="summary-grid" aria-label="Resumen de citas">
+  <section class="summary-grid" [attr.aria-label]="'appointments.aria.summary' | translate">
     <article class="summary-card summary-total">
       <strong>{{ totalCount() }}</strong>
-      <span>Total</span>
+      <span>{{ 'appointments.stats.total' | translate }}</span>
     </article>
 
     <article class="summary-card summary-confirmed">
       <strong>{{ confirmedCount() }}</strong>
-      <span>Confirmadas</span>
+      <span>{{ 'appointments.stats.confirmed' | translate }}</span>
     </article>
 
     <article class="summary-card summary-pending">
       <strong>{{ pendingCount() }}</strong>
-      <span>Pendientes</span>
+      <span>{{ 'appointments.stats.pending' | translate }}</span>
     </article>
 
     <article class="summary-card summary-completed">
       <strong>{{ completedCount() }}</strong>
-      <span>Completadas</span>
+      <span>{{ 'appointments.stats.completed' | translate }}</span>
     </article>
   </section>
 
   <section class="toolbar">
-    <nav class="filter-tabs" aria-label="Filtros de citas">
-      <button [class.active]="selectedFilter() === 'ALL'" (click)="selectFilter('ALL')">Todas</button>
-      <button [class.active]="selectedFilter() === 'CONFIRMED'" (click)="selectFilter('CONFIRMED')">Confirmadas</button>
-      <button [class.active]="selectedFilter() === 'PENDING'" (click)="selectFilter('PENDING')">Pendientes</button>
-      <button [class.active]="selectedFilter() === 'CANCELLED'" (click)="selectFilter('CANCELLED')">Canceladas</button>
-      <button [class.active]="selectedFilter() === 'COMPLETED'" (click)="selectFilter('COMPLETED')">Completadas</button>
+    <nav class="filter-tabs" [attr.aria-label]="'appointments.aria.filters' | translate">
+      <button [class.active]="selectedFilter() === 'ALL'" (click)="selectFilter('ALL')">
+        {{ 'appointments.filters.all' | translate }}
+      </button>
+
+      <button [class.active]="selectedFilter() === 'CONFIRMED'" (click)="selectFilter('CONFIRMED')">
+        {{ 'appointments.filters.confirmed' | translate }}
+      </button>
+
+      <button [class.active]="selectedFilter() === 'PENDING'" (click)="selectFilter('PENDING')">
+        {{ 'appointments.filters.pending' | translate }}
+      </button>
+
+      <button [class.active]="selectedFilter() === 'CANCELLED'" (click)="selectFilter('CANCELLED')">
+        {{ 'appointments.filters.cancelled' | translate }}
+      </button>
+
+      <button [class.active]="selectedFilter() === 'COMPLETED'" (click)="selectFilter('COMPLETED')">
+        {{ 'appointments.filters.completed' | translate }}
+      </button>
     </nav>
 
     <div class="search-box">
       <span>⌕</span>
-      <input type="search" placeholder="Buscar cliente, vehículo, mecánico" (input)="onSearchInput($event)" />
+      <input
+        type="search"
+        [placeholder]="'appointments.search.placeholder' | translate"
+        (input)="onSearchInput($event)"
+      />
     </div>
   </section>
 
   @if (loading()) {
-    <p class="empty-state">Cargando citas...</p>
+    <p class="empty-state">{{ 'appointments.loading' | translate }}</p>
   } @else if (error()) {
     <p class="empty-state error-state">{{ error() }}</p>
   } @else if (filteredAppointments().length === 0) {
-    <p class="empty-state">No se encontraron citas.</p>
+    <p class="empty-state">{{ 'appointments.empty' | translate }}</p>
   } @else {
-    <section class="appointments-list" aria-label="Lista de citas">
+    <section class="appointments-list" [attr.aria-label]="'appointments.aria.list' | translate">
       @for (appointment of filteredAppointments(); track appointment.id) {
-        <article class="appointment-card" [class.highlight]="appointment.isToday()" (click)="openDetail(appointment)">
+        <article
+          class="appointment-card"
+          [class.highlight]="appointment.isToday()"
+          (click)="openDetail(appointment)"
+        >
           <div class="time-box" [class.time-highlight]="appointment.isToday()">
             <span class="calendar-icon">▣</span>
             <strong>{{ appointment.getTimeLabel() }}</strong>
@@ -66,8 +88,9 @@
           <div class="appointment-info">
             <div class="title-row">
               <h3>{{ appointment.customerName }}</h3>
+
               @if (appointment.isToday()) {
-                <span class="today-chip">Hoy</span>
+                <span class="today-chip">{{ 'appointments.today' | translate }}</span>
               }
             </div>
 
@@ -81,7 +104,7 @@
           </div>
 
           <span class="status-chip" [ngClass]="getStatusClass(appointment.status)">
-            {{ getStatusLabel(appointment.status) }}
+            {{ statusLabelKey(appointment.status) | translate }}
           </span>
         </article>
       }
@@ -90,7 +113,13 @@
 </section>
 
 <app-modal [isOpen]="isFormOpen()" (close)="closeForm()">
-  <h2 modal-title>{{ formMode() === 'edit' ? 'Editar cita' : 'Nueva cita' }}</h2>
+  <h2 modal-title>
+    {{
+      formMode() === 'edit'
+        ? ('appointments.actions.editAppointment' | translate)
+        : ('appointments.actions.new' | translate)
+    }}
+  </h2>
 
   <div modal-body>
     <app-appointments-form
@@ -98,52 +127,61 @@
       [appointment]="selectedAppointment()"
       [saving]="saving()"
       (save)="saveAppointment($event)"
-      (cancel)="closeForm()" />
+      (cancel)="closeForm()"
+    />
   </div>
 </app-modal>
 
 <app-modal [isOpen]="isDetailOpen()" (close)="closeDetail()">
-  <h2 modal-title>Detalle de cita</h2>
+  <h2 modal-title>{{ 'appointments.detail.title' | translate }}</h2>
 
   <div modal-body>
     @if (selectedAppointment(); as appointment) {
       <section class="detail-grid">
         <div>
-          <span>Cliente</span>
+          <span>{{ 'appointments.fields.customer' | translate }}</span>
           <strong>{{ appointment.customerName }}</strong>
         </div>
+
         <div>
-          <span>Teléfono</span>
+          <span>{{ 'appointments.fields.phone' | translate }}</span>
           <strong>{{ appointment.customerPhone }}</strong>
         </div>
+
         <div>
-          <span>Vehículo</span>
+          <span>{{ 'appointments.fields.vehicle' | translate }}</span>
           <strong>{{ appointment.vehicleSummary }}</strong>
         </div>
+
         <div>
-          <span>Servicio</span>
+          <span>{{ 'appointments.fields.service' | translate }}</span>
           <strong>{{ appointment.serviceType }}</strong>
         </div>
+
         <div>
-          <span>Fecha</span>
+          <span>{{ 'appointments.fields.date' | translate }}</span>
           <strong>{{ appointment.getDateLabel() }}</strong>
         </div>
+
         <div>
-          <span>Hora</span>
+          <span>{{ 'appointments.fields.time' | translate }}</span>
           <strong>{{ appointment.getTimeLabel() }}</strong>
         </div>
+
         <div>
-          <span>Mecánico asignado</span>
+          <span>{{ 'appointments.fields.mechanic' | translate }}</span>
           <strong>{{ appointment.mechanicName }}</strong>
         </div>
+
         <div>
-          <span>Estado</span>
+          <span>{{ 'appointments.fields.status' | translate }}</span>
           <strong class="status-chip detail-status" [ngClass]="getStatusClass(appointment.status)">
-            {{ getStatusLabel(appointment.status) }}
+            {{ statusLabelKey(appointment.status) | translate }}
           </strong>
         </div>
+
         <div class="detail-full">
-          <span>Observaciones</span>
+          <span>{{ 'appointments.fields.notes' | translate }}</span>
           <strong>{{ appointment.notes }}</strong>
         </div>
       </section>
@@ -151,6 +189,8 @@
   </div>
 
   <div modal-actions>
-    <button type="button" class="btn-edit" (click)="openEditForm()">✎ Editar</button>
+    <button type="button" class="btn-edit" (click)="openEditForm()">
+      ✎ {{ 'appointments.actions.edit' | translate }}
+    </button>
   </div>
 </app-modal>

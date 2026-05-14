@@ -9,7 +9,7 @@
         <p class="subtitle">{{ 'customers.subtitle-loading' | translate }}</p>
       }
     </div>
-    
+
     <!-- New Customer Primary Button -->
     <button class="btn-new-customer" (click)="openModal()">
       <span class="btn-icon">+</span> {{ 'customers.new-customer' | translate }}
@@ -20,10 +20,10 @@
   <section class="filter-section">
     <div class="search-bar-wrapper">
       <ng-icon name="matSearch" class="search-icon"></ng-icon>
-      <input 
-        type="text" 
-        (input)="onSearchInput($event)" 
-        placeholder="{{ 'customers.search-placeholder' | translate }}" 
+      <input
+        type="text"
+        (input)="onSearchInput($event)"
+        placeholder="{{ 'customers.search-placeholder' | translate }}"
         class="custom-search-input"
       />
     </div>
@@ -52,6 +52,9 @@
                 <h2 class="customer-name">{{ customer.fullName }}</h2>
                 <span class="services-sub">{{ 'customers.services-performed' | translate: { count: customer.servicesCount } }}</span>
               </div>
+              <button class="delete-btn" (click)="onDeleteCustomer($event, customer.id)" [title]="'Eliminar cliente'">
+                <ng-icon name="matDelete"></ng-icon>
+              </button>
             </div>
 
             <!-- Middle Row: Contact & Vehicles Info -->
@@ -64,18 +67,26 @@
                 <ng-icon name="matPhoneAndroid" class="info-icon"></ng-icon>
                 <span class="info-text">{{ customer.phone }}</span>
               </div>
-              <div class="info-item">
-                <ng-icon name="matDirectionsCar" class="info-icon"></ng-icon>
-                <span class="info-text" [class.no-vehicles]="customer.vehiclesSummary === 'Sin vehículos registrados'">
-                  {{ customer.vehiclesSummary }}
-                </span>
+              <div class="info-item align-top">
+                <ng-icon name="matDirectionsCar" class="info-icon mt-1"></ng-icon>
+                <div class="vehicles-wrapper">
+                  @if (customer.getVehiclesList().length === 0) {
+                    <span class="info-text no-vehicles">{{ 'customers.no-vehicles' | translate }}</span>
+                  } @else {
+                    <mat-chip-set class="vehicle-chips-container">
+                      @for (vehicle of customer.getVehiclesList(); track vehicle) {
+                        <mat-chip class="custom-mat-chip">{{ vehicle }}</mat-chip>
+                      }
+                    </mat-chip-set>
+                  }
+                </div>
               </div>
             </div>
 
             <!-- Bottom Row: Separator & Last Visit -->
             <div class="card-footer">
               <span class="visit-lbl">{{ 'customers.last-visit' | translate }}</span>
-              <span class="visit-val">{{ customer.lastVisitDate }}</span>
+              <span class="visit-val">{{ customer.lastVisitDate === 'Sin visitas registradas' ? ('customers.no-visits' | translate) : customer.lastVisitDate }}</span>
             </div>
           </mat-card-content>
         </mat-card>
@@ -96,7 +107,7 @@
 
   <!-- Smart Customer Registration Modal -->
   <app-modal [isOpen]="isModalOpen()" (close)="closeModal()">
-    
+
     <!-- Title Area (Dynamic steps accessed via #form reference) -->
     <h2 modal-title>
       @if (form.modalStep() === 'SEARCH') {
@@ -111,18 +122,18 @@
         {{ 'customers.modal.title.manual-bypass' | translate }}
       }
     </h2>
-    
+
     <!-- Body Content: Modular Form Component -->
-    <app-customer-form 
-      modal-body 
-      #form 
-      (saved)="onCustomerSaved()" 
+    <app-customer-form
+      modal-body
+      #form
+      (saved)="onCustomerSaved()"
       (cancel)="closeModal()"
     ></app-customer-form>
 
     <!-- Modal Form Actions Row (exposing the template ref #form) -->
     <div modal-actions class="modal-form-actions">
-      
+
       <!-- SEARCH STEP -->
       @if (form.modalStep() === 'SEARCH') {
         <button type="button" class="btn-cancel" (click)="closeModal()">

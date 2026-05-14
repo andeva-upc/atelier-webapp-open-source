@@ -31,7 +31,7 @@ export class AppointmentAssembler implements BaseAssembler<Appointment, Appointm
       resource.version,
       resource.customer_id,
       resource.vehicle_id,
-      resource.deleted_at ?? null
+      resource.deleted_at ?? undefined
     );
   }
 

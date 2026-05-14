@@ -9,6 +9,20 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'billing',
+    loadChildren: () =>
+      import('./billing/presentation/billing.routes').then(
+        (m) => m.billingRoutes
+      ),
+  },
+  {
+    path: 'telemetry',
+    loadChildren: () =>
+      import('./telemetry/presentation/telemetry.routes').then(
+        (m) => m.telemetryRoutes
+      ),
+  },
+  {
     path: 'appointments',
     loadChildren: () =>
       import('./appointments/presentation/appointments.routes').then(
@@ -17,7 +31,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'customers',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
 ];

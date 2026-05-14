@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { AppointmentsStore } from '../../../application/appointments.store';
 import { Appointment, AppointmentStatus } from '../../../domain/models/appointments.entity';
 import { Modal } from '../../../../shared/presentation/modal/modal';
@@ -15,7 +17,7 @@ type AppointmentFilter = 'ALL' | 'CONFIRMED' | 'PENDING' | 'CANCELLED' | 'COMPLE
 @Component({
   selector: 'app-appointments-list',
   standalone: true,
-  imports: [CommonModule, Modal, AppointmentsForm],
+  imports: [CommonModule, Modal, AppointmentsForm, TranslatePipe],
   templateUrl: './appointments-list.html',
   styleUrl: './appointments-list.css',
 })
@@ -44,32 +46,38 @@ export class AppointmentsList implements OnInit {
   readonly filteredAppointments = computed(() => {
     const filter = this.selectedFilter();
 
-    return this.appointments().filter(appointment => {
+    return this.appointments().filter((appointment) => {
       if (filter === 'ALL') {
         return true;
       }
+
       if (filter === 'CONFIRMED') {
         return appointment.isConfirmed();
       }
+
       if (filter === 'PENDING') {
         return appointment.status === 'PENDING_APPROVAL';
       }
+
       if (filter === 'CANCELLED') {
         return appointment.status === 'CANCELLED';
       }
+
       return appointment.status === 'COMPLETED';
     });
   });
 
   ngOnInit(): void {
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(query => {
-      this.searchQuery.set(query);
-      this.store.loadAppointments(query);
-    });
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((query) => {
+        this.searchQuery.set(query);
+        this.store.loadAppointments(query);
+      });
 
     this.store.loadAppointments();
   }
@@ -122,14 +130,15 @@ export class AppointmentsList implements OnInit {
     this.store.updateAppointment(appointment, () => this.closeForm());
   }
 
-  getStatusLabel(status: AppointmentStatus): string {
+  statusLabelKey(status: AppointmentStatus): string {
     const map: Record<AppointmentStatus, string> = {
-      SCHEDULED: 'Confirmada',
-      PENDING_APPROVAL: 'Pendiente',
-      IN_PROGRESS: 'Confirmada',
-      COMPLETED: 'Completada',
-      CANCELLED: 'Cancelada',
+      SCHEDULED: 'appointments.status.confirmed',
+      PENDING_APPROVAL: 'appointments.status.pending',
+      IN_PROGRESS: 'appointments.status.confirmed',
+      COMPLETED: 'appointments.status.completed',
+      CANCELLED: 'appointments.status.cancelled',
     };
+
     return map[status];
   }
 
@@ -141,6 +150,7 @@ export class AppointmentsList implements OnInit {
       COMPLETED: 'status-completed',
       CANCELLED: 'status-cancelled',
     };
+
     return map[status];
   }
 

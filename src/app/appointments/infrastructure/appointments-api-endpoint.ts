@@ -129,7 +129,7 @@ export class AppointmentsApiEndpoint
           appointment.version,
           appointment.customer_id,
           appointment.vehicle_id,
-          appointment.deleted_at
+          appointment.deleted_at ?? undefined
         );
       })
       .sort((a, b) => new Date(a.appointmentDate).getTime() - new Date(b.appointmentDate).getTime());

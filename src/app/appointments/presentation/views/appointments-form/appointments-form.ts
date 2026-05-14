@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { Appointment, AppointmentStatus } from '../../../domain/models/appointments.entity';
 
 interface AppointmentFormValue {
@@ -21,7 +23,7 @@ interface AppointmentFormValue {
 @Component({
   selector: 'app-appointments-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslatePipe],
   templateUrl: './appointments-form.html',
   styleUrl: './appointments-form.css',
 })
@@ -78,46 +80,33 @@ export class AppointmentsForm implements OnChanges {
   }
 
   onSubmit(): void {
-  if (this.appointmentForm.invalid || this.saving) {
-    this.appointmentForm.markAllAsTouched();
+    if (this.appointmentForm.invalid || this.saving) {
+      this.appointmentForm.markAllAsTouched();
+      return;
+    }
 
-    console.log('Formulario inválido:', this.appointmentForm.getRawValue());
-    console.log('Errores:', {
-      customerName: this.appointmentForm.controls.customerName.errors,
-      customerPhone: this.appointmentForm.controls.customerPhone.errors,
-      vehicleSummary: this.appointmentForm.controls.vehicleSummary.errors,
-      serviceType: this.appointmentForm.controls.serviceType.errors,
-      date: this.appointmentForm.controls.date.errors,
-      time: this.appointmentForm.controls.time.errors,
-      mechanicName: this.appointmentForm.controls.mechanicName.errors,
-      status: this.appointmentForm.controls.status.errors,
-    });
+    const value = this.appointmentForm.getRawValue() as AppointmentFormValue;
+    const appointmentDate = `${value.date}T${value.time}:00Z`;
 
-    return;
-  }
+    const entity = new Appointment(
+      this.appointment?.id ?? crypto.randomUUID(),
+      this.appointment?.workshopId ?? 'e26b1580-b3b0-466d-8c10-ca7f62d1c9ef',
+      this.appointment?.branchId ?? 'b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa',
+      appointmentDate,
+      value.status,
+      value.customerName,
+      value.customerPhone,
+      value.vehicleSummary,
+      value.serviceType,
+      value.mechanicName,
+      value.notes,
+      this.appointment ? this.appointment.version + 1 : 0,
+      this.appointment?.customerId,
+      this.appointment?.vehicleId,
+      this.appointment?.deletedAt
+    );
 
-  const value = this.appointmentForm.getRawValue() as AppointmentFormValue;
-  const appointmentDate = `${value.date}T${value.time}:00Z`;
-
-  const entity = new Appointment(
-    this.appointment?.id ?? crypto.randomUUID(),
-    this.appointment?.workshopId ?? 'e26b1580-b3b0-466d-8c10-ca7f62d1c9ef',
-    this.appointment?.branchId ?? 'b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa',
-    appointmentDate,
-    value.status,
-    value.customerName,
-    value.customerPhone,
-    value.vehicleSummary,
-    value.serviceType,
-    value.mechanicName,
-    value.notes,
-    this.appointment ? this.appointment.version + 1 : 0,
-    this.appointment?.customerId,
-    this.appointment?.vehicleId,
-    this.appointment?.deletedAt
-  );
-
-  this.save.emit(entity);
+    this.save.emit(entity);
   }
 
   onCancel(): void {

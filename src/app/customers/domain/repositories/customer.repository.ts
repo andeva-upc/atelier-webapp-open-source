@@ -39,5 +39,13 @@ export abstract class CustomerRepository {
    * @returns An {@link Observable} emitting a pre-registration data object if found, or null.
    */
   abstract findPreRegistration(documentType: string, documentNumber: string, phone: string): Observable<any>;
+
+  /**
+   * Performs a soft delete operation on a customer record.
+   * 
+   * @param id - The unique identifier of the customer.
+   * @returns An {@link Observable} that completes when the operation is done.
+   */
+  abstract delete(id: string | number): Observable<void>;
 }
 

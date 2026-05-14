@@ -20,4 +20,6 @@ export interface BaseEntity {
    * It uniquely identifies this entity within its bounded context.
    */
   id: string | number;
+  workshopId: string;
+  deletedAt?: string | Date;
 }

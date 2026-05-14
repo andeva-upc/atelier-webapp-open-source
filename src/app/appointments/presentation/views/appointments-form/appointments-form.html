@@ -1,67 +1,102 @@
 <form class="appointment-form" [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
   <label class="form-field form-field-full">
-    <span>Cliente *</span>
-    <input type="text" formControlName="customerName" placeholder="Nombre del cliente" />
+    <span>{{ 'appointments.fields.customer' | translate }} *</span>
+    <input
+      type="text"
+      formControlName="customerName"
+      [placeholder]="'appointments.placeholders.customer' | translate"
+    />
   </label>
 
   <div class="form-grid">
     <label class="form-field">
-      <span>Teléfono *</span>
-      <input type="text" formControlName="customerPhone" placeholder="9xx xxx xxx" />
+      <span>{{ 'appointments.fields.phone' | translate }} *</span>
+      <input
+        type="text"
+        formControlName="customerPhone"
+        [placeholder]="'appointments.placeholders.phone' | translate"
+      />
     </label>
 
     <label class="form-field">
-      <span>Vehículo *</span>
-      <input type="text" formControlName="vehicleSummary" placeholder="Marca Modelo Placa" />
+      <span>{{ 'appointments.fields.vehicle' | translate }} *</span>
+      <input
+        type="text"
+        formControlName="vehicleSummary"
+        [placeholder]="'appointments.placeholders.vehicle' | translate"
+      />
     </label>
   </div>
 
   <label class="form-field form-field-full">
-    <span>Servicio *</span>
-    <input type="text" formControlName="serviceType" placeholder="Tipo de servicio" />
+    <span>{{ 'appointments.fields.service' | translate }} *</span>
+    <input
+      type="text"
+      formControlName="serviceType"
+      [placeholder]="'appointments.placeholders.service' | translate"
+    />
   </label>
 
   <div class="form-grid">
     <label class="form-field">
-      <span>Fecha *</span>
+      <span>{{ 'appointments.fields.date' | translate }} *</span>
       <input type="date" formControlName="date" />
     </label>
 
     <label class="form-field">
-      <span>Hora *</span>
+      <span>{{ 'appointments.fields.time' | translate }} *</span>
       <input type="time" formControlName="time" />
     </label>
   </div>
 
   <label class="form-field form-field-full">
-    <span>Mecánico asignado *</span>
-    <input type="text" formControlName="mechanicName" placeholder="Nombre del mecánico" />
+    <span>{{ 'appointments.fields.mechanic' | translate }} *</span>
+    <input
+      type="text"
+      formControlName="mechanicName"
+      [placeholder]="'appointments.placeholders.mechanic' | translate"
+    />
   </label>
 
   <label class="form-field form-field-full">
-    <span>Observaciones</span>
-    <textarea formControlName="notes" placeholder="Notas del cliente (opcional)"></textarea>
+    <span>{{ 'appointments.fields.notes' | translate }}</span>
+    <textarea
+      formControlName="notes"
+      [placeholder]="'appointments.placeholders.notes' | translate"
+    ></textarea>
   </label>
 
   @if (mode === 'edit') {
     <label class="form-field form-field-full">
-      <span>Estado</span>
+      <span>{{ 'appointments.fields.status' | translate }}</span>
       <select formControlName="status">
-        <option value="SCHEDULED">Confirmada</option>
-        <option value="PENDING_APPROVAL">Pendiente</option>
-        <option value="CANCELLED">Cancelada</option>
-        <option value="COMPLETED">Completada</option>
+        <option value="SCHEDULED">
+          {{ 'appointments.status.confirmed' | translate }}
+        </option>
+        <option value="PENDING_APPROVAL">
+          {{ 'appointments.status.pending' | translate }}
+        </option>
+        <option value="CANCELLED">
+          {{ 'appointments.status.cancelled' | translate }}
+        </option>
+        <option value="COMPLETED">
+          {{ 'appointments.status.completed' | translate }}
+        </option>
       </select>
     </label>
   }
 
   <div class="form-actions">
-  <button type="button" class="btn-secondary" (click)="onCancel()">
-    Cancelar
-  </button>
+    <button type="button" class="btn-secondary" (click)="onCancel()">
+      {{ 'appointments.actions.cancel' | translate }}
+    </button>
 
-  <button type="submit" class="btn-primary">
-  {{ mode === 'edit' ? 'Guardar cambios' : 'Agendar cita' }}
-  </button>
+    <button type="submit" class="btn-primary">
+      {{
+        mode === 'edit'
+          ? ('appointments.actions.saveChanges' | translate)
+          : ('appointments.actions.schedule' | translate)
+      }}
+    </button>
   </div>
 </form>

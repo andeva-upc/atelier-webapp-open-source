@@ -65,10 +65,14 @@ export class CustomersStore {
   readonly error = this.errorSignal.asReadonly();
 
   /**
-   * Computed signal for the total number of customers.
-   * Automatically updates when customers change.
+   * Computed signal for accessing non-deleted customers.
    */
-  readonly customersCount = computed(() => this.customers().length);
+  readonly activeCustomers = computed(() => this.customers().filter(c => !c.deletedAt));
+
+  /**
+   * Computed signal for the total number of active customers.
+   */
+  readonly customersCount = computed(() => this.activeCustomers().length);
 
   /**
    * Formats error messages for display to users or logs.
@@ -129,6 +133,27 @@ export class CustomersStore {
       error: (err) => {
         this.savingSignal.set(false);
         this.errorSignal.set(this.formatError(err, 'Failed to create customer'));
+      },
+    });
+  }
+
+  /**
+   * Performs a soft delete on a customer and updates the local state.
+   * 
+   * @param id - The ID of the customer to delete.
+   */
+  deleteCustomer(id: string | number): void {
+    this.savingSignal.set(true);
+    this.errorSignal.set(null);
+
+    this.repository.delete(id).subscribe({
+      next: () => {
+        this.customersSignal.update((list) => list.filter(cust => cust.id !== id));
+        this.savingSignal.set(false);
+      },
+      error: (err: any) => {
+        this.savingSignal.set(false);
+        this.errorSignal.set(this.formatError(err, 'Failed to delete customer'));
       },
     });
   }
