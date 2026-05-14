@@ -886,15 +886,15 @@
       "work_order_id": "wo1",
       "description": "Afinamiento Electrónico",
       "estimated_hours": 2.5,
-      "unit_price": 80.00,
+      "unit_price": 80,
       "status": "DOING"
     },
     {
       "id": "wt2",
       "work_order_id": "wo2",
       "description": "Mantenimiento Mayor 60k",
-      "estimated_hours": 5.0,
-      "unit_price": 350.00,
+      "estimated_hours": 5,
+      "unit_price": 350,
       "status": "COMPLETED"
     },
     {
@@ -902,15 +902,15 @@
       "work_order_id": "wo4",
       "description": "Cambio de Pastillas de Freno",
       "estimated_hours": 1.5,
-      "unit_price": 60.00,
+      "unit_price": 60,
       "status": "DOING"
     },
     {
       "id": "wt4",
       "work_order_id": "wo5",
       "description": "Revisión de Seguridad 5k",
-      "estimated_hours": 1.0,
-      "unit_price": 40.00,
+      "estimated_hours": 1,
+      "unit_price": 40,
       "status": "DOING"
     }
   ],
@@ -921,8 +921,8 @@
       "sku": "CASTROL-5W30",
       "name": "Aceite Castrol Sintético 5W30",
       "category": "Lubricantes",
-      "unit_price": 55.00,
-      "unit_cost": 32.00,
+      "unit_price": 55,
+      "unit_cost": 32,
       "current_stock": 120,
       "minimum_stock": 20
     },
@@ -932,8 +932,8 @@
       "sku": "FIL-TOY-001",
       "name": "Filtro de Aceite Toyota Original",
       "category": "Filtros",
-      "unit_price": 35.00,
-      "unit_cost": 15.00,
+      "unit_price": 35,
+      "unit_cost": 15,
       "current_stock": 45,
       "minimum_stock": 10
     },
@@ -943,8 +943,8 @@
       "sku": "NGK-IRIDIUM-01",
       "name": "Bujía NGK Iridium",
       "category": "Encendido",
-      "unit_price": 45.00,
-      "unit_cost": 22.00,
+      "unit_price": 45,
+      "unit_cost": 22,
       "current_stock": 80,
       "minimum_stock": 15
     },
@@ -954,8 +954,8 @@
       "sku": "BRK-CERAMIC-02",
       "name": "Pastillas de Freno Cerámicas",
       "category": "Frenos",
-      "unit_price": 120.00,
-      "unit_cost": 65.00,
+      "unit_price": 120,
+      "unit_cost": 65,
       "current_stock": 12,
       "minimum_stock": 5
     },
@@ -965,8 +965,8 @@
       "sku": "PRESTONE-EXT-01",
       "name": "Refrigerante Prestone 1 Gal",
       "category": "Líquidos",
-      "unit_price": 48.00,
-      "unit_cost": 28.00,
+      "unit_price": 48,
+      "unit_cost": 28,
       "current_stock": 35,
       "minimum_stock": 8
     },
@@ -976,24 +976,1397 @@
       "sku": "AIR-FIL-002",
       "name": "Filtro de Aire Universal",
       "category": "Filtros",
-      "unit_price": 40.00,
-      "unit_cost": 18.00,
+      "unit_price": 40,
+      "unit_cost": 18,
       "current_stock": 25,
       "minimum_stock": 5
     }
   ],
   "quotes": [
     {
+      "id": "q1ba938d-ef12-42da-bebe-0f192bca99bb",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "vehicle_id": "v1-corolla",
+      "work_order_id": "wo1ba38c-ef12-4f3d-be23-df129bca23bb",
+      "total_amount": 250,
+      "status": "APPROVED",
+      "created_at": "2026-05-06T18:40:00Z"
+    },
+    {
+      "id": "q2ba938d-ef12-42da-bebe-0f192bca99cc",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "vehicle_id": "v1-corolla",
+      "work_order_id": "wo3ba38c-ef12-4f3d-be23-df129bca23dd",
+      "total_amount": 400,
+      "status": "SENT",
+      "created_at": "2026-05-07T10:00:00Z"
+    },
+    {
       "id": "q1",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
       "customer_id": "c1-aldo",
       "vehicle_id": "v1-corolla",
       "currency": "PEN",
-      "subtotal_amount": 250.00,
-      "discount_amount": 20.00,
-      "tax_percentage": 18.00,
-      "total_amount": 271.40,
+      "subtotal_amount": 250,
+      "discount_amount": 20,
+      "tax_percentage": 18,
+      "total_amount": 271.4,
       "status": "APPROVED"
+    },
+    {
+      "id": "fcd5327e-3a31-4ddf-ba4d-400716c0475d",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-597",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "33068a83-fe4c-49d7-bec1-867a4510893f",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        },
+        {
+          "id": "3b7847e1-afc7-4dac-a27c-dd1035f583ce",
+          "type": "PRODUCT",
+          "reference_id": null,
+          "description": "Filtro de aceite original",
+          "quantity": 1,
+          "unit_price": 43,
+          "total": 43
+        }
+      ],
+      "subtotal": 193,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 34.74,
+      "total_amount": 227.74,
+      "valid_until": "2026-05-21T19:08:47.362Z",
+      "created_at": "2026-05-14T19:08:47.362Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "579347dd-9226-4671-93b3-21181b65900a",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-374",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "4567dfef-273f-4bd5-8d0a-e26cfd195ac5",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        },
+        {
+          "id": "4d98379f-5c1a-4b94-81ee-f691f01edd81",
+          "type": "PRODUCT",
+          "reference_id": null,
+          "description": "Filtro de aceite original",
+          "quantity": 1,
+          "unit_price": 43,
+          "total": 43
+        }
+      ],
+      "subtotal": 193,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 34.74,
+      "total_amount": 227.74,
+      "valid_until": "2026-05-21T19:08:49.010Z",
+      "created_at": "2026-05-14T19:08:49.010Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "b9840cac-6b13-4392-969f-a2a6d9d25586",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-640",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "3db9c020-43a6-420e-92f9-067c9857399d",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        },
+        {
+          "id": "b8ba39df-617d-411f-9d5c-a82ed51db3e4",
+          "type": "PRODUCT",
+          "reference_id": null,
+          "description": "Filtro de aceite original",
+          "quantity": 1,
+          "unit_price": 43,
+          "total": 43
+        }
+      ],
+      "subtotal": 193,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 34.74,
+      "total_amount": 227.74,
+      "valid_until": "2026-05-21T19:08:49.305Z",
+      "created_at": "2026-05-14T19:08:49.305Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "d82a24cf-6684-4950-90a8-1318c30c902e",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-027",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "6fc413b2-55d9-4181-beca-4ce4e3bf530c",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        },
+        {
+          "id": "4ee086bb-cba9-4b60-bf8f-38c4d7d3fbd2",
+          "type": "PRODUCT",
+          "reference_id": null,
+          "description": "Filtro de aceite original",
+          "quantity": 1,
+          "unit_price": 43,
+          "total": 43
+        }
+      ],
+      "subtotal": 193,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 34.74,
+      "total_amount": 227.74,
+      "valid_until": "2026-05-21T19:08:49.594Z",
+      "created_at": "2026-05-14T19:08:49.594Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "7c0bc1f7-3f63-4ea3-8971-1dc05bd55fef",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-758",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "3d779482-3f76-4606-9286-d1b4a15d1006",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        },
+        {
+          "id": "f642934b-19db-4225-ad2c-8a1e4914bb5c",
+          "type": "PRODUCT",
+          "reference_id": null,
+          "description": "Filtro de aceite original",
+          "quantity": 1,
+          "unit_price": 43,
+          "total": 43
+        }
+      ],
+      "subtotal": 193,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 34.74,
+      "total_amount": 227.74,
+      "valid_until": "2026-05-21T19:08:51.274Z",
+      "created_at": "2026-05-14T19:08:51.274Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "0178d06e-9d32-41c2-bc79-209a15d16056",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-701",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "8647b57e-fde6-491d-928a-1b13851ca126",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        },
+        {
+          "id": "293967d0-35a6-4820-bad0-5906c11be3a4",
+          "type": "PRODUCT",
+          "reference_id": null,
+          "description": "Filtro de aceite original",
+          "quantity": 1,
+          "unit_price": 43,
+          "total": 43
+        }
+      ],
+      "subtotal": 193,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 34.74,
+      "total_amount": 227.74,
+      "valid_until": "2026-05-21T19:08:51.450Z",
+      "created_at": "2026-05-14T19:08:51.450Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "b48ee990-f3bf-4f8d-8f10-fcdc39ac1b3d",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-692",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "a4217392-d2fa-4c9b-aeb5-856d5544575f",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        },
+        {
+          "id": "d7b41937-bbe7-46e2-aad5-8b151ace9ffb",
+          "type": "PRODUCT",
+          "reference_id": null,
+          "description": "Filtro de aceite original",
+          "quantity": 1,
+          "unit_price": 43,
+          "total": 43
+        }
+      ],
+      "subtotal": 193,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 34.74,
+      "total_amount": 227.74,
+      "valid_until": "2026-05-21T19:08:51.642Z",
+      "created_at": "2026-05-14T19:08:51.642Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "b4ffac16-bd8b-4738-93e5-f80084e4f1b3",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-719",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "7a6529ac-1564-4327-8a6a-713aa98dce9d",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:54.626Z",
+      "created_at": "2026-05-14T19:13:54.626Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "b433cdb7-c99e-4f7e-8638-4dd260952dae",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-257",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "9ba486f9-2d2e-40f5-9efc-48f26e49c236",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:55.354Z",
+      "created_at": "2026-05-14T19:13:55.354Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "1e45a09f-6008-46cc-b59d-02635687f389",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-965",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "ad47cb0a-e349-42dd-80db-41e4b00cfe8f",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:55.506Z",
+      "created_at": "2026-05-14T19:13:55.506Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "d2c558b6-a7a0-4141-9abd-3ec94a340213",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-082",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "3a4cd950-0edc-4bc4-8421-a897e2b8f17e",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:55.658Z",
+      "created_at": "2026-05-14T19:13:55.658Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "1194d591-c3e5-4137-ade7-7a5ae779fb48",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-600",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "e412161c-4c18-4f91-aa6d-8d9fbeeb5474",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:55.801Z",
+      "created_at": "2026-05-14T19:13:55.801Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "a9653595-2b6d-42fb-b29b-906cc32d9626",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-210",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "d5333bbe-4c0e-424f-841c-9237b955ce61",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:57.642Z",
+      "created_at": "2026-05-14T19:13:57.642Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "35be157c-a05a-40c0-8318-1af41b7f9171",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-658",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "7587f229-3bb9-4f1c-a5bd-1ef4161a7a21",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:57.802Z",
+      "created_at": "2026-05-14T19:13:57.802Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "d81853c9-866a-43c6-b088-35e6a83a054d",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-519",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "9343ab39-c80b-4c8a-a967-60ef7bdc4503",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:57.962Z",
+      "created_at": "2026-05-14T19:13:57.962Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "5dab4003-79ad-41f9-8c3f-b6ae92daabec",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-417",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "55322fb7-6b7e-499f-9d80-afb122f722b9",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:13:58.138Z",
+      "created_at": "2026-05-14T19:13:58.138Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "75b43698-9356-45a7-bbf3-2177df3417d1",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-397",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "0cb495d1-54b4-41e5-87e6-7ac2d61fe5af",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:28:59.730Z",
+      "created_at": "2026-05-14T19:28:59.730Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "3206b49a-3245-4246-92e3-105b247bcfda",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-672",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "35af3c75-7bb5-4f6e-aad7-e468332af6f6",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:00.290Z",
+      "created_at": "2026-05-14T19:29:00.290Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "b4c33f67-dfbd-49b6-888f-e75ee0445411",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-791",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "cedd49bc-6a66-4cfa-bba9-a0ad880b9f36",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:00.433Z",
+      "created_at": "2026-05-14T19:29:00.433Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "8a9bfc2a-e6be-4c7b-bbcd-48e73c9c4b38",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-164",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "b55e57bd-908f-4ec5-b88d-201129579b29",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:00.722Z",
+      "created_at": "2026-05-14T19:29:00.722Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "959dd976-d1da-4e26-a653-626df590daa8",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-593",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "0f6da03f-b170-40d2-a7ad-eb9934cfee61",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:00.865Z",
+      "created_at": "2026-05-14T19:29:00.865Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "f577f49c-e7b1-494e-b0e8-2dd466a13886",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-475",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "d0029062-e854-4a55-a377-32fd37492d2f",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:01.010Z",
+      "created_at": "2026-05-14T19:29:01.010Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "f6480b3c-84bf-4870-887b-41f2dce79c79",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-774",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "a38b93cf-4178-4fc1-b1b6-9d2de5114b6e",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:01.162Z",
+      "created_at": "2026-05-14T19:29:01.162Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "beb406a5-1f75-477d-a42f-c55749f710a1",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-158",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "9d640f09-a107-4226-a51d-7a46abf193f2",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:01.321Z",
+      "created_at": "2026-05-14T19:29:01.321Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "b17109f3-85dd-40ac-bf33-0d0352dc2d18",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-815",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "cb2ab32f-d02a-43e2-97d8-8b7fa4ba9733",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:01.474Z",
+      "created_at": "2026-05-14T19:29:01.474Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "a7bbef90-059b-461e-a77b-a7002608a3d6",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-695",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "b5ce276b-85f7-487a-b46f-f67f65c87378",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:01.634Z",
+      "created_at": "2026-05-14T19:29:01.634Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "9c2b7763-286c-4df1-a413-2be04fec8b99",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-080",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "7b85632b-d6c9-43a4-a4be-8b95566b2216",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:01.794Z",
+      "created_at": "2026-05-14T19:29:01.794Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "1843c88f-09ba-4ba1-bae7-1c5a296251a5",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-598",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "240326ba-2bdb-4da9-88d5-9439e601c6e0",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:01.962Z",
+      "created_at": "2026-05-14T19:29:01.962Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "536089d6-b473-43d6-b759-d4ee492fc949",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-935",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "8239aea4-72b2-4967-8a64-5977bfe3d50e",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:02.618Z",
+      "created_at": "2026-05-14T19:29:02.618Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "14b21dd4-967f-4b2e-b8a1-71c842c55c87",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-965",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "2a46b5ab-92c4-4be2-b399-c5a87f711c08",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:02.786Z",
+      "created_at": "2026-05-14T19:29:02.786Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "33b4b1a8-f3e8-4c67-82a9-306b39915d4d",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-151",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "3ed24602-ebf1-4a70-af14-831233a5df83",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:02.953Z",
+      "created_at": "2026-05-14T19:29:02.953Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "8cba37fc-c0cb-4844-927c-2fd2bc19f133",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-595",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "81fc0dc4-f062-4dc0-abf6-ab57785218e2",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 150,
+          "total": 150
+        }
+      ],
+      "subtotal": 150,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 27,
+      "total_amount": 177,
+      "valid_until": "2026-05-21T19:29:03.115Z",
+      "created_at": "2026-05-14T19:29:03.115Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "24d81a31-d0fc-4d45-a9e3-4b4c08a54396",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-776",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "4b3c48dc-2e6f-441a-99b9-41b8bb810371",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Test Item",
+          "quantity": 1,
+          "unit_price": 100,
+          "total": 100
+        }
+      ],
+      "subtotal": 100,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 18,
+      "total_amount": 118,
+      "valid_until": "2026-05-21T19:30:38.198Z",
+      "created_at": "2026-05-14T19:30:38.198Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "074d3020-0b6c-4ee6-8dcc-05050a4f2dad",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-660",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "ea223753-cd52-4a9b-9498-f2a406182792",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Test Item",
+          "quantity": 1,
+          "unit_price": 100,
+          "total": 100
+        }
+      ],
+      "subtotal": 100,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 18,
+      "total_amount": 118,
+      "valid_until": "2026-05-21T19:30:53.361Z",
+      "created_at": "2026-05-14T19:30:53.361Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "534c34eb-095d-4261-9045-65cc1a016e0e",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-908",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "9a082f53-e8fb-4e36-b6b2-4c0127743b18",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Test Item",
+          "quantity": 1,
+          "unit_price": 100,
+          "total": 100
+        }
+      ],
+      "subtotal": 100,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 18,
+      "total_amount": 118,
+      "valid_until": "2026-05-21T19:31:35.931Z",
+      "created_at": "2026-05-14T19:31:35.931Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "02641fc2-fac2-4804-b109-a4028031146b",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-399",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "e2bc80be-0a7b-42c5-8fe1-b08b76ca8746",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Test Item",
+          "quantity": 1,
+          "unit_price": 100,
+          "total": 100
+        }
+      ],
+      "subtotal": 100,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 18,
+      "total_amount": 118,
+      "valid_until": "2026-05-21T19:34:17.220Z",
+      "created_at": "2026-05-14T19:34:17.220Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "bc540a9a-a57b-4f56-9ac8-10491ab3bea8",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-630",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "654d45cb-360c-48ac-8a5f-b36c3ab1f66f",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Test Item",
+          "quantity": 1,
+          "unit_price": 100,
+          "total": 100
+        }
+      ],
+      "subtotal": 100,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 18,
+      "total_amount": 118,
+      "valid_until": "2026-05-21T19:34:30.207Z",
+      "created_at": "2026-05-14T19:34:30.208Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "717ed9d1-8525-4279-ab9f-9ed0248e65f9",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-257",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "b9fd1d5a-2c6e-46e3-be23-51183c92ef6c",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Mantenimiento preventivo 10k km",
+          "quantity": 1,
+          "unit_price": 149,
+          "total": 149
+        }
+      ],
+      "subtotal": 149,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 26.82,
+      "total_amount": 175.82,
+      "valid_until": "2026-05-21T19:36:35.098Z",
+      "created_at": "2026-05-14T19:36:35.098Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
+    },
+    {
+      "id": "a167c412-b5ed-449f-ace4-92325015dde5",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c3c047ca-51ff-4c22-b9cf-ae08fbff34dd",
+      "customer_name": "Maria Fe Torres Ugarte",
+      "quote_number": "COT-252",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "1304859c-aec1-4d64-b313-34603c084135",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Aceite",
+          "quantity": 1,
+          "unit_price": 45,
+          "total": 45
+        }
+      ],
+      "subtotal": 45,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 8.1,
+      "total_amount": 53.1,
+      "valid_until": "2026-05-21T19:37:27.513Z",
+      "created_at": "2026-05-14T19:37:27.513Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Kia Sportage Z1A-789",
+      "version": 0
+    },
+    {
+      "id": "8e32e92f-5e65-4073-b49f-c150e439746d",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c2-distribuidora",
+      "customer_name": "Distribuidora Lima S.A.",
+      "quote_number": "COT-959",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "b45a94ec-eaa8-445f-b600-ad1dd456ec3e",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Bjihas",
+          "quantity": 1,
+          "unit_price": 60,
+          "total": 60
+        }
+      ],
+      "subtotal": 60,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 10.8,
+      "total_amount": 70.8,
+      "valid_until": "2026-05-21T19:38:28.642Z",
+      "created_at": "2026-05-14T19:38:28.642Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Ford F-150 Raptor F15-RAP",
+      "version": 0
+    },
+    {
+      "id": "ab25acd4-41c5-40d0-9fe7-e5b4273647d7",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c7-pedro",
+      "customer_name": "Pedro Sanchez",
+      "quote_number": "COT-081",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "e8695381-eef4-4678-960d-a969c6035c15",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Aros",
+          "quantity": 4,
+          "unit_price": 67,
+          "total": 268
+        }
+      ],
+      "subtotal": 268,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 48.24,
+      "total_amount": 316.24,
+      "valid_until": "2026-05-21T19:45:14.179Z",
+      "created_at": "2026-05-14T19:45:14.179Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Honda Civic CIV-990",
+      "version": 0
+    },
+    {
+      "id": "385ee707-4279-436e-83b8-4ed6430f984e",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c8-ana",
+      "customer_name": "Ana Garcia",
+      "quote_number": "COT-822",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "0bd3861b-e35b-4b85-8271-78083146a897",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Carburador",
+          "quantity": 1,
+          "unit_price": 145,
+          "total": 145
+        }
+      ],
+      "subtotal": 145,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 26.1,
+      "total_amount": 171.1,
+      "valid_until": "2026-05-21T19:49:44.889Z",
+      "created_at": "2026-05-14T19:49:44.889Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota RAV4 RAV-777",
+      "version": 0
+    },
+    {
+      "id": "e9d9812f-94ef-4683-bcaf-cd05ee8acd6f",
+      "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
+      "quote_number": "COT-713",
+      "status": "DRAFT",
+      "items": [
+        {
+          "id": "72fefb44-4215-412e-9516-112ca01c7556",
+          "type": "SERVICE",
+          "reference_id": null,
+          "description": "Embriagues",
+          "quantity": 1,
+          "unit_price": 12,
+          "total": 12
+        }
+      ],
+      "subtotal": 12,
+      "discount_amount": 0,
+      "tax_rate": 18,
+      "tax_amount": 2.16,
+      "total_amount": 14.16,
+      "valid_until": "2026-05-21T21:51:58.106Z",
+      "created_at": "2026-05-14T21:51:58.106Z",
+      "approved_at": null,
+      "notes": "",
+      "vehicle": "Toyota Corolla ABC-123",
+      "version": 0
     }
   ],
   "quote_items": [
@@ -1003,8 +2376,8 @@
       "item_type": "SERVICE",
       "description": "Mano de Obra Cambio de Aceite",
       "quantity": 1,
-      "unit_price": 50.00,
-      "total_price": 50.00
+      "unit_price": 50,
+      "total_price": 50
     },
     {
       "id": "qi2",
@@ -1013,68 +2386,86 @@
       "reference_id": "p1-aceite",
       "description": "Aceite Castrol 5W30 (Galón)",
       "quantity": 4,
-      "unit_price": 50.00,
-      "total_price": 200.00
+      "unit_price": 50,
+      "total_price": 200
     }
   ],
   "vouchers": [
     {
       "id": "vo-old-1",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
       "work_order_id": "wo-completed-old",
+      "voucher_number": "B001-00001",
       "type": "INVOICE",
+      "status": "PAID",
       "currency": "PEN",
-      "subtotal_amount": 1000.00,
-      "discount_amount": 0.00,
-      "tax_percentage": 18.00,
-      "total_amount": 1180.00,
+      "subtotal": 1000,
+      "tax_amount": 180,
+      "total_amount": 1180,
+      "issued_at": "2026-04-10T16:00:00Z",
       "sunat_status": "ACCEPTED",
+      "version": 1,
       "created_at": "2026-04-10T15:00:00Z"
     },
     {
       "id": "vo-old-2",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c1-aldo",
+      "customer_name": "Aldo Mendoza Riva",
       "work_order_id": "wo-completed-old-2",
+      "voucher_number": "B001-00002",
       "type": "INVOICE",
+      "status": "PAID",
       "currency": "PEN",
-      "subtotal_amount": 1500.00,
-      "discount_amount": 50.00,
-      "tax_percentage": 18.00,
-      "total_amount": 1711.00,
+      "subtotal": 1500,
+      "tax_amount": 211,
+      "total_amount": 1711,
+      "issued_at": "2026-04-25T12:00:00Z",
       "sunat_status": "ACCEPTED",
+      "version": 1,
       "created_at": "2026-04-25T11:00:00Z"
     },
     {
       "id": "vo1",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c3c047ca-51ff-4c22-b9cf-ae08fbff34dd",
+      "customer_name": "Maria Fe Torres Ugarte",
       "work_order_id": "wo1",
+      "voucher_number": "B001-00045",
       "type": "INVOICE",
+      "status": "PAID",
       "currency": "PEN",
-      "subtotal_amount": 300.00,
-      "discount_amount": 30.00,
-      "tax_percentage": 18.00,
-      "total_amount": 318.60,
+      "subtotal": 300,
+      "tax_amount": 18.6,
+      "total_amount": 318.6,
+      "issued_at": "2026-05-12T10:00:00Z",
       "sunat_status": "ACCEPTED",
       "version": 0,
       "deleted_at": null,
       "created_at": "2026-05-05T17:15:00Z",
-      "updated_at": "2026-05-05T17:15:00Z"
+      "updated_at": "2026-05-12T10:00:00Z"
     },
     {
       "id": "vo2",
       "workshop_id": "e26b1580-b3b0-466d-8c10-ca7f62d1c9ef",
+      "customer_id": "c3c047ca-51ff-4c22-b9cf-ae08fbff34dd",
+      "customer_name": "Maria Fe Torres Ugarte",
       "work_order_id": "wo2",
+      "voucher_number": "B001-00046",
       "type": "INVOICE",
+      "status": "PAID",
       "currency": "PEN",
-      "subtotal_amount": 1200.00,
-      "discount_amount": 100.00,
-      "tax_percentage": 18.00,
-      "total_amount": 1298.00,
+      "subtotal": 1100,
+      "tax_amount": 198,
+      "total_amount": 1298,
+      "issued_at": "2026-05-12T17:30:00Z",
       "sunat_status": "ACCEPTED",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-12T17:00:00Z",
-      "updated_at": "2026-05-12T17:00:00Z"
+      "created_at": "2026-05-12T17:30:00Z",
+      "updated_at": "2026-05-12T17:30:00Z"
     }
   ],
   "voucher_items": [
@@ -1085,8 +2476,8 @@
       "reference_id": "p1-aceite",
       "description": "Aceite Castrol 5W30",
       "quantity": 10,
-      "unit_price": 100.00,
-      "total_price": 1000.00
+      "unit_price": 100,
+      "total_price": 1000
     },
     {
       "id": "vi1",
@@ -1094,8 +2485,8 @@
       "item_type": "SERVICE",
       "description": "Mantenimiento Preventivo 40k",
       "quantity": 1,
-      "unit_price": 100.00,
-      "total_price": 100.00
+      "unit_price": 100,
+      "total_price": 100
     },
     {
       "id": "vi2",
@@ -1104,15 +2495,15 @@
       "reference_id": "p2-filtro",
       "description": "Kit de Filtros",
       "quantity": 2,
-      "unit_price": 100.00,
-      "total_price": 200.00
+      "unit_price": 100,
+      "total_price": 200
     }
   ],
   "payments": [
     {
       "id": "pay-old-1",
       "voucher_id": "vo-old-1",
-      "amount": 1180.00,
+      "amount": 1180,
       "currency": "PEN",
       "method": "CASH",
       "paid_at": "2026-04-10T16:00:00Z",
@@ -1122,7 +2513,7 @@
     {
       "id": "pay-old-2",
       "voucher_id": "vo-old-2",
-      "amount": 1711.00,
+      "amount": 1711,
       "currency": "PEN",
       "method": "BANK_TRANSFER",
       "paid_at": "2026-04-25T12:00:00Z",
@@ -1132,7 +2523,7 @@
     {
       "id": "pay1",
       "voucher_id": "vo1",
-      "amount": 318.60,
+      "amount": 318.6,
       "currency": "PEN",
       "method": "BANK_TRANSFER",
       "paid_at": "2026-05-12T10:00:00Z",
@@ -1142,7 +2533,7 @@
     {
       "id": "pay2",
       "voucher_id": "vo2",
-      "amount": 1298.00,
+      "amount": 1298,
       "currency": "PEN",
       "method": "YAPE",
       "paid_at": "2026-05-12T17:30:00Z",
@@ -1217,7 +2608,7 @@
       "speed_kmh": 0,
       "odometer_km": 42150,
       "fuel_level_percent": 45.2,
-      "temp": 95.0
+      "temp": 95
     },
     {
       "id": 3,
@@ -1236,7 +2627,7 @@
       "rpm": 850,
       "speed_kmh": 0,
       "odometer_km": 12500,
-      "fuel_level_percent": 80.0,
+      "fuel_level_percent": 80,
       "temp": 89.2
     },
     {
@@ -1247,7 +2638,7 @@
       "speed_kmh": 95,
       "odometer_km": 34990,
       "fuel_level_percent": 30.1,
-      "temp": 98.0
+      "temp": 98
     },
     {
       "id": 6,
@@ -1266,7 +2657,7 @@
       "rpm": 850,
       "speed_kmh": 0,
       "odometer_km": 8500,
-      "fuel_level_percent": 95.0,
+      "fuel_level_percent": 95,
       "temp": 75.2
     },
     {
@@ -1287,7 +2678,7 @@
       "speed_kmh": 0,
       "odometer_km": 18000,
       "fuel_level_percent": 60.3,
-      "temp": 93.0
+      "temp": 93
     },
     {
       "id": 10,
@@ -1296,8 +2687,8 @@
       "rpm": 2000,
       "speed_kmh": 45,
       "odometer_km": 44990,
-      "fuel_level_percent": 70.0,
-      "temp": 90.0
+      "fuel_level_percent": 70,
+      "temp": 90
     },
     {
       "id": 11,
@@ -1316,7 +2707,7 @@
       "rpm": 2200,
       "speed_kmh": 60,
       "odometer_km": 54990,
-      "fuel_level_percent": 50.0,
+      "fuel_level_percent": 50,
       "temp": 95.5
     },
     {
@@ -1337,7 +2728,7 @@
       "speed_kmh": 15,
       "odometer_km": 81998,
       "fuel_level_percent": 25.5,
-      "temp": 80.0
+      "temp": 80
     },
     {
       "id": 15,
@@ -1346,7 +2737,7 @@
       "rpm": 1900,
       "speed_kmh": 40,
       "odometer_km": 4995,
-      "fuel_level_percent": 90.0,
+      "fuel_level_percent": 90,
       "temp": 88.4
     },
     {
@@ -1366,7 +2757,7 @@
       "rpm": 1600,
       "speed_kmh": 25,
       "odometer_km": 59990,
-      "fuel_level_percent": 55.0,
+      "fuel_level_percent": 55,
       "temp": 86.7
     },
     {

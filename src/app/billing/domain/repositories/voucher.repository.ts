@@ -20,4 +20,7 @@ export abstract class VoucherRepository {
 
   /** Updates the status of an existing voucher. */
   abstract updateStatus(id: string, status: string, version: number): Observable<Voucher>;
+
+  /** Registers a payment for a voucher. */
+  abstract registerPayment(voucherId: string, amount: number, method: string): Observable<void>;
 }

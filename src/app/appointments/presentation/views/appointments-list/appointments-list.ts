@@ -6,7 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { AppointmentsStore } from '../../../application/appointments.store';
 import { Appointment, AppointmentStatus } from '../../../domain/models/appointments.entity';
-import { Modal } from '../../../../shared/presentation/modal/modal';
+import { SharedModalComponent } from '../../../../shared/presentation/modal/modal';
 import { AppointmentsForm } from '../appointments-form/appointments-form';
 
 type AppointmentFilter = 'ALL' | 'CONFIRMED' | 'PENDING' | 'CANCELLED' | 'COMPLETED';
@@ -17,7 +17,7 @@ type AppointmentFilter = 'ALL' | 'CONFIRMED' | 'PENDING' | 'CANCELLED' | 'COMPLE
 @Component({
   selector: 'app-appointments-list',
   standalone: true,
-  imports: [CommonModule, Modal, AppointmentsForm, TranslatePipe],
+  imports: [CommonModule, SharedModalComponent, AppointmentsForm, TranslatePipe],
   templateUrl: './appointments-list.html',
   styleUrl: './appointments-list.css',
 })

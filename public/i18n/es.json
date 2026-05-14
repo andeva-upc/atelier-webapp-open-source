@@ -102,10 +102,6 @@
       "approved-quotes": "Cotizaciones aprobadas",
       "pending-quotes": "Cotizaciones pendientes"
     },
-    "tabs": {
-      "income-expenses": "Ingresos y Gastos",
-      "quotes": "Cotizaciones"
-    },
     "table": {
       "voucher-number": "Nº de Comprobante",
       "quote-number": "Nº de Cotización",
@@ -140,7 +136,58 @@
     },
     "action": {
       "mark-paid": "Marcar como pagado",
-      "approve": "Aprobar cotización"
+      "approve": "Aprobar cotización",
+      "new-quote": "Nueva cotización",
+      "download-pdf": "PDF",
+      "collect": "Cobrar",
+      "add-item": "Agregar ítem",
+      "confirm-payment": "Confirmar pago"
+    },
+    "tabs": {
+      "income-expenses": "Ingresos y Gastos",
+      "quotes": "Cotizaciones",
+      "vouchers": "Comprobantes"
+    },
+    "modal": {
+      "payment-title": "Registrar Cobro",
+      "quote": {
+        "customer-id": "ID Cliente",
+        "customer-name": "Nombre del Cliente",
+        "vehicle-label": "Vehículo (Placa / Modelo)",
+        "items-title": "Ítems de la Cotización",
+        "stock-warning": "Desabastecimiento: No hay suficiente stock disponible."
+      }
+    },
+    "financial": {
+      "subtotal": "Subtotal",
+      "tax": "IGV (18%)",
+      "total": "Total",
+      "discount": "Descuento"
+    },
+    "monthly-summary": "Resumen financiero mensual",
+    "chart": {
+      "income": "Ingresos",
+      "expenses": "Gastos"
+    },
+    "detail": {
+      "title": "Detalle por mes",
+      "columns": {
+        "month": "Mes",
+        "income": "Ingresos",
+        "expenses": "Gastos",
+        "profitability": "Rentabilidad",
+        "variation": "Variación",
+        "vehicle": "Vehículo",
+        "items": "Ítems",
+        "actions": "Acciones"
+      }
+    },
+    "months": {
+      "jan": "Ene",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "May"
     },
     "empty": {
       "vouchers": "No hay comprobantes registrados.",
