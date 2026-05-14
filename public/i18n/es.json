@@ -366,5 +366,67 @@
       "scheduled": "Programado"
     },
     "loading": "Cargando dashboard..."
+  },
+  "work": {
+    "title": "Órdenes de Trabajo",
+    "subtitle-count": "{{count}} órdenes registradas",
+    "new-ot": "Nueva OT",
+    "search-placeholder": "Buscar por OT, cliente, vehículo...",
+    "loading": "Cargando órdenes...",
+    "empty": "No se encontraron órdenes de trabajo.",
+    "no-services": "Sin servicios",
+    "table": {
+      "ot": "#OT",
+      "customer": "Cliente",
+      "vehicle": "Vehículo / Placa",
+      "service": "Servicio",
+      "mechanic": "Mecánico",
+      "date": "Fecha",
+      "status": "Estado",
+      "amount": "Monto"
+    },
+    "status": {
+      "draft": "Borrador",
+      "diagnosing": "Diagnosticando",
+      "in-progress": "En progreso",
+      "completed": "Completado",
+      "invoiced": "Facturado"
+    },
+    "detail": {
+      "title": "Detalle de Orden",
+      "customer": "Cliente",
+      "driver": "Conductor",
+      "phone": "Teléfono",
+      "mileage": "Kilometraje",
+      "vehicle": "Vehículo",
+      "plate": "Placa",
+      "service": "Servicio",
+      "mechanic": "Mecánico",
+      "date": "Fecha",
+      "amount": "Monto",
+      "status": "Estado",
+      "diagnosis": "Diagnóstico",
+      "close-btn": "Cerrar"
+    },
+    "form": {
+      "title": "Nueva Orden de Trabajo",
+      "customer": "Cliente",
+      "customer-placeholder": "Seleccionar cliente",
+      "vehicle": "Vehículo",
+      "vehicle-placeholder": "Seleccionar vehículo",
+      "mileage": "Kilometraje (km)",
+      "mileage-placeholder": "Ej: 15000",
+      "plate": "Placa",
+      "plate-placeholder": "Ej: ABC-123",
+      "mechanic": "Mecánico Asignado",
+      "mechanic-placeholder": "Seleccionar mecánico",
+      "diagnosis": "Diagnóstico y Observaciones",
+      "diagnosis-placeholder": "Describa el problema...",
+      "create-btn": "Crear Orden",
+      "cancel-btn": "Cancelar",
+      "error-customer": "El cliente es obligatorio",
+      "error-vehicle": "El vehículo es obligatorio",
+      "error-diagnosis": "El diagnóstico es obligatorio"
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideTranslateService } from '@ngx-translate/core';
@@ -26,9 +27,13 @@ import { DashboardApi } from './home/infrastructure/dashboard-api';
 import { InventoryRepository } from './inventory/domain/repositories/inventory.repository';
 import { InventoryApi } from './inventory/infrastructure/inventory-api';
 
+import { WorkOrderRepository } from './work/domain/repositories/work-order.repository';
+import { WorkOrdersApi } from './work/infrastructure/work-orders-api';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideAnimationsAsync(),
     provideHttpClient(),
     provideTranslateService({
       loader: provideTranslateHttpLoader({ prefix: './i18n/', suffix: '.json' }),
@@ -43,6 +48,7 @@ export const appConfig: ApplicationConfig = {
     { provide: QuoteRepository, useClass: BillingApi },
     { provide: TelemetryRepository, useClass: TelemetryApi },
     { provide: DashboardRepository, useClass: DashboardApi },
-    { provide: InventoryRepository, useClass: InventoryApi }
+    { provide: InventoryRepository, useClass: InventoryApi },
+    { provide: WorkOrderRepository, useClass: WorkOrdersApi }
   ]
 };

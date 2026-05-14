@@ -1,0 +1,112 @@
+<form [formGroup]="woForm" (ngSubmit)="onSubmit()" class="wo-form">
+  <div class="form-row-flex">
+    <!-- Customer -->
+    <div class="form-field-group">
+      <label for="customerId" class="field-label">{{ 'work.form.customer' | translate }}</label>
+      <div class="input-icon-wrapper">
+        <ng-icon name="matPersonSearch" class="field-icon"></ng-icon>
+        <select id="customerId" formControlName="customerId" class="custom-select icon-indent">
+          <option value="" disabled>{{ 'work.form.customer-placeholder' | translate }}</option>
+          @for (customer of customers(); track customer.id) {
+            <option [value]="customer.id">{{ customer.fullName }}</option>
+          }
+        </select>
+      </div>
+      @if (woForm.get('customerId')?.touched && woForm.get('customerId')?.invalid) {
+        <span class="error-msg">{{ 'work.form.error-customer' | translate }}</span>
+      }
+    </div>
+
+    <!-- Vehicle -->
+    <div class="form-field-group">
+      <label for="vehicleId" class="field-label">{{ 'work.form.vehicle' | translate }}</label>
+      <div class="input-icon-wrapper">
+        <ng-icon name="matDirectionsCar" class="field-icon"></ng-icon>
+        <select id="vehicleId" formControlName="vehicleId" class="custom-select icon-indent" [disabled]="!woForm.get('customerId')?.value">
+          <option value="" disabled>{{ 'work.form.vehicle-placeholder' | translate }}</option>
+          @for (vehicle of filteredVehicles(); track vehicle.id) {
+            <option [value]="vehicle.id">{{ vehicle.brand }} {{ vehicle.model }} ({{ vehicle.plate_number }})</option>
+          }
+        </select>
+      </div>
+      @if (woForm.get('vehicleId')?.touched && woForm.get('vehicleId')?.invalid) {
+        <span class="error-msg">{{ 'work.form.error-vehicle' | translate }}</span>
+      }
+    </div>
+  </div>
+
+  <div class="form-row-flex" style="margin-top: 1rem;">
+    <!-- Mileage -->
+    <div class="form-field-group">
+      <label for="currentMileage" class="field-label">{{ 'work.form.mileage' | translate }}</label>
+      <div class="input-icon-wrapper">
+        <ng-icon name="matSpeed" class="field-icon"></ng-icon>
+        <input 
+          id="currentMileage" 
+          type="number" 
+          formControlName="currentMileage" 
+          [placeholder]="'work.form.mileage-placeholder' | translate"
+          class="custom-form-input icon-indent"
+        />
+      </div>
+    </div>
+
+    <!-- Plate -->
+    <div class="form-field-group">
+      <label for="licensePlate" class="field-label">{{ 'work.form.plate' | translate }}</label>
+      <div class="input-icon-wrapper">
+        <ng-icon name="matPin" class="field-icon"></ng-icon>
+        <input 
+          id="licensePlate" 
+          type="text" 
+          formControlName="licensePlate" 
+          [placeholder]="'work.form.plate-placeholder' | translate"
+          class="custom-form-input icon-indent"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row-flex" style="margin-top: 1rem;">
+    <!-- Mechanic -->
+    <div class="form-field-group full-width">
+      <label for="assignedMechanicId" class="field-label">{{ 'work.form.mechanic' | translate }}</label>
+      <div class="input-icon-wrapper">
+        <ng-icon name="matEngineering" class="field-icon"></ng-icon>
+        <select id="assignedMechanicId" formControlName="assignedMechanicId" class="custom-select icon-indent">
+          <option value="" disabled>{{ 'work.form.mechanic-placeholder' | translate }}</option>
+          @for (mechanic of mechanics(); track mechanic.id) {
+            <option [value]="mechanic.id">{{ mechanic.full_name }}</option>
+          }
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diagnosis -->
+  <div class="form-field-group full-width" style="margin-top: 1rem;">
+    <label for="diagnosis" class="field-label">{{ 'work.form.diagnosis' | translate }}</label>
+    <div class="input-icon-wrapper">
+      <ng-icon name="matAssignment" class="field-icon" style="top: 1rem;"></ng-icon>
+      <textarea 
+        id="diagnosis" 
+        formControlName="diagnosis" 
+        rows="4" 
+        [placeholder]="'work.form.diagnosis-placeholder' | translate"
+        class="custom-form-input icon-indent"
+      ></textarea>
+    </div>
+    @if (woForm.get('diagnosis')?.touched && woForm.get('diagnosis')?.invalid) {
+      <span class="error-msg">{{ 'work.form.error-diagnosis' | translate }}</span>
+    }
+  </div>
+
+  <div class="form-actions">
+    <button type="button" class="btn-cancel" (click)="cancel.emit()">
+      {{ 'work.form.cancel-btn' | translate }}
+    </button>
+    <button mat-raised-button color="primary" type="submit" class="btn-save" [disabled]="woForm.invalid">
+      {{ 'work.form.create-btn' | translate }}
+    </button>
+  </div>
+</form>

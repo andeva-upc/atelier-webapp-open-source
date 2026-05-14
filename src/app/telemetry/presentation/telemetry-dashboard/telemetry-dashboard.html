@@ -23,37 +23,35 @@
     <!-- Right Content: Metrics & Charts -->
     <main class="telemetry-main">
       @if (selectedDevice()) {
-        <!-- Metrics Grid -->
-        <section class="metrics-section">
-          <app-metrics-grid></app-metrics-grid>
-        </section>
+      <!-- Metrics Grid -->
+      <section class="metrics-section">
+        <app-metrics-grid></app-metrics-grid>
+      </section>
 
-        <!-- History Chart -->
-        <section class="history-section">
-          <app-history-chart></app-history-chart>
-        </section>
+      <!-- History Chart -->
+      <section class="history-section">
+        <app-history-chart></app-history-chart>
+      </section>
 
-        <!-- Active Alerts -->
-        <section class="alerts-section">
-          <app-dtc-alerts-list></app-dtc-alerts-list>
-        </section>
+      <!-- Active Alerts -->
+      <section class="alerts-section">
+        <app-dtc-alerts-list></app-dtc-alerts-list>
+      </section>
       } @else if (!isLoading()) {
-        <div class="no-selection">
-          <div class="selection-icon">🔍</div>
-          <h2>{{ 'telemetry.empty.no-selection.title' | translate }}</h2>
-          <p>{{ 'telemetry.empty.no-selection.description' | translate }}</p>
-        </div>
+      <div class="no-selection">
+        <div class="selection-icon">🔍</div>
+        <h2>{{ 'telemetry.empty.no-selection.title' | translate }}</h2>
+        <p>{{ 'telemetry.empty.no-selection.description' | translate }}</p>
+      </div>
       } @else {
-         <div class="loading-state">
-            <p>{{ 'telemetry.loading-records' | translate }}</p>
-         </div>
+      <div class="loading-state">
+        <p>{{ 'telemetry.loading-records' | translate }}</p>
+      </div>
       }
     </main>
   </div>
 
   <!-- Modals -->
-  <app-link-obd-modal 
-    [isOpen]="isModalOpen()" 
-    (close)="closeLinkModal()">
+  <app-link-obd-modal [isOpen]="isModalOpen()" (close)="closeLinkModal()">
   </app-link-obd-modal>
 </div>

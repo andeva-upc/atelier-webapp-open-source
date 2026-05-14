@@ -40,6 +40,11 @@ export const routes: Routes = [
     component: InventoryListComponent,
   },
   {
+    path: 'work-orders',
+    loadChildren: () =>
+      import('./work/presentation/work.routes').then((m) => m.workRoutes),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

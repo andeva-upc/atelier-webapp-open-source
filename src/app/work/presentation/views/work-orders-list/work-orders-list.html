@@ -1,0 +1,181 @@
+<div class="work-orders-container">
+  <!-- Header Section -->
+  <header class="header-section">
+    <div class="title-group">
+      <h1>{{ 'work.title' | translate }}</h1>
+      <p class="subtitle">{{ 'work.subtitle-count' | translate: { count: store.count() } }}</p>
+    </div>
+    <button class="btn-primary" (click)="openCreateModal()">
+      <mat-icon>add</mat-icon>
+      {{ 'work.new-ot' | translate }}
+    </button>
+  </header>
+
+  <!-- Search and Filter Section -->
+  <div class="filters-section">
+    <div class="search-bar">
+      <mat-icon>search</mat-icon>
+      <input type="text" [placeholder]="'work.search-placeholder' | translate" [value]="store.searchTerm()"
+        (input)="onSearch($event)">
+    </div>
+    <button class="btn-filter">
+      <mat-icon>filter_list</mat-icon>
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <table class="work-orders-table">
+      <thead>
+        <tr>
+          <th>{{ 'work.table.ot' | translate }}</th>
+          <th>{{ 'work.table.customer' | translate }}</th>
+          <th>{{ 'work.table.vehicle' | translate }}</th>
+          <th>{{ 'work.table.service' | translate }}</th>
+          <th>{{ 'work.table.mechanic' | translate }}</th>
+          <th>{{ 'work.table.date' | translate }}</th>
+          <th>{{ 'work.table.status' | translate }}</th>
+          <th>{{ 'work.table.amount' | translate }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of store.filteredWorkOrders(); track order.id) {
+        <tr>
+          <td class="ot-number">OT-{{ order.internalNumber }}</td>
+          <td class="customer-name">{{ order.customerName }}</td>
+          <td class="vehicle-info">
+            <span class="vehicle-model">{{ order.vehicleModel }}</span>
+            <span class="vehicle-plate">{{ order.vehiclePlate }}</span>
+          </td>
+          <td class="service-description">{{ order.mainService || ('work.no-services' | translate) }}</td>
+          <td class="mechanic-name">{{ order.mechanicName }}</td>
+          <td class="order-date">{{ order.createdAt | date:'yyyy-MM-dd' }}</td>
+          <td>
+            <button class="status-btn" [matMenuTriggerFor]="statusMenu" [matMenuTriggerData]="{ order: order }">
+              <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+                {{ getStatusLabelKey(order.status) | translate }}
+              </span>
+            </button>
+          </td>
+          <td class="amount-cell">
+            <strong>S/ {{ order.totalAmount }}</strong>
+          </td>
+          <td class="actions-cell">
+            <button class="btn-detail" (click)="viewDetail(order)">
+              Ver Detalle
+            </button>
+          </td>
+        </tr>
+        } @empty {
+        @if (store.loading()) {
+        <tr>
+          <td colspan="9" class="loading-state">
+            <div class="spinner"></div>
+            {{ 'work.loading' | translate }}
+          </td>
+        </tr>
+        } @else {
+        <tr>
+          <td colspan="9" class="empty-state">
+            {{ 'work.empty' | translate }}
+          </td>
+        </tr>
+        }
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Details Modal -->
+  <app-modal [isOpen]="isModalOpen()" (close)="closeModal()">
+    <h2 modal-title class="detail-title">
+      OT-{{ selectedOrder()?.internalNumber }}
+    </h2>
+
+    <div modal-body class="detail-content">
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.customer' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.customerName }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.driver' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.driverName }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.phone' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.driverPhone }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.mileage' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.currentMileage | number }} km</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.vehicle' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.vehicleModel }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.plate' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.vehiclePlate }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.service' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.mainService || ('work.no-services' | translate) }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.mechanic' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.mechanicName }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.date' | translate }}</span>
+        <span class="value">{{ selectedOrder()?.createdAt | date:'yyyy-MM-dd' }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.amount' | translate }}</span>
+        <span class="value">S/ {{ selectedOrder()?.totalAmount }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">{{ 'work.detail.status' | translate }}</span>
+        <span class="value">
+          <span class="status-badge" [ngClass]="getStatusClass(selectedOrder()?.status!)">
+            {{ getStatusLabelKey(selectedOrder()?.status!) | translate }}
+          </span>
+        </span>
+      </div>
+      <div class="detail-row diagnosis-row">
+        <span class="label">{{ 'work.detail.diagnosis' | translate }}</span>
+        <span class="value diagnosis-text">{{ selectedOrder()?.diagnosis }}</span>
+      </div>
+    </div>
+
+    <div modal-actions class="detail-actions">
+      <button class="btn-close-modal" (click)="closeModal()">
+        {{ 'work.detail.close-btn' | translate }}
+      </button>
+    </div>
+  </app-modal>
+
+  <!-- Create Modal -->
+  <app-modal [isOpen]="isCreateModalOpen()" (close)="closeModal()">
+    <h2 modal-title class="detail-title">
+      {{ 'work.new-ot' | translate }}
+    </h2>
+
+    <div modal-body>
+      <app-work-order-form (saved)="closeModal()" (cancel)="closeModal()"></app-work-order-form>
+    </div>
+  </app-modal>
+
+  <mat-menu #statusMenu="matMenu">
+    <ng-template matMenuContent let-order="order">
+      @for (status of statusOptions; track status) {
+      <button mat-menu-item (click)="onStatusChange(order.id, status)">
+        <span class="status-badge" [ngClass]="getStatusClass(status)">
+          {{ getStatusLabelKey(status) | translate }}
+        </span>
+      </button>
+      }
+    </ng-template>
+  </mat-menu>
+</div>

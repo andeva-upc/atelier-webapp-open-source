@@ -362,5 +362,67 @@
       "scheduled": "Scheduled"
     },
     "loading": "Loading dashboard..."
+  },
+  "work": {
+    "title": "Work Orders",
+    "subtitle-count": "{{count}} orders registered",
+    "new-ot": "New WO",
+    "search-placeholder": "Search by WO, customer, vehicle...",
+    "loading": "Loading orders...",
+    "empty": "No work orders found.",
+    "no-services": "No services",
+    "table": {
+      "ot": "#WO",
+      "customer": "Customer",
+      "vehicle": "Vehicle / Plate",
+      "service": "Service",
+      "mechanic": "Mechanic",
+      "date": "Date",
+      "status": "Status",
+      "amount": "Amount"
+    },
+    "status": {
+      "draft": "Draft",
+      "diagnosing": "Diagnosing",
+      "in-progress": "In progress",
+      "completed": "Completed",
+      "invoiced": "Invoiced"
+    },
+    "detail": {
+      "title": "Order Details",
+      "customer": "Customer",
+      "driver": "Driver",
+      "phone": "Phone",
+      "mileage": "Mileage",
+      "vehicle": "Vehicle",
+      "plate": "Plate",
+      "service": "Service",
+      "mechanic": "Mechanic",
+      "date": "Date",
+      "amount": "Amount",
+      "status": "Status",
+      "diagnosis": "Diagnosis",
+      "close-btn": "Close"
+    },
+    "form": {
+      "title": "New Work Order",
+      "customer": "Customer",
+      "customer-placeholder": "Select customer",
+      "vehicle": "Vehicle",
+      "vehicle-placeholder": "Select vehicle",
+      "mileage": "Mileage (km)",
+      "mileage-placeholder": "Ex: 15000",
+      "plate": "Plate",
+      "plate-placeholder": "Ex: ABC-123",
+      "mechanic": "Assigned Mechanic",
+      "mechanic-placeholder": "Select mechanic",
+      "diagnosis": "Diagnosis and Observations",
+      "diagnosis-placeholder": "Describe the problem...",
+      "create-btn": "Create Order",
+      "cancel-btn": "Cancel",
+      "error-customer": "Customer is required",
+      "error-vehicle": "Vehicle is required",
+      "error-diagnosis": "Diagnosis is required"
+    }
   }
 }
