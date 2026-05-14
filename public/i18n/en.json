@@ -277,7 +277,52 @@
     "list": "Appointments list"
   }
   },
+  "inventory": {
+    "title": "Inventory",
+    "subtitle-count": "{{count}} spare parts registered",
+    "subtitle-loading": "Loading registered parts...",
+    "search-placeholder": "Search by SKU, name, brand...",
+    "loading-records": "Loading records...",
+    "alerts": {
+      "low-stock-count": "{{count}} parts with low stock"
+    },
+    "fields": {
+      "name": "Name",
+      "sku": "SKU",
+      "category": "Category",
+      "stock-actual": "Current stock",
+      "initial-stock": "Initial stock",
+      "min-stock": "Minimum stock",
+      "price-unit": "Unit price"
+    },
+    "placeholders": {
+      "name": "E.g. Synthetic Oil 5W30",
+      "sku": "E.g. OIL-5W30-001",
+      "category": "E.g. Lubricants"
+    },
+    "status": {
+      "ok": "OK",
+      "low": "Low stock"
+    },
+    "filters": {
+      "all-categories": "All categories"
+    },
+    "modal": {
+      "title": "Add new spare part"
+    },
+    "actions": {
+      "add": "Add spare part",
+      "save": "Save",
+      "cancel": "Cancel",
+      "increase": "Increase stock",
+      "decrease": "Decrease stock"
+    },
+    "empty": {
+      "description": "No registered parts found."
+    }
+  },
   "dashboard": {
+
     "greeting": "Good morning, {{name}}",
     "summary-date": "Here is today's summary — {{date}}",
     "kpi": {
@@ -317,55 +362,5 @@
       "scheduled": "Scheduled"
     },
     "loading": "Loading dashboard..."
-  },
-  "work": {
-    "title": "Work Orders",
-    "subtitle": "{{count}} registered orders",
-    "new-ot": "New WO",
-    "search-placeholder": "Search by name, plate, or diagnosis...",
-    "table": {
-      "id": "Order No.",
-      "customer": "Customer",
-      "vehicle": "Vehicle",
-      "service": "Service / Diagnosis",
-      "mechanic": "Mechanic",
-      "date": "Date",
-      "status": "Status",
-      "total": "Total",
-      "actions": "Actions",
-      "view-details": "View Details"
-    },
-    "detail": {
-      "title": "Order Detail",
-      "customer-info": "Customer Information",
-      "vehicle-info": "Vehicle Information",
-      "diagnosis": "Diagnosis & Reason",
-      "tasks": "Tasks & Services"
-    },
-    "status": {
-      "COMPLETED": "Completed",
-      "IN_PROGRESS": "In progress",
-      "SCHEDULED": "Pending",
-      "CANCELLED": "Cancelled"
-    },
-    "form": {
-      "title": "New Work Order",
-      "subtitle": "Enter technical details to start the service.",
-      "customer": "Customer",
-      "vehicle": "Vehicle",
-      "mechanic": "Assigned Mechanic",
-      "driver-name": "Driver Name",
-      "driver-phone": "Driver Phone",
-      "mileage": "Current Mileage",
-      "diagnosis": "Initial Diagnosis / Reason for Entry",
-      "errors": {
-        "required": "This field is required.",
-        "phone-invalid": "Invalid number (9 digits)."
-      },
-      "actions": {
-        "cancel": "Cancel",
-        "save": "Create Work Order"
-      }
-    }
   }
 }
