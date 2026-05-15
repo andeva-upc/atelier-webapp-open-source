@@ -36,6 +36,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'work-orders',
+    loadChildren: () =>
+      import('./work-orders/presentation/work-order.routes').then(
+        (m) => m.workOrderRoutes
+      ),
+  },
+  {
     path: 'inventory',
     component: InventoryListComponent,
   },

@@ -409,5 +409,64 @@
       "scheduled": "Scheduled"
     },
     "loading": "Loading dashboard..."
+  },
+  "work-order": {
+    "title": "Work Orders",
+    "subtitle-count": "{{count}} orders registered",
+    "subtitle-loading": "Loading registered orders...",
+    "search-placeholder": "Search by WO, customer, vehicle...",
+    "new-wo": "New WO",
+    "table": {
+      "wo": "#WO",
+      "customer": "CUSTOMER",
+      "vehicle": "VEHICLE / PLATE",
+      "service": "SERVICE",
+      "mechanic": "MECHANIC",
+      "date": "DATE",
+      "status": "STATUS",
+      "amount": "AMOUNT",
+      "empty": "No matching data for \"{{query}}\""
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "SCHEDULED": "Scheduled",
+      "DIAGNOSING": "Diagnosing",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "INVOICED": "Invoiced"
+    },
+    "actions": {
+      "view-detail": "View Detail",
+      "cancel": "Cancel",
+      "create": "Create Order",
+      "close": "Close"
+    },
+    "modal": {
+      "new": {
+        "title": "New WO",
+        "customer": "Customer",
+        "vehicle": "Vehicle",
+        "mileage": "Mileage (km)",
+        "plate": "Plate",
+        "mechanic": "Assigned Mechanic",
+        "service": "Initial Service",
+        "service-placeholder": "E.g. Oil change",
+        "diagnosis": "Diagnosis and Observations",
+        "select-customer": "Select customer",
+        "select-vehicle": "Select vehicle",
+        "select-mechanic": "Select mechanic",
+        "diagnosis-placeholder": "Describe the problem..."
+      },
+      "detail": {
+        "title": "WO Detail",
+        "customer": "Customer",
+        "driver": "Driver",
+        "phone": "Phone",
+        "mileage": "Mileage",
+        "vehicle": "Vehicle",
+        "plate": "Plate",
+        "service": "Service"
+      }
+    }
   }
 }

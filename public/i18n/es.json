@@ -413,5 +413,64 @@
       "scheduled": "Programado"
     },
     "loading": "Cargando dashboard..."
+  },
+  "work-order": {
+    "title": "Órdenes de Trabajo",
+    "subtitle-count": "{{count}} órdenes registradas",
+    "subtitle-loading": "Cargando órdenes registradas...",
+    "search-placeholder": "Buscar por OT, cliente, vehículo...",
+    "new-wo": "Nueva OT",
+    "table": {
+      "wo": "#WO",
+      "customer": "CLIENTE",
+      "vehicle": "VEHÍCULO / PLACA",
+      "service": "SERVICIO",
+      "mechanic": "MECÁNICO",
+      "date": "FECHA",
+      "status": "ESTADO",
+      "amount": "MONTO",
+      "empty": "No se encontraron datos para \"{{query}}\""
+    },
+    "status": {
+      "DRAFT": "Borrador",
+      "SCHEDULED": "Programado",
+      "DIAGNOSING": "Diagnosticando",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED": "Completado",
+      "INVOICED": "Facturado"
+    },
+    "actions": {
+      "view-detail": "Ver Detalle",
+      "cancel": "Cancelar",
+      "create": "Crear Orden",
+      "close": "Cerrar"
+    },
+    "modal": {
+      "new": {
+        "title": "Nueva OT",
+        "customer": "Cliente",
+        "vehicle": "Vehículo",
+        "mileage": "Kilometraje (km)",
+        "plate": "Placa",
+        "mechanic": "Mecánico Asignado",
+        "service": "Servicio Inicial",
+        "service-placeholder": "Ej: Cambio de aceite",
+        "diagnosis": "Diagnóstico y Observaciones",
+        "select-customer": "Seleccionar cliente",
+        "select-vehicle": "Seleccionar vehículo",
+        "select-mechanic": "Seleccionar mecánico",
+        "diagnosis-placeholder": "Describe el problema..."
+      },
+      "detail": {
+        "title": "Detalle de OT",
+        "customer": "Cliente",
+        "driver": "Conductor",
+        "phone": "Teléfono",
+        "mileage": "Kilometraje",
+        "vehicle": "Vehículo",
+        "plate": "Placa",
+        "service": "Servicio"
+      }
+    }
   }
 }
