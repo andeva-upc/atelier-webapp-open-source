@@ -1,0 +1,48 @@
+<div class="detail-container">
+  <div class="detail-row">
+    <span class="label">{{ 'work-order.modal.new.customer' | translate }}</span>
+    <span class="value">{{ workOrder().customerName }}</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="detail-row">
+    <span class="label">{{ 'work-order.modal.new.vehicle' | translate }}</span>
+    <span class="value">{{ workOrder().vehicleInfo }}</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="detail-row">
+    <span class="label">{{ 'work-order.modal.new.plate' | translate }}</span>
+    <span class="value">{{ workOrder().plateNumber }}</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="detail-row">
+    <span class="label">{{ 'work-order.modal.new.mileage' | translate }}</span>
+    <span class="value">{{ workOrder().currentMileage }} km</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="detail-row">
+    <span class="label">{{ 'work-order.modal.new.mechanic' | translate }}</span>
+    <span class="value">{{ workOrder().mechanicName }}</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="detail-row">
+    <span class="label">{{ 'work-order.modal.new.service' | translate }}</span>
+    <span class="value">{{ workOrder().serviceName }}</span>
+  </div>
+  <mat-divider></mat-divider>
+
+  <div class="detail-row diagnosis-row">
+    <span class="label">{{ 'work-order.modal.new.diagnosis' | translate }}</span>
+    <p class="diagnosis-text">{{ workOrder().diagnosis }}</p>
+  </div>
+
+  <div class="detail-actions">
+    <button mat-flat-button color="primary" class="close-btn" (click)="onClose()">
+      {{ 'work-order.actions.close' | translate }}
+    </button>
+  </div>
+</div>
