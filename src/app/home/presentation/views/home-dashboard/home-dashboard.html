@@ -16,7 +16,7 @@
           <span class="kpi-title">{{ 'dashboard.kpi.income' | translate }}</span>
           <div class="kpi-icon icon-blue"><ng-icon name="matAttachMoney"></ng-icon></div>
         </div>
-        <div class="kpi-value">S/ {{ kpi.monthlyIncome }}</div>
+        <div class="kpi-value">S/ {{ kpi.monthlyIncome | number:'1.3-3' }}</div>
         <div class="kpi-footer text-green">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
           {{ 'dashboard.kpi.vs-last-month' | translate: { percent: kpi.incomeGrowthPercentage } }}
@@ -147,7 +147,7 @@
 
         <ng-container matColumnDef="amount">
           <th mat-header-cell *matHeaderCellDef> {{ 'dashboard.orders.table.amount' | translate }} </th>
-          <td mat-cell *matCellDef="let element"> S/ {{element.amount}} </td>
+          <td mat-cell *matCellDef="let element"> S/ {{element.amount | number:'1.3-3'}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
