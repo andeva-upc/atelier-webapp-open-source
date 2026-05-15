@@ -251,9 +251,14 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef>{{ 'billing.detail.columns.actions' | translate }}</th>
               <td mat-cell *matCellDef="let quote">
-                <button class="btn-action-pdf">
-                  <mat-icon class="icon-small">download</mat-icon> {{ 'billing.action.download-pdf' | translate }}
-                </button>
+                <div class="action-buttons-flex">
+                  <button class="btn-action-collect" (click)="openPaymentModal(quote, paymentDialog)">
+                    <mat-icon class="icon-small">payments</mat-icon> $ Cobrar
+                  </button>
+                  <button class="btn-action-pdf">
+                    <mat-icon class="icon-small">download</mat-icon> PDF
+                  </button>
+                </div>
               </td>
             </ng-container>
 
@@ -405,15 +410,19 @@
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
-            @if (!hasSufficientStock(item.get('description')?.value, item.get('quantity')?.value, item.get('type')?.value)) {
+            @if (item.get('type')?.value === 'PRODUCT' && item.get('description')?.value && !hasSufficientStock(item.get('description')?.value, item.get('quantity')?.value, 'PRODUCT')) {
               <div class="stock-warning animate-fade">
                 <mat-icon class="icon-small">warning</mat-icon> {{ 'billing.modal.quote.stock-warning' | translate }}
               </div>
             }
           }
         </div>
-        <button type="button" class="btn-secondary-dashed" (click)="addItem()">
-          <mat-icon>add</mat-icon> {{ 'billing.action.add-item' | translate }}
+        <button type="button" 
+                class="btn-secondary-dashed" 
+                (click)="addItem()" 
+                [disabled]="items.length >= 10">
+          <mat-icon>add</mat-icon> 
+          {{ 'billing.action.add-item' | translate }} ({{ items.length }}/10)
         </button>
       </div>
 
@@ -423,6 +432,7 @@
             <mat-label>{{ 'billing.financial.discount' | translate }} (S/)</mat-label>
             <mat-icon matPrefix>discount</mat-icon>
             <input type="number" matInput formControlName="discountAmount">
+            <mat-hint>Máximo 30% del subtotal</mat-hint>
           </mat-form-field>
         </div>
         
@@ -454,44 +464,80 @@
 
 <!-- ── Payment Registration Dialog ────────────────────────────────────── -->
 <ng-template #paymentDialog>
-  <h2 mat-dialog-title>{{ 'billing.modal.payment-title' | translate }}</h2>
-
-  <mat-dialog-content>
-    <form [formGroup]="paymentForm" class="payment-form">
-      <div class="payment-info-card" *ngIf="selectedVoucher()">
-        <p>Comprobante: <strong>{{ selectedVoucher().voucherNumber }}</strong></p>
-        <p>Cliente: <strong>{{ selectedVoucher().customerName }}</strong></p>
-        <div class="payment-total-highlight">
-          {{ 'billing.financial.total' | translate }}: <span>S/ {{ selectedVoucher().totalAmount | number:'1.2-2' }}</span>
+  <div class="premium-payment-modal">
+    <!-- Header with Icon and Close -->
+    <header class="modal-premium-header">
+      <div class="header-left">
+        <div class="wallet-icon-circle">
+          <mat-icon>account_balance_wallet</mat-icon>
+        </div>
+        <div class="header-titles">
+          <h3>Registro de cobro</h3>
+          <p>Cotización: {{ selectedVoucher()?.quoteNumber || selectedVoucher()?.voucherNumber || 'IflJ6Fz' }}</p>
         </div>
       </div>
+      <button class="btn-close-modal" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+      </button>
+    </header>
 
-      <div class="form-row-grid">
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billing.financial.total' | translate }} (S/)</mat-label>
-          <mat-icon matPrefix>attach_money</mat-icon>
-          <input type="number" matInput formControlName="amount" readonly>
-        </mat-form-field>
+    <mat-dialog-content class="premium-content">
+      <form [formGroup]="paymentForm" class="payment-form-v2">
+        
+        <!-- Dark Total Card -->
+        <div class="total-display-card">
+          <div class="total-info">
+            <span class="label">Total a cobrar</span>
+            <span class="value">S/ {{ selectedVoucher()?.totalAmount | number:'1.2-2' }}</span>
+          </div>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>{{ 'billing.table.columns.actions' | translate }}</mat-label>
-          <mat-icon matPrefix>payments</mat-icon>
-          <mat-select formControlName="method">
-            <mat-option value="CASH">Efectivo</mat-option>
-            <mat-option value="CREDIT_CARD">Tarjeta de Crédito</mat-option>
-            <mat-option value="DEBIT_CARD">Tarjeta de Débito</mat-option>
-            <mat-option value="BANK_TRANSFER">Transferencia</mat-option>
-            <mat-option value="YAPE">Yape</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </form>
-  </mat-dialog-content>
+        <div class="payment-controls">
+          <!-- Method Selection -->
+          <div class="control-group">
+            <label>Método de pago</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-select formControlName="method">
+                <mat-option value="CASH">Efectivo</mat-option>
+                <mat-option value="CREDIT_CARD">Tarjeta de Crédito</mat-option>
+                <mat-option value="DEBIT_CARD">Tarjeta de Débito</mat-option>
+                <mat-option value="YAPE">Yape</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button class="btn-primary" (click)="onRegisterPayment()" [disabled]="paymentForm.invalid">
-      {{ 'billing.action.confirm-payment' | translate }}
-    </button>
-  </mat-dialog-actions>
+          <!-- Received Amount -->
+          <div class="control-group">
+            <label>Monto recibido (S/)</label>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-icon matPrefix class="prefix-icon">payments</mat-icon>
+              <input type="number" matInput formControlName="receivedAmount" placeholder="0.00">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Feedback Messages -->
+        @if (!isAmountSufficient()) {
+          <div class="insufficient-funds-alert animate-fade">
+            <mat-icon>error_outline</mat-icon>
+            <span>Monto insuficiente. El pago debe ser igual o mayor al total adeudado.</span>
+          </div>
+        } @else if (calculateChange() > 0) {
+          <div class="change-display-card animate-fade">
+            <span class="change-label">Vuelto a entregar:</span>
+            <span class="change-value">S/ {{ calculateChange() | number:'1.2-2' }}</span>
+          </div>
+        }
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="premium-actions">
+      <button class="btn-cancel-text" mat-dialog-close>Cancelar</button>
+      <button class="btn-confirm-payment" 
+              (click)="onRegisterPayment()" 
+              [disabled]="paymentForm.invalid || !isAmountSufficient()">
+        Confirmar pago
+      </button>
+    </mat-dialog-actions>
+  </div>
 </ng-template>
