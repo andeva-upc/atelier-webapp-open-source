@@ -96,7 +96,8 @@ export class DashboardApiEndpoint {
 
       const d = new Date(currentYear, currentMonth - i, 1);
       const key = `${d.getFullYear()}-${d.getMonth()}`;
-      const amount = monthlyRevenueMap.get(key) || 0;
+      const rawAmount = monthlyRevenueMap.get(key) || 0;
+      const amount = parseFloat(rawAmount.toFixed(3));
 
       revenueChart.push({
         month_name: monthNames[d.getMonth()],
@@ -144,7 +145,8 @@ export class DashboardApiEndpoint {
       
       // Look up tasks for this work order to calculate total amount
       const tasks = workOrderTasks.filter(t => t.work_order_id === wo.id);
-      const amount = tasks.reduce((sum, task) => sum + Number(task.unit_price), 0);
+      const rawAmount = tasks.reduce((sum, task) => sum + Number(task.unit_price), 0);
+      const amount = parseFloat(rawAmount.toFixed(3));
 
       return {
         id: wo.id,
