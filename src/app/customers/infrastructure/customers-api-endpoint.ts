@@ -207,7 +207,7 @@ export class CustomersApiEndpoint
             email: pending.pre_registered_email,
             phone: pending.pre_registered_phone,
             vehiclePlate: pending.pre_registered_vehicle_plate,
-            vehicleBrandModel: pending.pre_registered_vehicle_brand_model
+            vehicleBrandModel: pending.pre_registered_vehicle_brand_model || 'Vehículo genérico'
           };
         }
 
