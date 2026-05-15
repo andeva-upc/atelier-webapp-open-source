@@ -103,7 +103,8 @@ export class BillingList implements OnInit {
     });
 
     this.paymentForm = this.fb.group({
-      amount: [0, [Validators.required, Validators.min(0.01)]],
+      amount: [0, [Validators.required]], // This is the total to pay
+      receivedAmount: [0, [Validators.required, Validators.min(0.01)]],
       method: ['CASH', Validators.required]
     });
   }
@@ -131,6 +132,7 @@ export class BillingList implements OnInit {
     this.selectedVoucher.set(voucher);
     this.paymentForm.patchValue({
       amount: voucher.totalAmount,
+      receivedAmount: voucher.totalAmount,
       method: 'CASH'
     });
     this.dialog.open(template, {
@@ -146,22 +148,55 @@ export class BillingList implements OnInit {
 
   onRegisterPayment(): void {
     if (this.paymentForm.valid && this.selectedVoucher()) {
-      const { amount, method } = this.paymentForm.value;
-      const voucherTotal = this.selectedVoucher().totalAmount;
+      const { amount, receivedAmount, method } = this.paymentForm.value;
+      const entity = this.selectedVoucher();
+      const entityTotal = entity.totalAmount;
 
-      // US028: Reject if amount is less than total due
-      if (amount < voucherTotal) {
-        alert(`Error: El monto ingresado (S/ ${amount}) es insuficiente. El saldo total es S/ ${voucherTotal}.`);
+      // US028: Reject if received amount is less than total due
+      if (receivedAmount < entityTotal) {
         return;
       }
 
-      const voucherId = this.selectedVoucher().id;
-      this.store.registerPayment(voucherId, amount, method);
-      this.dialog.closeAll();
+      // Check if it's a Quote or a Voucher
+      const isQuote = !!entity.quoteNumber;
+
+      if (isQuote) {
+        // US028: If it's a quote, "paying" it means approving it
+        this.store.approveQuote(entity.id, entity.version || 0, () => {
+          this.dialog.closeAll();
+          this.selectedTab.set(1); // Stay/Switch to quotes to see "APPROVED"
+        });
+      } else {
+        // If it's a voucher, register the financial movement
+        this.store.registerPayment(entity.id, entityTotal, method);
+        this.dialog.closeAll();
+      }
     }
   }
 
+  /**
+   * US028: Calculates change (vuelto) for the payment.
+   */
+  calculateChange(): number {
+    const received = this.paymentForm.get('receivedAmount')?.value || 0;
+    const total = this.paymentForm.get('amount')?.value || 0;
+    return Math.max(0, received - total);
+  }
+
+  /**
+   * US028: Checks if the received amount is sufficient.
+   */
+  isAmountSufficient(): boolean {
+    const received = this.paymentForm.get('receivedAmount')?.value || 0;
+    const total = this.paymentForm.get('amount')?.value || 0;
+    return received >= total;
+  }
+
   addItem(): void {
+    if (this.items.length >= 10) {
+      alert('Límite alcanzado: No puedes agregar más de 10 ítems por cotización.');
+      return;
+    }
     const itemForm = this.fb.group({
       type: ['SERVICE', Validators.required],
       description: ['', Validators.required],
@@ -209,10 +244,10 @@ export class BillingList implements OnInit {
       const subtotal = formValue.items.reduce((sum: number, item: any) => sum + (item.quantity * item.unitPrice), 0);
       const discount = formValue.discountAmount || 0;
 
-      // US029: Reject if discount exceeds business limit (e.g., 30% of subtotal)
+      // US029: Reject if discount exceeds business limit (30% of subtotal)
       const maxDiscount = subtotal * 0.3;
       if (discount > maxDiscount) {
-        alert(`Error: El descuento aplicado (S/ ${discount}) supera el límite máximo permitido (30% del subtotal: S/ ${maxDiscount.toFixed(2)}).`);
+        alert(`Restricción de Negocio (US029): El descuento aplicado (S/ ${discount}) no puede superar el 30% del subtotal (Máximo: S/ ${maxDiscount.toFixed(2)}).`);
         return;
       }
 
@@ -408,11 +443,22 @@ export class BillingList implements OnInit {
    */
   hasSufficientStock(description: string, quantity: number, type: string): boolean {
     if (type === 'SERVICE') return true;
+    
+    // US026: Do not show warning if description is empty or just whitespace
+    if (!description || !description.trim()) return true;
+
     const product = this.availableProducts().find((p: any) => 
-      p.name.toLowerCase() === description.toLowerCase() || 
+      p.name.toLowerCase() === description.trim().toLowerCase() || 
       p.id === description
     );
-    return product ? product.current_stock >= quantity : false;
+
+    // Only alert if the product is found and its stock is insufficient
+    if (product) {
+      return product.current_stock >= quantity;
+    }
+
+    // If product is not found, we don't have stock data, so we don't alert yet
+    return true;
   }
 
   calculateSubtotal(): number {
