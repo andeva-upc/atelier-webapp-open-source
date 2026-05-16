@@ -18,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CustomersStore } from '../../../application/customers.store';
-import { Modal } from '../../../../shared/presentation/modal/modal';
+import { SharedModalComponent } from '../../../../shared/presentation/modal/modal';
 import { CustomerForm } from '../customer-form/customer-form';
 
 /**
@@ -37,7 +37,7 @@ import { CustomerForm } from '../customer-form/customer-form';
     MatInputModule,
     MatChipsModule,
     NgIcon,
-    Modal,
+    SharedModalComponent,
     CustomerForm,
     TranslateModule
   ],

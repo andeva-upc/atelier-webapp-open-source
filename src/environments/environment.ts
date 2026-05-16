@@ -12,11 +12,12 @@ export const environment = {
   platformProviderVehicleDtcAlertsEndpointPath: '/vehicle_dtc_alerts',
   platformProviderIotSnapshotsEndpointPath: '/iot_snapshots',
   platformProviderWorkOrdersEndpointPath: '/work_orders',
-  platformProviderWorkOrdersTasksEndpointPath: '/work_orders_tasks',
+  platformProviderWorkOrdersTasksEndpointPath: '/work_order_tasks',
   platformProviderQuotesEndpointPath: '/quotes',
   platformProviderProductsEndpointPath: '/products',
   platformProviderInventoryMovementsEndpointPath: '/inventory_movements',
   platformProviderVouchersEndpointPath: '/vouchers',
   platformProviderOutboxMessagesEndpointPath: '/outbox_messages',
   platformProviderPaymentsEndpointPath: '/payments',
+
 };

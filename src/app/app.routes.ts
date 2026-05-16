@@ -1,6 +1,12 @@
 import { Routes } from '@angular/router';
+import { InventoryListComponent } from './inventory/presentation/views/inventory-list/inventory-list.component';
 
 export const routes: Routes = [
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./home/presentation/home.routes').then((m) => m.homeRoutes),
+  },
   {
     path: 'customers',
     loadChildren: () =>
@@ -23,9 +29,30 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'appointments',
+    loadChildren: () =>
+      import('./appointments/presentation/appointments.routes').then(
+        (m) => m.appointmentsRoutes
+      ),
+  },
+  {
+    path: 'work-orders',
+    loadChildren: () =>
+      import('./work-orders/presentation/work-order.routes').then(
+        (m) => m.workOrderRoutes
+      ),
+  },
+  {
+    path: 'inventory',
+    component: InventoryListComponent,
+  },
+  {
     path: '',
-    redirectTo: 'customers',
+    redirectTo: 'home',
     pathMatch: 'full',
-    },
+  },
+  {
+    path: '**',
+    redirectTo: 'home',
+  }
 ];
-

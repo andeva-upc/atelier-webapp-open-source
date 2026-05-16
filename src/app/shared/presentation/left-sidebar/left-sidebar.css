@@ -1,7 +1,6 @@
 aside {
   display: flex;
   flex-direction: column;
-  width: 44px;
   min-height: 100vh;
   /* allow rounded buttons and shadows to be visible instead of being clipped */
   padding: 1rem 1rem;
@@ -161,7 +160,7 @@ aside.is-expanded .sidenav-nav-label {
 aside.is-expanded .sidenav-nav-item {
   padding: 0 1rem 0 1rem;
   justify-content: flex-start;
-  width: 87.5%;
+  width: 100%;
   min-width: auto;
 }
 

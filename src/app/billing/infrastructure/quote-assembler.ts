@@ -22,6 +22,8 @@ export class QuoteAssembler implements BaseAssembler<Quote, QuoteResponse, BaseR
   private toItemFromResponse(item: QuoteItemResponse): QuoteItem {
     return {
       id: item.id,
+      type: item.type,
+      referenceId: item.reference_id,
       description: item.description,
       quantity: item.quantity,
       unitPrice: item.unit_price,
@@ -45,12 +47,15 @@ export class QuoteAssembler implements BaseAssembler<Quote, QuoteResponse, BaseR
       resource.status,
       (resource.items ?? []).map(i => this.toItemFromResponse(i)),
       resource.subtotal,
+      resource.discount_amount,
+      resource.tax_rate,
       resource.tax_amount,
       resource.total_amount,
       resource.valid_until,
       resource.created_at,
       resource.approved_at,
       resource.notes,
+      resource.vehicle,
       resource.version
     );
   }
@@ -71,18 +76,23 @@ export class QuoteAssembler implements BaseAssembler<Quote, QuoteResponse, BaseR
       status: entity.status,
       items: entity.items.map(i => ({
         id: i.id,
+        type: i.type,
+        reference_id: i.referenceId,
         description: i.description,
         quantity: i.quantity,
         unit_price: i.unitPrice,
         total: i.total,
       })),
       subtotal: entity.subtotal,
+      discount_amount: entity.discountAmount,
+      tax_rate: entity.taxRate,
       tax_amount: entity.taxAmount,
       total_amount: entity.totalAmount,
       valid_until: entity.validUntil,
       created_at: entity.createdAt,
       approved_at: entity.approvedAt,
       notes: entity.notes,
+      vehicle: entity.vehicle,
       version: entity.version,
     };
   }

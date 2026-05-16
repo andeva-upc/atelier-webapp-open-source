@@ -5,6 +5,8 @@ import { BaseResource, BaseResponse } from '../../shared/infrastructure/base-res
  */
 export interface VoucherItemResponse {
   id: string;
+  type: 'PRODUCT' | 'SERVICE';
+  reference_id: string | null;
   description: string;
   quantity: number;
   unit_price: number;
@@ -29,6 +31,8 @@ export interface VoucherResponse extends BaseResource {
   status: 'PENDING' | 'PAID' | 'CANCELLED' | 'OVERDUE';
   items: VoucherItemResponse[];
   subtotal: number;
+  discount_amount: number;
+  tax_rate: number;
   tax_amount: number;
   total_amount: number;
   issued_at: string;

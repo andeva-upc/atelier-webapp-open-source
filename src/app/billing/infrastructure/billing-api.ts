@@ -67,6 +67,18 @@ export class BillingApi extends BaseApi implements VoucherRepository, QuoteRepos
     return this.vouchersEndpoint.updateStatus(id, status, version);
   }
 
+  /**
+   * Registers a payment for a specific voucher.
+   *
+   * @param voucherId - The voucher identifier.
+   * @param amount - The total amount paid.
+   * @param method - The payment method used.
+   * @returns An {@link Observable} that completes when the payment is recorded.
+   */
+  registerPayment(voucherId: string, amount: number, method: string): Observable<void> {
+    return this.vouchersEndpoint.registerPayment(voucherId, amount, method);
+  }
+
   // ── QuoteRepository ────────────────────────────────────────────────────────
 
   /**

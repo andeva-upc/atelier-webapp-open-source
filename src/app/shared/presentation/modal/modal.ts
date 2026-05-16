@@ -1,4 +1,4 @@
-import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matClose } from '@ng-icons/material-icons/baseline';
@@ -7,7 +7,7 @@ import { matClose } from '@ng-icons/material-icons/baseline';
  * Reusable premium modal component designed for rich aesthetics,
  * accessible overlays, and clean content projection.
  * 
- * Uses OnPush change detection and signals for state synchronization.
+ * Uses OnPush change detection for optimized performance.
  */
 @Component({
   selector: 'app-modal',
@@ -20,16 +20,16 @@ import { matClose } from '@ng-icons/material-icons/baseline';
   styleUrl: './modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Modal {
+export class SharedModalComponent {
   /**
-   * Signal-based input to toggle the modal open/close state.
+   * Input to toggle the modal open/close state.
    */
-  isOpen = input<boolean>(false);
+  @Input() isOpen: boolean = false;
 
   /**
-   * Signal-based output emitted when the modal is closed by the user.
+   * Output emitted when the modal is closed by the user.
    */
-  close = output<void>();
+  @Output() close = new EventEmitter<void>();
 
   /**
    * Handles closing the modal window from close button or backdrop click.

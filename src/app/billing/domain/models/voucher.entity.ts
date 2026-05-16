@@ -7,15 +7,12 @@ import { BaseEntity } from '../../../shared/domain/model/base-entity';
  * Value object encapsulating a single product/service entry in a voucher.
  */
 export interface VoucherItem {
-  /** Line item unique identifier */
   readonly id: string;
-  /** Description of the product or service rendered */
+  readonly type: 'PRODUCT' | 'SERVICE';
+  readonly referenceId: string | null;
   readonly description: string;
-  /** Quantity of units */
   readonly quantity: number;
-  /** Unit price in local currency */
   readonly unitPrice: number;
-  /** Total computed for this line (quantity × unitPrice) */
   readonly total: number;
 }
 
@@ -51,6 +48,8 @@ export class Voucher implements BaseEntity {
     public readonly status: VoucherStatus,
     public readonly items: VoucherItem[],
     public readonly subtotal: number,
+    public readonly discountAmount: number,
+    public readonly taxRate: number,
     public readonly taxAmount: number,
     public readonly totalAmount: number,
     public readonly issuedAt: string,

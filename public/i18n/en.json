@@ -102,10 +102,6 @@
       "approved-quotes": "Approved quotes",
       "pending-quotes": "Pending quotes"
     },
-    "tabs": {
-      "income-expenses": "Income & Expenses",
-      "quotes": "Quotations"
-    },
     "table": {
       "voucher-number": "Voucher No.",
       "quote-number": "Quote No.",
@@ -140,7 +136,58 @@
     },
     "action": {
       "mark-paid": "Mark as paid",
-      "approve": "Approve quotation"
+      "approve": "Approve quotation",
+      "new-quote": "New quotation",
+      "download-pdf": "PDF",
+      "collect": "Collect",
+      "add-item": "Add item",
+      "confirm-payment": "Confirm payment"
+    },
+    "tabs": {
+      "income-expenses": "Income & Expenses",
+      "quotes": "Quotations",
+      "vouchers": "Invoices"
+    },
+    "modal": {
+      "payment-title": "Register Payment",
+      "quote": {
+        "customer-id": "Customer ID",
+        "customer-name": "Customer Name",
+        "vehicle-label": "Vehicle (Plate / Model)",
+        "items-title": "Quote Items",
+        "stock-warning": "Stock out: Not enough stock available."
+      }
+    },
+    "financial": {
+      "subtotal": "Subtotal",
+      "tax": "IGV (18%)",
+      "total": "Total",
+      "discount": "Discount"
+    },
+    "monthly-summary": "Monthly financial summary",
+    "chart": {
+      "income": "Income",
+      "expenses": "Expenses"
+    },
+    "detail": {
+      "title": "Monthly detail",
+      "columns": {
+        "month": "Month",
+        "income": "Income",
+        "expenses": "Expenses",
+        "profitability": "Profitability",
+        "variation": "Variation",
+        "vehicle": "Vehicle",
+        "items": "Items",
+        "actions": "Actions"
+      }
+    },
+    "months": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May"
     },
     "empty": {
       "vouchers": "No vouchers registered.",
@@ -216,6 +263,215 @@
       "P0507": "Idle Control System RPM Higher Than Expected",
       "P0172": "System Too Rich (Bank 1)",
       "P0308": "Cylinder 8 Misfire Detected"
+    }
+  },
+  "appointments": {
+  "title": "Appointments",
+  "scheduledCount": "scheduled appointments",
+  "loading": "Loading appointments...",
+  "today": "Today",
+  "stats": {
+    "total": "Total",
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "completed": "Completed"
+  },
+  "filters": {
+    "all": "All",
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+  },
+  "search": {
+    "placeholder": "Search customer, vehicle, mechanic"
+  },
+  "fields": {
+    "customer": "Customer",
+    "phone": "Phone",
+    "vehicle": "Vehicle",
+    "service": "Service",
+    "date": "Date",
+    "time": "Time",
+    "mechanic": "Assigned mechanic",
+    "status": "Status",
+    "notes": "Notes"
+  },
+  "placeholders": {
+    "customer": "Customer name",
+    "phone": "9xx xxx xxx",
+    "vehicle": "Brand Model Plate",
+    "service": "Service type",
+    "mechanic": "Mechanic name",
+    "notes": "Optional customer notes"
+  },
+  "status": {
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "cancelled": "Cancelled",
+    "completed": "Completed"
+  },
+  "actions": {
+    "new": "New appointment",
+    "edit": "Edit",
+    "editAppointment": "Edit appointment",
+    "cancel": "Cancel",
+    "schedule": "Schedule appointment",
+    "saveChanges": "Save changes"
+  },
+  "detail": {
+    "title": "Appointment details"
+  },
+  "empty": "No appointments found.",
+  "aria": {
+    "summary": "Appointments summary",
+    "filters": "Appointment filters",
+    "list": "Appointments list"
+  }
+  },
+  "inventory": {
+    "title": "Inventory",
+    "subtitle-count": "{{count}} spare parts registered",
+    "subtitle-loading": "Loading registered parts...",
+    "search-placeholder": "Search by SKU, name, brand...",
+    "loading-records": "Loading records...",
+    "alerts": {
+      "low-stock-count": "{{count}} parts with low stock"
+    },
+    "fields": {
+      "name": "Name",
+      "sku": "SKU",
+      "category": "Category",
+      "stock-actual": "Current stock",
+      "initial-stock": "Initial stock",
+      "min-stock": "Minimum stock",
+      "price-unit": "Unit price"
+    },
+    "placeholders": {
+      "name": "E.g. Synthetic Oil 5W30",
+      "sku": "E.g. OIL-5W30-001",
+      "category": "E.g. Lubricants"
+    },
+    "status": {
+      "ok": "OK",
+      "low": "Low stock"
+    },
+    "filters": {
+      "all-categories": "All categories"
+    },
+    "modal": {
+      "title": "Add new spare part"
+    },
+    "actions": {
+      "add": "Add spare part",
+      "save": "Save",
+      "cancel": "Cancel",
+      "increase": "Increase stock",
+      "decrease": "Decrease stock"
+    },
+    "empty": {
+      "description": "No registered parts found."
+    }
+  },
+  "dashboard": {
+
+    "greeting": "Good morning, {{name}}",
+    "summary-date": "Here is today's summary — {{date}}",
+    "kpi": {
+      "income": "Monthly income",
+      "vs-last-month": "+{{percent}}% vs last month",
+      "active-orders": "Active WOs",
+      "completed-today": "{{count}} completed today",
+      "vehicles-workshop": "Vehicles in workshop",
+      "with-telemetry": "{{count}} with active telemetry",
+      "pending-alerts": "Pending alerts",
+      "critical-medium": "{{critical}} critical, {{medium}} medium"
+    },
+    "chart": {
+      "title": "Monthly income",
+      "subtitle": "Last 5 months"
+    },
+    "alerts": {
+      "title": "DTC Alerts",
+      "view-all": "View all"
+    },
+    "orders": {
+      "title": "Recent orders",
+      "view-all": "View all",
+      "table": {
+        "ot": "WO",
+        "customer": "Customer",
+        "vehicle": "Vehicle",
+        "mechanic": "Mechanic",
+        "status": "Status",
+        "amount": "Amount"
+      }
+    },
+    "status": {
+      "completed": "Completed",
+      "in-progress": "In progress",
+      "pending": "Pending",
+      "scheduled": "Scheduled"
+    },
+    "loading": "Loading dashboard..."
+  },
+  "work-order": {
+    "title": "Work Orders",
+    "subtitle-count": "{{count}} orders registered",
+    "subtitle-loading": "Loading registered orders...",
+    "search-placeholder": "Search by WO, customer, vehicle...",
+    "new-wo": "New WO",
+    "table": {
+      "wo": "#WO",
+      "customer": "CUSTOMER",
+      "vehicle": "VEHICLE / PLATE",
+      "service": "SERVICE",
+      "mechanic": "MECHANIC",
+      "date": "DATE",
+      "status": "STATUS",
+      "amount": "AMOUNT",
+      "empty": "No matching data for \"{{query}}\""
+    },
+    "status": {
+      "DRAFT": "Draft",
+      "SCHEDULED": "Scheduled",
+      "DIAGNOSING": "Diagnosing",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed",
+      "INVOICED": "Invoiced"
+    },
+    "actions": {
+      "view-detail": "View Detail",
+      "cancel": "Cancel",
+      "create": "Create Order",
+      "close": "Close"
+    },
+    "modal": {
+      "new": {
+        "title": "New WO",
+        "customer": "Customer",
+        "vehicle": "Vehicle",
+        "mileage": "Mileage (km)",
+        "plate": "Plate",
+        "mechanic": "Assigned Mechanic",
+        "service": "Initial Service",
+        "service-placeholder": "E.g. Oil change",
+        "diagnosis": "Diagnosis and Observations",
+        "select-customer": "Select customer",
+        "select-vehicle": "Select vehicle",
+        "select-mechanic": "Select mechanic",
+        "diagnosis-placeholder": "Describe the problem..."
+      },
+      "detail": {
+        "title": "WO Detail",
+        "customer": "Customer",
+        "driver": "Driver",
+        "phone": "Phone",
+        "mileage": "Mileage",
+        "vehicle": "Vehicle",
+        "plate": "Plate",
+        "service": "Service"
+      }
     }
   }
 }

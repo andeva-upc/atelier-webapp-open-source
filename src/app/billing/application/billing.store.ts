@@ -1,9 +1,13 @@
 import { Injectable, computed, signal, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs';
 import { Voucher } from '../domain/models/voucher.entity';
 import { Quote } from '../domain/models/quote.entity';
 import { VoucherRepository } from '../domain/repositories/voucher.repository';
 import { QuoteRepository } from '../domain/repositories/quote.repository';
+import { CustomerRepository } from '../../customers/domain/repositories/customer.repository';
+import { Customer } from '../../customers/domain/models/customer.entity';
+import { environment } from '../../../environments/environment';
 
 /**
  * Application store centralizing the reactive state for the Billing bounded context.
@@ -18,6 +22,9 @@ import { QuoteRepository } from '../domain/repositories/quote.repository';
 export class BillingStore {
   private readonly voucherRepository = inject(VoucherRepository);
   private readonly quoteRepository = inject(QuoteRepository);
+  private readonly customerRepository = inject(CustomerRepository);
+  private readonly http = inject(HttpClient);
+
 
   // ── Voucher signals ────────────────────────────────────────────────────────
 
@@ -37,6 +44,11 @@ export class BillingStore {
 
   /** Readonly signal exposing the latest voucher error message. */
   readonly vouchersError = this.vouchersErrorSignal.asReadonly();
+
+  // ── Customer signals ───────────────────────────────────────────────────────
+
+  private readonly customersSignal = signal<Customer[]>([]);
+  readonly customers = this.customersSignal.asReadonly();
 
   /** Computed total income from all PAID vouchers. */
   readonly totalIncome = computed(() =>
@@ -61,8 +73,12 @@ export class BillingStore {
   private readonly quotesLoadingSignal = signal<boolean>(false);
   private readonly quotesErrorSignal = signal<string | null>(null);
 
-  /** Readonly signal exposing all loaded quotations. */
-  readonly quotes = this.quotesSignal.asReadonly();
+  /** Readonly signal exposing all loaded quotations, sorted by date (newest first). */
+  readonly quotes = computed(() => {
+    return [...this.quotesSignal()].sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  });
 
   /** Readonly signal exposing the quotes data-loading state. */
   readonly quotesLoading = this.quotesLoadingSignal.asReadonly();
@@ -79,6 +95,12 @@ export class BillingStore {
   readonly pendingQuotesCount = computed(() =>
     this.quotes().filter(q => q.status === 'SENT').length
   );
+
+  // ── Product signals (for stock validation in quotes) ───────────────────────
+
+  private readonly productsSignal = signal<any[]>([]);
+  readonly products = this.productsSignal.asReadonly();
+
 
   // ── Private helpers ────────────────────────────────────────────────────────
 
@@ -143,6 +165,37 @@ export class BillingStore {
     });
   }
 
+  /**
+   * Loads all customers to enable search in quote creation.
+   */
+  loadCustomers(): void {
+    this.customerRepository.getAll().subscribe({
+      next: data => this.customersSignal.set(data),
+      error: () => console.error('Failed to load customers')
+    });
+  }
+
+  /**
+   * Registers a payment for a voucher and refreshes the voucher list.
+   * 
+   * @param voucherId - Target voucher ID.
+   * @param amount - Amount paid.
+   * @param method - Payment method.
+   */
+  registerPayment(voucherId: string, amount: number, method: string): void {
+    this.vouchersSavingSignal.set(true);
+    this.voucherRepository.registerPayment(voucherId, amount, method).subscribe({
+      next: () => {
+        // After payment, reload vouchers to get updated status (PAID)
+        this.loadVouchers();
+      },
+      error: err => {
+        this.vouchersSavingSignal.set(false);
+        this.vouchersErrorSignal.set(this.formatError(err, 'billing.error.register-payment'));
+      }
+    });
+  }
+
   // ── Use Cases: Quotes ──────────────────────────────────────────────────────
 
   /**
@@ -180,6 +233,35 @@ export class BillingStore {
       error: err => {
         this.quotesErrorSignal.set(this.formatError(err, 'billing.error.approve-quote'));
       },
+    });
+  }
+
+  /**
+   * Creates a new quotation and adds it to the reactive state.
+   * 
+   * @param quote - The quote to create.
+   * @param onSuccess - Optional success callback.
+   */
+  createQuote(quote: Quote, onSuccess?: () => void): void {
+    this.quoteRepository.createQuote(quote).subscribe({
+      next: created => {
+        this.quotesSignal.update(list => [created, ...list]);
+        onSuccess?.();
+      },
+      error: err => {
+        this.quotesErrorSignal.set(this.formatError(err, 'billing.error.create-quote'));
+      }
+    });
+  }
+
+  /**
+   * Loads available products from the inventory for quote validation.
+   */
+  loadProducts(): void {
+    const url = `${environment.platformProviderApiBaseUrl}${environment.platformProviderProductsEndpointPath}`;
+    this.http.get<any[]>(url).subscribe({
+      next: data => this.productsSignal.set(data),
+      error: () => console.error('Failed to load products')
     });
   }
 }

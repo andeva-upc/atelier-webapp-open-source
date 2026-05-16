@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, computed, inject, DestroyRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, signal, computed, inject, DestroyRef, Output, EventEmitter, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -91,7 +91,7 @@ export class CustomerForm implements OnInit {
     }),
     documentNumber: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.pattern('^[0-9]{8}$')]
+      validators: [Validators.pattern('^[0-9]{8}$')]
     }),
     fullName: new FormControl<string>('', {
       nonNullable: true,
@@ -103,7 +103,7 @@ export class CustomerForm implements OnInit {
     }),
     phone: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.pattern('^[0-9]{9}$')]
+      validators: [Validators.pattern('^[0-9]{9}$')]
     })
   });
 
@@ -135,24 +135,52 @@ export class CustomerForm implements OnInit {
     /** Register dynamic validator updates when the selected document type changes */
     this.customerForm.get('documentType')?.valueChanges.pipe(
       takeUntilDestroyed(this.destroyRef)
-    ).subscribe(type => {
-      const documentNumberControl = this.customerForm.get('documentNumber');
-      if (!documentNumberControl) {
-        return;
-      }
+    ).subscribe(() => this.updateValidators());
+  }
 
-      documentNumberControl.clearValidators();
+  /**
+   * Dynamically updates validators based on the current modal step and document type.
+   * This ensures fields are only required when actually creating/editing, 
+   * but remain optional during the search phase.
+   */
+  private updateValidators(): void {
+    const documentType = this.customerForm.get('documentType')?.value;
+    const documentNumberControl = this.customerForm.get('documentNumber');
+    const phoneControl = this.customerForm.get('phone');
+
+    if (!documentNumberControl || !phoneControl) return;
+
+    // Reset validators for Document Number
+    documentNumberControl.clearValidators();
+    if (this.modalStep() === 'MANUAL_BYPASS' || this.modalStep() === 'PRE_REGISTERED') {
       documentNumberControl.addValidators([Validators.required]);
+    }
 
-      if (type === 'DNI') {
-        documentNumberControl.addValidators([Validators.pattern('^[0-9]{8}$')]);
-      } else if (type === 'RUC') {
-        documentNumberControl.addValidators([Validators.pattern('^[0-9]{11}$')]);
-      } else {
-        documentNumberControl.addValidators([Validators.minLength(5), Validators.maxLength(15)]);
-      }
+    if (documentType === 'DNI') {
+      documentNumberControl.addValidators([Validators.pattern('^[0-9]{8}$')]);
+    } else if (documentType === 'RUC') {
+      documentNumberControl.addValidators([Validators.pattern('^[0-9]{11}$')]);
+    } else {
+      documentNumberControl.addValidators([Validators.minLength(5), Validators.maxLength(15)]);
+    }
 
-      documentNumberControl.updateValueAndValidity();
+    // Reset validators for Phone
+    phoneControl.clearValidators();
+    if (this.modalStep() === 'MANUAL_BYPASS' || this.modalStep() === 'PRE_REGISTERED' || this.modalStep() === 'NOT_FOUND') {
+      phoneControl.addValidators([Validators.required, Validators.pattern('^[0-9]{9}$')]);
+    } else {
+      phoneControl.addValidators([Validators.pattern('^[0-9]{9}$')]);
+    }
+
+    documentNumberControl.updateValueAndValidity({ emitEvent: false });
+    phoneControl.updateValueAndValidity({ emitEvent: false });
+  }
+
+  constructor() {
+    // Re-evaluate validators whenever the modal step changes
+    effect(() => {
+      this.modalStep();
+      this.updateValidators();
     });
   }
 

@@ -102,10 +102,6 @@
       "approved-quotes": "Cotizaciones aprobadas",
       "pending-quotes": "Cotizaciones pendientes"
     },
-    "tabs": {
-      "income-expenses": "Ingresos y Gastos",
-      "quotes": "Cotizaciones"
-    },
     "table": {
       "voucher-number": "Nº de Comprobante",
       "quote-number": "Nº de Cotización",
@@ -140,7 +136,58 @@
     },
     "action": {
       "mark-paid": "Marcar como pagado",
-      "approve": "Aprobar cotización"
+      "approve": "Aprobar cotización",
+      "new-quote": "Nueva cotización",
+      "download-pdf": "PDF",
+      "collect": "Cobrar",
+      "add-item": "Agregar ítem",
+      "confirm-payment": "Confirmar pago"
+    },
+    "tabs": {
+      "income-expenses": "Ingresos y Gastos",
+      "quotes": "Cotizaciones",
+      "vouchers": "Comprobantes"
+    },
+    "modal": {
+      "payment-title": "Registrar Cobro",
+      "quote": {
+        "customer-id": "ID Cliente",
+        "customer-name": "Nombre del Cliente",
+        "vehicle-label": "Vehículo (Placa / Modelo)",
+        "items-title": "Ítems de la Cotización",
+        "stock-warning": "Desabastecimiento: No hay suficiente stock disponible."
+      }
+    },
+    "financial": {
+      "subtotal": "Subtotal",
+      "tax": "IGV (18%)",
+      "total": "Total",
+      "discount": "Descuento"
+    },
+    "monthly-summary": "Resumen financiero mensual",
+    "chart": {
+      "income": "Ingresos",
+      "expenses": "Gastos"
+    },
+    "detail": {
+      "title": "Detalle por mes",
+      "columns": {
+        "month": "Mes",
+        "income": "Ingresos",
+        "expenses": "Gastos",
+        "profitability": "Rentabilidad",
+        "variation": "Variación",
+        "vehicle": "Vehículo",
+        "items": "Ítems",
+        "actions": "Acciones"
+      }
+    },
+    "months": {
+      "jan": "Ene",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Abr",
+      "may": "May"
     },
     "empty": {
       "vouchers": "No hay comprobantes registrados.",
@@ -219,6 +266,215 @@
       "P0507": "Sistema de control de ralentí - RPM superiores a lo esperado",
       "P0172": "Sistema demasiado rico (Banco 1)",
       "P0308": "Falla de encendido detectada en el cilindro 8"
+    }
+  },
+  "appointments": {
+  "title": "Citas",
+  "scheduledCount": "citas agendadas",
+  "loading": "Cargando citas...",
+  "today": "Hoy",
+  "stats": {
+    "total": "Total",
+    "confirmed": "Confirmadas",
+    "pending": "Pendientes",
+    "completed": "Completadas"
+  },
+  "filters": {
+    "all": "Todas",
+    "confirmed": "Confirmadas",
+    "pending": "Pendientes",
+    "cancelled": "Canceladas",
+    "completed": "Completadas"
+  },
+  "search": {
+    "placeholder": "Buscar cliente, vehículo, mecánico"
+  },
+  "fields": {
+    "customer": "Cliente",
+    "phone": "Teléfono",
+    "vehicle": "Vehículo",
+    "service": "Servicio",
+    "date": "Fecha",
+    "time": "Hora",
+    "mechanic": "Mecánico asignado",
+    "status": "Estado",
+    "notes": "Observaciones"
+  },
+  "placeholders": {
+    "customer": "Nombre del cliente",
+    "phone": "9xx xxx xxx",
+    "vehicle": "Marca Modelo Placa",
+    "service": "Tipo de servicio",
+    "mechanic": "Nombre del mecánico",
+    "notes": "Notas del cliente opcional"
+  },
+  "status": {
+    "confirmed": "Confirmada",
+    "pending": "Pendiente",
+    "cancelled": "Cancelada",
+    "completed": "Completada"
+  },
+  "actions": {
+    "new": "Nueva cita",
+    "edit": "Editar",
+    "editAppointment": "Editar cita",
+    "cancel": "Cancelar",
+    "schedule": "Agendar cita",
+    "saveChanges": "Guardar cambios"
+  },
+  "detail": {
+    "title": "Detalle de cita"
+  },
+  "empty": "No se encontraron citas.",
+  "aria": {
+    "summary": "Resumen de citas",
+    "filters": "Filtros de citas",
+    "list": "Lista de citas"
+  }
+  },
+  "inventory": {
+    "title": "Inventario",
+    "subtitle-count": "{{count}} repuestos registrados",
+    "subtitle-loading": "Cargando repuestos registrados...",
+    "search-placeholder": "Buscar por SKU, nombre, marca...",
+    "loading-records": "Cargando registros...",
+    "alerts": {
+      "low-stock-count": "{{count}} repuestos con stock bajo"
+    },
+    "fields": {
+      "name": "Nombre",
+      "sku": "SKU",
+      "category": "Categoría",
+      "stock-actual": "Stock actual",
+      "initial-stock": "Stock inicial",
+      "min-stock": "Stock mínimo",
+      "price-unit": "Precio unit."
+    },
+    "placeholders": {
+      "name": "Ej. Aceite Sintético 5W30",
+      "sku": "Ej. OIL-5W30-001",
+      "category": "Ej. Lubricantes"
+    },
+    "status": {
+      "ok": "OK",
+      "low": "Stock bajo"
+    },
+    "filters": {
+      "all-categories": "Todas las categorías"
+    },
+    "modal": {
+      "title": "Agregar nuevo repuesto"
+    },
+    "actions": {
+      "add": "Agregar repuesto",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "increase": "Aumentar stock",
+      "decrease": "Reducir stock"
+    },
+    "empty": {
+      "description": "No se encontraron repuestos registrados."
+    }
+  },
+  "dashboard": {
+
+    "greeting": "Buenos días, {{name}}",
+    "summary-date": "Aquí está el resumen de hoy — {{date}}",
+    "kpi": {
+      "income": "Ingresos del mes",
+      "vs-last-month": "+{{percent}}% vs mes anterior",
+      "active-orders": "OTs activas",
+      "completed-today": "{{count}} completadas hoy",
+      "vehicles-workshop": "Vehículos en taller",
+      "with-telemetry": "{{count}} con telemetría activa",
+      "pending-alerts": "Alertas pendientes",
+      "critical-medium": "{{critical}} crítica, {{medium}} media"
+    },
+    "chart": {
+      "title": "Ingresos del mes",
+      "subtitle": "Últimos 5 meses"
+    },
+    "alerts": {
+      "title": "Alertas DTC",
+      "view-all": "Ver todas"
+    },
+    "orders": {
+      "title": "Órdenes recientes",
+      "view-all": "Ver todas",
+      "table": {
+        "ot": "OT",
+        "customer": "Cliente",
+        "vehicle": "Vehículo",
+        "mechanic": "Mecánico",
+        "status": "Estado",
+        "amount": "Monto"
+      }
+    },
+    "status": {
+      "completed": "Completado",
+      "in-progress": "En progreso",
+      "pending": "Pendiente",
+      "scheduled": "Programado"
+    },
+    "loading": "Cargando dashboard..."
+  },
+  "work-order": {
+    "title": "Órdenes de Trabajo",
+    "subtitle-count": "{{count}} órdenes registradas",
+    "subtitle-loading": "Cargando órdenes registradas...",
+    "search-placeholder": "Buscar por OT, cliente, vehículo...",
+    "new-wo": "Nueva OT",
+    "table": {
+      "wo": "#WO",
+      "customer": "CLIENTE",
+      "vehicle": "VEHÍCULO / PLACA",
+      "service": "SERVICIO",
+      "mechanic": "MECÁNICO",
+      "date": "FECHA",
+      "status": "ESTADO",
+      "amount": "MONTO",
+      "empty": "No se encontraron datos para \"{{query}}\""
+    },
+    "status": {
+      "DRAFT": "Borrador",
+      "SCHEDULED": "Programado",
+      "DIAGNOSING": "Diagnosticando",
+      "IN_PROGRESS": "En Progreso",
+      "COMPLETED": "Completado",
+      "INVOICED": "Facturado"
+    },
+    "actions": {
+      "view-detail": "Ver Detalle",
+      "cancel": "Cancelar",
+      "create": "Crear Orden",
+      "close": "Cerrar"
+    },
+    "modal": {
+      "new": {
+        "title": "Nueva OT",
+        "customer": "Cliente",
+        "vehicle": "Vehículo",
+        "mileage": "Kilometraje (km)",
+        "plate": "Placa",
+        "mechanic": "Mecánico Asignado",
+        "service": "Servicio Inicial",
+        "service-placeholder": "Ej: Cambio de aceite",
+        "diagnosis": "Diagnóstico y Observaciones",
+        "select-customer": "Seleccionar cliente",
+        "select-vehicle": "Seleccionar vehículo",
+        "select-mechanic": "Seleccionar mecánico",
+        "diagnosis-placeholder": "Describe el problema..."
+      },
+      "detail": {
+        "title": "Detalle de OT",
+        "customer": "Cliente",
+        "driver": "Conductor",
+        "phone": "Teléfono",
+        "mileage": "Kilometraje",
+        "vehicle": "Vehículo",
+        "plate": "Placa",
+        "service": "Servicio"
+      }
     }
   }
 }

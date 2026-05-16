@@ -3,7 +3,9 @@
 // components according to the Material 3 design spec.
 // Learn more about theming and how to use it for your application's
 // custom components at https://material.angular.dev/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
+
+@include mat.core();
 
 html {
   height: 100%;
@@ -36,3 +38,16 @@ body {
   margin: 0;
   height: 100%;
 }
+
+/* ── Global Material 3 Shape Overrides ─────────────────────────── */
+:root {
+  --mdc-outlined-text-field-container-shape: 9px !important;
+  --mdc-shape-small: 4px !important;
+  --mdc-shape-medium: 8px !important;
+  --mdc-shape-large: 9px !important;
+}
+
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-container-shape: 9px !important;
+}
+
