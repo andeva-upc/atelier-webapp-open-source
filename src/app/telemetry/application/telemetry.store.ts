@@ -151,7 +151,8 @@ export class TelemetryStore {
   private loadTelemetryData(device: ObdDevice): void {
     this.loadingSignal.set(true);
     const to = new Date();
-    const from = new Date(to.getTime() - (48 * 60 * 60 * 1000));
+    // Extended to 7 days to ensure mock data (from May 13th) is visible
+    const from = new Date(to.getTime() - (7 * 24 * 60 * 60 * 1000)); 
 
     forkJoin({
       latest: this.repository.getLatestSnapshot(device.id),
