@@ -27,6 +27,9 @@ import { DashboardApi } from './home/infrastructure/dashboard-api';
 import { InventoryRepository } from './inventory/domain/repositories/inventory.repository';
 import { InventoryApi } from './inventory/infrastructure/inventory-api';
 
+import { WorkOrderRepository } from './work-orders/domain/repositories/work-order.repository';
+import { WorkOrdersApi } from './work-orders/infrastructure/work-orders-api';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -45,6 +48,7 @@ export const appConfig: ApplicationConfig = {
     { provide: QuoteRepository, useClass: BillingApi },
     { provide: TelemetryRepository, useClass: TelemetryApi },
     { provide: DashboardRepository, useClass: DashboardApi },
-    { provide: InventoryRepository, useClass: InventoryApi }
+    { provide: InventoryRepository, useClass: InventoryApi },
+    { provide: WorkOrderRepository, useClass: WorkOrdersApi }
   ]
 };

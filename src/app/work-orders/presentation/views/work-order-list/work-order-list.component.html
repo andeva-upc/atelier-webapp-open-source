@@ -1,0 +1,153 @@
+<div class="work-order-container">
+  <header class="work-order-header">
+    <div class="header-titles">
+      <h1>{{ 'work-order.title' | translate }}</h1>
+      <p class="subtitle">
+        @if (loading()) {
+          {{ 'work-order.subtitle-loading' | translate }}
+        } @else {
+          {{ 'work-order.subtitle-count' | translate: { count: count() } }}
+        }
+      </p>
+    </div>
+    <button mat-flat-button color="primary" class="new-wo-btn" (click)="openNewWoModal()">
+      <mat-icon>add</mat-icon>
+      {{ 'work-order.new-wo' | translate }}
+    </button>
+  </header>
+
+  <div class="search-bar-container">
+    <div class="custom-search-wrapper">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" 
+             [placeholder]="'work-order.search-placeholder' | translate" 
+             (input)="onSearch($event)"
+             class="custom-search-input">
+    </div>
+    
+    <button mat-icon-button class="filter-btn">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div>
+
+  <div class="table-container mat-elevation-z0">
+    @if (loading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+      </div>
+    }
+
+    <table mat-table [dataSource]="filteredWorkOrders()" class="work-order-table">
+      
+      <!-- WO Column -->
+      <ng-container matColumnDef="internalNumber">
+        <th mat-header-cell *matHeaderCellDef> {{ 'work-order.table.wo' | translate }} </th>
+        <td mat-cell *matCellDef="let wo" class="wo-number"> OT-{{ wo.internalNumber }} </td>
+      </ng-container>
+
+      <!-- Customer Column -->
+      <ng-container matColumnDef="customerName">
+        <th mat-header-cell *matHeaderCellDef> {{ 'work-order.table.customer' | translate }} </th>
+        <td mat-cell *matCellDef="let wo"> {{ wo.customerName }} </td>
+      </ng-container>
+
+      <!-- Vehicle Column -->
+      <ng-container matColumnDef="vehicleInfo">
+        <th mat-header-cell *matHeaderCellDef> {{ 'work-order.table.vehicle' | translate }} </th>
+        <td mat-cell *matCellDef="let wo">
+          <div class="vehicle-info">
+            <span class="vehicle-model">{{ wo.vehicleInfo }}</span>
+            <span class="vehicle-plate">{{ wo.plateNumber }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Service Column -->
+      <ng-container matColumnDef="serviceName">
+        <th mat-header-cell *matHeaderCellDef> {{ 'work-order.table.service' | translate }} </th>
+        <td mat-cell *matCellDef="let wo"> {{ wo.serviceName }} </td>
+      </ng-container>
+
+      <!-- Mechanic Column -->
+      <ng-container matColumnDef="mechanicName">
+        <th mat-header-cell *matHeaderCellDef> {{ 'work-order.table.mechanic' | translate }} </th>
+        <td mat-cell *matCellDef="let wo"> {{ wo.mechanicName }} </td>
+      </ng-container>
+
+      <!-- Date Column -->
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef> {{ 'work-order.table.date' | translate }} </th>
+        <td mat-cell *matCellDef="let wo"> {{ wo.createdAt | date:'yyyy-MM-dd' }} </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> {{ 'work-order.table.status' | translate }} </th>
+        <td mat-cell *matCellDef="let wo">
+          <button mat-button [matMenuTriggerFor]="statusMenu" class="status-trigger">
+            <span class="status-badge" [class]="getStatusClass(wo.status)">
+              {{ 'work-order.status.' + wo.status | translate }}
+            </span>
+          </button>
+          <mat-menu #statusMenu="matMenu">
+            @for (status of statusOptions; track status) {
+              <button mat-menu-item (click)="changeStatus(wo.id, status)">
+                {{ 'work-order.status.' + status | translate }}
+              </button>
+            }
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <!-- Amount Column -->
+      <ng-container matColumnDef="totalAmount">
+        <th mat-header-cell *matHeaderCellDef> {{ 'work-order.table.amount' | translate }} </th>
+        <td mat-cell *matCellDef="let wo" class="amount-cell"> S/ {{ wo.totalAmount }} </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let wo">
+          <button mat-flat-button color="primary" class="detail-btn" (click)="viewDetail(wo)">
+            {{ 'work-order.actions.view-detail' | translate }}
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="wo-row"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data" colspan="9">
+          @if (!loading()) {
+            {{ 'work-order.table.empty' | translate: { query: searchQuery() } }}
+          }
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- New Work Order Modal -->
+<app-modal [isOpen]="isNewModalOpen()" (close)="closeNewWoModal()">
+  <h2 modal-title>{{ 'work-order.modal.new.title' | translate }}</h2>
+  <div modal-body>
+    <app-work-order-form (saved)="closeNewWoModal()" (cancelled)="closeNewWoModal()"></app-work-order-form>
+  </div>
+</app-modal>
+
+<!-- Work Order Detail Modal -->
+<app-modal [isOpen]="isDetailModalOpen()" (close)="closeDetailModal()">
+  <h2 modal-title>
+    @if (selectedWorkOrder()) {
+      OT-{{ selectedWorkOrder()?.internalNumber }}
+    }
+  </h2>
+  <div modal-body>
+    @if (selectedWorkOrder(); as wo) {
+      <app-work-order-detail [workOrder]="wo" (closed)="closeDetailModal()"></app-work-order-detail>
+    }
+  </div>
+</app-modal>
