@@ -1,0 +1,211 @@
+.work-order-container {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+.work-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header-titles h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 1rem;
+  margin: 0.25rem 0 0 0;
+}
+
+.new-wo-btn {
+  border-radius: 10px !important;
+  padding: 0.75rem 2rem !important;
+  font-weight: 600 !important;
+}
+
+.search-bar-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Custom Search Wrapper */
+.custom-search-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  color: #94a3b8;
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.custom-search-input {
+  width: 100%;
+  padding: 12px 16px 12px 48px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 0.95rem;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.custom-search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.table-container {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.work-order-table {
+  width: 100%;
+}
+
+.mat-mdc-header-row {
+  background-color: #f8fafc;
+  height: 64px;
+}
+
+.mat-mdc-header-cell {
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wo-row {
+  height: 80px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.wo-row:hover {
+  background-color: #f1f5f9;
+}
+
+.wo-number {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.vehicle-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.vehicle-model {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.vehicle-plate {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.amount-cell {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Status Chips */
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.status-in-progress {
+  background-color: #eff6ff;
+  color: #3b82f6;
+  border: 1px solid #dbeafe;
+}
+
+.status-completed {
+  background-color: #f0fdf4;
+  color: #22c55e;
+  border: 1px solid #dcfce7;
+}
+
+.status-scheduled {
+  background-color: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fef3c7;
+}
+
+.status-draft {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+.status-diagnosing {
+  background-color: #f5f3ff;
+  color: #8b5cf6;
+  border: 1px solid #ede9fe;
+}
+
+.status-invoiced {
+  background-color: #fef2f2;
+  color: #ef4444;
+  border: 1px solid #fee2e2;
+}
+
+.status-trigger {
+  padding: 0;
+  min-width: unset;
+}
+
+.detail-btn {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  background-color: #2563eb !important;
+  color: white !important;
+}
+
+.no-data {
+  text-align: center;
+  padding: 3rem !important;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
