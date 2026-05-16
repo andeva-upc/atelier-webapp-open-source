@@ -47,9 +47,9 @@ export class CustomersApiEndpoint
    * @returns An {@link Observable} emitting the complete list of mapped {@link Customer} entities.
    */
   override getAll(): Observable<Customer[]> {
-    const rootBaseUrl = environment.platformProviderApiBaseUrl.replace('/api/v1', '');
-    const vehiclesUrl = `${rootBaseUrl}${environment.platformProviderVehiclesEndpointPath}`;
-    const appointmentsUrl = `${rootBaseUrl}${environment.platformProviderAppointmentsEndpointPath}`;
+    const baseUrl = environment.platformProviderApiBaseUrl;
+    const vehiclesUrl = `${baseUrl}${environment.platformProviderVehiclesEndpointPath}`;
+    const appointmentsUrl = `${baseUrl}${environment.platformProviderAppointmentsEndpointPath}`;
 
     return forkJoin({
       customers: this.find(),
@@ -70,9 +70,9 @@ export class CustomersApiEndpoint
    * @returns An {@link Observable} emitting the filtered and aggregated list of {@link Customer} entities.
    */
   search(query: string): Observable<Customer[]> {
-    const rootBaseUrl = environment.platformProviderApiBaseUrl.replace('/api/v1', '');
-    const vehiclesUrl = `${rootBaseUrl}${environment.platformProviderVehiclesEndpointPath}`;
-    const appointmentsUrl = `${rootBaseUrl}${environment.platformProviderAppointmentsEndpointPath}`;
+    const baseUrl = environment.platformProviderApiBaseUrl;
+    const vehiclesUrl = `${baseUrl}${environment.platformProviderVehiclesEndpointPath}`;
+    const appointmentsUrl = `${baseUrl}${environment.platformProviderAppointmentsEndpointPath}`;
 
     return forkJoin({
       customers: this.find({ q: query }),
@@ -141,6 +141,24 @@ export class CustomersApiEndpoint
   }
 
   /**
+   * Normalizes a phone number by removing country prefix (+51) and non-numeric characters.
+   * Useful for consistent relational matching.
+   * 
+   * @param phone - The raw phone string.
+   * @returns Normalized 9-digit phone string or original if invalid.
+   */
+  private normalizePhone(phone: string | null | undefined): string {
+    if (!phone) return '';
+    // Remove all non-digits
+    let cleaned = phone.replace(/\D/g, '');
+    // If it starts with 51 and has 11 digits, remove the 51
+    if (cleaned.startsWith('51') && cleaned.length === 11) {
+      cleaned = cleaned.substring(2);
+    }
+    return cleaned;
+  }
+
+  /**
    * Searches for any pending online pre-registrations matching the document credentials or phone number,
    * or checks if the customer is already registered in the system.
    * 
@@ -150,67 +168,90 @@ export class CustomersApiEndpoint
    * @returns An {@link Observable} emitting check results (existing customer, pre-registered appointment, or null).
    */
   findPreRegistration(documentType: string, documentNumber: string, phone: string): Observable<any> {
-    const rootBaseUrl = environment.platformProviderApiBaseUrl.replace('/api/v1', '');
-    const appointmentsUrl = `${rootBaseUrl}${environment.platformProviderAppointmentsEndpointPath}`;
+    const baseUrl = environment.platformProviderApiBaseUrl;
+    const appointmentsUrl = `${baseUrl}${environment.platformProviderAppointmentsEndpointPath}`;
+    const customersUrl = `${baseUrl}${environment.platformProviderCustomersEndpointPath}`;
     
+    const searchDocType = documentType?.toUpperCase();
+    const searchDocNumber = documentNumber?.trim();
+    const searchPhoneClean = this.normalizePhone(phone);
+    const clean = (val: any) => String(val || '').replace(/[^a-zA-Z0-9]/g, '');
+    const searchDocClean = clean(searchDocNumber);
+
+    const extract = (obj: any): any[] => {
+      if (Array.isArray(obj)) return obj;
+      if (obj?.data && Array.isArray(obj.data)) return obj.data;
+      if (obj?.results && Array.isArray(obj.results)) return obj.results;
+      if (obj?.items && Array.isArray(obj.items)) return obj.items;
+      return [];
+    };
+
     return forkJoin({
-      existingCustomers: this.find(), // Get all to filter in-memory with flexible doc/phone matches
-      appointments: this.http.get<any[]>(appointmentsUrl)
+      customers: this.http.get<any>(customersUrl),
+      appointments: this.http.get<any>(appointmentsUrl)
     }).pipe(
-      map(({ existingCustomers, appointments }) => {
+      map(({ customers, appointments }) => {
+        const customersList = extract(customers);
+        const appointmentsList = extract(appointments);
+
+        console.log(`[Search] Data Stats -> Customers: ${customersList.length}, Appointments: ${appointmentsList.length}`);
+
         /** 1. Check existing customers */
-        const matchedCustomer = existingCustomers.find(cust => {
-          const docMatch = documentNumber && 
-            cust.documentType === documentType && 
-            cust.documentNumber === documentNumber;
+        const matchedCustomer = customersList.find((cust: any) => {
+          const custDocNumber = clean(cust.document_number || cust.documentNumber);
+          const custDocType = (cust.document_type || cust.documentType)?.toUpperCase();
+          const custPhone = this.normalizePhone(cust.phone);
+
+          const docMatch = searchDocClean && 
+            custDocType === searchDocType && 
+            custDocNumber === searchDocClean;
             
-          const phoneMatch = phone && (
-            cust.phone === phone || 
-            cust.phone === `+51${phone}` || 
-            cust.phone.replace('+51', '').trim() === phone
-          );
-          
+          const phoneMatch = searchPhoneClean && 
+            custPhone === searchPhoneClean;
+            
           return docMatch || phoneMatch;
         });
 
         if (matchedCustomer) {
+          console.log('[Search] Match Found in Customers:', matchedCustomer.full_name);
           return {
             type: 'EXISTING',
-            customer: matchedCustomer
+            customer: this.assembler.toEntityFromResource(matchedCustomer)
           };
         }
 
-        /** 2. Check pending online pre-registrations */
-        const pending = appointments.find(appt => {
-          if (appt.status !== 'PENDING_APPROVAL') {
-            return false;
-          }
+        /** 2. Check appointments (ignore status/workshop for maximum detection) */
+        const pending = appointmentsList.find((appt: any) => {
+          const apptDocNumber = clean(appt.pre_registered_document_number);
+          const apptDocType = appt.pre_registered_document_type?.toUpperCase();
+          const apptPhone = this.normalizePhone(appt.pre_registered_phone);
 
-          const docMatch = documentNumber && 
-            appt.pre_registered_document_type === documentType && 
-            appt.pre_registered_document_number === documentNumber;
+          const docMatch = searchDocClean && 
+            apptDocType === searchDocType && 
+            apptDocNumber === searchDocClean;
             
-          const phoneMatch = phone && (
-            appt.pre_registered_phone === phone || 
-            appt.pre_registered_phone === `+51${phone}` || 
-            (appt.pre_registered_phone && appt.pre_registered_phone.replace('+51', '').trim() === phone)
-          );
-          
+          const phoneMatch = searchPhoneClean && 
+            apptPhone === searchPhoneClean;
+            
           return docMatch || phoneMatch;
         });
 
         if (pending) {
+          console.log('[Search] Match Found in Appointments:', pending.pre_registered_full_name);
           return {
             type: 'PRE_REGISTERED',
             appointmentId: pending.id,
             fullName: pending.pre_registered_full_name,
             email: pending.pre_registered_email,
             phone: pending.pre_registered_phone,
+            documentType: pending.pre_registered_document_type || 'DNI',
+            documentNumber: pending.pre_registered_document_number,
             vehiclePlate: pending.pre_registered_vehicle_plate,
             vehicleBrandModel: pending.pre_registered_vehicle_brand_model || 'Vehículo genérico'
           };
         }
 
+        console.log('[Search] No matches for Phone:', searchPhoneClean, 'Doc:', searchDocClean);
         return null;
       })
     );

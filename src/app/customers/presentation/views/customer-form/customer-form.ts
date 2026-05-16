@@ -103,7 +103,7 @@ export class CustomerForm implements OnInit {
     }),
     phone: new FormControl<string>('', {
       nonNullable: true,
-      validators: [Validators.pattern('^[0-9]{9}$')]
+      validators: [Validators.pattern('^(\\+?51\\s?)?[0-9\\s]{9,15}$')]
     })
   });
 
@@ -169,7 +169,7 @@ export class CustomerForm implements OnInit {
     if (this.modalStep() === 'MANUAL_BYPASS' || this.modalStep() === 'PRE_REGISTERED' || this.modalStep() === 'NOT_FOUND') {
       phoneControl.addValidators([Validators.required, Validators.pattern('^[0-9]{9}$')]);
     } else {
-      phoneControl.addValidators([Validators.pattern('^[0-9]{9}$')]);
+      phoneControl.addValidators([Validators.pattern('^(\\+?51\\s?)?[0-9\\s]{9,15}$|')]);
     }
 
     documentNumberControl.updateValueAndValidity({ emitEvent: false });
@@ -251,11 +251,13 @@ export class CustomerForm implements OnInit {
           this.modalStep.set('EXISTING');
         } else if (result.type === 'PRE_REGISTERED') {
           this.preRegisteredData.set(result);
+          console.log('[Search] Patching form with pre-registration data:', result);
           this.customerForm.patchValue({
-            documentNumber: docNumVal || result.documentNumber || '',
+            documentType: result.documentType || 'DNI',
+            documentNumber: result.documentNumber || docNumVal || '',
             fullName: result.fullName,
             email: result.email,
-            phone: result.phone.replace('+51', '').trim()
+            phone: result.phone ? result.phone.replace('+51', '').trim() : phoneVal
           });
           this.modalStep.set('PRE_REGISTERED');
         }
