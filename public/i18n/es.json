@@ -5,7 +5,7 @@
     "inventory": "Inventario",
     "customers": "Clientes",
     "appointments": "Citas",
-    "telemetry": "Telemetría",
+    "iot": "Telemetría",
     "billing": "Facturación",
     "configuration": "Configuración"
   },
@@ -153,7 +153,7 @@
       "approve-quote": "Error al aprobar la cotización"
     }
   },
-  "telemetry": {
+  "iot": {
     "title": "Telemetría OBD2",
     "subtitle": "Diagnóstico en tiempo real - {{count}} dispositivos activos",
     "loading-records": "Cargando telemetría...",
@@ -161,7 +161,11 @@
       "link-obd": "Vincular OBD2",
       "unlink": "Desvincular",
       "cancel": "Cancelar",
-      "link": "Vincular"
+      "link": "Vincular",
+      "retry": "Reintentar"
+    },
+    "error": {
+      "title": "Error de Conexión"
     },
     "vehicles": {
       "title": "Vehículos",
@@ -218,3 +222,4 @@
     }
   }
 }
+

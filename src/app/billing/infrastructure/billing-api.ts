@@ -109,3 +109,4 @@ export class BillingApi extends BaseApi implements VoucherRepository, QuoteRepos
     return this.quotesEndpoint.approve(id, version);
   }
 }
+

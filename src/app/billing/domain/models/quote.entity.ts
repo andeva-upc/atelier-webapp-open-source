@@ -81,3 +81,4 @@ export class Quote implements BaseEntity {
     return this.status === 'SENT' && !this.isExpired();
   }
 }
+

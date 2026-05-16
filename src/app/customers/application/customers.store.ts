@@ -174,3 +174,4 @@ export class CustomersStore {
     return this.repository.findPreRegistration(documentType, documentNumber, phone);
   }
 }
+

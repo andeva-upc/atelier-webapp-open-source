@@ -49,3 +49,4 @@ export abstract class CustomerRepository {
   abstract delete(id: string | number): Observable<void>;
 }
 
+

@@ -27,3 +27,4 @@ export interface BaseAssembler<
    */
   toEntitiesFromResponse(response: TResponse): TEntity[];
 }
+

@@ -107,3 +107,4 @@ export class CustomerAssembler implements BaseAssembler<Customer, CustomerRespon
     return [];
   }
 }
+

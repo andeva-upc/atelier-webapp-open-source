@@ -111,3 +111,4 @@ export class VoucherAssembler implements BaseAssembler<Voucher, VoucherResponse,
     return [];
   }
 }
+

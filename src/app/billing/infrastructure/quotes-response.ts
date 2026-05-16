@@ -42,3 +42,4 @@ export interface QuoteResponse extends BaseResource {
 export interface QuotesListResponse extends BaseResponse {
   quotes: QuoteResponse[];
 }
+

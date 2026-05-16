@@ -12,3 +12,4 @@ import { Toolbar } from '../toolbar/toolbar';
 export class Main {
 
 }
+

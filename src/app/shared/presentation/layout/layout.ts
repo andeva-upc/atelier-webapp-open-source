@@ -10,3 +10,4 @@ import { Main } from '../main/main';
 })
 export class Layout {
 }
+

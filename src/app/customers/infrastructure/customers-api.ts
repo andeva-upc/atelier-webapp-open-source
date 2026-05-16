@@ -77,3 +77,4 @@ export class CustomersApi extends BaseApi implements CustomerRepository {
     return this.customersEndpoint.delete(id);
   }
 }
+

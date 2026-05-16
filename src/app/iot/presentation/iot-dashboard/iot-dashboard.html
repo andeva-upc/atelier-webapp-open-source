@@ -1,0 +1,69 @@
+<div class="iot-container">
+  <!-- Header Section -->
+  <header class="page-header">
+    <div class="header-info">
+      <h1>{{ 'iot.title' | translate }}</h1>
+      <p>{{ 'iot.subtitle' | translate:{ count: devicesCount().length } }}</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-primary" (click)="openLinkModal()">
+        <ng-icon name="matLink"></ng-icon>
+        {{ 'iot.actions.link-obd' | translate }}
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <div class="iot-grid">
+    <!-- Left Sidebar: Vehicles List -->
+    <aside class="vehicles-sidebar">
+      <app-vehicle-iot-selector></app-vehicle-iot-selector>
+    </aside>
+
+    <!-- Right Content: Metrics & Charts -->
+    <main class="iot-main">
+      @if (selectedDevice()) {
+        <!-- Metrics Grid -->
+        <section class="metrics-section">
+          <app-metrics-grid></app-metrics-grid>
+        </section>
+
+        <!-- History Chart -->
+        <section class="history-section">
+          <app-history-chart></app-history-chart>
+        </section>
+
+        <!-- Active Alerts -->
+        <section class="alerts-section">
+          <app-dtc-alerts-list></app-dtc-alerts-list>
+        </section>
+      } @else if (!isLoading()) {
+        <div class="no-selection">
+          <div class="selection-icon">🔍</div>
+          <h2>{{ 'iot.empty.no-selection.title' | translate }}</h2>
+          <p>{{ 'iot.empty.no-selection.description' | translate }}</p>
+        </div>
+      } @else if (error()) {
+        <div class="error-state">
+          <div class="error-icon">⚠️</div>
+          <h2>{{ 'iot.error.title' | translate }}</h2>
+          <p>{{ error() }}</p>
+          <button class="btn-secondary" (click)="retry()">
+            {{ 'iot.actions.retry' | translate }}
+          </button>
+        </div>
+      } @else {
+         <div class="loading-state">
+            <p>{{ 'iot.loading-records' | translate }}</p>
+         </div>
+      }
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <app-link-obd-modal 
+    [isOpen]="isModalOpen()" 
+    (close)="closeLinkModal()">
+  </app-link-obd-modal>
+</div>
+

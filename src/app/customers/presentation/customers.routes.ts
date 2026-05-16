@@ -12,3 +12,4 @@ const customersList = () =>
 export const customersRoutes: Routes = [
   { path: '', loadComponent: customersList },
 ];
+

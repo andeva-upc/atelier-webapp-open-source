@@ -94,3 +94,4 @@ describe('CustomerAssembler', () => {
     expect(entities[0].fullName).toBe('Aldo Mendoza Riva');
   });
 });
+

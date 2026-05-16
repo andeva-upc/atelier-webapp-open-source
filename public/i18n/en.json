@@ -5,7 +5,7 @@
     "inventory": "Inventory",
     "customers": "Customers",
     "appointments": "Appointments",
-    "telemetry": "Telemetry",
+    "iot": "Iot",
     "billing": "Billing",
     "configuration": "Configuration"
   },
@@ -153,12 +153,17 @@
       "approve-quote": "Failed to approve quotation"
     }
   },
-  "telemetry": {
-    "title": "OBD2 Telemetry",
+  "iot": {
+    "title": "OBD2 Iot",
     "subtitle": "Real-time diagnosis - {{count}} active devices",
+    "loading-records": "Loading iot records...",
     "actions": {
       "link-obd": "Link OBD2",
-      "unlink": "Unlink"
+      "unlink": "Unlink",
+      "retry": "Retry"
+    },
+    "error": {
+      "title": "Connection Error"
     },
     "vehicles": {
       "title": "Vehicles",
@@ -174,7 +179,7 @@
       "speed": "Speed"
     },
     "history": {
-      "title": "Telemetry History",
+      "title": "Iot History",
       "rpm-legend": "RPM",
       "temp-legend": "Temp (°C)"
     },
@@ -200,7 +205,7 @@
     "empty": {
       "no-selection": {
         "title": "No vehicle selected",
-        "description": "Select a vehicle with an active OBD2 from the sidebar to view its telemetry."
+        "description": "Select a vehicle with an active OBD2 from the sidebar to view its iot."
       }
     },
     "dtc": {
@@ -214,3 +219,4 @@
     }
   }
 }
+

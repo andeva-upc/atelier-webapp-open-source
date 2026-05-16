@@ -217,3 +217,4 @@ export class BillingList implements OnInit {
     this.store.approveQuote(quote.id, quote.version);
   }
 }
+

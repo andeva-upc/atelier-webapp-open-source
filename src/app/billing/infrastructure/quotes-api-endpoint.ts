@@ -38,3 +38,4 @@ export class QuotesApiEndpoint extends BaseApiEndpoint<Quote, QuoteResponse, Bas
     return this.patch(id, { status: 'APPROVED', version } as Partial<QuoteResponse>);
   }
 }
+

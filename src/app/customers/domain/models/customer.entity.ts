@@ -46,3 +46,4 @@ export class Customer implements BaseEntity {
     return this.vehiclesSummary.split(', ').filter(v => v.trim() !== '');
   }
 }
+

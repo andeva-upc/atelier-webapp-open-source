@@ -20,3 +20,4 @@ export class App {
     this.translate.use('en');
   }
 }
+

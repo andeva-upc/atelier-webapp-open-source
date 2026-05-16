@@ -40,3 +40,4 @@ export class Toolbar {
     this.translate.use(lang);
   }
 }
+

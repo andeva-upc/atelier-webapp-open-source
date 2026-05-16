@@ -37,3 +37,4 @@ export interface CustomerResponse extends BaseResource {
     status: string;
   }>;
 }
+

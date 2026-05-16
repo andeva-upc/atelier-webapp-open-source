@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  platformProviderApiBaseUrl: 'https://atelier-backend-mock.onrender.com/api/v1',
+  production: false,
+  platformProviderApiBaseUrl: 'http://localhost:3000/api/v1',
   platformProviderWorkshopsEndpointPath: '/workshops',
   platformProviderUsersEndpointPath: '/users',
   platformProviderPasswordRecoveryTokensEndpointPath: '/password_recovery_token',
@@ -10,7 +10,7 @@ export const environment = {
   platformProviderAppointmentsEndpointPath: '/appointments',
   platformProviderObd2DevicesEndpointPath: '/obd2_devices',
   platformProviderVehicleDtcAlertsEndpointPath: '/vehicle_dtc_alerts',
-  platformProviderTelemetrySnapshotsEndpointPath: '/telemetry_snapshots',
+  platformProviderIotSnapshotsEndpointPath: '/iot_snapshots',
   platformProviderWorkOrdersEndpointPath: '/work_orders',
   platformProviderWorkOrdersTasksEndpointPath: '/work_orders_tasks',
   platformProviderQuotesEndpointPath: '/quotes',

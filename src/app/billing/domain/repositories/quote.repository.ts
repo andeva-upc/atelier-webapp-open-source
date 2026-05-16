@@ -23,3 +23,4 @@ export abstract class QuoteRepository {
   /** Updates the approval status of an existing quotation. */
   abstract approve(id: string, version: number): Observable<Quote>;
 }
+

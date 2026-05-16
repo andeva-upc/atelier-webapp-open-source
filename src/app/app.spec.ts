@@ -24,3 +24,4 @@ describe('App', () => {
     expect(app['title']()).toBe('atelier-webapp-open-source');
   });
 });
+

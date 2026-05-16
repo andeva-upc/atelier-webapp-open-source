@@ -179,8 +179,8 @@
       "phone": "+51944555666",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T10:00:00Z",
-      "updated_at": "2026-05-13T10:00:00Z"
+      "created_at": "2026-05-16T10:00:00Z",
+      "updated_at": "2026-05-16T10:00:00Z"
     }
   ],
   "vehicles": [
@@ -197,8 +197,8 @@
       "current_mileage": 42150,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T08:00:00Z",
-      "updated_at": "2026-05-13T08:00:00Z"
+      "created_at": "2026-05-16T08:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
     },
     {
       "id": "v2-ford",
@@ -213,8 +213,8 @@
       "current_mileage": 12500,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T08:15:00Z",
-      "updated_at": "2026-05-13T08:15:00Z"
+      "created_at": "2026-05-16T08:15:00Z",
+      "updated_at": "2026-05-16T08:15:00Z"
     },
     {
       "id": "v3-nissan",
@@ -229,8 +229,8 @@
       "current_mileage": 35000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T08:30:00Z",
-      "updated_at": "2026-05-13T08:30:00Z"
+      "created_at": "2026-05-16T08:30:00Z",
+      "updated_at": "2026-05-16T08:30:00Z"
     },
     {
       "id": "v4-kia",
@@ -245,8 +245,8 @@
       "current_mileage": 8500,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T08:45:00Z",
-      "updated_at": "2026-05-13T08:45:00Z"
+      "created_at": "2026-05-16T08:45:00Z",
+      "updated_at": "2026-05-16T08:45:00Z"
     },
     {
       "id": "v5-hyundai",
@@ -261,8 +261,8 @@
       "current_mileage": 18000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T09:00:00Z",
-      "updated_at": "2026-05-13T09:00:00Z"
+      "created_at": "2026-05-16T09:00:00Z",
+      "updated_at": "2026-05-16T09:00:00Z"
     },
     {
       "id": "v6-civic",
@@ -277,8 +277,8 @@
       "current_mileage": 45000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T09:15:00Z",
-      "updated_at": "2026-05-13T09:15:00Z"
+      "created_at": "2026-05-16T09:15:00Z",
+      "updated_at": "2026-05-16T09:15:00Z"
     },
     {
       "id": "v7-rav4",
@@ -293,8 +293,8 @@
       "current_mileage": 32000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T09:30:00Z",
-      "updated_at": "2026-05-13T09:30:00Z"
+      "created_at": "2026-05-16T09:30:00Z",
+      "updated_at": "2026-05-16T09:30:00Z"
     },
     {
       "id": "v8-hilux",
@@ -309,8 +309,8 @@
       "current_mileage": 55000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T09:45:00Z",
-      "updated_at": "2026-05-13T09:45:00Z"
+      "created_at": "2026-05-16T09:45:00Z",
+      "updated_at": "2026-05-16T09:45:00Z"
     },
     {
       "id": "v9-amarok",
@@ -325,8 +325,8 @@
       "current_mileage": 68000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T10:00:00Z",
-      "updated_at": "2026-05-13T10:00:00Z"
+      "created_at": "2026-05-16T10:00:00Z",
+      "updated_at": "2026-05-16T10:00:00Z"
     },
     {
       "id": "v10-spark",
@@ -341,8 +341,8 @@
       "current_mileage": 82000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T10:15:00Z",
-      "updated_at": "2026-05-13T10:15:00Z"
+      "created_at": "2026-05-16T10:15:00Z",
+      "updated_at": "2026-05-16T10:15:00Z"
     },
     {
       "id": "v11-yaris",
@@ -357,8 +357,8 @@
       "current_mileage": 5000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T10:30:00Z",
-      "updated_at": "2026-05-13T10:30:00Z"
+      "created_at": "2026-05-16T10:30:00Z",
+      "updated_at": "2026-05-16T10:30:00Z"
     },
     {
       "id": "v12-cx5",
@@ -373,8 +373,8 @@
       "current_mileage": 12000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T10:45:00Z",
-      "updated_at": "2026-05-13T10:45:00Z"
+      "created_at": "2026-05-16T10:45:00Z",
+      "updated_at": "2026-05-16T10:45:00Z"
     },
     {
       "id": "v13-etios",
@@ -389,8 +389,8 @@
       "current_mileage": 60000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T11:00:00Z",
-      "updated_at": "2026-05-13T11:00:00Z"
+      "created_at": "2026-05-16T11:00:00Z",
+      "updated_at": "2026-05-16T11:00:00Z"
     },
     {
       "id": "v14-frontier",
@@ -405,8 +405,8 @@
       "current_mileage": 42000,
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T11:15:00Z",
-      "updated_at": "2026-05-13T11:15:00Z"
+      "created_at": "2026-05-16T11:15:00Z",
+      "updated_at": "2026-05-16T11:15:00Z"
     }
   ],
   "work_bays": [
@@ -436,8 +436,8 @@
       "status": "SCHEDULED",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T08:00:00Z",
-      "updated_at": "2026-05-13T08:00:00Z"
+      "created_at": "2026-05-16T08:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
     },
     {
       "id": "a2-hybrid",
@@ -450,8 +450,8 @@
       "pre_registered_vehicle_plate": "XYZ-999",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T08:00:00Z",
-      "updated_at": "2026-05-13T08:00:00Z"
+      "created_at": "2026-05-16T08:00:00Z",
+      "updated_at": "2026-05-16T08:00:00Z"
     },
     {
       "id": "a3-pedro",
@@ -463,8 +463,8 @@
       "status": "SCHEDULED",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T10:00:00Z",
-      "updated_at": "2026-05-13T10:00:00Z"
+      "created_at": "2026-05-16T10:00:00Z",
+      "updated_at": "2026-05-16T10:00:00Z"
     },
     {
       "id": "a4-ana",
@@ -476,8 +476,8 @@
       "status": "SCHEDULED",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T11:00:00Z",
-      "updated_at": "2026-05-13T11:00:00Z"
+      "created_at": "2026-05-16T11:00:00Z",
+      "updated_at": "2026-05-16T11:00:00Z"
     },
     {
       "id": "a5-constructora",
@@ -502,8 +502,8 @@
       "status": "SCHEDULED",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T12:00:00Z",
-      "updated_at": "2026-05-13T12:00:00Z"
+      "created_at": "2026-05-16T12:00:00Z",
+      "updated_at": "2026-05-16T12:00:00Z"
     },
     {
       "id": "a7-elena",
@@ -511,12 +511,12 @@
       "branch_id": "b1ba1580-b3b0-466d-8c10-ca7f62d1c9aa",
       "customer_id": "c11-elena",
       "vehicle_id": "v11-yaris",
-      "appointment_date": "2026-05-13T11:00:00Z",
+      "appointment_date": "2026-05-16T11:00:00Z",
       "status": "IN_PROGRESS",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T09:00:00Z",
-      "updated_at": "2026-05-13T09:00:00Z"
+      "created_at": "2026-05-16T09:00:00Z",
+      "updated_at": "2026-05-16T09:00:00Z"
     }
   ],
   "obd2_devices": [
@@ -800,8 +800,8 @@
       "status": "IN_PROGRESS",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T09:00:00Z",
-      "updated_at": "2026-05-13T09:00:00Z"
+      "created_at": "2026-05-16T09:00:00Z",
+      "updated_at": "2026-05-16T09:00:00Z"
     },
     {
       "id": "wo2",
@@ -838,8 +838,8 @@
       "status": "SCHEDULED",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T10:30:00Z",
-      "updated_at": "2026-05-13T10:30:00Z"
+      "created_at": "2026-05-16T10:30:00Z",
+      "updated_at": "2026-05-16T10:30:00Z"
     },
     {
       "id": "wo4",
@@ -857,8 +857,8 @@
       "status": "IN_PROGRESS",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T08:15:00Z",
-      "updated_at": "2026-05-13T08:15:00Z"
+      "created_at": "2026-05-16T08:15:00Z",
+      "updated_at": "2026-05-16T08:15:00Z"
     },
     {
       "id": "wo5",
@@ -876,8 +876,8 @@
       "status": "IN_PROGRESS",
       "version": 0,
       "deleted_at": null,
-      "created_at": "2026-05-13T11:00:00Z",
-      "updated_at": "2026-05-13T11:00:00Z"
+      "created_at": "2026-05-16T11:00:00Z",
+      "updated_at": "2026-05-16T11:00:00Z"
     }
   ],
   "work_order_tasks": [
@@ -1195,14 +1195,14 @@
       "movement_type": "OUTBOUND",
       "quantity": 2,
       "reference_id": "wo4",
-      "created_at": "2026-05-13T09:00:00Z"
+      "created_at": "2026-05-16T09:00:00Z"
     }
   ],
-  "telemetry_snapshots": [
+  "iot_snapshots": [
     {
       "id": 1,
       "device_id": "d1",
-      "timestamp": "2026-05-13T08:00:00Z",
+      "timestamp": "2026-05-16T08:00:00Z",
       "rpm": 2200,
       "speed_kmh": 65,
       "odometer_km": 42140,
@@ -1212,7 +1212,7 @@
     {
       "id": 2,
       "device_id": "d1",
-      "timestamp": "2026-05-13T08:05:00Z",
+      "timestamp": "2026-05-16T08:05:00Z",
       "rpm": 850,
       "speed_kmh": 0,
       "odometer_km": 42150,
@@ -1222,7 +1222,7 @@
     {
       "id": 3,
       "device_id": "d2",
-      "timestamp": "2026-05-13T09:15:00Z",
+      "timestamp": "2026-05-16T09:15:00Z",
       "rpm": 1800,
       "speed_kmh": 40,
       "odometer_km": 12490,
@@ -1232,7 +1232,7 @@
     {
       "id": 4,
       "device_id": "d2",
-      "timestamp": "2026-05-13T09:20:00Z",
+      "timestamp": "2026-05-16T09:20:00Z",
       "rpm": 850,
       "speed_kmh": 0,
       "odometer_km": 12500,
@@ -1242,7 +1242,7 @@
     {
       "id": 5,
       "device_id": "d3",
-      "timestamp": "2026-05-13T10:30:00Z",
+      "timestamp": "2026-05-16T10:30:00Z",
       "rpm": 2500,
       "speed_kmh": 95,
       "odometer_km": 34990,
@@ -1252,7 +1252,7 @@
     {
       "id": 6,
       "device_id": "d3",
-      "timestamp": "2026-05-13T10:35:00Z",
+      "timestamp": "2026-05-16T10:35:00Z",
       "rpm": 850,
       "speed_kmh": 0,
       "odometer_km": 35000,
@@ -1262,7 +1262,7 @@
     {
       "id": 7,
       "device_id": "d4",
-      "timestamp": "2026-05-13T11:45:00Z",
+      "timestamp": "2026-05-16T11:45:00Z",
       "rpm": 850,
       "speed_kmh": 0,
       "odometer_km": 8500,
@@ -1272,7 +1272,7 @@
     {
       "id": 8,
       "device_id": "d5",
-      "timestamp": "2026-05-13T12:00:00Z",
+      "timestamp": "2026-05-16T12:00:00Z",
       "rpm": 2100,
       "speed_kmh": 55,
       "odometer_km": 17990,
@@ -1282,7 +1282,7 @@
     {
       "id": 9,
       "device_id": "d5",
-      "timestamp": "2026-05-13T12:05:00Z",
+      "timestamp": "2026-05-16T12:05:00Z",
       "rpm": 850,
       "speed_kmh": 0,
       "odometer_km": 18000,
@@ -1292,7 +1292,7 @@
     {
       "id": 10,
       "device_id": "d6",
-      "timestamp": "2026-05-13T08:30:00Z",
+      "timestamp": "2026-05-16T08:30:00Z",
       "rpm": 2000,
       "speed_kmh": 45,
       "odometer_km": 44990,
@@ -1302,7 +1302,7 @@
     {
       "id": 11,
       "device_id": "d7",
-      "timestamp": "2026-05-13T09:45:00Z",
+      "timestamp": "2026-05-16T09:45:00Z",
       "rpm": 1500,
       "speed_kmh": 30,
       "odometer_km": 31995,
@@ -1312,7 +1312,7 @@
     {
       "id": 12,
       "device_id": "d8",
-      "timestamp": "2026-05-13T10:00:00Z",
+      "timestamp": "2026-05-16T10:00:00Z",
       "rpm": 2200,
       "speed_kmh": 60,
       "odometer_km": 54990,
@@ -1322,7 +1322,7 @@
     {
       "id": 13,
       "device_id": "d9",
-      "timestamp": "2026-05-13T11:20:00Z",
+      "timestamp": "2026-05-16T11:20:00Z",
       "rpm": 2400,
       "speed_kmh": 85,
       "odometer_km": 67990,
@@ -1332,7 +1332,7 @@
     {
       "id": 14,
       "device_id": "d10",
-      "timestamp": "2026-05-13T12:15:00Z",
+      "timestamp": "2026-05-16T12:15:00Z",
       "rpm": 1100,
       "speed_kmh": 15,
       "odometer_km": 81998,
@@ -1342,7 +1342,7 @@
     {
       "id": 15,
       "device_id": "d11",
-      "timestamp": "2026-05-13T13:00:00Z",
+      "timestamp": "2026-05-16T13:00:00Z",
       "rpm": 1900,
       "speed_kmh": 40,
       "odometer_km": 4995,
@@ -1352,7 +1352,7 @@
     {
       "id": 16,
       "device_id": "d12",
-      "timestamp": "2026-05-13T14:10:00Z",
+      "timestamp": "2026-05-16T14:10:00Z",
       "rpm": 2100,
       "speed_kmh": 70,
       "odometer_km": 11990,
@@ -1362,7 +1362,7 @@
     {
       "id": 17,
       "device_id": "d13",
-      "timestamp": "2026-05-13T15:20:00Z",
+      "timestamp": "2026-05-16T15:20:00Z",
       "rpm": 1600,
       "speed_kmh": 25,
       "odometer_km": 59990,
@@ -1372,7 +1372,7 @@
     {
       "id": 18,
       "device_id": "d14",
-      "timestamp": "2026-05-13T16:00:00Z",
+      "timestamp": "2026-05-16T16:00:00Z",
       "rpm": 2300,
       "speed_kmh": 90,
       "odometer_km": 41990,
@@ -1381,3 +1381,5 @@
     }
   ]
 }
+
+

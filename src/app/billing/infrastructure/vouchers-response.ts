@@ -46,3 +46,4 @@ export interface VoucherResponse extends BaseResource {
 export interface VouchersListResponse extends BaseResponse {
   vouchers: VoucherResponse[];
 }
+

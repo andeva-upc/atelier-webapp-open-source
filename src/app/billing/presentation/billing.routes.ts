@@ -13,3 +13,4 @@ const billingList = () =>
 export const billingRoutes: Routes = [
   { path: '', loadComponent: billingList },
 ];
+

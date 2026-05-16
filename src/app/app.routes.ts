@@ -16,10 +16,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'telemetry',
+    path: 'iot',
     loadChildren: () =>
-      import('./telemetry/presentation/telemetry.routes').then(
-        (m) => m.telemetryRoutes
+      import('./iot/presentation/iot.routes').then(
+        (m) => m.iotRoutes
       ),
   },
   {
@@ -28,3 +28,4 @@ export const routes: Routes = [
     pathMatch: 'full',
     },
 ];
+

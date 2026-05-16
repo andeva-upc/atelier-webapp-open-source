@@ -39,3 +39,4 @@ export class VouchersApiEndpoint extends BaseApiEndpoint<Voucher, VoucherRespons
     return this.patch(id, { status, version } as Partial<VoucherResponse>);
   }
 }
+

@@ -22,7 +22,7 @@ export class LeftSidebar {
   options = signal([
     { link: '/home', label: 'option.home', icon: 'pi pi-objects-column' },
     { link: '/work-orders', label: 'option.work-orders', icon: 'pi pi-wrench' },
-    { link: '/telemetry', label: 'option.telemetry', icon: 'pi pi-chart-line' },
+    { link: '/iot', label: 'option.iot', icon: 'pi pi-chart-line' },
     { link: '/customers', label: 'option.customers', icon: 'pi pi-users' },
     { link: '/appointments', label: 'option.appointments', icon: 'pi pi-calendar' },
     { link: '/billing', label: 'option.billing', icon: 'pi pi-receipt' },
@@ -30,3 +30,4 @@ export class LeftSidebar {
     { link: '/configuration', label: 'option.configuration', icon: 'pi pi-cog' },
   ]);
 }
+

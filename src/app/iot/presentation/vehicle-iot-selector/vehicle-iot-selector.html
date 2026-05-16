@@ -1,0 +1,47 @@
+<div class="selector-container">
+  <h3 class="sidebar-title">{{ 'iot.vehicles.title' | translate }}</h3>
+  
+  <div class="vehicle-list">
+    @for (item of vehicleDevices(); track item.vehicle.id) {
+      <div 
+        class="vehicle-item" 
+        [class.active]="selectedDevice()?.id === item.device?.id"
+        [class.disabled]="!item.device"
+        (click)="item.device && onSelect(item.device)"
+      >
+        <div class="vehicle-icon">
+          <ng-icon name="matDirectionsCar"></ng-icon>
+        </div>
+        
+        <div class="vehicle-info">
+          <span class="plate">{{ item.vehicle.plateNumber }}</span>
+          <span class="model">{{ item.vehicle.getDisplayName() }}</span>
+          
+          @if (item.device) {
+            <button 
+              mat-button 
+              color="warn" 
+              class="unlink-btn-mat"
+              (click)="onUnlink($event, item.device.id)"
+            >
+               {{ 'iot.actions.unlink' | translate }}
+            </button>
+          }
+        </div>
+
+        <div class="vehicle-status">
+          @if (item.device) {
+            <span class="status-badge" [class]="item.status.toLowerCase()">
+              {{ 'iot.vehicles.active' | translate }}
+            </span>
+          } @else {
+            <span class="status-badge unlinked">
+              {{ 'iot.vehicles.inactive' | translate }}
+            </span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>
+

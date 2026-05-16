@@ -107,3 +107,4 @@ export class QuoteAssembler implements BaseAssembler<Quote, QuoteResponse, BaseR
     return [];
   }
 }
+

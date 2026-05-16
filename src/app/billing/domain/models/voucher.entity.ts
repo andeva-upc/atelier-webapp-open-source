@@ -94,3 +94,4 @@ export class Voucher implements BaseEntity {
     return this.status === 'PENDING';
   }
 }
+

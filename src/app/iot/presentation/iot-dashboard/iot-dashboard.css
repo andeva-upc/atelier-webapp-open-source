@@ -1,0 +1,105 @@
+.iot-container {
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 64px);
+  font-family: 'Mona Sans', system-ui, -apple-system, sans-serif;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.page-header p {
+  color: #64748b;
+  margin: 0.25rem 0 0 0;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #0071EB;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.iot-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
+}
+
+.iot-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.placeholder-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  color: #94a3b8;
+  font-style: italic;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.no-selection {
+  background: white;
+  border-radius: 1rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.selection-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.no-selection h2 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 1.25rem;
+}
+
+.no-selection p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+}
+
+.loading-state {
+  padding: 4rem;
+  text-align: center;
+  color: #64748b;
+}
+
+@media (max-width: 1024px) {
+  .iot-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
