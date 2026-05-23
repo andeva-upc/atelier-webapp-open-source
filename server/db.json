@@ -3,7 +3,7 @@
     {
       "id": "e26b1580-1234-466d-1234-ca7f62d1c9ef",
       "email": "JoseCarlos@gmail.com",
-      "password_hash": "$2a$12$R.yWc8sK6/pC.kM5mH7uO.Hj2tX0fN748rT4y1w9q6mS6e8qDkX2K",
+      "password_hash": "$2a$12$R.yWc8sK6/pC.kM5mH7uO.Hj2tX0f",
       "google_id": "",
       "document_type": "DNI",
       "document_number": "11223344",
@@ -16,7 +16,7 @@
     {
       "id": "e26b1580-5678-466d-5678-ca7f62d1c9ef",
       "email": "Luis@gmail.com",
-      "password_hash": "$2a$12$N.zXe9tY7/qD.lM6nH8vP.Ik3uY0gO849sU5z2x0r7nT7f9rEkY3L",
+      "password_hash": "$2a$12$N.zXe9tY7/qD.lM6nH8vP.Ik3uY0g",
       "google_id": "",
       "document_type": "DNI",
       "document_number": "55667788",
@@ -29,7 +29,7 @@
     {
       "id": "e26b1580-9012-466d-9012-ca7f62d1c9ef",
       "email": "AlquileresAldo@gmail.com",
-      "password_hash": "$2a$12$M.wYd8sK6/pC.kM5mH7uO.Hj2tX0fN748rT4y1w9q6mS6e8qDkX2K",
+      "password_hash": "$2a$12$M.wYd8sK6/pC.kM5mH7uO.Hj2tX0f",
       "google_id": "",
       "document_type": "RUC",
       "document_number": "20123456789",
@@ -42,7 +42,7 @@
     {
       "id": "e26b1580-3333-466d-3333-ca7f62d1c9ef",
       "email": "MariaTorres@gmail.com",
-      "password_hash": "$2a$12$X.yWc8sK6/pC.kM5mH7uO.Hj2tX0fN748rT4y1w9q6mS6e8qDkX2K",
+      "password_hash": "$2a$12$X.yWc8sK6/pC.kM5mH7uO.Hj2tX0f",
       "google_id": "google-oauth2|10987654321",
       "document_type": "DNI",
       "document_number": "99001122",
@@ -55,7 +55,7 @@
     {
       "id": "e26b1580-3456-466d-3456-ca7f62d1c9ef",
       "email": "JosePerez@gmail.com",
-      "password_hash": "$2a$12$A.zXe9tY7/qD.lM6nH8vP.Ik3uY0gO849sU5z2x0r7nT7f9rEkY3L",
+      "password_hash": "$2a$12$A.zXe9tY7/qD.lM6nH8vP.Ik3uY0g",
       "google_id": "",
       "document_type": "DNI",
       "document_number": "44332211",
@@ -68,7 +68,7 @@
     {
       "id": "e26b1580-7890-466d-7890-ca7f62d1c9ef",
       "email": "MecanicoGonzales@gmail.com",
-      "password_hash": "$2a$12$K.wYd8sK6/pC.kM5mH7uO.Hj2tX0fN748rT4y1w9q6mS6e8qDkX2K",
+      "password_hash": "$2a$12$K.wYd8sK6/pC.kM5mH7uO.Hj2tX0f",
       "google_id": "",
       "document_type": "DNI",
       "document_number": "33445566",
@@ -81,7 +81,7 @@
     {
       "id": "e26b1580-4444-466d-4444-ca7f62d1c9ef",
       "email": "SofiaRamirez@gmail.com",
-      "password_hash": "$2a$12$P.yWc8sK6/pC.kM5mH7uO.Hj2tX0fN748rT4y1w9q6mS6e8qDkX2K",
+      "password_hash": "$2a$12$P.yWc8sK6/pC.kM5mH7uO.Hj2tX0f",
       "google_id": "",
       "document_type": "DNI",
       "document_number": "77665544",
@@ -200,31 +200,31 @@
   ],
   "categories": [
     {
-      "id": "cat-motor-1111-2222-3333-444455556666",
+      "id": "cat-motor-1111-2222-3333-44445555666",
       "category_name": "Repuestos de Motor"
     },
     {
-      "id": "cat-frenos-1111-2222-3333-444455556666",
+      "id": "cat-frenos-1111-2222-3333-4444555566",
       "category_name": "Sistema de Frenos"
     },
     {
-      "id": "cat-lubricantes-1111-2222-3333-444455556666",
+      "id": "cat-lubricantes-1111-2222-3333-44445",
       "category_name": "Lubricantes"
     },
     {
-      "id": "cat-filtros-1111-2222-3333-444455556666",
+      "id": "cat-filtros-1111-2222-3333-444455556",
       "category_name": "Filtros y Mantenimiento"
     }
   ],
   "products": [
     {
-      "id": "prod-aceite-5w30-1111-2222-3333-44445555",
-      "category_id": "cat-lubricantes-1111-2222-3333-444455556666",
+      "id": "prod-aceite-5w30-1111-2222-3333-4444",
+      "category_id": "cat-lubricantes-1111-2222-3333-44445",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "product_name": "Aceite Sintético Mobil 1 5W-30 1L",
       "sku": "MOBIL-5W30-1L",
-      "description": "Aceite de motor 100% sintético avanzado diseñado para mantener los motores funcionando como nuevos.",
-      "current_selling_price": 45.00,
+      "description": "Aceite de motor 100% sintético avanz",
+      "current_selling_price": 45.0,
       "current_stock": 24,
       "minimum_stock": 10,
       "version": 0,
@@ -235,13 +235,13 @@
       "updated_by": ""
     },
     {
-      "id": "prod-freno-corolla-1111-2222-3333-44445555",
-      "category_id": "cat-frenos-1111-2222-3333-444455556666",
+      "id": "prod-freno-corolla-1111-2222-3333-44",
+      "category_id": "cat-frenos-1111-2222-3333-4444555566",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
-      "product_name": "Pastillas de Freno Bosch Toyota Corolla",
+      "product_name": "Pastillas de Freno Bosch Toyota Coro",
       "sku": "BOSCH-PF-COROLLA",
-      "description": "Pastillas de freno cerámicas delanteras con gran potencia de frenado y baja emisión de polvo.",
-      "current_selling_price": 110.00,
+      "description": "Pastillas de freno cerámicas delante",
+      "current_selling_price": 110.0,
       "current_stock": 8,
       "minimum_stock": 5,
       "version": 0,
@@ -252,13 +252,13 @@
       "updated_by": ""
     },
     {
-      "id": "prod-fil-aceite-1111-2222-3333-444455556666",
-      "category_id": "cat-filtros-1111-2222-3333-444455556666",
+      "id": "prod-fil-aceite-1111-2222-3333-44445",
+      "category_id": "cat-filtros-1111-2222-3333-444455556",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "product_name": "Filtro de Aceite Original Toyota",
       "sku": "TOYOTA-FIL-90915-YZZN1",
-      "description": "Filtro de aceite OEM para motores Toyota serie ZR.",
-      "current_selling_price": 25.00,
+      "description": "Filtro de aceite OEM para motores To",
+      "current_selling_price": 25.0,
       "current_stock": 3,
       "minimum_stock": 8,
       "version": 0,
@@ -271,59 +271,59 @@
   ],
   "inventory_batches": [
     {
-      "id": "batch-mob-001-1111-2222-3333-444455556666",
-      "product_id": "prod-aceite-5w30-1111-2222-3333-44445555",
+      "id": "batch-mob-001-1111-2222-3333-4444555",
+      "product_id": "prod-aceite-5w30-1111-2222-3333-4444",
       "initial_quantity": 20,
       "available_quantity": 14,
-      "acquisition_cost": 28.50,
+      "acquisition_cost": 28.5,
       "entry_date": "2026-05-01 10:00:00",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "id": "batch-mob-002-1111-2222-3333-444455556666",
-      "product_id": "prod-aceite-5w30-1111-2222-3333-44445555",
+      "id": "batch-mob-002-1111-2222-3333-4444555",
+      "product_id": "prod-aceite-5w30-1111-2222-3333-4444",
       "initial_quantity": 10,
       "available_quantity": 10,
-      "acquisition_cost": 29.00,
+      "acquisition_cost": 29.0,
       "entry_date": "2026-05-15 11:30:00",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "id": "batch-bosch-001-1111-2222-3333-4444555566",
-      "product_id": "prod-freno-corolla-1111-2222-3333-44445555",
+      "id": "batch-bosch-001-1111-2222-3333-44445",
+      "product_id": "prod-freno-corolla-1111-2222-3333-44",
       "initial_quantity": 8,
       "available_quantity": 8,
-      "acquisition_cost": 65.00,
+      "acquisition_cost": 65.0,
       "entry_date": "2026-05-10 09:15:00",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "id": "batch-fil-001-1111-2222-3333-4444555566666",
-      "product_id": "prod-fil-aceite-1111-2222-3333-444455556666",
+      "id": "batch-fil-001-1111-2222-3333-4444555",
+      "product_id": "prod-fil-aceite-1111-2222-3333-44445",
       "initial_quantity": 15,
       "available_quantity": 3,
-      "acquisition_cost": 14.00,
+      "acquisition_cost": 14.0,
       "entry_date": "2026-05-02 08:30:00",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     }
   ],
   "services": [
     {
-      "id": "serv-aceite-1111-2222-3333-444455556666",
-      "service_name": "Mano de Obra Cambio de Aceite y Filtro",
-      "service_price": 40.00,
+      "id": "serv-aceite-1111-2222-3333-444455556",
+      "service_name": "Mano de Obra Cambio de Aceite y Filt",
+      "service_price": 40.0,
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "id": "serv-frenos-1111-2222-3333-444455556666",
+      "id": "serv-frenos-1111-2222-3333-444455556",
       "service_name": "Mantenimiento Preventivo de Frenos",
-      "service_price": 90.00,
+      "service_price": 90.0,
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "id": "serv-diag-1111-2222-3333-444455556666",
-      "service_name": "Diagnóstico Computarizado Completo OBD2",
-      "service_price": 60.00,
+      "id": "serv-diag-1111-2222-3333-44445555666",
+      "service_name": "Diagnóstico Computarizado Completo O",
+      "service_price": 60.0,
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     }
   ],
@@ -378,7 +378,7 @@
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "employee_id": "e2612345-5678-466d-5678-ca7f62d1c9ef",
       "specialty_id": "e2624680-7890-466d-7890-ca7f62d1c456",
-      "salary": 1600.00,
+      "salary": 1600.0,
       "registered_at": "2026-05-23 12:45:00",
       "unregistered_at": null
     },
@@ -387,7 +387,7 @@
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "employee_id": "e2612345-9012-466d-9012-ca7f62d1c9ef",
       "specialty_id": "e2624680-7890-466d-7890-ca7f62d1c789",
-      "salary": 2200.00,
+      "salary": 2200.0,
       "registered_at": "2026-05-23 12:50:00",
       "unregistered_at": null
     },
@@ -396,33 +396,33 @@
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "employee_id": "e2612345-4444-466d-4444-ca7f62d1c9ef",
       "specialty_id": "e2624680-7890-466d-7890-ca7f62d1c012",
-      "salary": 2500.00,
+      "salary": 2500.0,
       "registered_at": "2026-05-23 12:55:00",
       "unregistered_at": null
     }
   ],
   "vehicle_models": [
     {
-      "id": "model-corolla-1111-2222-3333-444455556666",
+      "id": "model-corolla-1111-2222-3333-4444555",
       "brand": "Toyota",
       "model": "Corolla"
     },
     {
-      "id": "model-accent-1111-2222-3333-444455556666",
+      "id": "model-accent-1111-2222-3333-44445555",
       "brand": "Hyundai",
       "model": "Accent"
     },
     {
-      "id": "model-civic-1111-2222-3333-444455556666",
+      "id": "model-civic-1111-2222-3333-444455556",
       "brand": "Honda",
       "model": "Civic"
     }
   ],
   "vehicles": [
     {
-      "id": "veh-luis-corolla-1111-2222-3333-4444555",
+      "id": "veh-luis-corolla-1111-2222-3333-4444",
       "user_id": "e26b1580-5678-466d-5678-ca7f62d1c9ef",
-      "vehicle_model_id": "model-corolla-1111-2222-3333-444455556666",
+      "vehicle_model_id": "model-corolla-1111-2222-3333-4444555",
       "plate_number": "ABC-123",
       "year": 2021,
       "vin": "9T1F1234567890987",
@@ -432,9 +432,9 @@
       "deleted_at": null
     },
     {
-      "id": "veh-aldo-accent-1111-2222-3333-44445555",
+      "id": "veh-aldo-accent-1111-2222-3333-44445",
       "user_id": "e26b1580-9012-466d-9012-ca7f62d1c9ef",
-      "vehicle_model_id": "model-accent-1111-2222-3333-444455556666",
+      "vehicle_model_id": "model-accent-1111-2222-3333-44445555",
       "plate_number": "XYZ-789",
       "year": 2023,
       "vin": "KMH12345678901234",
@@ -444,9 +444,9 @@
       "deleted_at": null
     },
     {
-      "id": "veh-maria-civic-1111-2222-3333-44445555",
+      "id": "veh-maria-civic-1111-2222-3333-44445",
       "user_id": "e26b1580-3333-466d-3333-ca7f62d1c9ef",
-      "vehicle_model_id": "model-civic-1111-2222-3333-444455556666",
+      "vehicle_model_id": "model-civic-1111-2222-3333-444455556",
       "plate_number": "MNO-456",
       "year": 2019,
       "vin": "1HG12345678905678",
@@ -458,10 +458,10 @@
   ],
   "appointments": [
     {
-      "id": "app-luis-001-1111-2222-3333-444455556666",
+      "id": "app-luis-001-1111-2222-3333-44445555",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "customer_id": "e2612345-1234-466d-1234-ca7f62d1c9ef",
-      "vehicle_id": "veh-luis-corolla-1111-2222-3333-4444555",
+      "vehicle_id": "veh-luis-corolla-1111-2222-3333-4444",
       "appointment_date": "2026-05-23 10:00:00",
       "status": "COMPLETED",
       "version": 1,
@@ -469,10 +469,10 @@
       "updated_at": "2026-05-23 10:05:00"
     },
     {
-      "id": "app-maria-001-1111-2222-3333-44445555666",
+      "id": "app-maria-001-1111-2222-3333-4444555",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "customer_id": "e2612345-1234-466d-3333-ca7f62d1c9ef",
-      "vehicle_id": "veh-maria-civic-1111-2222-3333-44445555",
+      "vehicle_id": "veh-maria-civic-1111-2222-3333-44445",
       "appointment_date": "2026-05-23 14:00:00",
       "status": "COMPLETED",
       "version": 1,
@@ -480,10 +480,10 @@
       "updated_at": "2026-05-23 14:05:00"
     },
     {
-      "id": "app-aldo-001-1111-2222-3333-444455556666",
+      "id": "app-aldo-001-1111-2222-3333-44445555",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "customer_id": "e2612345-1234-466d-9999-ca7f62d1c9ef",
-      "vehicle_id": "veh-aldo-accent-1111-2222-3333-44445555",
+      "vehicle_id": "veh-aldo-accent-1111-2222-3333-44445",
       "appointment_date": "2026-05-24 09:00:00",
       "status": "SCHEDULED",
       "version": 0,
@@ -493,7 +493,7 @@
   ],
   "workbays": [
     {
-      "id": "bay-chorrillos-1-1111-2222-3333-44445555",
+      "id": "bay-chorrillos-1-1111-2222-3333-4444",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "status": "OCCUPIED",
       "version": 1,
@@ -503,7 +503,7 @@
       "deleted_at": null
     },
     {
-      "id": "bay-chorrillos-2-1111-2222-3333-44445555",
+      "id": "bay-chorrillos-2-1111-2222-3333-4444",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "status": "VACANT",
       "version": 0,
@@ -515,14 +515,14 @@
   ],
   "work_orders": [
     {
-      "id": "wo-luis-001-1111-2222-3333-444455556666",
-      "workbay_id": "bay-chorrillos-1-1111-2222-3333-44445555",
+      "id": "wo-luis-001-1111-2222-3333-444455556",
+      "workbay_id": "bay-chorrillos-1-1111-2222-3333-4444",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "internal_number": 1001,
       "customer_id": "e2612345-1234-466d-1234-ca7f62d1c9ef",
-      "vehicle_id": "veh-luis-corolla-1111-2222-3333-4444555",
+      "vehicle_id": "veh-luis-corolla-1111-2222-3333-4444",
       "current_mileage": 42000,
-      "diagnosis": "Cambio de aceite preventivo y revisión de vibración en freno delantero.",
+      "diagnosis": "Cambio de aceite preventivo y revisi",
       "status": "IN_PROGRESS",
       "version": 2,
       "created_at": "2026-05-23 10:05:00",
@@ -533,14 +533,14 @@
       "updated_by": ""
     },
     {
-      "id": "wo-maria-001-1111-2222-3333-44445555666",
-      "workbay_id": "bay-chorrillos-2-1111-2222-3333-44445555",
+      "id": "wo-maria-001-1111-2222-3333-44445555",
+      "workbay_id": "bay-chorrillos-2-1111-2222-3333-4444",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "internal_number": 1002,
       "customer_id": "e2612345-1234-466d-3333-ca7f62d1c9ef",
-      "vehicle_id": "veh-maria-civic-1111-2222-3333-44445555",
+      "vehicle_id": "veh-maria-civic-1111-2222-3333-44445",
       "current_mileage": 68000,
-      "diagnosis": "Luz Check Engine encendida en tablero. Escaneo requerido.",
+      "diagnosis": "Luz Check Engine encendida en tabler",
       "status": "PAID",
       "version": 3,
       "created_at": "2026-05-23 14:05:00",
@@ -553,14 +553,14 @@
   ],
   "work_order_tasks": [
     {
-      "id": "task-luis-t1-1111-2222-3333-444455556666",
-      "work_order_id": "wo-luis-001-1111-2222-3333-444455556666",
-      "service_id": "serv-aceite-1111-2222-3333-444455556666",
-      "description": "Mano de obra para cambio de aceite sintético y reemplazo de filtro de aceite original.",
+      "id": "task-luis-t1-1111-2222-3333-44445555",
+      "work_order_id": "wo-luis-001-1111-2222-3333-444455556",
+      "service_id": "serv-aceite-1111-2222-3333-444455556",
+      "description": "Mano de obra para cambio de aceite s",
       "mechanic_id": "e2612345-9012-466d-9012-ca7f62d1c9ef",
-      "total_price": 40.00,
+      "total_price": 40.0,
       "status": "DONE",
-      "hours": 0.50,
+      "hours": 0.5,
       "started_at": "2026-05-23 10:10:00",
       "completed_at": "2026-05-23 10:35:00",
       "version": 1,
@@ -572,14 +572,14 @@
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "id": "task-luis-t2-1111-2222-3333-444455556666",
-      "work_order_id": "wo-luis-001-1111-2222-3333-444455556666",
-      "service_id": "serv-frenos-1111-2222-3333-444455556666",
-      "description": "Limpieza y mantenimiento preventivo de frenos. Reemplazo de pastillas delanteras.",
+      "id": "task-luis-t2-1111-2222-3333-44445555",
+      "work_order_id": "wo-luis-001-1111-2222-3333-444455556",
+      "service_id": "serv-frenos-1111-2222-3333-444455556",
+      "description": "Limpieza y mantenimiento preventivo ",
       "mechanic_id": "e2612345-9012-466d-9012-ca7f62d1c9ef",
-      "total_price": 90.00,
+      "total_price": 90.0,
       "status": "DOING",
-      "hours": 1.20,
+      "hours": 1.2,
       "started_at": "2026-05-23 10:40:00",
       "completed_at": null,
       "version": 1,
@@ -591,14 +591,14 @@
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "id": "task-maria-t1-1111-2222-3333-44445555666",
-      "work_order_id": "wo-maria-001-1111-2222-3333-44445555666",
-      "service_id": "serv-diag-1111-2222-3333-444455556666",
-      "description": "Escaneo general OBD2 en caliente. Lectura e interpretación de códigos de error.",
+      "id": "task-maria-t1-1111-2222-3333-4444555",
+      "work_order_id": "wo-maria-001-1111-2222-3333-44445555",
+      "service_id": "serv-diag-1111-2222-3333-44445555666",
+      "description": "Escaneo general OBD2 en caliente. Le",
       "mechanic_id": "e2612345-4444-466d-4444-ca7f62d1c9ef",
-      "total_price": 60.00,
+      "total_price": 60.0,
       "status": "DONE",
-      "hours": 0.80,
+      "hours": 0.8,
       "started_at": "2026-05-23 14:10:00",
       "completed_at": "2026-05-23 14:55:00",
       "version": 1,
@@ -612,33 +612,33 @@
   ],
   "work_order_task_products": [
     {
-      "work_order_task_id": "task-luis-t1-1111-2222-3333-444455556666",
-      "product_id": "prod-aceite-5w30-1111-2222-3333-44445555",
+      "work_order_task_id": "task-luis-t1-1111-2222-3333-44445555",
+      "product_id": "prod-aceite-5w30-1111-2222-3333-4444",
       "quantity": 4,
-      "unit_price": 45.00,
-      "total_amount": 180.00,
+      "unit_price": 45.0,
+      "total_amount": 180.0,
       "created_at": "2026-05-23 10:15:00",
       "updated_at": "2026-05-23 10:15:00",
       "deleted_at": null,
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "work_order_task_id": "task-luis-t1-1111-2222-3333-444455556666",
-      "product_id": "prod-fil-aceite-1111-2222-3333-444455556666",
+      "work_order_task_id": "task-luis-t1-1111-2222-3333-44445555",
+      "product_id": "prod-fil-aceite-1111-2222-3333-44445",
       "quantity": 1,
-      "unit_price": 25.00,
-      "total_amount": 25.00,
+      "unit_price": 25.0,
+      "total_amount": 25.0,
       "created_at": "2026-05-23 10:15:00",
       "updated_at": "2026-05-23 10:15:00",
       "deleted_at": null,
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "work_order_task_id": "task-luis-t2-1111-2222-3333-444455556666",
-      "product_id": "prod-freno-corolla-1111-2222-3333-44445555",
+      "work_order_task_id": "task-luis-t2-1111-2222-3333-44445555",
+      "product_id": "prod-freno-corolla-1111-2222-3333-44",
       "quantity": 1,
-      "unit_price": 110.00,
-      "total_amount": 110.00,
+      "unit_price": 110.0,
+      "total_amount": 110.0,
       "created_at": "2026-05-23 10:45:00",
       "updated_at": "2026-05-23 10:45:00",
       "deleted_at": null,
@@ -647,10 +647,10 @@
   ],
   "quotes": [
     {
-      "id": "quote-luis-001-1111-2222-3333-444455556666",
-      "work_order_id": "wo-luis-001-1111-2222-3333-444455556666",
-      "subtotal_amount": 445.00,
-      "discount_percentage": 5.00,
+      "id": "quote-luis-001-1111-2222-3333-444455",
+      "work_order_id": "wo-luis-001-1111-2222-3333-444455556",
+      "subtotal_amount": 445.0,
+      "discount_percentage": 5.0,
       "total_amount": 422.75,
       "version": 0,
       "status": "DRAFT",
@@ -662,11 +662,11 @@
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
     },
     {
-      "id": "quote-maria-001-1111-2222-3333-44445555666",
-      "work_order_id": "wo-maria-001-1111-2222-3333-44445555666",
-      "subtotal_amount": 60.00,
-      "discount_percentage": 0.00,
-      "total_amount": 60.00,
+      "id": "quote-maria-001-1111-2222-3333-44445",
+      "work_order_id": "wo-maria-001-1111-2222-3333-44445555",
+      "subtotal_amount": 60.0,
+      "discount_percentage": 0.0,
+      "total_amount": 60.0,
       "version": 1,
       "status": "APPROVED",
       "created_at": "2026-05-23 14:55:00",
@@ -679,11 +679,11 @@
   ],
   "vouchers": [
     {
-      "id": "vouch-maria-001-1111-2222-3333-44445555",
-      "quote_id": "quote-maria-001-1111-2222-3333-44445555666",
+      "id": "vouch-maria-001-1111-2222-3333-44445",
+      "quote_id": "quote-maria-001-1111-2222-3333-44445",
       "voucher_number": "F001-00000102",
-      "subtotal_amount": 60.00,
-      "total_amount": 60.00,
+      "subtotal_amount": 60.0,
+      "total_amount": 60.0,
       "type": "INVOICE",
       "status": "PAID",
       "version": 1,
@@ -698,9 +698,9 @@
   ],
   "payments": [
     {
-      "id": "pay-maria-001-1111-2222-3333-44445555",
-      "voucher_id": "vouch-maria-001-1111-2222-3333-44445555",
-      "amount": 60.00,
+      "id": "pay-maria-001-1111-2222-3333-4444555",
+      "voucher_id": "vouch-maria-001-1111-2222-3333-44445",
+      "amount": 60.0,
       "currency": "PEN",
       "method": "CASH",
       "paid_at": "2026-05-23 15:10:00",
@@ -710,7 +710,7 @@
   ],
   "obd2_devices": [
     {
-      "id": "obd-device-001-1111-2222-3333-44445555",
+      "id": "obd-device-001-1111-2222-3333-444455",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "mac_address": "AA:BB:CC:DD:EE:11",
       "last_ping": "2026-05-23 12:45:00",
@@ -726,8 +726,8 @@
   "obd2_device_vehicle_registration": [
     {
       "id": "obd-reg-001-1111-2222-3333-44445555",
-      "obd2_id": "obd-device-001-1111-2222-3333-44445555",
-      "vehicle_id": "veh-luis-corolla-1111-2222-3333-4444555",
+      "obd2_id": "obd-device-001-1111-2222-3333-444455",
+      "vehicle_id": "veh-luis-corolla-1111-2222-3333-4444",
       "registered_at": "2026-05-23 10:05:00",
       "unregistered_at": null,
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345"
@@ -735,7 +735,7 @@
   ],
   "telemetry_snapshots": [
     {
-      "id": "tele-snap-001-1111-2222-3333-44445555",
+      "id": "tele-snap-001-1111-2222-3333-4444555",
       "obd2_device_vehicle_registration_id": "obd-reg-001-1111-2222-3333-44445555",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "rpm": 2200,
@@ -746,7 +746,7 @@
       "created_at": "2026-05-23 10:20:00"
     },
     {
-      "id": "tele-snap-002-1111-2222-3333-44445555",
+      "id": "tele-snap-002-1111-2222-3333-4444555",
       "obd2_device_vehicle_registration_id": "obd-reg-001-1111-2222-3333-44445555",
       "branch_id": "e2667890-7890-466d-7890-ca7f62d12345",
       "rpm": 3200,
@@ -759,8 +759,8 @@
   ],
   "dtc_alerts": [
     {
-      "id": "dtc-alert-001-1111-2222-3333-44445555",
-      "telemetry_snapshot_id": "tele-snap-002-1111-2222-3333-44445555",
+      "id": "dtc-alert-001-1111-2222-3333-4444555",
+      "telemetry_snapshot_id": "tele-snap-002-1111-2222-3333-4444555",
       "dtc_code": "P0302",
       "description": "Cylinder 2 Misfire Detected",
       "severity": "HIGH",
@@ -771,7 +771,7 @@
   ],
   "password_recovery_tokens": [
     {
-      "id": "tok-luis-001-1111-2222-3333-44445555666",
+      "id": "tok-luis-001-1111-2222-3333-44445555",
       "user_id": "e26b1580-5678-466d-5678-ca7f62d1c9ef",
       "token": "4f971b3e8c9d02a5f76b4e1d3c05fa92",
       "expires_at": "2026-05-23 18:30:00",
