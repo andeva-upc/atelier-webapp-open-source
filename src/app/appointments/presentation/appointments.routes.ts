@@ -5,6 +5,22 @@ const appointmentsList = () =>
     (m) => m.AppointmentsList
   );
 
+const appointmentsForm = () =>
+  import('./views/appointments-form/appointments-form').then(
+    (m) => m.AppointmentsForm
+  );
+
 export const appointmentsRoutes: Routes = [
-  { path: '', loadComponent: appointmentsList },
+  {
+    path: '',
+    loadComponent: appointmentsList,
+  },
+  {
+    path: 'new',
+    loadComponent: appointmentsForm,
+  },
+  {
+    path: ':id/edit',
+    loadComponent: appointmentsForm,
+  },
 ];

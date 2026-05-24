@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -24,6 +25,7 @@ type AppointmentFilter = 'ALL' | 'CONFIRMED' | 'PENDING' | 'CANCELLED' | 'COMPLE
 export class AppointmentsList implements OnInit {
   private readonly store = inject(AppointmentsStore);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
   private readonly searchSubject = new Subject<string>();
 
   readonly appointments = this.store.activeAppointments;
@@ -92,9 +94,7 @@ export class AppointmentsList implements OnInit {
   }
 
   openCreateForm(): void {
-    this.formMode.set('create');
-    this.selectedAppointment.set(null);
-    this.isFormOpen.set(true);
+    void this.router.navigate(['/appointments/new']);
   }
 
   openDetail(appointment: Appointment): void {
@@ -108,9 +108,7 @@ export class AppointmentsList implements OnInit {
     }
 
     this.isDetailOpen.set(false);
-    this.formMode.set('edit');
-    this.selectedAppointment.set(appointment);
-    this.isFormOpen.set(true);
+    void this.router.navigate(['/appointments', appointment.id, 'edit']);
   }
 
   closeForm(): void {
