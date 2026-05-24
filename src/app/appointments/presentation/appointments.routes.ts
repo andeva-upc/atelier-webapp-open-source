@@ -6,5 +6,16 @@ const appointmentsList = () =>
   );
 
 export const appointmentsRoutes: Routes = [
-  { path: '', loadComponent: appointmentsList },
+  {
+    path: '',
+    loadComponent: appointmentsList,
+  },
+  {
+    path: 'new',
+    loadComponent: appointmentsList,
+  },
+  {
+    path: ':id/edit',
+    loadComponent: appointmentsList,
+  },
 ];

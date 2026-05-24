@@ -1,11 +1,15 @@
 <form class="appointment-form" [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
   <label class="form-field form-field-full">
     <span>{{ 'appointments.fields.customer' | translate }} *</span>
-    <input
-      type="text"
-      formControlName="customerName"
-      [placeholder]="'appointments.placeholders.customer' | translate"
-    />
+    <select formControlName="customerId" (change)="onCustomerChange()">
+      <option value="">Select customer</option>
+
+      @for (customer of customers(); track customer.id) {
+        <option [value]="customer.id">
+          {{ customer.name }}
+        </option>
+      }
+    </select>
   </label>
 
   <div class="form-grid">
@@ -14,17 +18,22 @@
       <input
         type="text"
         formControlName="customerPhone"
+        readonly
         [placeholder]="'appointments.placeholders.phone' | translate"
       />
     </label>
 
     <label class="form-field">
       <span>{{ 'appointments.fields.vehicle' | translate }} *</span>
-      <input
-        type="text"
-        formControlName="vehicleSummary"
-        [placeholder]="'appointments.placeholders.vehicle' | translate"
-      />
+      <select formControlName="vehicleId" (change)="onVehicleChange()">
+        <option value="">Select vehicle</option>
+
+        @for (vehicle of availableVehicles(); track vehicle.id) {
+          <option [value]="vehicle.id">
+            {{ vehicle.summary }}
+          </option>
+        }
+      </select>
     </label>
   </div>
 
@@ -91,7 +100,7 @@
       {{ 'appointments.actions.cancel' | translate }}
     </button>
 
-    <button type="submit" class="btn-primary">
+    <button type="submit" class="btn-primary" [disabled]="saving">
       {{
         mode === 'edit'
           ? ('appointments.actions.saveChanges' | translate)
