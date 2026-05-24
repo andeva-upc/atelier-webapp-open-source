@@ -1,7 +1,7 @@
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -26,6 +26,7 @@ export class AppointmentsList implements OnInit {
   private readonly store = inject(AppointmentsStore);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly searchSubject = new Subject<string>();
 
   readonly appointments = this.store.activeAppointments;
@@ -44,6 +45,7 @@ export class AppointmentsList implements OnInit {
   readonly isDetailOpen = signal<boolean>(false);
   readonly formMode = signal<'create' | 'edit'>('create');
   readonly selectedAppointment = signal<Appointment | null>(null);
+  readonly routeSegments = signal<string[]>([]);
 
   readonly filteredAppointments = computed(() => {
     const filter = this.selectedFilter();
@@ -69,6 +71,42 @@ export class AppointmentsList implements OnInit {
     });
   });
 
+  private readonly routeModalEffect = effect(() => {
+    const paths = this.routeSegments();
+    const appointments = this.appointments();
+
+    if (paths.length === 0) {
+      this.isFormOpen.set(false);
+      return;
+    }
+
+    if (paths[0] === 'new') {
+      this.formMode.set('create');
+      this.selectedAppointment.set(null);
+      this.isDetailOpen.set(false);
+      this.isFormOpen.set(true);
+      return;
+    }
+
+    if (paths.length === 2 && paths[1] === 'edit') {
+      const appointment = appointments.find((item) => item.id === paths[0]);
+
+      if (appointment) {
+        this.formMode.set('edit');
+        this.selectedAppointment.set(appointment);
+        this.isDetailOpen.set(false);
+        this.isFormOpen.set(true);
+        return;
+      }
+
+      this.selectedAppointment.set(null);
+      this.isFormOpen.set(false);
+      return;
+    }
+
+    this.isFormOpen.set(false);
+  });
+
   ngOnInit(): void {
     this.searchSubject
       .pipe(
@@ -79,6 +117,12 @@ export class AppointmentsList implements OnInit {
       .subscribe((query) => {
         this.searchQuery.set(query);
         this.store.loadAppointments(query);
+      });
+
+    this.route.url
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((segments) => {
+        this.routeSegments.set(segments.map((segment) => segment.path));
       });
 
     this.store.loadAppointments();
@@ -113,6 +157,8 @@ export class AppointmentsList implements OnInit {
 
   closeForm(): void {
     this.isFormOpen.set(false);
+    this.selectedAppointment.set(null);
+    void this.router.navigate(['/appointments']);
   }
 
   closeDetail(): void {

@@ -5,11 +5,6 @@ const appointmentsList = () =>
     (m) => m.AppointmentsList
   );
 
-const appointmentsForm = () =>
-  import('./views/appointments-form/appointments-form').then(
-    (m) => m.AppointmentsForm
-  );
-
 export const appointmentsRoutes: Routes = [
   {
     path: '',
@@ -17,10 +12,10 @@ export const appointmentsRoutes: Routes = [
   },
   {
     path: 'new',
-    loadComponent: appointmentsForm,
+    loadComponent: appointmentsList,
   },
   {
     path: ':id/edit',
-    loadComponent: appointmentsForm,
+    loadComponent: appointmentsList,
   },
 ];
