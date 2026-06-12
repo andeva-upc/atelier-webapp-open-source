@@ -1,0 +1,19 @@
+{
+  "option": {
+    "home": "Home",
+    "work-orders": "Work Orders",
+    "inventory": "Inventory",
+    "customers": "Customers",
+    "staff": "Staff",
+    "appointments": "Appointments",
+    "telemetry": "Telemetry",
+    "billing": "Billing",
+    "vehicles": "Vehicles",
+    "configuration": "Configuration"
+  },
+  "page-not-found": {
+    "title": "Page Not Found",
+    "content": "The path <strong>{{ invalid_path }}</strong> is not available.",
+    "go-home": "Return to Home"
+  }
+}

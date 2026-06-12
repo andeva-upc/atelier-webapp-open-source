@@ -1,0 +1,19 @@
+{
+  "option": {
+    "home": "Inicio",
+    "work-orders": "Órdenes de Trabajo",
+    "inventory": "Inventario",
+    "customers": "Clientes",
+    "staff": "Personal",
+    "appointments": "Citas",
+    "telemetry": "Telemetría",
+    "billing": "Facturación",
+    "vehicles": "Vehículos",
+    "configuration": "Configuración"
+  },
+  "page-not-found": {
+    "title": "Página No Encontrada",
+    "content": "La ruta <strong>{{ invalid_path }}</strong> no está disponible.",
+    "go-home": "Volver al Inicio"
+  }
+}
