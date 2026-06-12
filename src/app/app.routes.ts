@@ -1,58 +1,17 @@
 import { Routes } from '@angular/router';
-import { InventoryListComponent } from './inventory/presentation/views/inventory-list/inventory-list.component';
+import { Home } from './shared/presentation/views/home/home';
 
+const pageNotFound = () => import('./shared/presentation/views/page-not-found/page-not-found').then((m) => m.PageNotFound);
+
+/**
+ * Defines the application routes. Each route is associated with a component that will be displayed when the route is accessed. The title property is used to set the document title when the route is active.
+ * The routes are defined as an array of objects, where each object represents a route with its path, component, and title. The routes can also include lazy-loaded modules for better performance.
+ * @summary Application routes configuration, defining paths, components, and titles for navigation.
+ * @author Joel Huamani Estefanero
+ * @see https://angular.io/guide/router for more information on Angular routing.
+ */
 export const routes: Routes = [
-  {
-    path: 'home',
-    loadChildren: () =>
-      import('./home/presentation/home.routes').then((m) => m.homeRoutes),
-  },
-  {
-    path: 'customers',
-    loadChildren: () =>
-      import('./customers/presentation/customers.routes').then(
-        (m) => m.customersRoutes
-      ),
-  },
-  {
-    path: 'billing',
-    loadChildren: () =>
-      import('./billing/presentation/billing.routes').then(
-        (m) => m.billingRoutes
-      ),
-  },
-  {
-    path: 'telemetry',
-    loadChildren: () =>
-      import('./telemetry/presentation/telemetry.routes').then(
-        (m) => m.telemetryRoutes
-      ),
-  },
-  {
-    path: 'appointments',
-    loadChildren: () =>
-      import('./appointments/presentation/appointments.routes').then(
-        (m) => m.appointmentsRoutes
-      ),
-  },
-  {
-    path: 'work-orders',
-    loadChildren: () =>
-      import('./work-orders/presentation/work-order.routes').then(
-        (m) => m.workOrderRoutes
-      ),
-  },
-  {
-    path: 'inventory',
-    component: InventoryListComponent,
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
-    path: '**',
-    redirectTo: 'home',
-  }
+  { path: 'home', component: Home },
+  { path: '',     redirectTo: 'home',          pathMatch: 'full'},
+  { path: '**',   loadComponent: pageNotFound, title: 'Page Not Found' },
 ];

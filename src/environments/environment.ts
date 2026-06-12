@@ -1,23 +1,4 @@
 export const environment = {
   production: true,
-  platformProviderApiBaseUrl: 'https://atelier-backend-mock.onrender.com/api/v1',
-  platformProviderWorkshopsEndpointPath: '/workshops',
-  platformProviderUsersEndpointPath: '/users',
-  platformProviderPasswordRecoveryTokensEndpointPath: '/password_recovery_token',
-  platformProviderCustomersEndpointPath: '/customers',
-  platformProviderVehiclesEndpointPath: '/vehicles',
-  platformProviderWorkBaysEndpointPath: '/work_bays',
-  platformProviderAppointmentsEndpointPath: '/appointments',
-  platformProviderObd2DevicesEndpointPath: '/obd2_devices',
-  platformProviderVehicleDtcAlertsEndpointPath: '/vehicle_dtc_alerts',
-  platformProviderTelemetrySnapshotsEndpointPath: '/telemetry_snapshots',
-  platformProviderWorkOrdersEndpointPath: '/work_orders',
-  platformProviderWorkOrdersTasksEndpointPath: '/work_order_tasks',
-  platformProviderQuotesEndpointPath: '/quotes',
-  platformProviderProductsEndpointPath: '/products',
-  platformProviderInventoryMovementsEndpointPath: '/inventory_movements',
-  platformProviderVouchersEndpointPath: '/vouchers',
-  platformProviderOutboxMessagesEndpointPath: '/outbox_messages',
-  platformProviderPaymentsEndpointPath: '/payments',
-
+  platformProviderApiBaseUrl: 'http://localhost:8080/api/v1'
 };
