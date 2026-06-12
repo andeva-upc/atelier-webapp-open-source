@@ -5,10 +5,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { TranslateService } from '@ngx-translate/core';
 import { LayoutService } from '../layout/layout.service';
+import {Profile} from '../../../../iam/presentation/components/profile/profile';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [CommonModule, MatToolbarModule, MatMenuModule, MatBadgeModule],
+  imports: [CommonModule, MatToolbarModule, MatMenuModule, MatBadgeModule, Profile],
   templateUrl: './toolbar.html',
   styleUrl: './toolbar.css',
 })
