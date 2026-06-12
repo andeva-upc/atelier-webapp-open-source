@@ -12,6 +12,6 @@ const pageNotFound = () => import('./shared/presentation/views/page-not-found/pa
  */
 export const routes: Routes = [
   { path: 'home', component: Home },
-  { path: '',     redirectTo: 'home',          pathMatch: 'full'},
-  { path: '**',   loadComponent: pageNotFound, title: 'Page Not Found' },
+  { path: '',     redirectTo: 'home', pathMatch: 'full'},
+  { path: '**',   loadComponent: pageNotFound },
 ];
