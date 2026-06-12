@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Toolbar } from '../toolbar/toolbar';
@@ -9,6 +9,4 @@ import { Toolbar } from '../toolbar/toolbar';
   templateUrl: './main.html',
   styleUrl: './main.css',
 })
-export class Main {
-
-}
+export class Main {}
