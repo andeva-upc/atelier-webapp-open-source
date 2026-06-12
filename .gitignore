@@ -48,3 +48,4 @@ package-lock.json
 
 #Enviroments
 /src/environments/environment.development.ts
+/src/environments/environment.local.ts

@@ -5,8 +5,6 @@
 // custom components at https://material.angular.dev/guide/theming
 @use "@angular/material" as mat;
 
-@include mat.core();
-
 html {
   height: 100%;
   @include mat.theme(
@@ -51,3 +49,4 @@ body {
   --mdc-outlined-text-field-container-shape: 9px !important;
 }
 
+@include mat.core();
