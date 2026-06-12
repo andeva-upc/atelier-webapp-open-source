@@ -20,3 +20,9 @@
   padding: 1.5rem;
   background-color: #fafafa;
 }
+
+@media screen and (max-width: 480px) {
+  .main-content {
+    padding: 0.7rem 0.7rem;
+  }
+}
