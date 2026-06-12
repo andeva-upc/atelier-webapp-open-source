@@ -1,6 +1,8 @@
 <mat-toolbar class="tool">
   <div class="toolbar-start">
-    <!-- El lado izquierdo para el título de la página u otras opciones -->
+    <button class="mobile-menu-btn" (click)="layoutService.toggleMobileSidebar()">
+      <i class="pi pi-bars"></i>
+    </button>
   </div>
 
   <div class="toolbar-end">
@@ -29,29 +31,6 @@
               [matBadgeHidden]="!hasNotifications()">
         <i class="pi pi-bell"></i>
       </button>
-    </div>
-
-    <!-- Menú desplegable del usuario -->
-    <div class="toolbar-item user-wrapper">
-      <button [matMenuTriggerFor]="userMenu" class="user-button" type="button">
-        <div class="user-avatar">{{ userInitials() }}</div>
-        <span class="user-name">{{ currentUser().name }}</span>
-        <i class="pi pi-chevron-down"></i>
-      </button>
-      <mat-menu #userMenu="matMenu" class="custom-menu">
-        <button mat-menu-item>
-          <div class="menu-item-content">
-            <i class="pi pi-user menu-icon"></i>
-            <span class="menu-text">Perfil</span>
-          </div>
-        </button>
-        <button mat-menu-item>
-          <div class="menu-item-content">
-            <i class="pi pi-sign-out menu-icon"></i>
-            <span class="menu-text">Cerrar sesión</span>
-          </div>
-        </button>
-      </mat-menu>
     </div>
   </div>
 </mat-toolbar>
