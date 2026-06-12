@@ -1,0 +1,18 @@
+.container-with-spacing {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-not-found-title {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.page-not-found-text {
+  text-align: center;
+  font-size: 1rem;
+  margin: 1rem;
+}
