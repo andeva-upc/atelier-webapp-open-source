@@ -2,27 +2,65 @@ aside {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* allow rounded buttons and shadows to be visible instead of being clipped */
   padding: 1rem 1rem;
   background-color: #fff;
   color: #212121;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.3);
   border-right: 1.5px solid rgba(189, 189, 189, 0.3);
-
   transition: all 0.5s ease;
 
   @media (max-width: 768px) {
     position: fixed;
-    z-index: 99;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    width: calc(16rem);
   }
 }
 
-aside.is-expanded {
+aside.mobile-open {
+  transform: translateX(0);
+}
+
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .sidebar-backdrop {
+    display: block;
+  }
+  .desktop-only-btn {
+    display: none !important;
+  }
+  .mobile-only-btn {
+    display: flex !important;
+  }
+}
+
+aside.is-expanded, aside.mobile-open {
   width: calc(16rem);
 }
 
-aside.is-expanded .logo-text {
+aside.is-expanded .logo-text, aside.mobile-open .logo-text {
   display: flex;
+  margin: 0 0 0 1rem;
+  transform: none;
 }
 
 .logo-container {
@@ -31,6 +69,9 @@ aside.is-expanded .logo-text {
 }
 
 .arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #0071EB;
   min-height: 44px;
   min-width: 44px;
@@ -38,6 +79,10 @@ aside.is-expanded .logo-text {
   cursor: pointer;
   border: 2px solid #0071EB;
   transition: all 0.3s ease;
+}
+
+.mobile-only-btn {
+  display: none;
 }
 
 .logo-text {
@@ -138,7 +183,7 @@ aside.is-expanded .logo-text {
   color: #212121;
 }
 
-aside.is-expanded .sidenav-nav-label {
+aside.is-expanded .sidenav-nav-label, aside.mobile-open .sidenav-nav-label {
   display: inline;
   opacity: 1;
 }
@@ -146,7 +191,7 @@ aside.is-expanded .sidenav-nav-label {
 .sidenav-nav-item.active {
   background: #0071EB;
   color: #fff;
-  box-shadow: 0 6px 18px rgba(0,113,235,0.18); /* subtle elevation so it doesn't look cut */
+  box-shadow: 0 6px 18px rgba(0,113,235,0.18);
 }
 
 .sidenav-nav-item.active i {
@@ -157,9 +202,9 @@ aside.is-expanded .sidenav-nav-label {
   background: #004FA6;
 }
 
-aside.is-expanded .sidenav-nav-item {
+aside.is-expanded .sidenav-nav-item, aside.mobile-open .sidenav-nav-item {
   padding: 0 1rem 0 1rem;
   justify-content: flex-start;
-  width: 100%;
+  width: 87%;
   min-width: auto;
 }

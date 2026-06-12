@@ -1,0 +1,23 @@
+@if (layoutService.isMobileSidebarOpen()) {
+  <div class="sidebar-backdrop" (click)="layoutService.closeMobileSidebar()"></div>
+}
+<aside [class.is-expanded]="layoutService.isDesktopSidebarExpanded()" [class.mobile-open]="layoutService.isMobileSidebarOpen()">
+  <div class="logo-container">
+    <button type="button" class="arrow mobile-only-btn" aria-label="close sidebar" (click)="layoutService.closeMobileSidebar()">
+      <i class="sidebar-toggle-icon pi pi-times"></i>
+    </button>
+    <button type="button" class="arrow desktop-only-btn" aria-label="toggle sidebar" (click)="layoutService.toggleDesktopSidebar()">
+      <i class="sidebar-toggle-icon" [ngClass]="layoutService.isDesktopSidebarExpanded() ? 'pi pi-times' : 'pi pi-bars'"></i>
+    </button>
+    <p class="logo-text">atelier</p>
+  </div>
+  <div class="sidebar-divider"></div>
+  <nav class="sidenav">
+    @for (option of options(); track option.label) {
+      <a class="sidenav-nav-item" [routerLink]="option.link" routerLinkActive="active" (click)="layoutService.closeMobileSidebar()">
+        <i [ngClass]="option.icon"></i>
+        <span class="sidenav-nav-label">{{ option.label | translate }}</span>
+      </a>
+    }
+  </nav>
+</aside>
