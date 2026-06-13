@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Zizou Slab";
-  src: url("assets/fonts/Zizou-Slab-Medium.otf") format("opentype");
+  src: url("/assets/fonts/Zizou-Slab-Medium.otf") format("opentype");
 }
 
 /* ── Global Material Rounding Overrides (Ultra-Specific) ───────────────── */

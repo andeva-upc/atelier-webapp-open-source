@@ -1,0 +1,22 @@
+<div class="toolbar-item user-wrapper">
+  <button [matMenuTriggerFor]="userMenu" class="user-button" type="button">
+    <div class="user-avatar">{{ userInitials() }}</div>
+    <span class="user-name">{{ currentUser().name }}</span>
+    <i class="pi pi-chevron-down"></i>
+  </button>
+  <mat-menu #userMenu="matMenu" class="custom-menu">
+    <button mat-menu-item>
+      <div class="menu-item-content">
+        <i class="pi pi-user menu-icon"></i>
+        <span class="menu-text">Perfil</span>
+      </div>
+    </button>
+    <button mat-menu-item>
+      <div class="menu-item-content">
+        <i class="pi pi-sign-out menu-icon"></i>
+        <span class="menu-text">Cerrar sesión</span>
+      </div>
+    </button>
+  </mat-menu>
+</div>
+
