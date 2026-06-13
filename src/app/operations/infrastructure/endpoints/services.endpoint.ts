@@ -11,7 +11,7 @@ import { UpdateServiceRequestAssembler } from '../assemblers/update-service-requ
 
 @Injectable({ providedIn: 'root' })
 export class ServicesApiEndpoint {
-  private readonly baseUrl = environment.operations.services;
+  private readonly baseUrl = `${environment.apiBaseUrl}${environment.endpoints.operations.services}`;
 
   constructor(private http: HttpClient) {}
 

@@ -20,7 +20,7 @@ import { UpdateProductQuantityInTaskRequestAssembler } from '../assemblers/updat
 
 @Injectable({ providedIn: 'root' })
 export class WorkOrdersApiEndpoint {
-  private readonly baseUrl = environment.operations.workOrders;
+  private readonly baseUrl = `${environment.apiBaseUrl}${environment.endpoints.operations.workOrders}`;
 
   constructor(private http: HttpClient) {}
 
