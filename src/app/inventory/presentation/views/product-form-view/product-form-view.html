@@ -1,0 +1,30 @@
+<div class="view-container">
+  <div class="view-header">
+    <h2>{{ isEditMode ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+    <p>{{ isEditMode ? 'Modifica los detalles del producto en el inventario.' : 'Agrega un nuevo producto al catálogo de la sucursal.' }}</p>
+  </div>
+
+  <ng-container *ngIf="!isEditMode">
+    <app-product-form 
+      [isEditMode]="false"
+      (save)="onSave($event)"
+      (cancel)="onCancel()">
+    </app-product-form>
+  </ng-container>
+
+  <ng-container *ngIf="isEditMode">
+    <ng-container *ngIf="activeProduct(); else loading">
+      <app-product-form 
+        [initialData]="activeProduct()"
+        [isEditMode]="true"
+        (save)="onSave($event)"
+        (cancel)="onCancel()">
+      </app-product-form>
+    </ng-container>
+    <ng-template #loading>
+      <div class="loading-state">
+        <i class="fas fa-spinner fa-spin"></i> Cargando producto...
+      </div>
+    </ng-template>
+  </ng-container>
+</div>
