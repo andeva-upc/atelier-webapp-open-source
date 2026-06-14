@@ -1,7 +1,7 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { CreateOwnerCommand } from '../../domain/model/commands/create-owner.command';
 import { UpdateOwnerCommand } from '../../domain/model/commands/update-owner.command';
 import { OwnerResource } from '../responses/owner-response';
@@ -12,7 +12,7 @@ const baseUrl = `${environment.apiBaseUrl}${environment.endpoints.core.owners}`;
 
 export class OwnersApiEndpoint extends BaseApi {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private createAssembler: CreateOwnerAssembler,
     private updateAssembler: UpdateOwnerAssembler
   ) { super(); }

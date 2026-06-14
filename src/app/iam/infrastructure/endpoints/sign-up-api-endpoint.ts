@@ -1,10 +1,9 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
-import { SignUpRequest } from '../requests/sign-up.request';
 import { SignUpResponse } from '../responses/sign-up-response';
 import { HttpClient } from '@angular/common/http';
 import { SignUpAssembler } from '../assemblers/sign-up-assembler';
 import { Observable, catchError, map } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { SignUpCommand } from '../../domain/model/commands/sign-up.command';
 
 const signUpApiEndpointUrl = `${environment.apiBaseUrl}${environment.endpoints.iam.signUp}`;

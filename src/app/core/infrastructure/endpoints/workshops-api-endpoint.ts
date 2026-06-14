@@ -1,7 +1,7 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { CreateWorkshopCommand } from '../../domain/model/commands/create-workshop.command';
 import { UpdateWorkshopCommand } from '../../domain/model/commands/update-workshop.command';
 import { WorkshopResource } from '../responses/workshop-response';
@@ -12,7 +12,7 @@ const baseUrl = `${environment.apiBaseUrl}${environment.endpoints.core.workshops
 
 export class WorkshopsApiEndpoint extends BaseApi {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private createAssembler: CreateWorkshopAssembler,
     private updateAssembler: UpdateWorkshopAssembler
   ) { super(); }

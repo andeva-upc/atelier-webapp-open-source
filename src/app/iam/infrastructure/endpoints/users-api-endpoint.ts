@@ -2,7 +2,7 @@ import { BaseApi } from '../../../shared/infrastructure/base-api';
 import { UserResource } from '../responses/user-response';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 
 const usersApiEndpointUrl = `${environment.apiBaseUrl}${environment.endpoints.iam.getByUserId}`;
 

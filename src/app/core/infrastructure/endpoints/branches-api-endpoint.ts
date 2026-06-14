@@ -1,7 +1,7 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { CreateBranchCommand } from '../../domain/model/commands/create-branch.command';
 import { UpdateBranchCommand } from '../../domain/model/commands/update-branch.command';
 import { AssignSubscriptionCommand } from '../../domain/model/commands/assign-subscription.command';
@@ -15,7 +15,7 @@ const baseUrl = `${environment.apiBaseUrl}${environment.endpoints.core.branches}
 
 export class BranchesApiEndpoint extends BaseApi {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private createAssembler: CreateBranchAssembler,
     private updateAssembler: UpdateBranchAssembler,
     private assignAssembler: AssignSubscriptionAssembler

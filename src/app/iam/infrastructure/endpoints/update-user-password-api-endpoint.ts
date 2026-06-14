@@ -1,10 +1,9 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
-import { UpdateUserPasswordRequest } from '../requests/update-user-password.request';
 import { UpdateUserPasswordResponse } from '../responses/update-user-password-response';
 import { HttpClient } from '@angular/common/http';
 import { UpdateUserPasswordAssembler } from '../assemblers/update-user-password-assembler';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { UpdateUserPasswordCommand } from '../../domain/model/commands/update-user-password.command';
 
 const updateUserPasswordApiEndpointUrl = `${environment.apiBaseUrl}${environment.endpoints.iam.updateUserPassword}`;
