@@ -1,0 +1,30 @@
+<div class="product-card" (click)="onCardClick()">
+  <div class="product-header">
+    <span class="product-category">{{ product.category }}</span>
+    <span class="product-sku">{{ product.sku }}</span>
+  </div>
+  
+  <div class="product-body">
+    <h3 class="product-name">{{ product.name }}</h3>
+    <p class="product-description">{{ product.description || 'Sin descripción' }}</p>
+    
+    <div class="product-stats">
+      <div class="stat-item">
+        <span class="stat-label">Precio</span>
+        <span class="stat-value">${{ product.salePrice | number:'1.2-2' }}</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Stock Actual</span>
+        <span class="stat-value" [class.low-stock]="product.currentStock <= product.minimumStock">
+          {{ product.currentStock }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-footer">
+    <button class="add-batch-btn" (click)="onAddBatchClick($event)">
+      <i class="fas fa-plus-circle"></i> Agregar lote
+    </button>
+  </div>
+</div>
