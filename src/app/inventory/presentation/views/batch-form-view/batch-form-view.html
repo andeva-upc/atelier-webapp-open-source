@@ -1,9 +1,14 @@
 <div class="view-container">
   <div class="view-header">
-    <h2>Registrar Nuevo Lote</h2>
-    <ng-container *ngIf="activeProduct()">
-      <p>Agrega stock al producto: <strong>{{ activeProduct()!.name }}</strong> (SKU: {{ activeProduct()!.sku }})</p>
-    </ng-container>
+    <div class="header-titles">
+      <button class="btn-back" (click)="onCancel()"><i class="pi pi-arrow-left"></i></button>
+      <div>
+        <h2>Registrar Nuevo Lote</h2>
+        <ng-container *ngIf="activeProduct()">
+          <p>Agrega stock al producto: <strong>{{ activeProduct()!.name }}</strong> (SKU: {{ activeProduct()!.sku }})</p>
+        </ng-container>
+      </div>
+    </div>
   </div>
 
   <ng-container *ngIf="activeProduct(); else loading">

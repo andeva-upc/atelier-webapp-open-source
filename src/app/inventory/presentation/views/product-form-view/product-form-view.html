@@ -1,7 +1,12 @@
 <div class="view-container">
   <div class="view-header">
-    <h2>{{ isEditMode ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
-    <p>{{ isEditMode ? 'Modifica los detalles del producto en el inventario.' : 'Agrega un nuevo producto al catálogo de la sucursal.' }}</p>
+    <div class="header-titles">
+      <button class="btn-back" (click)="onCancel()"><i class="pi pi-arrow-left"></i></button>
+      <div>
+        <h2>{{ isEditMode ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+        <p>{{ isEditMode ? 'Modifica los detalles del producto en el inventario.' : 'Agrega un nuevo producto al catálogo de la sucursal.' }}</p>
+      </div>
+    </div>
   </div>
 
   <ng-container *ngIf="!isEditMode">

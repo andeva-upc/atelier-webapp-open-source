@@ -19,7 +19,7 @@
 }
 
 .btn-back:hover {
-  color: var(--primary-color, #4f46e5);
+  color: var(--primary-color, #0071EB);
 }
 
 .product-detail-card {
@@ -49,8 +49,8 @@
 
 .category-badge {
   align-self: flex-start;
-  background: rgba(79, 70, 229, 0.1);
-  color: var(--primary-color, #4f46e5);
+  background: rgba(0, 113, 235, 0.1);
+  color: var(--primary-color, #0071EB);
   padding: 0.25rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
@@ -91,16 +91,16 @@
 }
 
 .btn-primary {
-  background: var(--primary-color, #4f46e5);
+  background: var(--primary-color, #0071EB);
   color: white;
   border: 1px solid transparent;
-  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+  box-shadow: 0 4px 6px -1px rgba(0, 113, 235, 0.2);
 }
 
 .btn-primary:hover {
-  background: #4338ca;
+  background: #004FA6;
   transform: translateY(-2px);
-  box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 6px 8px -1px rgba(0, 113, 235, 0.3);
 }
 
 .btn-secondary {
