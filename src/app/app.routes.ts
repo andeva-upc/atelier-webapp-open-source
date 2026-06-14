@@ -16,14 +16,7 @@ const inventoryRoutes = () => import('./inventory/inventory.routes').then((m) =>
  */
 export const routes: Routes = [
   { path: 'home', component: Home,    canActivate: [iamGuard] },
-  { 
-    path: 'inventory', 
-    component: Home, 
-    canActivate: [iamGuard],
-    children: [
-      { path: '', loadChildren: inventoryRoutes }
-    ]
-  },
+  { path: 'inventory', loadChildren: inventoryRoutes, canActivate: [iamGuard] },
   { path: '',  loadChildren: iamRoutes },
   { path: '',     redirectTo: 'home', pathMatch: 'full'},
   { path: '**',   loadComponent: pageNotFound },
