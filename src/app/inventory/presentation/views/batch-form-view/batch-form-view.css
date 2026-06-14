@@ -1,0 +1,31 @@
+.view-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.view-header {
+  margin-bottom: 2rem;
+}
+
+.view-header h2 {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: var(--text-primary, #111827);
+  margin: 0 0 0.5rem 0;
+}
+
+.view-header p {
+  color: #6b7280;
+  margin: 0;
+}
+
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  font-size: 1.25rem;
+  color: #6b7280;
+  gap: 1rem;
+}

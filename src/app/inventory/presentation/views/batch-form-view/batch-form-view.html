@@ -1,0 +1,21 @@
+<div class="view-container">
+  <div class="view-header">
+    <h2>Registrar Nuevo Lote</h2>
+    <ng-container *ngIf="activeProduct()">
+      <p>Agrega stock al producto: <strong>{{ activeProduct()!.name }}</strong> (SKU: {{ activeProduct()!.sku }})</p>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="activeProduct(); else loading">
+    <app-batch-form 
+      (save)="onSave($event)"
+      (cancel)="onCancel()">
+    </app-batch-form>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="loading-state">
+      <i class="fas fa-spinner fa-spin"></i> Cargando producto...
+    </div>
+  </ng-template>
+</div>
