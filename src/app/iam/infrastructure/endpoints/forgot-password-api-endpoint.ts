@@ -1,10 +1,9 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
-import { ForgotPasswordRequest } from '../requests/forgot-password.request';
 import { ForgotPasswordResponse } from '../responses/forgot-password-response';
 import { HttpClient } from '@angular/common/http';
 import { ForgotPasswordAssembler } from '../assemblers/forgot-password-assembler';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { GeneratePasswordRecoveryTokenCommand } from '../../domain/model/commands/generate-password-recovery-token.command';
 
 const forgotPasswordApiEndpointUrl = `${environment.apiBaseUrl}${environment.endpoints.iam.forgotPassword}`;

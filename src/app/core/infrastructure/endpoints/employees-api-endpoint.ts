@@ -1,7 +1,7 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { CreateEmployeeCommand } from '../../domain/model/commands/create-employee.command';
 import { UpdateEmployeeCommand } from '../../domain/model/commands/update-employee.command';
 import { EmployeeResource } from '../responses/employee-response';
@@ -12,7 +12,7 @@ const baseUrl = `${environment.apiBaseUrl}${environment.endpoints.core.employees
 
 export class EmployeesApiEndpoint extends BaseApi {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private createAssembler: CreateEmployeeAssembler,
     private updateAssembler: UpdateEmployeeAssembler
   ) { super(); }

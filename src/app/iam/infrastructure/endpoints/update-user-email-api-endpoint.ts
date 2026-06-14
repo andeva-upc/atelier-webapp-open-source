@@ -3,7 +3,7 @@ import { UpdateUserEmailResponse } from '../responses/update-user-email-response
 import { HttpClient } from '@angular/common/http';
 import { UpdateUserEmailAssembler } from '../assemblers/update-user-email-assembler';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { UpdateUserEmailCommand } from '../../domain/model/commands/update-user-email.command';
 
 const updateUserEmailApiEndpointUrl = `${environment.apiBaseUrl}${environment.endpoints.iam.updateUserEmail}`;

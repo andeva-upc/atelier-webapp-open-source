@@ -1,7 +1,7 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { environment } from '../../../../environments/environment.local';
+import { environment } from '../../../../environments/environment';
 import { CreateCustomerCommand } from '../../domain/model/commands/create-customer.command';
 import { UpdateCustomerCommand } from '../../domain/model/commands/update-customer.command';
 import { CustomerResource } from '../responses/customer-response';
@@ -12,7 +12,7 @@ const baseUrl = `${environment.apiBaseUrl}${environment.endpoints.core.customers
 
 export class CustomersApiEndpoint extends BaseApi {
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private createAssembler: CreateCustomerAssembler,
     private updateAssembler: UpdateCustomerAssembler
   ) { super(); }
