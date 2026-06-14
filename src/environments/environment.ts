@@ -23,6 +23,13 @@ export const environment = {
     operations: {
       services: '/services',
       workOrders: '/work-orders'
+    },
+    iot: {
+      obd2Devices: '/obd2-devices',
+      obd2DeviceRegistrations: '/obd2-device-registrations',
+      vehicles: '/vehicles',
+      customers: '/customers',
+      vhTelemetryBatches: '/vh_telemetry_batches'
     }
   }
 };
