@@ -2,7 +2,7 @@ import { BaseApi } from '../../../shared/infrastructure/base-api';
 import { SignInResponse } from '../responses/sign-in-response';
 import { HttpClient } from '@angular/common/http';
 import { SignInAssembler } from '../assemblers/sign-in-assembler';
-import { Observable, catchError, map } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { SignInCommand } from '../../domain/model/commands/sign-in.command';
 
