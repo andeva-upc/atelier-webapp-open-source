@@ -2,9 +2,9 @@ import { Component, OnInit, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { InventoryStore } from '../../../../application/inventory.store';
+import { InventoryStore } from '../../../application/inventory.store';
 import { ProductCardComponent } from '../../components/product-card/product-card';
-import { ProductResponse } from '../../../../infrastructure/responses/product.response';
+import { ProductResponse } from '../../../infrastructure/responses/product.response';
 
 @Component({
   selector: 'app-inventory-list',

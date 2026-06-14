@@ -1,10 +1,10 @@
 import { Component, OnInit, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InventoryStore } from '../../../../application/inventory.store';
+import { InventoryStore } from '../../../application/inventory.store';
 import { ProductFormComponent } from '../../components/product-form/product-form';
-import { CreateProductCommand } from '../../../../domain/model/commands/create-product.command';
-import { UpdateProductCommand } from '../../../../domain/model/commands/update-product.command';
+import { CreateProductCommand } from '../../../domain/model/commands/create-product.command';
+import { UpdateProductCommand } from '../../../domain/model/commands/update-product.command';
 
 @Component({
   selector: 'app-product-form-view',

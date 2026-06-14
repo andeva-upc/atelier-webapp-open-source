@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, computed } from '@angular/core';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { InventoryStore } from '../../../../application/inventory.store';
+import { InventoryStore } from '../../../application/inventory.store';
 
 @Component({
   selector: 'app-product-detail-view',
