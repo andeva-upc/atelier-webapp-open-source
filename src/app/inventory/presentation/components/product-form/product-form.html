@@ -22,6 +22,12 @@
       <span class="error-msg" *ngIf="hasError('category')">Seleccione una categoría válida</span>
     </div>
 
+    <div class="form-group" *ngIf="productForm.get('category')?.value === 'OTHER'">
+      <label for="customCategory">Especificar Categoría *</label>
+      <input id="customCategory" type="text" formControlName="customCategory" placeholder="Ej. Baterías" [class.error]="hasError('customCategory')">
+      <span class="error-msg" *ngIf="hasError('customCategory')">Especifique su categoría</span>
+    </div>
+
     <div class="form-group">
       <label for="salePrice">Precio de Venta ($) *</label>
       <input id="salePrice" type="number" step="0.01" formControlName="salePrice" placeholder="0.00" [class.error]="hasError('salePrice')">

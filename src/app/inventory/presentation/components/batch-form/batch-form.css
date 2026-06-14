@@ -18,17 +18,13 @@
   gap: 0.5rem;
 }
 
-.form-group.full-width {
-  grid-column: 1 / -1;
-}
-
 label {
   font-size: 0.875rem;
   font-weight: 600;
   color: #374151;
 }
 
-input, select, textarea {
+input {
   padding: 0.75rem 1rem;
   border: 1px solid #d1d5db;
   border-radius: 8px;
@@ -38,14 +34,14 @@ input, select, textarea {
   background-color: #f9fafb;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus {
   outline: none;
   border-color: var(--primary-color, #0071EB);
   background-color: white;
   box-shadow: 0 0 0 3px rgba(0, 113, 235, 0.1);
 }
 
-input.error, select.error {
+input.error {
   border-color: #ef4444;
   background-color: #fef2f2;
 }

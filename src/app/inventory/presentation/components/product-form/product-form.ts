@@ -24,25 +24,48 @@ export class ProductFormComponent implements OnInit {
     { value: 'TIRES', label: 'Llantas' },
     { value: 'SPARE_PARTS', label: 'Repuestos' },
     { value: 'ACCESSORIES', label: 'Accesorios' },
-    { value: 'FLUIDS', label: 'Fluidos/Aceites' }
+    { value: 'FLUIDS', label: 'Fluidos/Aceites' },
+    { value: 'OTHER', label: 'Otros' }
   ];
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    // Determine if initial category is predefined or custom
+    const isPredefined = !this.initialData?.category || this.categories.some(c => c.value === this.initialData?.category);
+    const categoryValue = isPredefined ? (this.initialData?.category || '') : 'OTHER';
+    const customCategoryValue = isPredefined ? '' : this.initialData?.category;
+
     this.productForm = this.fb.group({
-      category: [this.initialData?.category || '', Validators.required],
+      category: [categoryValue, Validators.required],
+      customCategory: [customCategoryValue],
       name: [this.initialData?.name || '', [Validators.required, Validators.maxLength(100)]],
       sku: [this.initialData?.sku || '', Validators.required],
       description: [this.initialData?.description || ''],
       salePrice: [this.initialData?.salePrice || null, [Validators.required, Validators.min(0)]],
       minimumStock: [this.initialData?.minimumStock || null, [Validators.required, Validators.min(0)]]
     });
+
+    // Add dynamic validation for custom category
+    this.productForm.get('category')?.valueChanges.subscribe(value => {
+      const customControl = this.productForm.get('customCategory');
+      if (value === 'OTHER') {
+        customControl?.setValidators([Validators.required]);
+      } else {
+        customControl?.clearValidators();
+      }
+      customControl?.updateValueAndValidity();
+    });
   }
 
   onSubmit(): void {
     if (this.productForm.valid) {
-      this.save.emit(this.productForm.value);
+      const formValue = { ...this.productForm.value };
+      if (formValue.category === 'OTHER') {
+        formValue.category = formValue.customCategory;
+      }
+      delete formValue.customCategory; // remove internal field
+      this.save.emit(formValue);
     } else {
       this.productForm.markAllAsTouched();
     }
