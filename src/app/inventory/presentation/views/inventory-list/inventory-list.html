@@ -1,0 +1,36 @@
+<div class="inventory-container">
+  <div class="inventory-header">
+    <div class="header-titles">
+      <h1>Inventario</h1>
+      <p>Gestiona los productos y repuestos de tu sucursal</p>
+    </div>
+    
+    <button class="add-product-btn" (click)="onAddProduct()">
+      <i class="fas fa-plus"></i>
+      Agregar Producto
+    </button>
+  </div>
+
+  <div class="products-grid" *ngIf="products() && products().length > 0; else emptyState">
+    @for (product of products(); track product.id) {
+      <app-product-card 
+        [product]="product"
+        (cardClick)="onProductClick($event)"
+        (addBatchClick)="onAddBatch($event)">
+      </app-product-card>
+    }
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fas fa-box-open"></i>
+      </div>
+      <h2>No hay productos en esta sucursal</h2>
+      <p>Comienza agregando tu primer producto al inventario.</p>
+      <button class="add-product-btn" (click)="onAddProduct()">
+        Agregar Producto
+      </button>
+    </div>
+  </ng-template>
+</div>
