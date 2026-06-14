@@ -7,7 +7,7 @@ export interface ProductResponse {
   name: string;
   sku: string;
   description: string;
-  currentSellingPrice: number;
+  salePrice: number;
   currentStock: number;
   minimumStock: number;
   batches?: ProductBatchResponse[];

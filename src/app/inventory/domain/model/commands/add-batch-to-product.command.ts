@@ -1,4 +1,4 @@
 export interface AddBatchToProductCommand {
-  initialQuantity: number;
+  quantity: number;
   acquisitionCost: number;
 }

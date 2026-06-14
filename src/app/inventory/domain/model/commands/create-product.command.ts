@@ -4,6 +4,6 @@ export interface CreateProductCommand {
   name: string;
   sku: string;
   description: string;
-  currentSellingPrice: number;
+  salePrice: number;
   minimumStock: number;
 }

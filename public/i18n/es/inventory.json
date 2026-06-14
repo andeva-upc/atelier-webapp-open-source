@@ -1,1 +1,43 @@
-﻿{}
+{
+  "title": "Inventario",
+  "addProduct": "Agregar Producto",
+  "addBatch": "Agregar Lote",
+  "searchPlaceholder": "Buscar producto...",
+  "noProductsFound": "No se encontraron productos.",
+  "table": {
+    "sku": "SKU",
+    "name": "Nombre",
+    "category": "Categoría",
+    "stock": "Stock",
+    "price": "Precio",
+    "actions": "Acciones"
+  },
+  "productForm": {
+    "title": "Nuevo Producto",
+    "category": "Categoría",
+    "categoryPlaceholder": "Selecciona una categoría",
+    "categoryOther": "Otro...",
+    "categoryCustom": "Escribe una categoría",
+    "name": "Nombre",
+    "sku": "SKU",
+    "description": "Descripción",
+    "salePrice": "Precio de Venta",
+    "minimumStock": "Stock Mínimo",
+    "cancel": "Cancelar",
+    "save": "Guardar Producto"
+  },
+  "batchForm": {
+    "title": "Agregar Lote de Producto",
+    "product": "Producto",
+    "productPlaceholder": "Selecciona un producto",
+    "quantity": "Cantidad",
+    "acquisitionCost": "Costo de Adquisición",
+    "cancel": "Cancelar",
+    "save": "Agregar Lote"
+  },
+  "dialog": {
+    "detailsTitle": "Detalles del Producto",
+    "batchesTitle": "Lotes Registrados",
+    "close": "Cerrar"
+  }
+}

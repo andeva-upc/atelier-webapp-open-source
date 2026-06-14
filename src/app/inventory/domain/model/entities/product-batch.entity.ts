@@ -1,5 +1,5 @@
 export interface ProductBatch {
-  id: string;
+  batchId: string;
   productId: string;
   branchId: string;
   initialQuantity: number;

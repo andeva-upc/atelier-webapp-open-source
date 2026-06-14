@@ -1,0 +1,82 @@
+.inventory-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-section h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+  color: #333;
+}
+
+.actions-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-field {
+  width: 300px;
+}
+
+/* Remove default padding from form field wrapper to align nicely */
+.search-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-header-cell {
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+
+.category-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.low-stock {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+mat-card {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .actions-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-field {
+    width: 100%;
+  }
+}
