@@ -10,7 +10,7 @@ import { AddBatchToProductCommand } from '../../domain/model/commands/add-batch-
 
 @Injectable({ providedIn: 'root' })
 export class ProductsApiEndpoint {
-  private readonly baseUrl = `${environment.apiBaseUrl}/products`;
+  private readonly baseUrl = `${environment.apiBaseUrl}/inventory/products`;
 
   constructor(private http: HttpClient) {}
 
