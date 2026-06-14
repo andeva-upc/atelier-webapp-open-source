@@ -1,82 +1,86 @@
 .inventory-container {
-  padding: 24px;
-  max-width: 1200px;
+  padding: 2rem;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-.header-section {
+.inventory-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-  gap: 16px;
+  margin-bottom: 2rem;
 }
 
-.header-section h1 {
+.header-titles h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary, #111827);
+  margin: 0 0 0.5rem 0;
+}
+
+.header-titles p {
+  color: #6b7280;
   margin: 0;
-  font-size: 28px;
-  font-weight: 500;
-  color: #333;
+  font-size: 1rem;
 }
 
-.actions-group {
+.add-product-btn {
+  background: var(--primary-color, #4f46e5);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
 }
 
-.search-field {
-  width: 300px;
+.add-product-btn:hover {
+  background: #4338ca;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.3);
 }
 
-/* Remove default padding from form field wrapper to align nicely */
-.search-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-  display: none;
+.add-product-btn:active {
+  transform: translateY(0);
 }
 
-.mat-table {
-  width: 100%;
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
 }
 
-.mat-header-cell {
-  font-weight: 600;
-  color: #555;
-  font-size: 14px;
-}
-
-.category-badge {
-  background: #e3f2fd;
-  color: #1976d2;
-  padding: 4px 12px;
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: white;
   border-radius: 16px;
-  font-size: 12px;
-  font-weight: 500;
+  border: 1px dashed #d1d5db;
+  text-align: center;
 }
 
-.low-stock {
-  color: #d32f2f;
-  font-weight: bold;
+.empty-icon {
+  font-size: 4rem;
+  color: #9ca3af;
+  margin-bottom: 1.5rem;
 }
 
-mat-card {
-  overflow: hidden;
-  border-radius: 8px;
+.empty-state h2 {
+  font-size: 1.5rem;
+  color: #374151;
+  margin: 0 0 0.5rem 0;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .header-section {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .actions-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .search-field {
-    width: 100%;
-  }
+.empty-state p {
+  color: #6b7280;
+  margin: 0 0 2rem 0;
 }

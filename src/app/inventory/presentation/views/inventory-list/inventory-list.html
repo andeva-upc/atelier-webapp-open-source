@@ -1,86 +1,36 @@
 <div class="inventory-container">
-  <div class="header-section">
-    <h1>{{ 'title' | translate }}</h1>
-    
-    <div class="actions-group">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label>{{ 'searchPlaceholder' | translate }}</mat-label>
-        <mat-icon matPrefix>search</mat-icon>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Llantas" #input>
-      </mat-form-field>
-      
-      <button mat-flat-button color="primary" routerLink="/inventory/products/new">
-        <mat-icon>add</mat-icon>
-        {{ 'addProduct' | translate }}
-      </button>
-      <button mat-stroked-button color="accent" routerLink="/inventory/batches/new">
-        <mat-icon>add_box</mat-icon>
-        {{ 'addBatch' | translate }}
-      </button>
+  <div class="inventory-header">
+    <div class="header-titles">
+      <h1>Inventario</h1>
+      <p>Gestiona los productos y repuestos de tu sucursal</p>
     </div>
+    
+    <button class="add-product-btn" (click)="onAddProduct()">
+      <i class="fas fa-plus"></i>
+      Agregar Producto
+    </button>
   </div>
 
-  <mat-card>
-    <mat-table [dataSource]="filteredData" class="mat-elevation-z8">
-      
-      <!-- SKU Column -->
-      <ng-container matColumnDef="sku">
-        <mat-header-cell *matHeaderCellDef> {{ 'table.sku' | translate }} </mat-header-cell>
-        <mat-cell *matCellDef="let product"> {{product.sku}} </mat-cell>
-      </ng-container>
+  <div class="products-grid" *ngIf="products() && products().length > 0; else emptyState">
+    @for (product of products(); track product.id) {
+      <app-product-card 
+        [product]="product"
+        (cardClick)="onProductClick($event)"
+        (addBatchClick)="onAddBatch($event)">
+      </app-product-card>
+    }
+  </div>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef> {{ 'table.name' | translate }} </mat-header-cell>
-        <mat-cell *matCellDef="let product"> {{product.name}} </mat-cell>
-      </ng-container>
-
-      <!-- Category Column -->
-      <ng-container matColumnDef="category">
-        <mat-header-cell *matHeaderCellDef> {{ 'table.category' | translate }} </mat-header-cell>
-        <mat-cell *matCellDef="let product">
-          <span class="category-badge">{{product.category}}</span>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Stock Column -->
-      <ng-container matColumnDef="stock">
-        <mat-header-cell *matHeaderCellDef> {{ 'table.stock' | translate }} </mat-header-cell>
-        <mat-cell *matCellDef="let product"> 
-          <span [class.low-stock]="product.currentStock <= product.minimumStock">
-            {{product.currentStock}}
-          </span>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Price Column -->
-      <ng-container matColumnDef="price">
-        <mat-header-cell *matHeaderCellDef> {{ 'table.price' | translate }} </mat-header-cell>
-        <mat-cell *matCellDef="let product"> {{product.currentSellingPrice | currency}} </mat-cell>
-      </ng-container>
-
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> {{ 'table.actions' | translate }} </mat-header-cell>
-        <mat-cell *matCellDef="let product">
-          <button mat-icon-button color="primary" [routerLink]="['/inventory/products', product.id, 'edit']" matTooltip="Editar">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteProduct(product.id)" matTooltip="Eliminar">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="6" style="text-align: center; padding: 2rem;">
-          {{ 'noProductsFound' | translate }} "{{input.value}}"
-        </td>
-      </tr>
-    </mat-table>
-  </mat-card>
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fas fa-box-open"></i>
+      </div>
+      <h2>No hay productos en esta sucursal</h2>
+      <p>Comienza agregando tu primer producto al inventario.</p>
+      <button class="add-product-btn" (click)="onAddProduct()">
+        Agregar Producto
+      </button>
+    </div>
+  </ng-template>
 </div>

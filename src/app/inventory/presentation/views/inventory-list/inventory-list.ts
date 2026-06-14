@@ -1,70 +1,44 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { ProductsApiEndpoint } from '../../../infrastructure/endpoints/products.endpoint';
-import { ProductResponse } from '../../../infrastructure/responses/product.response';
-import { MatCardModule } from '@angular/material/card';
+import { InventoryStore } from '../../../../application/inventory.store';
+import { ProductCardComponent } from '../../components/product-card/product-card';
+import { ProductResponse } from '../../../../infrastructure/responses/product.response';
 
 @Component({
   selector: 'app-inventory-list',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
+    CommonModule,
     TranslateModule,
-    MatTableModule, 
-    MatButtonModule, 
-    MatIconModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCardModule
+    ProductCardComponent
   ],
   templateUrl: './inventory-list.html',
   styleUrls: ['./inventory-list.css']
 })
 export class InventoryListComponent implements OnInit {
-  displayedColumns: string[] = ['sku', 'name', 'category', 'stock', 'price', 'actions'];
-  dataSource: ProductResponse[] = [];
-  filteredData: ProductResponse[] = [];
-  
-  private productsApi = inject(ProductsApiEndpoint);
+  private store = inject(InventoryStore);
+  private router = inject(Router);
+
+  // Expose the signal from the store
+  products = this.store.branchProducts;
 
   ngOnInit(): void {
-    this.loadProducts();
-  }
-
-  loadProducts() {
-    // We are currently mocking the branchId until the auth context provides it.
+    // In a real scenario, this branchId comes from the active session/core store.
     const mockBranchId = '90ce7890-482d-4f27-a006-dc2a3be6be3f';
-    this.productsApi.getByBranchId(mockBranchId).subscribe({
-      next: (products) => {
-        this.dataSource = products;
-        this.filteredData = products;
-      },
-      error: (err) => console.error('Error loading products', err)
-    });
+    this.store.loadProductsByBranchId(mockBranchId);
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.filteredData = this.dataSource.filter(product => 
-      product.name.toLowerCase().includes(filterValue) || 
-      product.sku.toLowerCase().includes(filterValue) ||
-      product.category.toLowerCase().includes(filterValue)
-    );
+  onAddProduct(): void {
+    this.router.navigate(['/inventory/products/new']);
   }
 
-  deleteProduct(productId: string) {
-    if (confirm('¿Estás seguro de eliminar este producto?')) {
-      this.productsApi.delete(productId).subscribe(() => {
-        this.loadProducts();
-      });
-    }
+  onProductClick(product: ProductResponse): void {
+    this.router.navigate(['/inventory/products', product.id]);
+  }
+
+  onAddBatch(product: ProductResponse): void {
+    this.router.navigate(['/inventory/products', product.id, 'batches', 'new']);
   }
 }
