@@ -1,1 +1,15 @@
-﻿{}
+{
+  "user-profile": {
+    "loading": "Cargando..."
+  },
+  "role-selection": {
+    "no_roles": "No tienes perfiles asociados a esta cuenta.",
+    "sign_out": "Cerrar Sesión",
+    "title": "¿Con qué perfil deseas ingresar?",
+    "roles": {
+      "CUSTOMER": "Cliente",
+      "OWNER": "Propietario",
+      "EMPLOYEE": "Mecánico"
+    }
+  }
+}

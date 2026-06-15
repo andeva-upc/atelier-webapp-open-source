@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IamStore } from '../../../application/iam.store';
@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ArrowBack } from '../../../../shared/presentation/components/arrow-back/arrow-back';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sign-in',
@@ -25,15 +26,18 @@ import { ArrowBack } from '../../../../shared/presentation/components/arrow-back
     MatCheckboxModule,
     NgIf,
     RouterLink,
-    ArrowBack
+    ArrowBack,
+    TranslateModule
   ],
   templateUrl: './sign-in-form.html',
   styleUrls: ['./sign-in-form.css']
 })
 export class SignInComponent {
   private fb = inject(FormBuilder);
-  private iamStore = inject(IamStore);
+  public iamStore = inject(IamStore);
   private router = inject(Router);
+
+  hidePassword = signal(true);
 
   signInForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -49,9 +53,9 @@ export class SignInComponent {
       this.signInForm.markAllAsTouched();
       return;
     }
-    const { email, password } = this.signInForm.value;
+    const { email, password, rememberMe } = this.signInForm.value;
     const command = new SignInCommand({ email, password });
-    this.iamStore.signIn(command, this.router);
+    this.iamStore.signIn(command, rememberMe, this.router);
   }
 
   onGoogleSignIn(): void {

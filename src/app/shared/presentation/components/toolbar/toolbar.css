@@ -45,8 +45,16 @@
   .mobile-menu-btn {
     display: flex;
   }
-  .lang-text {
-    display: none;
+  .language-wrapper,
+  .branch-wrapper {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  ::ng-deep .custom-menu .mobile-only,
+  .mobile-only {
+    display: none !important;
   }
 }
 
@@ -148,6 +156,15 @@
 .lang-text {
   font-weight: 500;
   margin: 0 0.2rem;
+}
+
+.branch-text {
+  font-weight: 500;
+  margin: 0 0.2rem;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 ::ng-deep .custom-menu.mat-mdc-menu-panel {

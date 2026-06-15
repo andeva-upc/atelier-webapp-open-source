@@ -7,43 +7,43 @@
 
     <div class="form-container">
       <h1 class="main-heading">
-        Bienvenido a <span class="brand-text">atelier.</span><br/>
-        Regístrate para iniciar!
+        {{ 'sign-up.welcome' | translate }} <span class="brand-text">atelier.</span><br/>
+        {{ 'sign-up.subtitle1' | translate }}
       </h1>
-      <p class="subtitle">Ingrese su datos personales para registrarse</p>
+      <p class="subtitle">{{ 'sign-up.subtitle2' | translate }}</p>
 
       <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="auth-form">
 
         <!-- Email Field -->
         <mat-form-field appearance="outline" class="full-width">
-          <input matInput type="email" formControlName="email" placeholder="Email">
+          <input matInput type="email" formControlName="email" [placeholder]="'sign-up.email_placeholder' | translate">
           <i class="pi pi-user suffix-icon" matSuffix></i>
-          <mat-error *ngIf="emailControl?.hasError('required')">El email es requerido</mat-error>
-          <mat-error *ngIf="emailControl?.hasError('email')">Debe ser un email válido</mat-error>
+          <mat-error *ngIf="emailControl?.hasError('required')">{{ 'sign-up.email_required' | translate }}</mat-error>
+          <mat-error *ngIf="emailControl?.hasError('email')">{{ 'sign-up.email_invalid' | translate }}</mat-error>
         </mat-form-field>
 
         <!-- Password Field -->
         <mat-form-field appearance="outline" class="full-width">
-          <input matInput type="password" formControlName="password" placeholder="Contraseña">
+          <input matInput type="password" formControlName="password" [placeholder]="'sign-up.password_placeholder' | translate">
           <i class="pi pi-lock suffix-icon" matSuffix></i>
-          <mat-error *ngIf="passwordControl?.hasError('required')">La contraseña es requerida</mat-error>
-          <mat-error *ngIf="passwordControl?.hasError('minlength')">Mínimo 6 caracteres</mat-error>
+          <mat-error *ngIf="passwordControl?.hasError('required')">{{ 'sign-up.password_required' | translate }}</mat-error>
+          <mat-error *ngIf="passwordControl?.hasError('minlength')">{{ 'sign-up.password_min' | translate }}</mat-error>
         </mat-form-field>
 
         <!-- Terms and Conditions -->
         <div class="terms-container">
           <mat-checkbox formControlName="terms" color="primary">
-            Acepto los Términos y Condiciones
+            {{ 'sign-up.terms' | translate }}
           </mat-checkbox>
         </div>
 
         <!-- Action Buttons -->
         <div class="action-buttons">
           <button mat-flat-button color="primary" type="submit" class="submit-btn">
-            Registrarse
+            {{ 'sign-up.sign_up_btn' | translate }}
           </button>
           <button mat-stroked-button color="primary" type="button" class="login-link-btn" routerLink="/sign-in">
-            Iniciar Sesión
+            {{ 'sign-up.sign_in_btn' | translate }}
           </button>
         </div>
 
@@ -51,8 +51,8 @@
 
       <!-- Google Sign In -->
       <div class="social-login">
-        <p class="social-text">O ingresa con</p>
-        <button mat-icon-button class="google-btn" (click)="onGoogleSignIn()" type="button" aria-label="Ingresa con Google">
+        <p class="social-text">{{ 'sign-up.social_login' | translate }}</p>
+        <button mat-icon-button class="google-btn" (click)="onGoogleSignIn()" type="button" [attr.aria-label]="'sign-up.google_aria' | translate">
           <h2 style="font-family: Arimo; font-weight: bold; color: #4b5563; margin: 0;">G</h2>
         </button>
       </div>

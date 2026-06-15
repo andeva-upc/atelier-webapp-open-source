@@ -14,6 +14,14 @@
   "page-not-found": {
     "title": "Page Not Found",
     "content": "The path <strong>{{ invalid_path }}</strong> is not available.",
-    "go-home": "Return to Home"
+    "go-home": "Go Home"
+  },
+  "toolbar": {
+    "profile": "Profile",
+    "branch": "Branch:",
+    "language": "Language:"
+  },
+  "modal": {
+    "close": "Close modal"
   }
 }

@@ -1,1 +1,43 @@
-﻿{}
+{
+  "logout": "Cerrar sesión",
+  "profile": {
+    "loading": "Cargando...",
+    "profile": "Perfil",
+    "branch": "Sede:",
+    "language": "Idioma:"
+  },
+  "sign-in": {
+    "welcome": "Bienvenido a",
+    "subtitle1": "Tu taller te espera para continuar!",
+    "subtitle2": "Ingrese su datos personales para continuar",
+    "email_placeholder": "Email",
+    "email_required": "El email es requerido",
+    "email_invalid": "Debe ser un email válido",
+    "password_placeholder": "Contraseña",
+    "password_required": "La contraseña es requerida",
+    "password_min": "Mínimo 6 caracteres",
+    "remember_me": "Recuérdame",
+    "recover_password": "Recover password",
+    "sign_in_btn": "Iniciar Sesión",
+    "sign_up_btn": "Registrarse",
+    "social_login": "O ingresa con",
+    "google_aria": "Ingresa con Google",
+    "error_invalid_credentials": "Credenciales inválidas. Por favor, verifique su email y contraseña."
+  },
+  "sign-up": {
+    "welcome": "Bienvenido a",
+    "subtitle1": "Regístrate para iniciar!",
+    "subtitle2": "Ingrese su datos personales para registrarse",
+    "email_placeholder": "Email",
+    "email_required": "El email es requerido",
+    "email_invalid": "Debe ser un email válido",
+    "password_placeholder": "Contraseña",
+    "password_required": "La contraseña es requerida",
+    "password_min": "Mínimo 6 caracteres",
+    "terms": "Acepto los Términos y Condiciones",
+    "sign_up_btn": "Registrarse",
+    "sign_in_btn": "Iniciar Sesión",
+    "social_login": "O ingresa con",
+    "google_aria": "Ingresa con Google"
+  }
+}
