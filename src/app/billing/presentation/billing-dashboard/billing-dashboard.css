@@ -6,9 +6,12 @@
   --billing-accent: #FF6D00;
   --billing-surface: #FFFFFF;
   --billing-bg: #FFFFFF;
-  --billing-text-primary: #212121; /* Darker, crisper text */
-  --billing-text-secondary: #757575; /* Neutral gray */
-  --billing-divider: #E5E7EB; /* Hairline border color */
+  --billing-text-primary: #212121;
+  /* Darker, crisper text */
+  --billing-text-secondary: #757575;
+  /* Neutral gray */
+  --billing-divider: #E5E7EB;
+  /* Hairline border color */
   --billing-success: #10B981;
   --billing-failure: #EF4444;
 
@@ -51,26 +54,17 @@
 }
 
 .charts-section {
-  background: var(--billing-surface);
-  border-radius: var(--billing-radius-md);
-  padding: 32px;
-  border: 1px solid var(--billing-divider);
-  /* Removed heavy shadow, keeping it extremely subtle to emphasize borders */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.charts-section:hover {
-  border-color: #D1D5DB;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .transactions-section {
   background: var(--billing-surface);
   border-radius: var(--billing-radius-md);
   overflow: hidden;
-  border: 1px solid var(--billing-divider);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 /* Premium Toggle Group Overrides */
@@ -83,40 +77,86 @@
 ::ng-deep .premium-toggle.mat-button-toggle-group {
   background-color: #FFFFFF;
   border-radius: 50px;
-  border: 1px solid var(--billing-divider);
+  border: none;
   padding: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   font-family: var(--font-body);
+  position: relative;
+  z-index: 1;
+}
+
+/* The Sliding Pill */
+::ng-deep .premium-toggle::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: 140px; /* Fixed width for uniform tabs */
+  background-color: var(--billing-primary);
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 113, 235, 0.3);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 0;
+}
+
+::ng-deep .premium-toggle[data-active="quotes"]::before {
+  transform: translateX(0);
+}
+::ng-deep .premium-toggle[data-active="vouchers"]::before {
+  transform: translateX(140px);
+}
+::ng-deep .premium-toggle[data-active="expenses"]::before {
+  transform: translateX(280px);
 }
 
 ::ng-deep .premium-toggle .mat-button-toggle {
-  border: none !important; /* Remove separators */
-  background: transparent;
+  border: none !important;
+  background: transparent !important;
   border-radius: 50px;
+  overflow: visible; /* Let text show, background is handled by ::before */
+  width: 140px; /* Force uniform width for sliding math */
+  z-index: 1;
 }
 
 ::ng-deep .premium-toggle .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
   line-height: 40px;
-  padding: 0 32px;
+  padding: 0;
+  text-align: center;
+  width: 100%;
   font-size: 14px;
   font-weight: 500;
   color: var(--billing-text-secondary);
   border-radius: 50px;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
+  background-color: transparent !important;
+}
+
+::ng-deep .premium-toggle .mat-button-toggle-button {
+  border-radius: 50px;
+  background-color: transparent !important;
 }
 
 ::ng-deep .premium-toggle .mat-button-toggle-checked {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 ::ng-deep .premium-toggle .mat-button-toggle-checked .mat-button-toggle-label-content {
-  background-color: var(--billing-primary);
+  background-color: transparent !important; /* Handled by ::before slider */
   color: #FFFFFF;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(0, 113, 235, 0.3);
+  box-shadow: none !important; /* Handled by ::before slider */
+}
+
+/* Force inner overlays to be transparent so they don't hide the blue pill */
+::ng-deep .premium-toggle .mat-button-toggle-focus-overlay,
+::ng-deep .premium-toggle .mat-button-toggle-ripple,
+::ng-deep .premium-toggle .mat-ripple {
+  background-color: transparent !important;
+  opacity: 0 !important;
 }
 
 /* Remove Material Button Toggle divider */
-::ng-deep .premium-toggle.mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
+::ng-deep .premium-toggle.mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle {
   border-left: none;
 }
