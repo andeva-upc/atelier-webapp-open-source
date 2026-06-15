@@ -11,6 +11,7 @@
         </mat-option>
       </mat-select>
       <mat-error *ngIf="checkoutForm.get('quoteId')?.hasError('required')">Quote is required</mat-error>
+      <mat-error *ngIf="checkoutForm.get('quoteId')?.hasError('zeroTotal')">Cannot checkout a quote with a total of $0.00</mat-error>
     </mat-form-field>
 
     <div class="voucher-type-section">
