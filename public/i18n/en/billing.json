@@ -13,7 +13,11 @@
       "fromVouchers": "From Vouchers",
       "expenses": "Total Expenses",
       "calculated": "Calculated",
-      "balance": "Balance"
+      "balance": "Balance",
+      "approved_quotes": "Approved Quotes",
+      "current_status": "Current Status",
+      "pending_quotes": "Pending Quotes",
+      "in_draft": "In Draft"
     },
     "chart": {
       "title": "Income vs Expenses"

@@ -13,7 +13,11 @@
       "fromVouchers": "De Comprobantes",
       "expenses": "Gastos Totales",
       "calculated": "Calculado",
-      "balance": "Balance"
+      "balance": "Balance",
+      "approved_quotes": "Cotizaciones Aprobadas",
+      "current_status": "Estado Actual",
+      "pending_quotes": "Cotizaciones Pendientes",
+      "in_draft": "En Borrador"
     },
     "chart": {
       "title": "Ingresos vs Gastos"
