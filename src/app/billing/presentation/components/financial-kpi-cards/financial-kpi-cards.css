@@ -1,1 +1,41 @@
-/* Placeholder for Commit 3 */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.kpi-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+.kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.kpi-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  color: white;
+  margin-right: 16px;
+}
+
+.income-card .kpi-icon { background-color: #4CAF50; }
+.expense-card .kpi-icon { background-color: #F44336; }
+.approved-card .kpi-icon { background-color: #2196F3; }
+.pending-card .kpi-icon { background-color: #FF9800; }
+
+.kpi-value {
+  margin-top: 16px;
+  margin-bottom: 0;
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+}
