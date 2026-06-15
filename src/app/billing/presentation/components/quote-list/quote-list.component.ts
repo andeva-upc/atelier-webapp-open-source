@@ -14,5 +14,5 @@ import { QuoteResource } from '../../../infrastructure/responses/billing-respons
 export class QuoteListComponent {
   @Input({ required: true }) quotes: QuoteResource[] = [];
   
-  displayedColumns: string[] = ['id', 'customerName', 'description', 'basePrice', 'totalPrice', 'status'];
+  displayedColumns: string[] = ['id', 'workOrderId', 'subtotalAmount', 'discountPercentage', 'totalAmount', 'status'];
 }

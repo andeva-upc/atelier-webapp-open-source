@@ -44,9 +44,7 @@ export class CheckoutDialogComponent implements OnInit {
     this.checkoutForm.get('quoteId')?.valueChanges.subscribe(quoteId => {
       const selectedQuote = this.data.approvedQuotes.find(q => q.id === quoteId);
       if (selectedQuote) {
-        this.checkoutForm.patchValue({ customerName: selectedQuote.customerName });
-        
-        if (selectedQuote.totalPrice <= 0) {
+        if (selectedQuote.totalAmount <= 0) {
           this.checkoutForm.get('quoteId')?.setErrors({ zeroTotal: true });
         }
       }

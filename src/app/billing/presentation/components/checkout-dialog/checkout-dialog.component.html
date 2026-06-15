@@ -7,7 +7,7 @@
       <mat-label>Select Approved Quote</mat-label>
       <mat-select formControlName="quoteId">
         <mat-option *ngFor="let quote of data.approvedQuotes" [value]="quote.id">
-          {{ quote.customerName }} - {{ quote.totalPrice | currency }} (ID: {{ quote.id.substring(0, 8) }})
+          WO: {{ quote.workOrderId.substring(0, 8) }} - {{ quote.totalAmount | currency }} (ID: {{ quote.id.substring(0, 8) }})
         </mat-option>
       </mat-select>
       <mat-error *ngIf="checkoutForm.get('quoteId')?.hasError('required')">Quote is required</mat-error>
