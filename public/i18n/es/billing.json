@@ -12,6 +12,8 @@
       "income": "Ingresos Totales",
       "fromVouchers": "De Comprobantes",
       "expenses": "Gastos Totales",
+      "pending_balance": "Saldo Pendiente",
+      "from_unpaid": "Por Cobrar",
       "calculated": "Calculado",
       "balance": "Balance",
       "approved_quotes": "Cotizaciones Aprobadas",
@@ -20,7 +22,7 @@
       "in_draft": "En Borrador"
     },
     "chart": {
-      "title": "Ingresos vs Gastos"
+      "title": "Ingresos vs Saldo Pendiente"
     },
     "checkout": {
       "title": "Cobrar y Emitir Comprobante",

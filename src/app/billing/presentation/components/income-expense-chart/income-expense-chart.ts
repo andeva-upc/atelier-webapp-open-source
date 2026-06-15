@@ -69,9 +69,9 @@ export class IncomeExpenseChartComponent implements OnDestroy {
 
   private getChartData(stats: FinancialStats) {
     return {
-      labels: ['Income', 'Expenses'],
+      labels: ['Income', 'Pending Balance'],
       datasets: [{
-        data: [stats.totalIncome || 0, stats.totalExpenses || 0],
+        data: [stats.totalIncome || 0, stats.pendingBalance || 0],
         backgroundColor: [
           '#10B981', // Success Color
           '#EF4444'  // Failure Color

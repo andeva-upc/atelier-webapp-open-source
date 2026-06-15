@@ -11,15 +11,15 @@
     </mat-card-content>
   </mat-card>
 
-  <!-- Total Expenses -->
-  <mat-card class="kpi-card expense-card">
+  <!-- Pending Balance -->
+  <mat-card class="kpi-card pending-balance-card">
     <mat-card-header>
-      <mat-icon mat-card-avatar class="kpi-icon">trending_down</mat-icon>
-      <mat-card-title>{{ 'billing.kpi.expenses' | translate }}</mat-card-title>
-      <mat-card-subtitle>{{ 'billing.kpi.calculated' | translate }}</mat-card-subtitle>
+      <mat-icon mat-card-avatar class="kpi-icon">account_balance_wallet</mat-icon>
+      <mat-card-title>{{ 'billing.kpi.pending_balance' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'billing.kpi.from_unpaid' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <h2 class="kpi-value">{{ stats().totalExpenses | currency }}</h2>
+      <h2 class="kpi-value">{{ stats().pendingBalance | currency }}</h2>
     </mat-card-content>
   </mat-card>
 

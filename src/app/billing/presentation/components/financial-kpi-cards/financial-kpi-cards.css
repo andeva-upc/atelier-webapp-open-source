@@ -79,7 +79,7 @@
   border-color: rgba(16, 185, 129, 0.1);
   color: var(--billing-success);
 }
-.expense-card .kpi-icon { 
+.pending-balance-card .kpi-icon { 
   background-color: rgba(239, 68, 68, 0.05); 
   border-color: rgba(239, 68, 68, 0.1);
   color: var(--billing-failure);

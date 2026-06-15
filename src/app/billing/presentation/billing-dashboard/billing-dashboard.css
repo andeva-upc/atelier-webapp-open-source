@@ -15,8 +15,8 @@
   --billing-radius-md: 16px;
 
   /* Typography variables */
-  --font-display: "Zizou Slab", serif;
-  --font-body: "Mona Sans", "Roboto", sans-serif;
+  --font-display: "Arimo", sans-serif;
+  --font-body: "Mona Sans", sans-serif;
 
   padding: 40px;
   display: flex;
