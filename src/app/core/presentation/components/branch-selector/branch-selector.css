@@ -1,0 +1,87 @@
+.menu-item-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.menu-icon {
+  font-size: 1.2rem;
+  color: #71717a;
+}
+
+.desktop-only {
+  display: none;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #212121;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+}
+
+.user-button:hover {
+  background: rgba(0, 113, 235, 0.08);
+}
+
+.user-button i {
+  font-size: 14px;
+  color: #999;
+  transition: transform 0.2s ease;
+}
+
+.user-button:hover i {
+  color: #0071EB;
+}
+
+.pi-map-marker {
+  font-size: 1.2rem;
+  color: #71717a;
+}
+
+.branch-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #18181b;
+}
+
+.custom-menu-item {
+  width: 100%;
+  padding: 0 16px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: #18181b;
+  font-family: inherit;
+  font-size: 1rem;
+}
+.custom-menu-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.pi-chevron-down {
+  font-size: 0.8rem;
+  color: #71717a;
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: block;
+  }
+  .mobile-only {
+    display: none !important;
+  }
+}
