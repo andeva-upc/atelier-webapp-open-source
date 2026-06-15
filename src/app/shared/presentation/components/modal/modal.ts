@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matClose } from '@ng-icons/material-icons/baseline';
 
@@ -12,7 +13,7 @@ import { matClose } from '@ng-icons/material-icons/baseline';
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [CommonModule, NgIcon],
+  imports: [CommonModule, NgIcon, TranslateModule],
   providers: [
     provideIcons({ matClose })
   ],

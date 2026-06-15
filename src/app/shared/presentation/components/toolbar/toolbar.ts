@@ -3,13 +3,27 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { LayoutService } from '../layout/layout.service';
-import {Profile} from '../../../../iam/presentation/components/profile/profile';
+
+import { SharedLanguageSelectorComponent } from '../language-selector/language-selector';
+import { CoreBranchSelectorComponent } from '../../../../core/presentation/components/branch-selector/branch-selector';
+import { CoreUserInfoComponent } from '../../../../core/presentation/components/user-profile-button/user-profile-button';
+import { IamLogoutButtonComponent } from '../../../../iam/presentation/components/logout-menu-item/logout-menu-item';
 
 @Component({
   selector: 'app-toolbar',
-  imports: [CommonModule, MatToolbarModule, MatMenuModule, MatBadgeModule, Profile],
+  imports: [
+    CommonModule, 
+    MatToolbarModule, 
+    MatMenuModule, 
+    MatBadgeModule,
+    TranslateModule,
+    SharedLanguageSelectorComponent,
+    CoreBranchSelectorComponent,
+    CoreUserInfoComponent,
+    IamLogoutButtonComponent
+  ],
   templateUrl: './toolbar.html',
   styleUrl: './toolbar.css',
 })

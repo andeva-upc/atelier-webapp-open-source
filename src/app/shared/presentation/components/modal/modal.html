@@ -6,7 +6,7 @@
         <div class="modal-title-area">
           <ng-content select="[modal-title]"></ng-content>
         </div>
-        <button class="btn-close" (click)="onClose()" aria-label="Cerrar modal">
+        <button class="btn-close" (click)="onClose()" [attr.aria-label]="'modal.close' | translate">
           <ng-icon name="matClose" class="close-icon"></ng-icon>
         </button>
       </header>
