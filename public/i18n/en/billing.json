@@ -1,1 +1,67 @@
-{}
+{
+  "billing": {
+    "dashboard": {
+      "title": "Billing Dashboard"
+    },
+    "tabs": {
+      "quotes": "Quotes",
+      "vouchers": "Vouchers",
+      "expenses": "Expenses"
+    },
+    "kpi": {
+      "income": "Total Income",
+      "expenses": "Total Expenses",
+      "balance": "Balance"
+    },
+    "chart": {
+      "title": "Income vs Expenses"
+    },
+    "checkout": {
+      "title": "Checkout & Emit Voucher",
+      "select_quote": "Select Approved Quote",
+      "quote_required": "Quote is required",
+      "zero_total": "Cannot checkout a quote with a total of $0.00",
+      "voucher_type": "Voucher Type:",
+      "receipt": "Receipt (Boleta)",
+      "invoice": "Invoice (Factura)",
+      "customer_id": "Customer ID (DNI/RUC)",
+      "customer_id_required": "Customer ID is required",
+      "customer_name": "Customer Name",
+      "customer_name_required": "Customer Name is required",
+      "customer_email": "Customer Email",
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email format",
+      "cancel": "Cancel",
+      "emit": "Emit Voucher"
+    },
+    "expense_list": {
+      "empty_title": "Fixed Expenses Coming Soon",
+      "empty_subtitle": "We are currently implementing the fixed operational expenses tracking.",
+      "empty_icon_aria": "Expenses Coming Soon"
+    },
+    "income_list": {
+      "title": "Vouchers List",
+      "emit_btn": "+ Emit Voucher",
+      "columns": {
+        "id": "Voucher ID",
+        "customer": "Customer",
+        "type": "Type",
+        "total_amount": "Total Amount",
+        "total_paid": "Total Paid",
+        "status": "Status"
+      },
+      "empty": "No vouchers found."
+    },
+    "quote_list": {
+      "columns": {
+        "id": "Quote ID",
+        "work_order": "Work Order",
+        "subtotal": "Subtotal",
+        "discount": "Discount",
+        "total_amount": "Total Amount",
+        "status": "Status"
+      },
+      "empty": "No quotes found."
+    }
+  }
+}
