@@ -1,21 +1,57 @@
 <div class="toolbar-item user-wrapper">
   <button [matMenuTriggerFor]="userMenu" class="user-button" type="button">
     <div class="user-avatar">{{ userInitials() }}</div>
-    <span class="user-name">{{ currentUser().name }}</span>
+    <span class="user-name">{{ userName() || ('profile.loading' | translate) }}</span>
     <i class="pi pi-chevron-down"></i>
   </button>
   <mat-menu #userMenu="matMenu" class="custom-menu">
     <button mat-menu-item>
-      <div class="menu-item-content">
+      <span class="menu-item-content">
         <i class="pi pi-user menu-icon"></i>
-        <span class="menu-text">Perfil</span>
-      </div>
+        <span class="menu-text">{{ 'profile.profile' | translate }}</span>
+      </span>
     </button>
-    <button mat-menu-item>
-      <div class="menu-item-content">
+    <!-- Sub-menu de Sede (Sólo Móvil) -->
+    @if (activeRole().includes('OWNER') && currentBranch()) {
+      <button mat-menu-item [matMenuTriggerFor]="branchSubMenu" class="mobile-only">
+        <span class="menu-item-content">
+          <i class="pi pi-map-marker menu-icon"></i>
+          <span class="menu-text">{{ 'profile.branch' | translate }} {{ currentBranch()?.name }}</span>
+        </span>
+      </button>
+    }
+
+    <!-- Sub-menu de Idioma (Sólo Móvil) -->
+    <button mat-menu-item [matMenuTriggerFor]="langSubMenu" class="mobile-only">
+      <span class="menu-item-content">
+        <i class="pi pi-globe menu-icon"></i>
+        <span class="menu-text">{{ 'profile.language' | translate }} {{ currentLang() | uppercase }}</span>
+      </span>
+    </button>
+
+    <button mat-menu-item (click)="onSignOut()">
+      <span class="menu-item-content">
         <i class="pi pi-sign-out menu-icon"></i>
-        <span class="menu-text">Cerrar sesión</span>
-      </div>
+        <span class="menu-text">{{ 'logout' | translate }}</span>
+      </span>
+    </button>
+  </mat-menu>
+
+  <!-- Definición de sub-menus -->
+  <mat-menu #branchSubMenu="matMenu" class="custom-menu">
+    @for (branch of currentWorkshopBranches(); track branch.id) {
+      <button mat-menu-item (click)="onBranchSelect(branch)">
+        <span class="menu-text">{{ branch.name }}</span>
+      </button>
+    }
+  </mat-menu>
+
+  <mat-menu #langSubMenu="matMenu" class="custom-menu">
+    <button mat-menu-item (click)="switchLanguage('es')">
+      <span class="menu-text">Español</span>
+    </button>
+    <button mat-menu-item (click)="switchLanguage('en')">
+      <span class="menu-text">English</span>
     </button>
   </mat-menu>
 </div>
