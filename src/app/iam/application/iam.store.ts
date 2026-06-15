@@ -1,5 +1,4 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { User } from '../domain/model/entities/user.entity';
 import { SignInCommand } from '../domain/model/commands/sign-in.command';
 import { Router } from '@angular/router';
 import { IamApi } from '../infrastructure/iam-api';
