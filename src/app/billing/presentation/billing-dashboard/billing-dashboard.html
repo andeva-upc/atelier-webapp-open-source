@@ -13,6 +13,13 @@
     <!-- TRANSACTIONS TABS -->
     <div class="transactions-section">
       <mat-tab-group animationDuration="0ms" class="mat-elevation-z1">
+        <!-- Quotes Tab -->
+        <mat-tab label="Quotes">
+          <div class="tab-content">
+            <app-quote-list [quotes]="store.branchQuotes()"></app-quote-list>
+          </div>
+        </mat-tab>
+        
         <!-- Income Tab -->
         <mat-tab label="Income (Vouchers)">
           <div class="tab-content">

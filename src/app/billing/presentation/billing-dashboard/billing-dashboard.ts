@@ -6,11 +6,12 @@ import { FinancialKpiCardsComponent } from '../components/financial-kpi-cards/fi
 import { IncomeExpenseChartComponent } from '../components/income-expense-chart/income-expense-chart';
 import { IncomeListComponent } from '../components/income-list/income-list.component';
 import { ExpenseListComponent } from '../components/expense-list/expense-list.component';
+import { QuoteListComponent } from '../components/quote-list/quote-list.component';
 
 @Component({
   selector: 'app-billing-dashboard',
   standalone: true,
-  imports: [CommonModule, MatTabsModule, FinancialKpiCardsComponent, IncomeExpenseChartComponent, IncomeListComponent, ExpenseListComponent],
+  imports: [CommonModule, MatTabsModule, FinancialKpiCardsComponent, IncomeExpenseChartComponent, IncomeListComponent, ExpenseListComponent, QuoteListComponent],
   templateUrl: './billing-dashboard.html',
   styleUrls: ['./billing-dashboard.css']
 })
