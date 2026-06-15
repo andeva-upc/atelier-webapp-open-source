@@ -1,12 +1,13 @@
 import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { FinancialStats } from '../../../domain/model/financial-stats';
 import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-income-expense-chart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './income-expense-chart.html',
   styleUrls: ['./income-expense-chart.css']
 })

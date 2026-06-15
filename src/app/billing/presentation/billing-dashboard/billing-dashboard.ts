@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BillingStore } from '../../application/billing.store';
 import { FinancialKpiCardsComponent } from '../components/financial-kpi-cards/financial-kpi-cards';
@@ -13,7 +14,7 @@ import { CheckoutDialogComponent } from '../components/checkout-dialog/checkout-
 @Component({
   selector: 'app-billing-dashboard',
   standalone: true,
-  imports: [CommonModule, MatTabsModule, MatDialogModule, FinancialKpiCardsComponent, IncomeExpenseChartComponent, IncomeListComponent, ExpenseListComponent, QuoteListComponent],
+  imports: [CommonModule, MatTabsModule, MatDialogModule, TranslateModule, FinancialKpiCardsComponent, IncomeExpenseChartComponent, IncomeListComponent, ExpenseListComponent, QuoteListComponent],
   templateUrl: './billing-dashboard.html',
   styleUrls: ['./billing-dashboard.css']
 })
