@@ -1,1 +1,74 @@
-{}
+{
+  "billing": {
+    "dashboard": {
+      "title": "Panel de Facturación"
+    },
+    "tabs": {
+      "quotes": "Cotizaciones",
+      "vouchers": "Comprobantes",
+      "expenses": "Gastos"
+    },
+    "kpi": {
+      "income": "Ingresos Totales",
+      "fromVouchers": "De Comprobantes",
+      "expenses": "Gastos Totales",
+      "calculated": "Calculado",
+      "balance": "Balance",
+      "approved_quotes": "Cotizaciones Aprobadas",
+      "current_status": "Estado Actual",
+      "pending_quotes": "Cotizaciones Pendientes",
+      "in_draft": "En Borrador"
+    },
+    "chart": {
+      "title": "Ingresos vs Gastos"
+    },
+    "checkout": {
+      "title": "Cobrar y Emitir Comprobante",
+      "select_quote": "Seleccionar Cotización Aprobada",
+      "quote_required": "La cotización es obligatoria",
+      "zero_total": "No se puede cobrar una cotización con un total de $0.00",
+      "voucher_type": "Tipo de Comprobante:",
+      "receipt": "Boleta",
+      "invoice": "Factura",
+      "customer_id": "Documento (DNI/RUC)",
+      "customer_id_required": "El documento es obligatorio",
+      "customer_name": "Nombre del Cliente",
+      "customer_name_required": "El nombre es obligatorio",
+      "customer_email": "Correo del Cliente",
+      "email_required": "El correo es obligatorio",
+      "email_invalid": "Formato de correo inválido",
+      "cancel": "Cancelar",
+      "emit": "Emitir Comprobante"
+    },
+    "expense_list": {
+      "empty_title": "Registro de Gastos Próximamente",
+      "empty_subtitle": "Estamos implementando el registro y seguimiento de gastos operativos fijos.",
+      "empty_icon_aria": "Gastos Próximamente",
+      "add_expense_btn": "+ Agregar Gasto"
+    },
+    "income_list": {
+      "title": "Lista de Comprobantes",
+      "emit_btn": "+ Emitir Comprobante",
+      "columns": {
+        "id": "ID",
+        "customer": "Cliente",
+        "type": "Tipo",
+        "total_amount": "Monto Total",
+        "total_paid": "Total Pagado",
+        "status": "Estado"
+      },
+      "empty": "No se encontraron comprobantes."
+    },
+    "quote_list": {
+      "columns": {
+        "id": "ID Cotización",
+        "work_order": "Orden de Trabajo",
+        "subtotal": "Subtotal",
+        "discount": "Descuento",
+        "total_amount": "Monto Total",
+        "status": "Estado"
+      },
+      "empty": "No se encontraron cotizaciones."
+    }
+  }
+}

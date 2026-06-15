@@ -1,6 +1,6 @@
 <div class="dashboard-container">
   <div class="header">
-    <h1>Billing Dashboard</h1>
+    <h1>{{ 'billing.dashboard.title' | translate }}</h1>
   </div>
   
   <div class="content">
@@ -13,22 +13,19 @@
     <!-- TRANSACTIONS TABS -->
     <div class="transactions-section">
       <mat-tab-group animationDuration="0ms" class="mat-elevation-z1">
-        <!-- Quotes Tab -->
-        <mat-tab label="Quotes">
+        <mat-tab label="{{ 'billing.tabs.quotes' | translate }}">
           <div class="tab-content">
             <app-quote-list [quotes]="store.branchQuotes()"></app-quote-list>
           </div>
         </mat-tab>
         
-        <!-- Income Tab -->
-        <mat-tab label="Vouchers">
+        <mat-tab label="{{ 'billing.tabs.vouchers' | translate }}">
           <div class="tab-content">
             <app-income-list [incomes]="store.branchVouchers()" (openCheckout)="openCheckoutDialog()"></app-income-list>
           </div>
         </mat-tab>
         
-        <!-- Expenses Tab -->
-        <mat-tab label="Expenses">
+        <mat-tab label="{{ 'billing.tabs.expenses' | translate }}">
           <div class="tab-content">
             <app-expense-list></app-expense-list>
           </div>

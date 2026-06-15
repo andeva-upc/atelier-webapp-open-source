@@ -1,10 +1,9 @@
 <div class="empty-state-container">
   <div class="empty-state-content">
-    <!-- Using a standard material icon class for the placeholder -->
-    <span class="material-icons placeholder-icon" style="font-family: 'Material Icons';">receipt_long</span>
-    <h2>No Expenses Recorded</h2>
-    <p>Operational expense tracking will be integrated in a future update.</p>
+    <mat-icon class="empty-icon" aria-hidden="false" [attr.aria-label]="'billing.expense_list.empty_icon_aria' | translate">pending_actions</mat-icon>
+    <h2>{{ 'billing.expense_list.empty_title' | translate }}</h2>
+    <p>{{ 'billing.expense_list.empty_subtitle' | translate }}</p>
     <!-- Placeholder button for future use -->
-    <button class="add-expense-btn" disabled>+ Add Expense</button>
+    <button class="add-expense-btn" disabled>{{ 'billing.expense_list.add_expense_btn' | translate }}</button>
   </div>
 </div>

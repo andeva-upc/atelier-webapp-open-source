@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 import { QuoteResource } from '../../../infrastructure/responses/billing-responses';
 
 export interface CheckoutDialogData {
@@ -24,7 +25,8 @@ export interface CheckoutDialogData {
     MatInputModule, 
     MatSelectModule, 
     MatRadioModule, 
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ],
   templateUrl: './checkout-dialog.component.html',
   styleUrls: ['./checkout-dialog.component.css']

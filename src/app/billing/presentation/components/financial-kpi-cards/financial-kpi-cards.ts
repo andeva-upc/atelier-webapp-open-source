@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { FinancialStats } from '../../../domain/model/financial-stats';
@@ -7,7 +8,7 @@ import { FinancialStats } from '../../../domain/model/financial-stats';
 @Component({
   selector: 'app-financial-kpi-cards',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, TranslateModule],
   templateUrl: './financial-kpi-cards.html',
   styleUrls: ['./financial-kpi-cards.css']
 })
