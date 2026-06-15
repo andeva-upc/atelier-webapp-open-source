@@ -2,42 +2,50 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
-  background: white;
+  min-height: 400px;
+  background: var(--billing-surface);
   border-radius: 8px;
-  border: 1px solid #eee;
   padding: 32px;
 }
 
 .empty-state-content {
   text-align: center;
-  color: #666;
+  color: var(--billing-text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.placeholder-icon {
-  font-size: 64px;
-  color: #ccc;
-  margin-bottom: 16px;
-  display: inline-block;
+.empty-icon {
+  font-size: 80px;
+  width: 80px;
+  height: 80px;
+  color: var(--billing-divider);
+  margin-bottom: 24px;
 }
 
 h2 {
-  margin: 0 0 8px 0;
-  color: #333;
+  margin: 0 0 12px 0;
+  color: var(--billing-text-primary);
+  font-size: 20px;
+  font-weight: 600;
 }
 
 p {
-  margin: 0 0 24px 0;
+  margin: 0 0 32px 0;
   max-width: 400px;
+  line-height: 1.5;
 }
 
 .add-expense-btn {
-  background-color: #2196F3;
+  background-color: var(--billing-primary);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 6px;
   font-size: 14px;
+  font-weight: 600;
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
 }

@@ -1,41 +1,82 @@
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
 }
 
 .kpi-card {
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease-in-out;
+  background-color: var(--billing-surface);
+  border: 1px solid rgba(189, 189, 189, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 .kpi-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  border-color: rgba(189, 189, 189, 0.4);
+}
+
+::ng-deep .kpi-card .mat-mdc-card-header-text {
+  margin: 0 !important;
+}
+
+::ng-deep .kpi-card .mat-mdc-card-title {
+  color: var(--billing-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+::ng-deep .kpi-card .mat-mdc-card-subtitle {
+  color: var(--billing-divider);
+  font-size: 12px;
 }
 
 .kpi-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
   width: 48px;
   height: 48px;
-  border-radius: 8px;
-  color: white;
+  border-radius: 12px;
   margin-right: 16px;
 }
 
-.income-card .kpi-icon { background-color: #4CAF50; }
-.expense-card .kpi-icon { background-color: #F44336; }
-.approved-card .kpi-icon { background-color: #2196F3; }
-.pending-card .kpi-icon { background-color: #FF9800; }
+::ng-deep .kpi-icon mat-icon {
+  font-size: 24px;
+  height: 24px;
+  width: 24px;
+}
+
+/* Color variations */
+.income-card .kpi-icon { 
+  background-color: rgba(16, 185, 129, 0.1); 
+  color: var(--billing-success);
+}
+.expense-card .kpi-icon { 
+  background-color: rgba(239, 68, 68, 0.1); 
+  color: var(--billing-failure);
+}
+.approved-card .kpi-icon { 
+  background-color: rgba(0, 113, 235, 0.1); 
+  color: var(--billing-primary);
+}
+.pending-card .kpi-icon { 
+  background-color: rgba(255, 109, 0, 0.1); 
+  color: var(--billing-accent);
+}
 
 .kpi-value {
-  margin-top: 16px;
+  margin-top: 20px;
   margin-bottom: 0;
   font-size: 32px;
   font-weight: 700;
-  color: #333;
+  color: var(--billing-text-primary);
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
 }

@@ -2,41 +2,66 @@
   width: 100%;
   overflow-x: auto;
   border-radius: 8px;
+  background-color: var(--billing-surface);
 }
 
 table {
   width: 100%;
+  background-color: var(--billing-surface);
 }
 
 .table-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background-color: white;
-  border-bottom: 1px solid #eee;
+  padding: 16px 24px;
+  background-color: var(--billing-surface);
+  border-bottom: 1px solid var(--billing-divider);
 }
 
 .table-header h3 {
   margin: 0;
   font-size: 18px;
-  font-weight: 500;
-  color: #333;
+  font-weight: 600;
+  color: var(--billing-text-primary);
+}
+
+::ng-deep .table-container th.mat-mdc-header-cell {
+  color: var(--billing-text-secondary);
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+::ng-deep .table-container td.mat-mdc-cell {
+  color: var(--billing-text-primary);
+  font-size: 14px;
+  border-bottom-color: rgba(189, 189, 189, 0.3);
+}
+
+.mat-mdc-row {
+  transition: background-color 0.2s ease;
 }
 
 .mat-mdc-row:hover {
-  background-color: #f5f5f5;
+  background-color: rgba(0, 113, 235, 0.04);
 }
 
 .empty-state {
-  padding: 32px;
+  padding: 48px 32px;
   text-align: center;
-  color: #666;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #eee;
+  color: var(--billing-text-secondary);
+  background: var(--billing-surface);
+  border-top: 1px solid rgba(189, 189, 189, 0.3);
 }
 
-.paid { background-color: #4CAF50 !important; color: white !important; }
-.pending { background-color: #FF9800 !important; color: white !important; }
-.canceled { background-color: #F44336 !important; color: white !important; }
+/* Badges / Chips */
+::ng-deep .mat-mdc-chip {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.paid { background-color: rgba(16, 185, 129, 0.15) !important; color: var(--billing-success) !important; }
+.pending { background-color: rgba(255, 109, 0, 0.15) !important; color: var(--billing-accent) !important; }
+.canceled { background-color: rgba(239, 68, 68, 0.15) !important; color: var(--billing-failure) !important; }

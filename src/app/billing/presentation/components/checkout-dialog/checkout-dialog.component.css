@@ -1,28 +1,61 @@
 .checkout-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding-top: 8px;
-  min-width: 400px;
+  gap: 20px;
+  padding-top: 16px;
+  min-width: 450px;
 }
 
 .full-width {
   width: 100%;
 }
 
+::ng-deep .checkout-form .mat-mdc-text-field-wrapper {
+  background-color: #FFFFFF !important;
+}
+
 .voucher-type-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   margin-bottom: 8px;
+  padding: 16px;
+  background-color: #F8FAFC; /* Slight tint to separate it visually */
+  border-radius: 8px;
+  border: 1px solid #BDBDBD;
 }
 
 .radio-label {
-  font-weight: 500;
-  color: #555;
+  font-weight: 600;
+  color: #212121;
+  font-size: 14px;
 }
 
 .radio-group {
   display: flex;
-  gap: 16px;
+  gap: 24px;
+}
+
+/* Override radio button colors to match primary */
+::ng-deep .radio-group .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__native-control:enabled + .mdc-radio__background .mdc-radio__inner-circle {
+  border-color: #0071EB !important;
+}
+
+::ng-deep .radio-group .mat-mdc-radio-button.mat-mdc-radio-checked .mdc-radio__native-control:enabled + .mdc-radio__background .mdc-radio__outer-circle {
+  border-color: #0071EB !important;
+}
+
+/* Override primary button */
+::ng-deep mat-dialog-actions .mat-mdc-raised-button.mat-primary {
+  background-color: #004FA6 !important;
+  color: #FFFFFF !important;
+  transition: background-color 0.2s ease;
+}
+
+::ng-deep mat-dialog-actions .mat-mdc-raised-button.mat-primary:not(:disabled):hover {
+  background-color: #0071EB !important;
+}
+
+::ng-deep mat-dialog-actions .mat-mdc-button {
+  color: #757575 !important;
 }
