@@ -17,22 +17,23 @@ const billingRoutes = () => import('./billing/billing.routes').then((m) => m.BIL
  */
 export const routes: Routes = [
   { path: 'home', component: Home,    canActivate: [iamGuard] },
-  { 
-    path: 'inventory', 
-    component: Home, 
+  {
+    path: 'inventory',
+    component: Home,
     canActivate: [iamGuard],
     children: [
       { path: '', loadChildren: inventoryRoutes }
     ]
   },
-  { 
-    path: 'billing', 
-    component: Home, 
+  {
+    path: 'billing',
+    component: Home,
     canActivate: [iamGuard],
     children: [
       { path: '', loadChildren: billingRoutes }
     ]
   },
+  { path: 'role-selection', loadComponent: () => import('./core/presentation/views/role-selection/role-selection').then(m => m.RoleSelectionComponent), canActivate: [iamGuard] },
   { path: '',  loadChildren: iamRoutes },
   { path: '',     redirectTo: 'home', pathMatch: 'full'},
   { path: '**',   loadComponent: pageNotFound },
