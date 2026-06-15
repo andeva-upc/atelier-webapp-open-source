@@ -1,12 +1,13 @@
 .dashboard-container {
   /* Precision Design Tokens */
   --billing-primary: #0071EB;
-  --billing-primary-dark: #0056b3;
+  --billing-primary-dark: #004FA6;
+  --billing-primary-light: #B3D4F8;
   --billing-accent: #FF6D00;
   --billing-surface: #FFFFFF;
   --billing-bg: #FFFFFF;
-  --billing-text-primary: #111827; /* Darker, crisper text */
-  --billing-text-secondary: #6B7280; /* Neutral gray */
+  --billing-text-primary: #212121; /* Darker, crisper text */
+  --billing-text-secondary: #757575; /* Neutral gray */
   --billing-divider: #E5E7EB; /* Hairline border color */
   --billing-success: #10B981;
   --billing-failure: #EF4444;

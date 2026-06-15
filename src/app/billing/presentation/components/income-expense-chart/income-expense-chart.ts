@@ -73,8 +73,8 @@ export class IncomeExpenseChartComponent implements OnDestroy {
       datasets: [{
         data: [stats.totalIncome || 0, stats.pendingBalance || 0],
         backgroundColor: [
-          '#10B981', // Success Color
-          '#EF4444'  // Failure Color
+          '#0056b3', // Primary Dark for Income
+          '#B3D4F8'  // Primary Light for Pending Balance
         ],
         hoverOffset: 4
       }]
