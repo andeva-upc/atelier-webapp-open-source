@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ArrowBack } from '../../../../shared/presentation/components/arrow-back/arrow-back';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,7 +26,8 @@ import { ArrowBack } from '../../../../shared/presentation/components/arrow-back
     MatCheckboxModule,
     NgIf,
     RouterLink,
-    ArrowBack
+    ArrowBack,
+    TranslateModule
   ],
   templateUrl: './sign-up-form.html',
   styleUrls: ['./sign-up-form.css']

@@ -6,44 +6,53 @@
 
     <div class="form-container">
       <h1 class="main-heading">
-        Bienvenido a <span class="brand-text">atelier.</span><br/>
-        Tu taller te espera para continuar!
+        {{ 'sign-in.welcome' | translate }} <span class="brand-text">atelier.</span><br/>
+        {{ 'sign-in.subtitle1' | translate }}
       </h1>
-      <p class="subtitle">Ingrese su datos personales para continuar</p>
+      <p class="subtitle">{{ 'sign-in.subtitle2' | translate }}</p>
+
+      @if (iamStore.signInError()) {
+        <div class="error-banner">
+          <i class="pi pi-exclamation-circle"></i>
+          <span>{{ iamStore.signInError()! | translate }}</span>
+        </div>
+      }
 
       <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="auth-form">
 
         <!-- Email Field -->
         <mat-form-field appearance="outline" class="full-width">
-          <input matInput type="email" formControlName="email" placeholder="Email">
+          <input matInput type="email" formControlName="email" [placeholder]="'sign-in.email_placeholder' | translate">
           <i class="pi pi-envelope suffix-icon" matSuffix></i>
-          <mat-error *ngIf="emailControl?.hasError('required')">El email es requerido</mat-error>
-          <mat-error *ngIf="emailControl?.hasError('email')">Debe ser un email válido</mat-error>
+          <mat-error *ngIf="emailControl?.hasError('required')">{{ 'sign-in.email_required' | translate }}</mat-error>
+          <mat-error *ngIf="emailControl?.hasError('email')">{{ 'sign-in.email_invalid' | translate }}</mat-error>
         </mat-form-field>
 
         <!-- Password Field -->
         <mat-form-field appearance="outline" class="full-width">
-          <input matInput type="password" formControlName="password" placeholder="Contraseña">
-          <i class="pi pi-lock suffix-icon" matSuffix></i>
-          <mat-error *ngIf="passwordControl?.hasError('required')">La contraseña es requerida</mat-error>
-          <mat-error *ngIf="passwordControl?.hasError('minlength')">Mínimo 6 caracteres</mat-error>
+          <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" [placeholder]="'sign-in.password_placeholder' | translate">
+          <button mat-icon-button matSuffix (click)="hidePassword.set(!hidePassword())" type="button" aria-label="Toggle password visibility">
+            <i class="pi suffix-icon" [class.pi-eye]="hidePassword()" [class.pi-eye-slash]="!hidePassword()"></i>
+          </button>
+          <mat-error *ngIf="passwordControl?.hasError('required')">{{ 'sign-in.password_required' | translate }}</mat-error>
+          <mat-error *ngIf="passwordControl?.hasError('minlength')">{{ 'sign-in.password_min' | translate }}</mat-error>
         </mat-form-field>
 
         <!-- Options Row -->
         <div class="options-row">
           <mat-checkbox formControlName="rememberMe" color="primary" class="rounded-checkbox">
-            Recuérdame
+            {{ 'sign-in.remember_me' | translate }}
           </mat-checkbox>
-          <a routerLink="/forgot-password" class="recover-link">Recover password</a>
+          <a routerLink="/forgot-password" class="recover-link">{{ 'sign-in.recover_password' | translate }}</a>
         </div>
 
         <!-- Action Buttons -->
         <div class="action-buttons">
           <button mat-flat-button color="primary" type="submit" class="submit-btn">
-            Iniciar Sesión
+            {{ 'sign-in.sign_in_btn' | translate }}
           </button>
           <button mat-stroked-button color="primary" type="button" class="login-link-btn" routerLink="/sign-up">
-            Registrarse
+            {{ 'sign-in.sign_up_btn' | translate }}
           </button>
         </div>
 
@@ -51,8 +60,8 @@
 
       <!-- Google Sign In -->
       <div class="social-login">
-        <p class="social-text">O ingresa con</p>
-        <button mat-icon-button class="google-btn" (click)="onGoogleSignIn()" type="button" aria-label="Ingresa con Google">
+        <p class="social-text">{{ 'sign-in.social_login' | translate }}</p>
+        <button mat-icon-button class="google-btn" (click)="onGoogleSignIn()" type="button" [attr.aria-label]="'sign-in.google_aria' | translate">
           <h2 style="font-family: Arimo; font-weight: bold; color: #4b5563; margin: 0;">G</h2>
         </button>
       </div>

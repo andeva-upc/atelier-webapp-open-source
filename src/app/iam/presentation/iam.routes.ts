@@ -4,6 +4,7 @@ const signInForm = () => import('./views/sign-in-form/sign-in-form').then((m) =>
 const signUpForm = () => import('./views/sign-up-form/sign-up-form').then((m) => m.SignUpComponent);
 
 export const iamRoutes: Routes = [
+  { path: '', redirectTo: 'sign-in', pathMatch: 'full' },
   { path: 'sign-in', loadComponent: signInForm },
   { path: 'sign-up', loadComponent: signUpForm }
 ];
