@@ -25,9 +25,12 @@ export class InventoryListComponent implements OnInit {
   products = this.store.branchProducts;
 
   ngOnInit(): void {
-    // In a real scenario, this branchId comes from the active session/core store.
-    const mockBranchId = '90ce7890-482d-4f27-a006-dc2a3be6be3f';
-    this.store.loadProductsByBranchId(mockBranchId);
+    const branchId = localStorage.getItem('tenantBranchId');
+    if (branchId) {
+      this.store.loadProductsByBranchId(branchId);
+    } else {
+      console.warn('No branchId found in localStorage for inventory load');
+    }
   }
 
   onAddProduct(): void {
