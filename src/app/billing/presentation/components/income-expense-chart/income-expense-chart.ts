@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ChangeDetectionStrategy, input, viewChild, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { FinancialStats } from '../../../domain/model/financial-stats';
@@ -6,25 +6,30 @@ import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-income-expense-chart',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, TranslateModule],
   templateUrl: './income-expense-chart.html',
   styleUrls: ['./income-expense-chart.css']
 })
-export class IncomeExpenseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @Input({ required: true }) stats!: FinancialStats;
-  @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
+export class IncomeExpenseChartComponent implements OnDestroy {
+  stats = input.required<FinancialStats>();
+  chartCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>('chartCanvas');
   
   private chart: Chart | null = null;
 
-  ngAfterViewInit() {
-    this.createChart();
-  }
+  constructor() {
+    effect(() => {
+      const currentStats = this.stats();
+      const canvasRef = this.chartCanvas();
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['stats'] && !changes['stats'].isFirstChange()) {
-      this.updateChart();
-    }
+      if (canvasRef) {
+        if (!this.chart) {
+          this.createChart(canvasRef.nativeElement, currentStats);
+        } else {
+          this.updateChart(currentStats);
+        }
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -33,15 +38,13 @@ export class IncomeExpenseChartComponent implements AfterViewInit, OnChanges, On
     }
   }
 
-  private createChart() {
-    if (!this.chartCanvas) return;
-    
-    const ctx = this.chartCanvas.nativeElement.getContext('2d');
+  private createChart(canvas: HTMLCanvasElement, stats: FinancialStats) {
+    const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     this.chart = new Chart(ctx, {
       type: 'doughnut',
-      data: this.getChartData(),
+      data: this.getChartData(stats),
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -50,29 +53,28 @@ export class IncomeExpenseChartComponent implements AfterViewInit, OnChanges, On
             position: 'bottom',
           },
           title: {
-            display: true,
-            text: 'Income vs Expenses'
+            display: false // The title is handled by HTML now
           }
         }
       }
     });
   }
 
-  private updateChart() {
+  private updateChart(stats: FinancialStats) {
     if (this.chart) {
-      this.chart.data = this.getChartData();
+      this.chart.data = this.getChartData(stats);
       this.chart.update();
     }
   }
 
-  private getChartData() {
+  private getChartData(stats: FinancialStats) {
     return {
       labels: ['Income', 'Expenses'],
       datasets: [{
-        data: [this.stats.totalIncome || 0, this.stats.totalExpenses || 0],
+        data: [stats.totalIncome || 0, stats.totalExpenses || 0],
         backgroundColor: [
-          '#4CAF50',
-          '#F44336' 
+          '#10B981', // Success Color
+          '#EF4444'  // Failure Color
         ],
         hoverOffset: 4
       }]

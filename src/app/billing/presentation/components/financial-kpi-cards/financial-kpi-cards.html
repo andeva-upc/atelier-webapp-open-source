@@ -7,7 +7,7 @@
       <mat-card-subtitle>{{ 'billing.kpi.fromVouchers' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <h2 class="kpi-value">{{ stats.totalIncome | currency }}</h2>
+      <h2 class="kpi-value">{{ stats().totalIncome | currency }}</h2>
     </mat-card-content>
   </mat-card>
 
@@ -19,7 +19,7 @@
       <mat-card-subtitle>{{ 'billing.kpi.calculated' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <h2 class="kpi-value">{{ stats.totalExpenses | currency }}</h2>
+      <h2 class="kpi-value">{{ stats().totalExpenses | currency }}</h2>
     </mat-card-content>
   </mat-card>
 
@@ -31,7 +31,7 @@
       <mat-card-subtitle>{{ 'billing.kpi.current_status' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <h2 class="kpi-value">{{ stats.approvedQuotesCount }}</h2>
+      <h2 class="kpi-value">{{ stats().approvedQuotesCount }}</h2>
     </mat-card-content>
   </mat-card>
 
@@ -43,7 +43,7 @@
       <mat-card-subtitle>{{ 'billing.kpi.in_draft' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <h2 class="kpi-value">{{ stats.pendingQuotesCount }}</h2>
+      <h2 class="kpi-value">{{ stats().pendingQuotesCount }}</h2>
     </mat-card-content>
   </mat-card>
 </div>

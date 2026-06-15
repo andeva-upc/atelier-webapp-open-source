@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,7 +13,7 @@ import { CheckoutDialogComponent } from '../components/checkout-dialog/checkout-
 
 @Component({
   selector: 'app-billing-dashboard',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, MatTabsModule, MatDialogModule, TranslateModule, FinancialKpiCardsComponent, IncomeExpenseChartComponent, IncomeListComponent, ExpenseListComponent, QuoteListComponent],
   templateUrl: './billing-dashboard.html',
   styleUrls: ['./billing-dashboard.css']
