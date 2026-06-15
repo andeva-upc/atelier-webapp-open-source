@@ -73,34 +73,50 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-/* Material Tabs Precision Overrides */
-::ng-deep .transactions-section .mat-mdc-tab-group {
+/* Premium Toggle Group Overrides */
+.view-toggle-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+
+::ng-deep .premium-toggle.mat-button-toggle-group {
+  background-color: #FFFFFF;
+  border-radius: 50px;
+  border: 1px solid var(--billing-divider);
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   font-family: var(--font-body);
 }
 
-::ng-deep .transactions-section .mat-mdc-tab-header {
-  border-bottom: 1px solid var(--billing-divider);
-  background-color: #F9FAFB; /* Subtle contrast for tab bar */
+::ng-deep .premium-toggle .mat-button-toggle {
+  border: none !important; /* Remove separators */
+  background: transparent;
+  border-radius: 50px;
 }
 
-::ng-deep .transactions-section .mat-mdc-tab .mdc-tab__text-label {
-  color: var(--billing-text-secondary);
-  font-weight: 500;
+::ng-deep .premium-toggle .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  line-height: 40px;
+  padding: 0 32px;
   font-size: 14px;
-  letter-spacing: 0.01em;
-  transition: color 0.2s ease;
+  font-weight: 500;
+  color: var(--billing-text-secondary);
+  border-radius: 50px;
+  transition: all 0.3s ease;
 }
 
-::ng-deep .transactions-section .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
-  color: var(--billing-primary);
+::ng-deep .premium-toggle .mat-button-toggle-checked {
+  background-color: transparent;
+}
+
+::ng-deep .premium-toggle .mat-button-toggle-checked .mat-button-toggle-label-content {
+  background-color: var(--billing-primary);
+  color: #FFFFFF;
   font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 113, 235, 0.3);
 }
 
-::ng-deep .transactions-section .mat-mdc-tab-indicator__inner--theme-demo {
-  border-color: var(--billing-primary) !important;
-}
-
-.tab-content {
-  padding: 0;
-  background-color: var(--billing-surface);
+/* Remove Material Button Toggle divider */
+::ng-deep .premium-toggle.mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle {
+  border-left: none;
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BillingStore } from '../../application/billing.store';
@@ -14,13 +14,15 @@ import { CheckoutDialogComponent } from '../components/checkout-dialog/checkout-
 @Component({
   selector: 'app-billing-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, MatTabsModule, MatDialogModule, TranslateModule, FinancialKpiCardsComponent, IncomeExpenseChartComponent, IncomeListComponent, ExpenseListComponent, QuoteListComponent],
+  imports: [CommonModule, MatButtonToggleModule, MatDialogModule, TranslateModule, FinancialKpiCardsComponent, IncomeExpenseChartComponent, IncomeListComponent, ExpenseListComponent, QuoteListComponent],
   templateUrl: './billing-dashboard.html',
   styleUrls: ['./billing-dashboard.css']
 })
 export class BillingDashboardComponent implements OnInit {
   store = inject(BillingStore);
   dialog = inject(MatDialog);
+
+  currentView = signal<'quotes' | 'vouchers' | 'expenses'>('quotes');
 
   private defaultBranchId = '1'; // In a real scenario, this comes from an Auth or Config store
 
