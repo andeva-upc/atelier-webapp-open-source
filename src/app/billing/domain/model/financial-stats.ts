@@ -1,6 +1,6 @@
 export interface FinancialStats {
   totalIncome: number;
-  totalExpenses: number;
+  pendingBalance: number;
   approvedQuotesCount: number;
   pendingQuotesCount: number;
 }

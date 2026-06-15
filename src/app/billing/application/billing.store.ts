@@ -22,16 +22,15 @@ export class BillingStore {
     const quotes = this.branchQuotesSignal();
     const vouchers = this.branchVouchersSignal();
 
-    const totalIncome = vouchers.reduce((acc, voucher) => acc + voucher.totalAmount, 0);
-    // Temporary mock or static calculation for expenses until an accounting endpoint exists.
-    const totalExpenses = 0; 
+    const totalIncome = vouchers.reduce((acc, voucher) => acc + voucher.totalPaid, 0);
+    const pendingBalance = vouchers.reduce((acc, voucher) => acc + (voucher.totalAmount - voucher.totalPaid), 0);
     
     const approvedQuotesCount = quotes.filter(q => q.status === 'APPROVED').length;
     const pendingQuotesCount = quotes.filter(q => q.status === 'DRAFT').length;
 
     return {
       totalIncome,
-      totalExpenses,
+      pendingBalance,
       approvedQuotesCount,
       pendingQuotesCount
     };

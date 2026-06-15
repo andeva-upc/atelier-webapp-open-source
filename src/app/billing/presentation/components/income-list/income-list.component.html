@@ -3,51 +3,53 @@
     <h3>{{ 'billing.income_list.title' | translate }}</h3>
     <button mat-raised-button color="primary" (click)="onOpenCheckout()">{{ 'billing.income_list.emit_btn' | translate }}</button>
   </div>
-  <table mat-table [dataSource]="incomes" class="mat-elevation-z2" *ngIf="incomes.length > 0">
-    
-    <!-- ID Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.id' | translate }} </th>
-      <td mat-cell *matCellDef="let voucher"> {{voucher.id.substring(0, 8)}}... </td>
-    </ng-container>
+  @if (incomes().length > 0) {
+    <table mat-table [dataSource]="incomes()" class="precision-table">
+      
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.id' | translate }} </th>
+        <td mat-cell *matCellDef="let voucher"> {{voucher.id.substring(0, 8)}}... </td>
+      </ng-container>
 
-    <!-- Customer Name Column -->
-    <ng-container matColumnDef="customerName">
-      <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.customer' | translate }} </th>
-      <td mat-cell *matCellDef="let voucher"> {{voucher.customerName}} </td>
-    </ng-container>
+      <!-- Customer Name Column -->
+      <ng-container matColumnDef="customerName">
+        <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.customer' | translate }} </th>
+        <td mat-cell *matCellDef="let voucher"> {{voucher.customerName}} </td>
+      </ng-container>
 
-    <!-- Type Column -->
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.type' | translate }} </th>
-      <td mat-cell *matCellDef="let voucher"> {{voucher.type}} </td>
-    </ng-container>
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.type' | translate }} </th>
+        <td mat-cell *matCellDef="let voucher"> {{voucher.type}} </td>
+      </ng-container>
 
-    <!-- Total Amount Column -->
-    <ng-container matColumnDef="totalAmount">
-      <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.total_amount' | translate }} </th>
-      <td mat-cell *matCellDef="let voucher"> {{voucher.totalAmount | currency}} </td>
-    </ng-container>
+      <!-- Total Amount Column -->
+      <ng-container matColumnDef="totalAmount">
+        <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.total_amount' | translate }} </th>
+        <td mat-cell *matCellDef="let voucher"> {{voucher.totalAmount | currency}} </td>
+      </ng-container>
 
-    <!-- Total Paid Column -->
-    <ng-container matColumnDef="totalPaid">
-      <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.total_paid' | translate }} </th>
-      <td mat-cell *matCellDef="let voucher"> {{voucher.totalPaid | currency}} </td>
-    </ng-container>
+      <!-- Total Paid Column -->
+      <ng-container matColumnDef="totalPaid">
+        <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.total_amount' | translate }} </th>
+        <td mat-cell *matCellDef="let voucher"> {{voucher.totalPaid | currency}} </td>
+      </ng-container>
 
-    <!-- Status Column -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.status' | translate }} </th>
-      <td mat-cell *matCellDef="let voucher">
-        <mat-chip [ngClass]="voucher.status.toLowerCase()">{{voucher.status}}</mat-chip>
-      </td>
-    </ng-container>
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> {{ 'billing.income_list.columns.status' | translate }} </th>
+        <td mat-cell *matCellDef="let voucher">
+          <mat-chip [class]="voucher.status.toLowerCase()">{{voucher.status}}</mat-chip>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  
-  <div *ngIf="incomes.length === 0" class="empty-state">
-    <p>{{ 'billing.income_list.empty' | translate }}</p>
-  </div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  } @else {
+    <div class="empty-state">
+      <p>{{ 'billing.income_list.empty' | translate }}</p>
+    </div>
+  }
 </div>

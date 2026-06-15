@@ -2,42 +2,53 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #eee;
+  min-height: 400px;
+  background: var(--billing-surface);
+  border-radius: 0;
   padding: 32px;
 }
 
 .empty-state-content {
   text-align: center;
-  color: #666;
+  color: var(--billing-text-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.placeholder-icon {
+.empty-icon {
   font-size: 64px;
-  color: #ccc;
-  margin-bottom: 16px;
-  display: inline-block;
+  width: 64px;
+  height: 64px;
+  color: var(--billing-divider);
+  margin-bottom: 24px;
 }
 
 h2 {
-  margin: 0 0 8px 0;
-  color: #333;
+  margin: 0 0 12px 0;
+  color: var(--billing-text-primary);
+  font-size: 18px;
+  font-weight: 500;
+  font-family: var(--font-body);
 }
 
 p {
-  margin: 0 0 24px 0;
+  margin: 0 0 32px 0;
   max-width: 400px;
+  line-height: 1.5;
+  font-size: 14px;
+  font-family: var(--font-body);
 }
 
 .add-expense-btn {
-  background-color: #2196F3;
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: var(--billing-text-secondary);
+  border: 1px solid var(--billing-divider);
   padding: 10px 20px;
   border-radius: 4px;
   font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-body);
   cursor: not-allowed;
   opacity: 0.6;
 }

@@ -10,27 +10,28 @@
       <app-income-expense-chart [stats]="store.financialStats()"></app-income-expense-chart>
     </div>
 
-    <!-- TRANSACTIONS TABS -->
+    <!-- PAGE-LEVEL VIEW TOGGLE -->
+    <div class="view-toggle-container">
+      <mat-button-toggle-group [value]="currentView()" (change)="currentView.set($event.value)" class="premium-toggle" hideSingleSelectionIndicator="true" [attr.data-active]="currentView()">
+        <mat-button-toggle value="quotes">{{ 'billing.tabs.quotes' | translate }}</mat-button-toggle>
+        <mat-button-toggle value="vouchers">{{ 'billing.tabs.vouchers' | translate }}</mat-button-toggle>
+        <mat-button-toggle value="expenses">{{ 'billing.tabs.expenses' | translate }}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+
+    <!-- TRANSACTIONS CONTAINER -->
     <div class="transactions-section">
-      <mat-tab-group animationDuration="0ms" class="mat-elevation-z1">
-        <mat-tab label="{{ 'billing.tabs.quotes' | translate }}">
-          <div class="tab-content">
-            <app-quote-list [quotes]="store.branchQuotes()"></app-quote-list>
-          </div>
-        </mat-tab>
-        
-        <mat-tab label="{{ 'billing.tabs.vouchers' | translate }}">
-          <div class="tab-content">
-            <app-income-list [incomes]="store.branchVouchers()" (openCheckout)="openCheckoutDialog()"></app-income-list>
-          </div>
-        </mat-tab>
-        
-        <mat-tab label="{{ 'billing.tabs.expenses' | translate }}">
-          <div class="tab-content">
-            <app-expense-list></app-expense-list>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
+      @switch (currentView()) {
+        @case ('quotes') {
+          <app-quote-list [quotes]="store.branchQuotes()"></app-quote-list>
+        }
+        @case ('vouchers') {
+          <app-income-list [incomes]="store.branchVouchers()" (openCheckout)="openCheckoutDialog()"></app-income-list>
+        }
+        @case ('expenses') {
+          <app-expense-list></app-expense-list>
+        }
+      }
     </div>
   </div>
 </div>

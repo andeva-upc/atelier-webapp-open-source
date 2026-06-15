@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
@@ -7,13 +7,13 @@ import { QuoteResource } from '../../../infrastructure/responses/billing-respons
 
 @Component({
   selector: 'app-quote-list',
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule, MatTableModule, MatChipsModule, TranslateModule],
   templateUrl: './quote-list.component.html',
   styleUrls: ['./quote-list.component.css']
 })
 export class QuoteListComponent {
-  @Input({ required: true }) quotes: QuoteResource[] = [];
+  quotes = input.required<QuoteResource[]>();
   
   displayedColumns: string[] = ['id', 'workOrderId', 'subtotalAmount', 'discountPercentage', 'totalAmount', 'status'];
 }

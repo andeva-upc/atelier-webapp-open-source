@@ -6,12 +6,18 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'billing.checkout.select_quote' | translate }}</mat-label>
       <mat-select formControlName="quoteId">
-        <mat-option *ngFor="let quote of data.approvedQuotes" [value]="quote.id">
-          WO: {{ quote.workOrderId.substring(0, 8) }} - {{ quote.totalAmount | currency }} (ID: {{ quote.id.substring(0, 8) }})
-        </mat-option>
+        @for (quote of data.approvedQuotes; track quote.id) {
+          <mat-option [value]="quote.id">
+            WO: {{ quote.workOrderId.substring(0, 8) }} - {{ quote.totalAmount | currency }} (ID: {{ quote.id.substring(0, 8) }})
+          </mat-option>
+        }
       </mat-select>
-      <mat-error *ngIf="checkoutForm.get('quoteId')?.hasError('required')">{{ 'billing.checkout.quote_required' | translate }}</mat-error>
-      <mat-error *ngIf="checkoutForm.get('quoteId')?.hasError('zeroTotal')">{{ 'billing.checkout.zero_total' | translate }}</mat-error>
+      @if (checkoutForm.get('quoteId')?.hasError('required')) {
+        <mat-error>{{ 'billing.checkout.quote_required' | translate }}</mat-error>
+      }
+      @if (checkoutForm.get('quoteId')?.hasError('zeroTotal')) {
+        <mat-error>{{ 'billing.checkout.zero_total' | translate }}</mat-error>
+      }
     </mat-form-field>
 
     <div class="voucher-type-section">
@@ -25,20 +31,28 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'billing.checkout.customer_id' | translate }}</mat-label>
       <input matInput formControlName="customerId" placeholder="e.g. 12345678">
-      <mat-error *ngIf="checkoutForm.get('customerId')?.hasError('required')">{{ 'billing.checkout.customer_id_required' | translate }}</mat-error>
+      @if (checkoutForm.get('customerId')?.hasError('required')) {
+        <mat-error>{{ 'billing.checkout.customer_id_required' | translate }}</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'billing.checkout.customer_name' | translate }}</mat-label>
       <input matInput formControlName="customerName" placeholder="e.g. John Doe">
-      <mat-error *ngIf="checkoutForm.get('customerName')?.hasError('required')">{{ 'billing.checkout.customer_name_required' | translate }}</mat-error>
+      @if (checkoutForm.get('customerName')?.hasError('required')) {
+        <mat-error>{{ 'billing.checkout.customer_name_required' | translate }}</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'billing.checkout.customer_email' | translate }}</mat-label>
       <input matInput formControlName="customerEmail" type="email" placeholder="e.g. john@example.com">
-      <mat-error *ngIf="checkoutForm.get('customerEmail')?.hasError('required')">{{ 'billing.checkout.email_required' | translate }}</mat-error>
-      <mat-error *ngIf="checkoutForm.get('customerEmail')?.hasError('email')">{{ 'billing.checkout.email_invalid' | translate }}</mat-error>
+      @if (checkoutForm.get('customerEmail')?.hasError('required')) {
+        <mat-error>{{ 'billing.checkout.email_required' | translate }}</mat-error>
+      }
+      @if (checkoutForm.get('customerEmail')?.hasError('email')) {
+        <mat-error>{{ 'billing.checkout.email_invalid' | translate }}</mat-error>
+      }
     </mat-form-field>
 
   </form>

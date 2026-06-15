@@ -1,38 +1,162 @@
 .dashboard-container {
-  padding: 24px;
+  /* Precision Design Tokens */
+  --billing-primary: #0071EB;
+  --billing-primary-dark: #004FA6;
+  --billing-primary-light: #B3D4F8;
+  --billing-accent: #FF6D00;
+  --billing-surface: #FFFFFF;
+  --billing-bg: #FFFFFF;
+  --billing-text-primary: #212121;
+  /* Darker, crisper text */
+  --billing-text-secondary: #757575;
+  /* Neutral gray */
+  --billing-divider: #E5E7EB;
+  /* Hairline border color */
+  --billing-success: #10B981;
+  --billing-failure: #EF4444;
+
+  --billing-radius-sm: 8px;
+  --billing-radius-md: 16px;
+
+  /* Typography variables */
+  --font-display: "Arimo", sans-serif;
+  --font-body: "Mona Sans", sans-serif;
+
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  height: 100%;
+  gap: 40px;
+  min-height: 100vh;
+  background-color: var(--billing-bg);
+  color: var(--billing-text-primary);
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+.header {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--billing-divider);
 }
 
 .header h1 {
   margin: 0;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 500;
+  font-family: var(--font-display);
+  color: var(--billing-text-primary);
+  letter-spacing: -0.02em;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 40px;
 }
 
 .charts-section {
-  background: white;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .transactions-section {
-  background: white;
-  border-radius: 8px;
+  background: var(--billing-surface);
+  border-radius: var(--billing-radius-md);
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
-.tab-content {
-  padding: 16px;
-  background-color: #fafafa;
+/* Premium Toggle Group Overrides */
+.view-toggle-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+
+::ng-deep .premium-toggle.mat-button-toggle-group {
+  background-color: #FFFFFF;
+  border-radius: 50px;
+  border: none;
+  padding: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  font-family: var(--font-body);
+  position: relative;
+  z-index: 1;
+}
+
+/* The Sliding Pill */
+::ng-deep .premium-toggle::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: 140px; /* Fixed width for uniform tabs */
+  background-color: var(--billing-primary);
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 113, 235, 0.3);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 0;
+}
+
+::ng-deep .premium-toggle[data-active="quotes"]::before {
+  transform: translateX(0);
+}
+::ng-deep .premium-toggle[data-active="vouchers"]::before {
+  transform: translateX(140px);
+}
+::ng-deep .premium-toggle[data-active="expenses"]::before {
+  transform: translateX(280px);
+}
+
+::ng-deep .premium-toggle .mat-button-toggle {
+  border: none !important;
+  background: transparent !important;
+  border-radius: 50px;
+  overflow: visible; /* Let text show, background is handled by ::before */
+  width: 140px; /* Force uniform width for sliding math */
+  z-index: 1;
+}
+
+::ng-deep .premium-toggle .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  line-height: 40px;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--billing-text-secondary);
+  border-radius: 50px;
+  transition: color 0.3s ease;
+  background-color: transparent !important;
+}
+
+::ng-deep .premium-toggle .mat-button-toggle-button {
+  border-radius: 50px;
+  background-color: transparent !important;
+}
+
+::ng-deep .premium-toggle .mat-button-toggle-checked {
+  background-color: transparent !important;
+}
+
+::ng-deep .premium-toggle .mat-button-toggle-checked .mat-button-toggle-label-content {
+  background-color: transparent !important; /* Handled by ::before slider */
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: none !important; /* Handled by ::before slider */
+}
+
+/* Force inner overlays to be transparent so they don't hide the blue pill */
+::ng-deep .premium-toggle .mat-button-toggle-focus-overlay,
+::ng-deep .premium-toggle .mat-button-toggle-ripple,
+::ng-deep .premium-toggle .mat-ripple {
+  background-color: transparent !important;
+  opacity: 0 !important;
+}
+
+/* Remove Material Button Toggle divider */
+::ng-deep .premium-toggle.mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle {
+  border-left: none;
 }
