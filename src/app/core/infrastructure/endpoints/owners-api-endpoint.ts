@@ -37,6 +37,12 @@ export class OwnersApiEndpoint extends BaseApi {
     );
   }
 
+  getByUserId(userId: string): Observable<OwnerResource> {
+    return this.http.get<OwnerResource>(`${baseUrl}/user/${userId}`).pipe(
+      catchError(this.handleError('Failed to get owner by user id'))
+    );
+  }
+
   delete(userId: string): Observable<any> {
     return this.http.delete(`${baseUrl}/user/${userId}`).pipe(
       catchError(this.handleError('Failed to delete owner'))

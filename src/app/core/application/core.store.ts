@@ -7,7 +7,6 @@ import { CustomerResource } from '../infrastructure/responses/customer-response'
 import { OwnerResource } from '../infrastructure/responses/owner-response';
 import { EmployeeResource } from '../infrastructure/responses/employee-response';
 import { BranchResource } from '../infrastructure/responses/branch-response';
-import { BranchSubscriptionResource } from '../infrastructure/responses/branch-subscription-response';
 
 import { CreateWorkshopCommand } from '../domain/model/commands/create-workshop.command';
 import { UpdateWorkshopCommand } from '../domain/model/commands/update-workshop.command';

@@ -37,6 +37,12 @@ export class CustomersApiEndpoint extends BaseApi {
     );
   }
 
+  getByUserId(userId: string): Observable<CustomerResource> {
+    return this.http.get<CustomerResource>(`${baseUrl}/user/${userId}`).pipe(
+      catchError(this.handleError('Failed to get customer by user id'))
+    );
+  }
+
   delete(userId: string): Observable<any> {
     return this.http.delete(`${baseUrl}/user/${userId}`).pipe(
       catchError(this.handleError('Failed to delete customer'))
