@@ -2,9 +2,9 @@
   <!-- Total Income -->
   <mat-card class="kpi-card income-card">
     <mat-card-header>
-      <mat-icon mat-card-avatar class="kpi-icon">attach_money</mat-icon>
-      <mat-card-title>Total Income</mat-card-title>
-      <mat-card-subtitle>From Vouchers</mat-card-subtitle>
+      <mat-icon mat-card-avatar class="kpi-icon">trending_up</mat-icon>
+      <mat-card-title>{{ 'billing.kpi.income' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'billing.kpi.fromVouchers' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <h2 class="kpi-value">{{ stats.totalIncome | currency }}</h2>
@@ -15,8 +15,8 @@
   <mat-card class="kpi-card expense-card">
     <mat-card-header>
       <mat-icon mat-card-avatar class="kpi-icon">trending_down</mat-icon>
-      <mat-card-title>Total Expenses</mat-card-title>
-      <mat-card-subtitle>Calculated</mat-card-subtitle>
+      <mat-card-title>{{ 'billing.kpi.expenses' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'billing.kpi.calculated' | translate }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <h2 class="kpi-value">{{ stats.totalExpenses | currency }}</h2>

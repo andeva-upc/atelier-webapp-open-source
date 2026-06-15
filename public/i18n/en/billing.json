@@ -10,7 +10,9 @@
     },
     "kpi": {
       "income": "Total Income",
+      "fromVouchers": "From Vouchers",
       "expenses": "Total Expenses",
+      "calculated": "Calculated",
       "balance": "Balance"
     },
     "chart": {
@@ -37,7 +39,8 @@
     "expense_list": {
       "empty_title": "Fixed Expenses Coming Soon",
       "empty_subtitle": "We are currently implementing the fixed operational expenses tracking.",
-      "empty_icon_aria": "Expenses Coming Soon"
+      "empty_icon_aria": "Expenses Coming Soon",
+      "add_expense_btn": "+ Add Expense"
     },
     "income_list": {
       "title": "Vouchers List",

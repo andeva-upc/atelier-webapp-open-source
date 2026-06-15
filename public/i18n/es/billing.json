@@ -10,7 +10,9 @@
     },
     "kpi": {
       "income": "Ingresos Totales",
+      "fromVouchers": "De Comprobantes",
       "expenses": "Gastos Totales",
+      "calculated": "Calculado",
       "balance": "Balance"
     },
     "chart": {
@@ -37,7 +39,8 @@
     "expense_list": {
       "empty_title": "Registro de Gastos Próximamente",
       "empty_subtitle": "Estamos implementando el registro y seguimiento de gastos operativos fijos.",
-      "empty_icon_aria": "Gastos Próximamente"
+      "empty_icon_aria": "Gastos Próximamente",
+      "add_expense_btn": "+ Agregar Gasto"
     },
     "income_list": {
       "title": "Lista de Comprobantes",
