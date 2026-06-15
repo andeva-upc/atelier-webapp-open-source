@@ -1,1 +1,43 @@
-{}
+{
+  "title": "Inventory",
+  "addProduct": "Add Product",
+  "addBatch": "Add Batch",
+  "searchPlaceholder": "Search product...",
+  "noProductsFound": "No products found.",
+  "table": {
+    "sku": "SKU",
+    "name": "Name",
+    "category": "Category",
+    "stock": "Stock",
+    "price": "Price",
+    "actions": "Actions"
+  },
+  "productForm": {
+    "title": "New Product",
+    "category": "Category",
+    "categoryPlaceholder": "Select a category",
+    "categoryOther": "Other...",
+    "categoryCustom": "Type a category",
+    "name": "Name",
+    "sku": "SKU",
+    "description": "Description",
+    "salePrice": "Sale Price",
+    "minimumStock": "Minimum Stock",
+    "cancel": "Cancel",
+    "save": "Save Product"
+  },
+  "batchForm": {
+    "title": "Add Product Batch",
+    "product": "Product",
+    "productPlaceholder": "Select a product",
+    "quantity": "Quantity",
+    "acquisitionCost": "Acquisition Cost",
+    "cancel": "Cancel",
+    "save": "Add Batch"
+  },
+  "dialog": {
+    "detailsTitle": "Product Details",
+    "batchesTitle": "Registered Batches",
+    "close": "Close"
+  }
+}

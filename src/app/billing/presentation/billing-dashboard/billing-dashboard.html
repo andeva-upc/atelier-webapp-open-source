@@ -1,0 +1,39 @@
+<div class="dashboard-container">
+  <div class="header">
+    <h1>Billing Dashboard</h1>
+  </div>
+  
+  <div class="content">
+    <app-financial-kpi-cards [stats]="store.financialStats()"></app-financial-kpi-cards>
+    
+    <div class="charts-section">
+      <app-income-expense-chart [stats]="store.financialStats()"></app-income-expense-chart>
+    </div>
+
+    <!-- TRANSACTIONS TABS -->
+    <div class="transactions-section">
+      <mat-tab-group animationDuration="0ms" class="mat-elevation-z1">
+        <!-- Quotes Tab -->
+        <mat-tab label="Quotes">
+          <div class="tab-content">
+            <app-quote-list [quotes]="store.branchQuotes()"></app-quote-list>
+          </div>
+        </mat-tab>
+        
+        <!-- Income Tab -->
+        <mat-tab label="Income (Vouchers)">
+          <div class="tab-content">
+            <app-income-list [incomes]="store.branchVouchers()"></app-income-list>
+          </div>
+        </mat-tab>
+        
+        <!-- Expenses Tab -->
+        <mat-tab label="Expenses">
+          <div class="tab-content">
+            <app-expense-list></app-expense-list>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="kpi-grid">
+  <!-- Total Income -->
+  <mat-card class="kpi-card income-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="kpi-icon">attach_money</mat-icon>
+      <mat-card-title>Total Income</mat-card-title>
+      <mat-card-subtitle>From Vouchers</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h2 class="kpi-value">{{ stats.totalIncome | currency }}</h2>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Total Expenses -->
+  <mat-card class="kpi-card expense-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="kpi-icon">trending_down</mat-icon>
+      <mat-card-title>Total Expenses</mat-card-title>
+      <mat-card-subtitle>Calculated</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h2 class="kpi-value">{{ stats.totalExpenses | currency }}</h2>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Approved Quotes -->
+  <mat-card class="kpi-card approved-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="kpi-icon">check_circle</mat-icon>
+      <mat-card-title>Approved Quotes</mat-card-title>
+      <mat-card-subtitle>Current Status</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h2 class="kpi-value">{{ stats.approvedQuotesCount }}</h2>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Pending Quotes -->
+  <mat-card class="kpi-card pending-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar class="kpi-icon">pending_actions</mat-icon>
+      <mat-card-title>Pending Quotes</mat-card-title>
+      <mat-card-subtitle>In Draft</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <h2 class="kpi-value">{{ stats.pendingQuotesCount }}</h2>
+    </mat-card-content>
+  </mat-card>
+</div>

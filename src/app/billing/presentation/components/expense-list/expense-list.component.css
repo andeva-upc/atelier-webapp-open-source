@@ -1,0 +1,43 @@
+.empty-state-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  padding: 32px;
+}
+
+.empty-state-content {
+  text-align: center;
+  color: #666;
+}
+
+.placeholder-icon {
+  font-size: 64px;
+  color: #ccc;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+h2 {
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+p {
+  margin: 0 0 24px 0;
+  max-width: 400px;
+}
+
+.add-expense-btn {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
