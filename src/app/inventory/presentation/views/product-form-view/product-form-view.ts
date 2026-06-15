@@ -38,9 +38,12 @@ export class ProductFormViewComponent implements OnInit {
       this.store.updateProduct(this.productId, command);
       this.router.navigate(['/inventory/products', this.productId]);
     } else {
-      // Mocking branchId again for creation
-      const mockBranchId = '90ce7890-482d-4f27-a006-dc2a3be6be3f';
-      const command: CreateProductCommand = { branchId: mockBranchId, ...formData };
+      const branchId = localStorage.getItem('tenantBranchId');
+      if (!branchId) {
+        console.error('No branch selected!');
+        return;
+      }
+      const command: CreateProductCommand = { branchId: branchId, ...formData };
       this.store.createProduct(command);
       this.router.navigate(['/inventory']);
     }
