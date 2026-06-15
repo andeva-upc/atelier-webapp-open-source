@@ -4,7 +4,7 @@
   align-items: center;
   min-height: 400px;
   background: var(--billing-surface);
-  border-radius: 8px;
+  border-radius: 0;
   padding: 32px;
 }
 
@@ -17,9 +17,9 @@
 }
 
 .empty-icon {
-  font-size: 80px;
-  width: 80px;
-  height: 80px;
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
   color: var(--billing-divider);
   margin-bottom: 24px;
 }
@@ -27,25 +27,28 @@
 h2 {
   margin: 0 0 12px 0;
   color: var(--billing-text-primary);
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: var(--font-body);
 }
 
 p {
   margin: 0 0 32px 0;
   max-width: 400px;
   line-height: 1.5;
+  font-size: 14px;
+  font-family: var(--font-body);
 }
 
 .add-expense-btn {
-  background-color: var(--billing-primary);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
+  background-color: transparent;
+  color: var(--billing-text-secondary);
+  border: 1px solid var(--billing-divider);
+  padding: 10px 20px;
+  border-radius: 4px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: var(--font-body);
   cursor: not-allowed;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
+  opacity: 0.6;
 }

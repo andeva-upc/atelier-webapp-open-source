@@ -1,27 +1,33 @@
 .table-container {
   width: 100%;
   overflow-x: auto;
-  border-radius: 8px;
+  border-radius: 0;
   background-color: var(--billing-surface);
 }
 
 table {
   width: 100%;
   background-color: var(--billing-surface);
+  border-collapse: collapse;
 }
 
 ::ng-deep .table-container th.mat-mdc-header-cell {
   color: var(--billing-text-secondary);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 13px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
+  font-family: var(--font-body);
+  border-bottom: 1px solid var(--billing-divider);
+  padding: 16px;
 }
 
 ::ng-deep .table-container td.mat-mdc-cell {
   color: var(--billing-text-primary);
   font-size: 14px;
-  border-bottom-color: rgba(189, 189, 189, 0.3);
+  font-family: var(--font-body);
+  border-bottom: 1px solid var(--billing-divider);
+  padding: 16px;
 }
 
 .mat-mdc-row {
@@ -29,7 +35,7 @@ table {
 }
 
 .mat-mdc-row:hover {
-  background-color: rgba(0, 113, 235, 0.04);
+  background-color: #F9FAFB;
 }
 
 .empty-state {
@@ -37,27 +43,31 @@ table {
   text-align: center;
   color: var(--billing-text-secondary);
   background: var(--billing-surface);
-  border-top: 1px solid rgba(189, 189, 189, 0.3);
+  border-top: 1px solid var(--billing-divider);
 }
 
 .discount-badge {
   font-size: 11px;
-  background-color: rgba(16, 185, 129, 0.1);
+  background-color: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
   color: var(--billing-success);
   padding: 2px 6px;
   border-radius: 4px;
   margin-left: 6px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Badges / Chips */
 ::ng-deep .mat-mdc-chip {
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  font-size: 12px;
+  border-radius: 8px; /* Flatter chips */
+  border: 1px solid transparent;
 }
 
-.draft { background-color: rgba(117, 117, 117, 0.15) !important; color: var(--billing-text-secondary) !important; }
-.approved { background-color: rgba(0, 113, 235, 0.15) !important; color: var(--billing-primary) !important; }
-.canceled { background-color: rgba(239, 68, 68, 0.15) !important; color: var(--billing-failure) !important; }
-.in_progress { background-color: rgba(255, 109, 0, 0.15) !important; color: var(--billing-accent) !important; }
-.completed { background-color: rgba(16, 185, 129, 0.15) !important; color: var(--billing-success) !important; }
+.draft { background-color: #F3F4F6 !important; border-color: #E5E7EB !important; color: var(--billing-text-secondary) !important; }
+.approved { background-color: rgba(0, 113, 235, 0.05) !important; border-color: rgba(0, 113, 235, 0.1) !important; color: var(--billing-primary) !important; }
+.canceled { background-color: rgba(239, 68, 68, 0.05) !important; border-color: rgba(239, 68, 68, 0.1) !important; color: var(--billing-failure) !important; }
+.in_progress { background-color: rgba(255, 109, 0, 0.05) !important; border-color: rgba(255, 109, 0, 0.1) !important; color: var(--billing-accent) !important; }
+.completed { background-color: rgba(16, 185, 129, 0.05) !important; border-color: rgba(16, 185, 129, 0.1) !important; color: var(--billing-success) !important; }

@@ -4,7 +4,7 @@
     <button mat-raised-button color="primary" (click)="onOpenCheckout()">{{ 'billing.income_list.emit_btn' | translate }}</button>
   </div>
   @if (incomes().length > 0) {
-    <table mat-table [dataSource]="incomes()" class="mat-elevation-z2">
+    <table mat-table [dataSource]="incomes()" class="precision-table">
       
       <!-- ID Column -->
       <ng-container matColumnDef="id">

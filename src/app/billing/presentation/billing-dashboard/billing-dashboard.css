@@ -1,75 +1,92 @@
 .dashboard-container {
-  /* Billing Context Color Palette */
+  /* Precision Design Tokens */
   --billing-primary: #0071EB;
-  --billing-primary-dark: #004FA6;
-  --billing-primary-light: #B3D4F8;
+  --billing-primary-dark: #0056b3;
   --billing-accent: #FF6D00;
   --billing-surface: #FFFFFF;
-  --billing-text-primary: #212121;
-  --billing-text-secondary: #757575;
-  --billing-divider: #BDBDBD;
+  --billing-bg: #FFFFFF;
+  --billing-text-primary: #111827; /* Darker, crisper text */
+  --billing-text-secondary: #6B7280; /* Neutral gray */
+  --billing-divider: #E5E7EB; /* Hairline border color */
   --billing-success: #10B981;
   --billing-failure: #EF4444;
 
-  padding: 32px;
+  --billing-radius-sm: 8px;
+  --billing-radius-md: 16px;
+
+  /* Typography variables */
+  --font-display: "Zizou Slab", serif;
+  --font-body: "Mona Sans", "Roboto", sans-serif;
+
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  height: 100%;
-  background-color: var(--billing-surface);
+  gap: 40px;
+  min-height: 100vh;
+  background-color: var(--billing-bg);
   color: var(--billing-text-primary);
   box-sizing: border-box;
+  font-family: var(--font-body);
 }
 
 .header {
-  padding-bottom: 16px;
+  padding-bottom: 24px;
   border-bottom: 1px solid var(--billing-divider);
 }
 
 .header h1 {
   margin: 0;
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 500;
+  font-family: var(--font-display);
   color: var(--billing-text-primary);
-  letter-spacing: -0.5px;
+  letter-spacing: -0.02em;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 40px;
 }
 
 .charts-section {
   background: var(--billing-surface);
-  border-radius: 12px;
-  padding: 24px;
-  border: 1px solid rgba(189, 189, 189, 0.4);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  transition: box-shadow 0.3s ease;
+  border-radius: var(--billing-radius-md);
+  padding: 32px;
+  border: 1px solid var(--billing-divider);
+  /* Removed heavy shadow, keeping it extremely subtle to emphasize borders */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .charts-section:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border-color: #D1D5DB;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .transactions-section {
   background: var(--billing-surface);
-  border-radius: 12px;
+  border-radius: var(--billing-radius-md);
   overflow: hidden;
-  border: 1px solid rgba(189, 189, 189, 0.4);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--billing-divider);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
-/* Material Tabs Overrides */
+/* Material Tabs Precision Overrides */
 ::ng-deep .transactions-section .mat-mdc-tab-group {
-  font-family: inherit;
+  font-family: var(--font-body);
+}
+
+::ng-deep .transactions-section .mat-mdc-tab-header {
+  border-bottom: 1px solid var(--billing-divider);
+  background-color: #F9FAFB; /* Subtle contrast for tab bar */
 }
 
 ::ng-deep .transactions-section .mat-mdc-tab .mdc-tab__text-label {
   color: var(--billing-text-secondary);
   font-weight: 500;
-  letter-spacing: 0.3px;
+  font-size: 14px;
+  letter-spacing: 0.01em;
   transition: color 0.2s ease;
 }
 
@@ -83,6 +100,6 @@
 }
 
 .tab-content {
-  padding: 0; /* Removing padding because the tables inside will handle it nicely or span full width */
+  padding: 0;
   background-color: var(--billing-surface);
 }
