@@ -1,0 +1,157 @@
+/* Atelier Color Palette Implementation */
+.role-selection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #F4F6F9; /* Clean light gray-blue background */
+  color: #212121; /* Primary Text */
+  font-family: 'Inter', 'Roboto', sans-serif;
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: #212121; /* Primary Text */
+  margin-bottom: 3.5rem;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.profiles-grid {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 900px;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-card:hover {
+  transform: translateY(-8px);
+}
+
+.avatar-container {
+  width: 150px;
+  height: 150px;
+  border-radius: 24px; /* Premium smooth corners */
+  background: #FFFFFF; /* Text / Shapes Background */
+  border: 2px solid #BDBDBD; /* Divider Color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.role-icon {
+  font-size: 3.75rem;
+  color: #0071EB; /* Primary Color / Icons */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-card:hover .avatar-container {
+  border-color: #0071EB; /* Primary Color */
+  background-color: #B3D4F8; /* Light Primary Color */
+  box-shadow: 0 16px 32px rgba(0, 113, 235, 0.15);
+}
+
+.profile-card:hover .role-icon {
+  color: #004FA6; /* Dark Primary Color */
+  transform: scale(1.1);
+}
+
+.role-name {
+  margin-top: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #757575; /* Secondary Text */
+  transition: color 0.3s ease;
+}
+
+.profile-card:hover .role-name {
+  color: #004FA6; /* Dark Primary Color */
+}
+
+/* Empty State / No Roles Found Container */
+.no-roles-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border: 1px solid #BDBDBD;
+  border-radius: 24px;
+  padding: 3.5rem 3rem;
+  text-align: center;
+  max-width: 450px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+}
+
+.no-roles-icon {
+  font-size: 4.5rem;
+  color: #FF6D00; /* Accent Color (Warning/Alert) */
+  margin-bottom: 1.5rem;
+}
+
+.no-roles-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #212121;
+  margin-bottom: 2.25rem;
+  line-height: 1.5;
+}
+
+.sign-out-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #0071EB; /* Primary Color */
+  color: #FFFFFF; /* Text / Shapes */
+  border: none;
+  border-radius: 12px;
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 113, 235, 0.2);
+}
+
+.sign-out-btn:hover {
+  background-color: #004FA6; /* Dark Primary Color */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 113, 235, 0.3);
+}
+
+.sign-out-btn:active {
+  transform: translateY(1px);
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+/* Loading State */
+.loading-spinner {
+  border: 4px solid rgba(0, 113, 235, 0.1); /* Light Primary boundary */
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border-left-color: #0071EB; /* Primary Color Accent */
+  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
