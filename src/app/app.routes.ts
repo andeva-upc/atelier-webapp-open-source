@@ -6,6 +6,7 @@ import { iamGuard } from './iam/infrastructure/iam.guard';
 const pageNotFound = () => import('./shared/presentation/views/page-not-found/page-not-found').then((m) => m.PageNotFound);
 const iamRoutes = () => import('./iam/presentation/iam.routes').then((m) => m.iamRoutes);
 const inventoryRoutes = () => import('./inventory/inventory.routes').then((m) => m.INVENTORY_ROUTES);
+const billingRoutes = () => import('./billing/billing.routes').then((m) => m.BILLING_ROUTES);
 
 /**
  * Defines the application routes. Each route is associated with a component that will be displayed when the route is accessed. The title property is used to set the document title when the route is active.
@@ -22,6 +23,14 @@ export const routes: Routes = [
     canActivate: [iamGuard],
     children: [
       { path: '', loadChildren: inventoryRoutes }
+    ]
+  },
+  { 
+    path: 'billing', 
+    component: Home, 
+    canActivate: [iamGuard],
+    children: [
+      { path: '', loadChildren: billingRoutes }
     ]
   },
   { path: '',  loadChildren: iamRoutes },

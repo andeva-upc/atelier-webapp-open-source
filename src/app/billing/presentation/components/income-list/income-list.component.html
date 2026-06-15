@@ -1,0 +1,49 @@
+<div class="table-container">
+  <table mat-table [dataSource]="incomes" class="mat-elevation-z2" *ngIf="incomes.length > 0">
+    
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> Voucher ID </th>
+      <td mat-cell *matCellDef="let voucher"> {{voucher.id.substring(0, 8)}}... </td>
+    </ng-container>
+
+    <!-- Customer Name Column -->
+    <ng-container matColumnDef="customerName">
+      <th mat-header-cell *matHeaderCellDef> Customer </th>
+      <td mat-cell *matCellDef="let voucher"> {{voucher.customerName}} </td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let voucher"> {{voucher.type}} </td>
+    </ng-container>
+
+    <!-- Total Amount Column -->
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let voucher"> {{voucher.totalAmount | currency}} </td>
+    </ng-container>
+
+    <!-- Total Paid Column -->
+    <ng-container matColumnDef="totalPaid">
+      <th mat-header-cell *matHeaderCellDef> Paid </th>
+      <td mat-cell *matCellDef="let voucher"> {{voucher.totalPaid | currency}} </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let voucher">
+        <mat-chip [ngClass]="voucher.status.toLowerCase()">{{voucher.status}}</mat-chip>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  <div *ngIf="incomes.length === 0" class="empty-state">
+    <p>No income transactions found.</p>
+  </div>
+</div>
