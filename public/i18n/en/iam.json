@@ -1,1 +1,43 @@
-﻿{}
+{
+  "logout": "Sign out",
+  "profile": {
+    "loading": "Loading...",
+    "profile": "Profile",
+    "branch": "Branch:",
+    "language": "Language:"
+  },
+  "sign-in": {
+    "welcome": "Welcome to",
+    "subtitle1": "Your workshop is waiting for you to continue!",
+    "subtitle2": "Enter your personal data to continue",
+    "email_placeholder": "Email",
+    "email_required": "Email is required",
+    "email_invalid": "Must be a valid email",
+    "password_placeholder": "Password",
+    "password_required": "Password is required",
+    "password_min": "Minimum 6 characters",
+    "remember_me": "Remember me",
+    "recover_password": "Recover password",
+    "sign_in_btn": "Sign In",
+    "sign_up_btn": "Sign Up",
+    "social_login": "Or sign in with",
+    "google_aria": "Sign in with Google",
+    "error_invalid_credentials": "Invalid credentials. Please verify your email and password."
+  },
+  "sign-up": {
+    "welcome": "Welcome to",
+    "subtitle1": "Sign up to start!",
+    "subtitle2": "Enter your personal data to register",
+    "email_placeholder": "Email",
+    "email_required": "Email is required",
+    "email_invalid": "Must be a valid email",
+    "password_placeholder": "Password",
+    "password_required": "Password is required",
+    "password_min": "Minimum 6 characters",
+    "terms": "I accept the Terms and Conditions",
+    "sign_up_btn": "Sign Up",
+    "sign_in_btn": "Sign In",
+    "social_login": "Or sign in with",
+    "google_aria": "Sign in with Google"
+  }
+}

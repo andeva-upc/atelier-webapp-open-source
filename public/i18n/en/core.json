@@ -1,1 +1,15 @@
-﻿{}
+{
+  "user-profile": {
+    "loading": "Loading..."
+  },
+  "role-selection": {
+    "no_roles": "You do not have profiles associated with this account.",
+    "sign_out": "Sign Out",
+    "title": "Which profile do you want to log in with?",
+    "roles": {
+      "CUSTOMER": "Customer",
+      "OWNER": "Owner",
+      "EMPLOYEE": "Mechanic"
+    }
+  }
+}

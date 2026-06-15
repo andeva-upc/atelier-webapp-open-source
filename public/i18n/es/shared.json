@@ -15,5 +15,13 @@
     "title": "Página No Encontrada",
     "content": "La ruta <strong>{{ invalid_path }}</strong> no está disponible.",
     "go-home": "Volver al Inicio"
+  },
+  "toolbar": {
+    "profile": "Perfil",
+    "branch": "Sede:",
+    "language": "Idioma:"
+  },
+  "modal": {
+    "close": "Cerrar modal"
   }
 }

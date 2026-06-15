@@ -1,0 +1,28 @@
+.menu-item-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.menu-icon {
+  font-size: 1.2rem;
+  color: #71717a;
+}
+
+.custom-menu-item {
+  width: 100%;
+  padding: 0 16px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: #18181b;
+  font-family: inherit;
+  font-size: 1rem;
+}
+.custom-menu-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}

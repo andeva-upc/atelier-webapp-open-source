@@ -1,0 +1,29 @@
+<div class="role-selection-container">
+  @if (isLoading()) {
+    <div class="loading-spinner"></div>
+  } @else {
+    @if (coreStore.currentRoles()?.length === 0) {
+      <div class="no-roles-container">
+        <i class="pi pi-exclamation-triangle no-roles-icon"></i>
+        <p class="no-roles-text">{{ 'role-selection.no_roles' | translate }}</p>
+        <button class="sign-out-btn" (click)="onSignOut()">
+          <i class="pi pi-sign-out btn-icon"></i> {{ 'role-selection.sign_out' | translate }}
+        </button>
+      </div>
+    } @else {
+      <h1 class="title">{{ 'role-selection.title' | translate }}</h1>
+      
+      <div class="profiles-grid">
+        @for (role of coreStore.currentRoles(); track role) {
+          <div class="profile-card" (click)="selectRole(role)">
+            <div class="avatar-container">
+              <!-- Renderized PrimeIcons instead of images -->
+              <i [class]="getRoleIcon(role) + ' role-icon'"></i>
+            </div>
+            <span class="role-name">{{ 'role-selection.roles.' + role | translate }}</span>
+          </div>
+        }
+      </div>
+    }
+  }
+</div>
