@@ -7,30 +7,30 @@
       <td mat-cell *matCellDef="let quote"> {{quote.id.substring(0, 8)}}... </td>
     </ng-container>
 
-    <!-- Customer Name Column -->
-    <ng-container matColumnDef="customerName">
-      <th mat-header-cell *matHeaderCellDef> Customer </th>
-      <td mat-cell *matCellDef="let quote"> {{quote.customerName}} </td>
+    <!-- Work Order ID Column -->
+    <ng-container matColumnDef="workOrderId">
+      <th mat-header-cell *matHeaderCellDef> Work Order </th>
+      <td mat-cell *matCellDef="let quote"> {{quote.workOrderId.substring(0, 8)}}... </td>
     </ng-container>
 
-    <!-- Description Column -->
-    <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef> Description </th>
-      <td mat-cell *matCellDef="let quote"> {{quote.description}} </td>
+    <!-- Subtotal Amount Column -->
+    <ng-container matColumnDef="subtotalAmount">
+      <th mat-header-cell *matHeaderCellDef> Subtotal </th>
+      <td mat-cell *matCellDef="let quote"> {{quote.subtotalAmount | currency}} </td>
     </ng-container>
 
-    <!-- Base Price Column -->
-    <ng-container matColumnDef="basePrice">
-      <th mat-header-cell *matHeaderCellDef> Base Price </th>
-      <td mat-cell *matCellDef="let quote"> {{quote.basePrice | currency}} </td>
+    <!-- Discount Percentage Column -->
+    <ng-container matColumnDef="discountPercentage">
+      <th mat-header-cell *matHeaderCellDef> Discount </th>
+      <td mat-cell *matCellDef="let quote"> {{quote.discountPercentage}}% </td>
     </ng-container>
 
-    <!-- Total Price Column -->
-    <ng-container matColumnDef="totalPrice">
-      <th mat-header-cell *matHeaderCellDef> Total Price </th>
+    <!-- Total Amount Column -->
+    <ng-container matColumnDef="totalAmount">
+      <th mat-header-cell *matHeaderCellDef> Total Amount </th>
       <td mat-cell *matCellDef="let quote"> 
-        {{quote.totalPrice | currency}} 
-        <span *ngIf="quote.discount > 0" class="discount-badge">-{{quote.discount}}%</span>
+        {{quote.totalAmount | currency}} 
+        <span *ngIf="quote.discountPercentage > 0" class="discount-badge">-{{quote.discountPercentage}}%</span>
       </td>
     </ng-container>
 

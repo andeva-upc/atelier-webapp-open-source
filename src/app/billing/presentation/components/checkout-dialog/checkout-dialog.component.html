@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>Checkout & Emit Voucher</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="checkoutForm" class="checkout-form">
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Select Approved Quote</mat-label>
+      <mat-select formControlName="quoteId">
+        <mat-option *ngFor="let quote of data.approvedQuotes" [value]="quote.id">
+          WO: {{ quote.workOrderId.substring(0, 8) }} - {{ quote.totalAmount | currency }} (ID: {{ quote.id.substring(0, 8) }})
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="checkoutForm.get('quoteId')?.hasError('required')">Quote is required</mat-error>
+      <mat-error *ngIf="checkoutForm.get('quoteId')?.hasError('zeroTotal')">Cannot checkout a quote with a total of $0.00</mat-error>
+    </mat-form-field>
+
+    <div class="voucher-type-section">
+      <mat-label class="radio-label">Voucher Type:</mat-label>
+      <mat-radio-group formControlName="type" class="radio-group">
+        <mat-radio-button value="RECEIPT">Receipt (Boleta)</mat-radio-button>
+        <mat-radio-button value="INVOICE">Invoice (Factura)</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Customer ID (DNI/RUC)</mat-label>
+      <input matInput formControlName="customerId" placeholder="e.g. 12345678">
+      <mat-error *ngIf="checkoutForm.get('customerId')?.hasError('required')">Customer ID is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Customer Name</mat-label>
+      <input matInput formControlName="customerName" placeholder="e.g. John Doe">
+      <mat-error *ngIf="checkoutForm.get('customerName')?.hasError('required')">Customer Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Customer Email</mat-label>
+      <input matInput formControlName="customerEmail" type="email" placeholder="e.g. john@example.com">
+      <mat-error *ngIf="checkoutForm.get('customerEmail')?.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="checkoutForm.get('customerEmail')?.hasError('email')">Invalid email format</mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="checkoutForm.invalid">
+    Emit Voucher
+  </button>
+</mat-dialog-actions>

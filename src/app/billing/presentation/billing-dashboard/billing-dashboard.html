@@ -21,9 +21,9 @@
         </mat-tab>
         
         <!-- Income Tab -->
-        <mat-tab label="Income (Vouchers)">
+        <mat-tab label="Vouchers">
           <div class="tab-content">
-            <app-income-list [incomes]="store.branchVouchers()"></app-income-list>
+            <app-income-list [incomes]="store.branchVouchers()" (openCheckout)="openCheckoutDialog()"></app-income-list>
           </div>
         </mat-tab>
         
