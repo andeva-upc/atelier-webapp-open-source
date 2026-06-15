@@ -1,4 +1,8 @@
 <div class="table-container">
+  <div class="table-header">
+    <h3>Vouchers List</h3>
+    <button mat-raised-button color="primary" (click)="onOpenCheckout()">+ Emit Voucher</button>
+  </div>
   <table mat-table [dataSource]="incomes" class="mat-elevation-z2" *ngIf="incomes.length > 0">
     
     <!-- ID Column -->
