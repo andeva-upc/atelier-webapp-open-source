@@ -24,7 +24,7 @@ import { AssignSubscriptionCommand } from '../domain/model/commands/assign-subsc
 @Injectable({providedIn: 'root'})
 export class CoreStore {
   // Roles
-  private readonly currentRolesSignal = signal<string[]>([]);
+  private readonly currentRolesSignal = signal<string[] | null>(null);
   // Profiles
   private readonly currentCustomerSignal = signal<CustomerResource | null>(null);
   private readonly currentOwnerSignal = signal<OwnerResource | null>(null);
@@ -32,6 +32,7 @@ export class CoreStore {
   // Workshops & Branches
   private readonly ownerWorkshopsSignal = signal<WorkshopResource[]>([]);
   private readonly currentWorkshopBranchesSignal = signal<BranchResource[]>([]);
+  private readonly currentBranchSignal = signal<BranchResource | null>(null);
 
   // Exposed Readonly Signals
   readonly currentRoles = this.currentRolesSignal.asReadonly();
@@ -40,6 +41,7 @@ export class CoreStore {
   readonly currentEmployee = this.currentEmployeeSignal.asReadonly();
   readonly ownerWorkshops = this.ownerWorkshopsSignal.asReadonly();
   readonly currentWorkshopBranches = this.currentWorkshopBranchesSignal.asReadonly();
+  readonly currentBranch = this.currentBranchSignal.asReadonly();
 
   constructor(private coreApi: CoreApi) {}
 
@@ -47,7 +49,10 @@ export class CoreStore {
   loadRolesByUserId(userId: string) {
     this.coreApi.profiles.getRolesByUserId(userId).subscribe({
       next: (roles) => this.currentRolesSignal.set(roles),
-      error: (err) => console.error('Failed to load roles:', err)
+      error: (err) => {
+        console.error('Failed to load roles:', err);
+        this.currentRolesSignal.set([]);
+      }
     });
   }
 
@@ -66,6 +71,13 @@ export class CoreStore {
     this.coreApi.customers.getById(customerId).subscribe({
       next: (resource) => this.currentCustomerSignal.set(resource),
       error: (err) => console.error('Failed to load customer:', err)
+    });
+  }
+
+  loadCustomerByUserId(userId: string) {
+    this.coreApi.customers.getByUserId(userId).subscribe({
+      next: (resource) => this.currentCustomerSignal.set(resource),
+      error: (err) => console.error('Failed to load customer by user id:', err)
     });
   }
 
@@ -94,6 +106,18 @@ export class CoreStore {
     });
   }
 
+  loadOwnerByUserId(userId: string) {
+    this.coreApi.owners.getByUserId(userId).subscribe({
+      next: (resource) => {
+        this.currentOwnerSignal.set(resource);
+        if (resource && resource.id) {
+          this.loadWorkshopsByOwnerId(resource.id);
+        }
+      },
+      error: (err) => console.error('Failed to load owner by user id:', err)
+    });
+  }
+
   updateOwner(userId: string, command: UpdateOwnerCommand) {
     this.coreApi.owners.update(userId, command).subscribe({
       next: (resource) => this.currentOwnerSignal.set(resource),
@@ -116,6 +140,13 @@ export class CoreStore {
     this.coreApi.employees.getById(employeeId).subscribe({
       next: (resource) => this.currentEmployeeSignal.set(resource),
       error: (err) => console.error('Failed to load employee:', err)
+    });
+  }
+
+  loadEmployeeByUserId(userId: string) {
+    this.coreApi.employees.getByUserId(userId).subscribe({
+      next: (resource) => this.currentEmployeeSignal.set(resource),
+      error: (err) => console.error('Failed to load employee by user id:', err)
     });
   }
 
@@ -149,7 +180,12 @@ export class CoreStore {
 
   loadWorkshopsByOwnerId(ownerId: string) {
     this.coreApi.workshops.getByOwnerId(ownerId).subscribe({
-      next: (resources) => this.ownerWorkshopsSignal.set(resources),
+      next: (resources) => {
+        this.ownerWorkshopsSignal.set(resources);
+        if (resources && resources.length > 0) {
+          this.loadBranchesByWorkshopId(resources[0].id);
+        }
+      },
       error: (err) => console.error('Failed to load workshops:', err)
     });
   }
@@ -177,9 +213,34 @@ export class CoreStore {
 
   loadBranchesByWorkshopId(workshopId: string) {
     this.coreApi.branches.getByWorkshopId(workshopId).subscribe({
-      next: (resources) => this.currentWorkshopBranchesSignal.set(resources),
-      error: (err) => console.error('Failed to load branches:', err)
+      next: (resources) => {
+        this.currentWorkshopBranchesSignal.set(resources);
+        if (resources && resources.length > 0) {
+          const savedBranchId = localStorage.getItem('tenantBranchId');
+          const matchedBranch = resources.find(b => b.id.toString() === savedBranchId);
+          if (matchedBranch) {
+            this.selectBranch(matchedBranch);
+          } else {
+            this.selectBranch(resources[0]);
+          }
+        } else {
+          this.selectBranch(null);
+        }
+      },
+      error: (err) => {
+        console.error('Failed to load branches:', err);
+        this.selectBranch(null);
+      }
     });
+  }
+
+  selectBranch(branch: BranchResource | null) {
+    this.currentBranchSignal.set(branch);
+    if (branch && branch.id) {
+      localStorage.setItem('tenantBranchId', branch.id.toString());
+    } else {
+      localStorage.removeItem('tenantBranchId');
+    }
   }
 
   // Subscriptions
