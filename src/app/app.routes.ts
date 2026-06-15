@@ -15,6 +15,7 @@ const iamRoutes = () => import('./iam/presentation/iam.routes').then((m) => m.ia
  */
 export const routes: Routes = [
   { path: 'home', component: Home,    canActivate: [iamGuard] },
+  { path: 'role-selection', loadComponent: () => import('./core/presentation/views/role-selection/role-selection').then(m => m.RoleSelectionComponent), canActivate: [iamGuard] },
   { path: '',  loadChildren: iamRoutes },
   { path: '',     redirectTo: 'home', pathMatch: 'full'},
   { path: '**',   loadComponent: pageNotFound },
