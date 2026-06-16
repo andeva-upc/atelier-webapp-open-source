@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { InventoryApi } from '../infrastructure/inventory-api';
-
+import { Observable, tap } from 'rxjs';
 import { ProductResponse } from '../infrastructure/responses/product.response';
 
 import { CreateProductCommand } from '../domain/model/commands/create-product.command';
@@ -38,28 +38,32 @@ export class InventoryStore {
     });
   }
 
-  createProduct(command: CreateProductCommand) {
-    this.api.products.create(command).subscribe({
-      next: (product) => {
-        const currentProducts = this.branchProductsSignal();
-        this.branchProductsSignal.set([...currentProducts, product]);
-        this.activeProductSignal.set(product);
-      },
-      error: (err) => console.error('Failed to create product:', err)
-    });
+  createProduct(command: CreateProductCommand): Observable<ProductResponse> {
+    return this.api.products.create(command).pipe(
+      tap({
+        next: (product) => {
+          const currentProducts = this.branchProductsSignal();
+          this.branchProductsSignal.set([...currentProducts, product]);
+          this.activeProductSignal.set(product);
+        },
+        error: (err) => console.error('Failed to create product:', err)
+      })
+    );
   }
 
-  updateProduct(productId: string, command: UpdateProductCommand) {
-    this.api.products.update(productId, command).subscribe({
-      next: (product) => {
-        const currentProducts = this.branchProductsSignal().map(p => p.id === product.id ? product : p);
-        this.branchProductsSignal.set(currentProducts);
-        if (this.activeProductSignal()?.id === productId) {
-            this.activeProductSignal.set(product);
-        }
-      },
-      error: (err) => console.error('Failed to update product:', err)
-    });
+  updateProduct(productId: string, command: UpdateProductCommand): Observable<ProductResponse> {
+    return this.api.products.update(productId, command).pipe(
+      tap({
+        next: (product) => {
+          const currentProducts = this.branchProductsSignal().map(p => p.id === product.id ? product : p);
+          this.branchProductsSignal.set(currentProducts);
+          if (this.activeProductSignal()?.id === productId) {
+              this.activeProductSignal.set(product);
+          }
+        },
+        error: (err) => console.error('Failed to update product:', err)
+      })
+    );
   }
 
   deleteProduct(productId: string) {

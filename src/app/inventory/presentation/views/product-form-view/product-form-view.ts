@@ -35,8 +35,10 @@ export class ProductFormViewComponent implements OnInit {
   onSave(formData: any): void {
     if (this.isEditMode && this.productId) {
       const command: UpdateProductCommand = { ...formData };
-      this.store.updateProduct(this.productId, command);
-      this.router.navigate(['/inventory/products', this.productId]);
+      this.store.updateProduct(this.productId, command).subscribe({
+        next: () => this.router.navigate(['/inventory/products', this.productId]),
+        error: (err) => console.error('Failed to update product:', err)
+      });
     } else {
       const branchId = localStorage.getItem('tenantBranchId');
       if (!branchId) {
@@ -44,8 +46,10 @@ export class ProductFormViewComponent implements OnInit {
         return;
       }
       const command: CreateProductCommand = { branchId: branchId, ...formData };
-      this.store.createProduct(command);
-      this.router.navigate(['/inventory']);
+      this.store.createProduct(command).subscribe({
+        next: () => this.router.navigate(['/inventory']),
+        error: (err) => console.error('Failed to create product:', err)
+      });
     }
   }
 

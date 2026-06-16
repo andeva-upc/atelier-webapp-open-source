@@ -27,7 +27,9 @@ export class ProductsApiEndpoint {
   }
 
   getByBranchId(branchId: string): Observable<ProductResponse[]> {
-    return this.http.get<ProductResponse[]>(`${this.baseUrl}/branch/${branchId}`);
+    return this.http.get<ProductResponse[]>(`${this.baseUrl}/branch/${branchId}`, {
+      params: { _t: new Date().getTime().toString() }
+    });
   }
 
   getById(productId: string): Observable<ProductResponse> {

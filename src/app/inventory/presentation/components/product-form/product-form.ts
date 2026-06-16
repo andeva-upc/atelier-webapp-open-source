@@ -65,6 +65,8 @@ export class ProductFormComponent implements OnInit {
         formValue.category = formValue.customCategory;
       }
       delete formValue.customCategory; // remove internal field
+      formValue.salePrice = Number(formValue.salePrice);
+      formValue.minimumStock = Number(formValue.minimumStock);
       this.save.emit(formValue);
     } else {
       this.productForm.markAllAsTouched();
