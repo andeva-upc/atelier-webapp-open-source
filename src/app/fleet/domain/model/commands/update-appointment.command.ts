@@ -2,7 +2,7 @@ export interface UpdateAppointmentCommand {
   scheduledStart?: string;
   scheduledEnd?: string;
   notes?: string | null;
-  status?: 'PENDING' | 'COMPLETED' | 'CANCELED' | string;
+  status?: 'PENDING' | 'APPROVED' | 'COMPLETED' | 'CANCELLED' | string;
   updatedBy?: string;
 }
 

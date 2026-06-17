@@ -3,7 +3,7 @@ export interface AppointmentResponse {
   branchId: string;
   customerId: string;
   vehicleId: string;
-  status: 'PENDING' | 'COMPLETED' | 'CANCELED' | string;
+  status: 'PENDING' | 'APPROVED' | 'COMPLETED' | 'CANCELLED' | string;
   scheduledStart: string; // ISO timestamp
   scheduledEnd: string; // ISO timestamp
   notes?: string;

@@ -1,5 +1,4 @@
 import { Injectable, signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { FleetApi } from '../infrastructure/fleet-api';
 
 import { AppointmentResponse } from '../infrastructure/responses/appointment.response';
@@ -25,7 +24,7 @@ export class FleetStore {
   readonly activeAppointment = this.activeAppointmentSignal.asReadonly();
   readonly activeCustomerRegistration = this.activeCustomerRegistrationSignal.asReadonly();
 
-  constructor(private api: FleetApi, private router: Router) {}
+  constructor(private api: FleetApi) {}
 
 
   loadAppointmentsByBranchId(branchId: string) {

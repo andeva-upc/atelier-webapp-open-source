@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { CustomerRegistrationResponse } from '../responses/customer-registration.response';
+import { CreateCustomerRegistrationCommand } from '../../domain/model/commands/create-customer-registration.command';
+import { UpdateCustomerRegistrationCommand } from '../../domain/model/commands/update-customer-registration.command';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class CustomerRegistrationsApiEndpoint {
   constructor(private http: HttpClient) {}
 
   getByBranchId(branchId: string) {
-    return this.http.get<any[]>(`${this.baseUrl}/branch/${branchId}`);
+    return this.http.get<CustomerRegistrationResponse[]>(`${this.baseUrl}/branch/${branchId}`);
   }
 
   getByBranchIdAndStatus(branchId: string, status: string) {
@@ -20,15 +22,15 @@ export class CustomerRegistrationsApiEndpoint {
   }
 
   getById(registrationId: string) {
-    return this.http.get<any>(`${this.baseUrl}/${registrationId}`);
+    return this.http.get<CustomerRegistrationResponse>(`${this.baseUrl}/${registrationId}`);
   }
 
-  create(command: any) {
-    return this.http.post<any>(this.baseUrl, command);
+  create(command: CreateCustomerRegistrationCommand) {
+    return this.http.post<CustomerRegistrationResponse>(this.baseUrl, command);
   }
 
-  update(registrationId: string, command: any) {
-    return this.http.put<any>(`${this.baseUrl}/${registrationId}`, command);
+  update(registrationId: string, command: UpdateCustomerRegistrationCommand) {
+    return this.http.put<CustomerRegistrationResponse>(`${this.baseUrl}/${registrationId}`, command);
   }
 
   delete(registrationId: string) {
