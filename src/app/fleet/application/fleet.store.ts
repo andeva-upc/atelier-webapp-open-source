@@ -1,5 +1,10 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { FleetApi } from '../infrastructure/fleet-api';
+import { FleetAssemblers } from '../infrastructure/assemblers/fleet-assemblers';
+import { Vehicle } from '../domain/model/vehicle.model';
+import { Obd2Device, Obd2Registration, TelemetrySnapshot, DtcAlert } from '../domain/model/obd2.model';
+import { CreateVehicleCommand } from '../domain/model/commands/create-vehicle.command';
+import { LinkObd2DeviceCommand } from '../domain/model/commands/link-obd2-device.command';
 
 import { AppointmentResponse } from '../infrastructure/responses/appointment.response';
 import { CustomerRegistrationResponse } from '../infrastructure/responses/customer-registration.response';
@@ -23,6 +28,24 @@ export class FleetStore {
 
   readonly activeAppointment = this.activeAppointmentSignal.asReadonly();
   readonly activeCustomerRegistration = this.activeCustomerRegistrationSignal.asReadonly();
+
+  private readonly vehiclesSignal = signal<Vehicle[]>([]);
+  private readonly obd2DevicesSignal = signal<Obd2Device[]>([]);
+  private readonly activeObd2RegistrationsSignal = signal<Obd2Registration[]>([]);
+  
+  private readonly selectedVehicleTelemetrySignal = signal<TelemetrySnapshot[]>([]);
+  private readonly selectedVehicleDtcAlertsSignal = signal<DtcAlert[]>([]);
+
+  readonly vehicles = this.vehiclesSignal.asReadonly();
+  readonly obd2Devices = this.obd2DevicesSignal.asReadonly();
+  readonly activeObd2Registrations = this.activeObd2RegistrationsSignal.asReadonly();
+  
+  readonly selectedVehicleTelemetry = this.selectedVehicleTelemetrySignal.asReadonly();
+  readonly selectedVehicleDtcAlerts = this.selectedVehicleDtcAlertsSignal.asReadonly();
+
+  readonly availableObd2Devices = computed(() => {
+    return this.obd2DevicesSignal().filter(d => d.status === 'AVAILABLE');
+  });
 
   constructor(private api: FleetApi) {}
 
@@ -136,4 +159,74 @@ export class FleetStore {
     });
   }
 
+  // ==========================================
+  // VEHICLES & OBD2
+  // ==========================================
+
+  loadAvailableVehicles() {
+    this.api.vehicles.getAvailableForLinking().subscribe({
+      next: (responses) => this.vehiclesSignal.set(FleetAssemblers.toVehicleArray(responses)),
+      error: (err) => console.error('Failed to load available vehicles:', err)
+    });
+  }
+
+  loadObd2Devices() {
+    this.api.obd2Devices.getAll().subscribe({
+      next: (responses) => this.obd2DevicesSignal.set(FleetAssemblers.toObd2DeviceArray(responses)),
+      error: (err) => console.error('Failed to load obd2 devices:', err)
+    });
+  }
+
+  loadActiveObd2Registrations() {
+    this.api.obd2Registrations.getAll().subscribe({
+      next: (responses) => this.activeObd2RegistrationsSignal.set(FleetAssemblers.toObd2RegistrationArray(responses)),
+      error: (err) => console.error('Failed to load active obd2 registrations:', err)
+    });
+  }
+
+  loadVehicleTelemetry(vehicleId: string) {
+    this.api.vehicles.getTelemetrySnapshots(vehicleId).subscribe({
+      next: (responses) => this.selectedVehicleTelemetrySignal.set(FleetAssemblers.toTelemetrySnapshotArray(responses)),
+      error: (err) => console.error('Failed to load vehicle telemetry:', err)
+    });
+  }
+
+  loadVehicleDtcAlerts(vehicleId: string) {
+    this.api.vehicles.getDtcAlerts(vehicleId).subscribe({
+      next: (responses) => this.selectedVehicleDtcAlertsSignal.set(FleetAssemblers.toDtcAlertArray(responses)),
+      error: (err) => console.error('Failed to load vehicle dtc alerts:', err)
+    });
+  }
+
+  registerVehicle(command: CreateVehicleCommand) {
+    this.api.vehicles.register(command).subscribe({
+      next: (response) => {
+        const vehicle = FleetAssemblers.toVehicle(response);
+        this.vehiclesSignal.set([...this.vehiclesSignal(), vehicle]);
+      },
+      error: (err) => console.error('Failed to register vehicle:', err)
+    });
+  }
+
+  linkObd2Device(command: LinkObd2DeviceCommand) {
+    this.api.obd2Registrations.linkDevice(command).subscribe({
+      next: (response) => {
+        const registration = FleetAssemblers.toObd2Registration(response);
+        this.activeObd2RegistrationsSignal.set([...this.activeObd2RegistrationsSignal(), registration]);
+        this.loadObd2Devices();
+      },
+      error: (err) => console.error('Failed to link obd2 device:', err)
+    });
+  }
+
+  deactivateObd2Registration(registrationId: string) {
+    this.api.obd2Registrations.deactivate(registrationId).subscribe({
+      next: () => {
+        const updated = this.activeObd2RegistrationsSignal().filter(r => r.id !== registrationId);
+        this.activeObd2RegistrationsSignal.set(updated);
+        this.loadObd2Devices();
+      },
+      error: (err) => console.error('Failed to deactivate registration:', err)
+    });
+  }
 }
