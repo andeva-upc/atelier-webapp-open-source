@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { CustomerRegistrationResponse } from '../responses/customer-registration.response';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class CustomerRegistrationsApiEndpoint {
   }
 
   getByBranchIdAndStatus(branchId: string, status: string) {
-    return this.http.get<any[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
+    return this.http.get<CustomerRegistrationResponse[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
   }
 
   getById(registrationId: string) {
