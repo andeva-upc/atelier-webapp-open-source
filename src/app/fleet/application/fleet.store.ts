@@ -30,6 +30,7 @@ export class FleetStore {
   readonly activeCustomerRegistration = this.activeCustomerRegistrationSignal.asReadonly();
 
   private readonly vehiclesSignal = signal<Vehicle[]>([]);
+  private readonly customerVehiclesSignal = signal<Vehicle[]>([]);
   private readonly obd2DevicesSignal = signal<Obd2Device[]>([]);
   private readonly activeObd2RegistrationsSignal = signal<Obd2Registration[]>([]);
   
@@ -37,6 +38,7 @@ export class FleetStore {
   private readonly selectedVehicleDtcAlertsSignal = signal<DtcAlert[]>([]);
 
   readonly vehicles = this.vehiclesSignal.asReadonly();
+  readonly customerVehicles = this.customerVehiclesSignal.asReadonly();
   readonly obd2Devices = this.obd2DevicesSignal.asReadonly();
   readonly activeObd2Registrations = this.activeObd2RegistrationsSignal.asReadonly();
   
@@ -98,6 +100,13 @@ export class FleetStore {
         }
       },
       error: (err) => console.error('Failed to delete appointment:', err)
+    });
+  }
+
+  loadAppointmentsByVehicleId(vehicleId: string) {
+    this.api.appointments.getByVehicleId(vehicleId).subscribe({
+      next: (appointments) => this.appointmentsSignal.set(appointments),
+      error: (err) => console.error('Failed to load appointments by vehicle:', err)
     });
   }
 
@@ -170,6 +179,13 @@ export class FleetStore {
     });
   }
 
+  loadCustomerVehicles(customerId: string) {
+    this.api.customerVehicles.getByCustomerId(customerId).subscribe({
+      next: (responses) => this.customerVehiclesSignal.set(FleetAssemblers.toVehicleArray(responses)),
+      error: (err) => console.error('Failed to load customer vehicles:', err)
+    });
+  }
+
   loadObd2Devices() {
     this.api.obd2Devices.getAll().subscribe({
       next: (responses) => this.obd2DevicesSignal.set(FleetAssemblers.toObd2DeviceArray(responses)),
@@ -208,6 +224,25 @@ export class FleetStore {
     });
   }
 
+  updateVehicle(id: string, command: any) {
+    this.api.vehicles.update(id, command).subscribe({
+      next: (response) => {
+        const updated = FleetAssemblers.toVehicle(response);
+        this.vehiclesSignal.update(list => list.map(v => v.id === id ? updated : v));
+      },
+      error: (err) => console.error('Failed to update vehicle:', err)
+    });
+  }
+
+  deleteVehicle(id: string) {
+    this.api.vehicles.delete(id).subscribe({
+      next: () => {
+        this.vehiclesSignal.update(list => list.filter(v => v.id !== id));
+      },
+      error: (err) => console.error('Failed to delete vehicle:', err)
+    });
+  }
+
   linkObd2Device(command: LinkObd2DeviceCommand) {
     this.api.obd2Registrations.linkDevice(command).subscribe({
       next: (response) => {
@@ -227,6 +262,39 @@ export class FleetStore {
         this.loadObd2Devices();
       },
       error: (err) => console.error('Failed to deactivate registration:', err)
+    });
+  }
+
+  // ==========================================
+  // OBD2 DEVICES MUTATORS
+  // ==========================================
+  
+  registerObd2Device(command: any) {
+    this.api.obd2Devices.register(command).subscribe({
+      next: (response) => {
+        const device = FleetAssemblers.toObd2Device(response);
+        this.obd2DevicesSignal.update(list => [...list, device]);
+      },
+      error: (err) => console.error('Failed to register obd2 device:', err)
+    });
+  }
+
+  updateObd2Device(id: string, command: any) {
+    this.api.obd2Devices.update(id, command).subscribe({
+      next: (response) => {
+        const updated = FleetAssemblers.toObd2Device(response);
+        this.obd2DevicesSignal.update(list => list.map(d => d.id === id ? updated : d));
+      },
+      error: (err) => console.error('Failed to update obd2 device:', err)
+    });
+  }
+
+  deleteObd2Device(id: string) {
+    this.api.obd2Devices.delete(id).subscribe({
+      next: () => {
+        this.obd2DevicesSignal.update(list => list.filter(d => d.id !== id));
+      },
+      error: (err) => console.error('Failed to delete obd2 device:', err)
     });
   }
 }
