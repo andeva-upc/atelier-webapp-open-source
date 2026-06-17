@@ -21,6 +21,10 @@ export class AppointmentsApiEndpoint {
     return this.http.get<AppointmentResponse>(`${this.baseUrl}/${appointmentId}`);
   }
 
+  getByVehicleId(vehicleId: string) {
+    return this.http.get<AppointmentResponse[]>(`${this.baseUrl}/vehicle/${vehicleId}`);
+  }
+
   create(command: CreateAppointmentCommand) {
     return this.http.post<AppointmentResponse>(this.baseUrl, command);
   }

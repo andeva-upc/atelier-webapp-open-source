@@ -2082,38 +2082,57 @@ A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus p
 
 ---
 
-### `GET /api/v1/appointments/branch/{branchId}/status/{status}`
-**Propósito:** Get appointments by branch and status
+### `PUT /api/v1/employee-registrations/{id}`
+**Propósito:** Update an employee registration
 
-*Returns appointments filtered by branch ID and status. Values: PENDING, COMPLETED, CANCELED*
+*Updates an existing employee registration by ID*
 
 **📍 Parámetros (URL / Query):**
-- `branchId` (path):  (Requerido: true)
-- `status` (path):  (Requerido: true)
+- `id` (path):  (Requerido: true)
+
+**📤 Qué tienes que enviar (Request Body JSON):**
+```json
+{
+  "speciality": "string_value",
+  "specialityName": "string_value",
+  "salary": 0
+}
+```
 
 **📥 Qué vas a recibir (Responses):**
 - **Código HTTP 200**: OK
 
 ---
 
-### `DELETE /api/v1/vouchers/{voucherId}/payments/{paymentId}`
-**Propósito:** Remove a payment from a voucher
+### `DELETE /api/v1/employee-registrations/{id}`
+**Propósito:** Delete an employee registration
 
-*Deletes a previously recorded payment and updates the voucher's balance and status*
+*Soft deletes an employee registration by ID, setting status to INACTIVE*
 
 **📍 Parámetros (URL / Query):**
-- `voucherId` (path):  (Requerido: true)
-- `paymentId` (path):  (Requerido: true)
+- `id` (path):  (Requerido: true)
 
 **📥 Qué vas a recibir (Responses):**
 - **Código HTTP 200**: OK
 
 ---
 
-### `DELETE /api/v1/branches/{branchId}/subscriptions/active`
-**Propósito:** Cancel an active subscription
+### `GET /api/v1/appointments/vehicle/{vehicleId}`
+**Propósito:** Get appointments by vehicle
 
-*Cancels the currently active subscription of a branch*
+*Returns all appointments for a given vehicle ID*
+
+**📍 Parámetros (URL / Query):**
+- `vehicleId` (path):  (Requerido: true)
+
+**📥 Qué vas a recibir (Responses):**
+- **Código HTTP 200**: OK
+
+---
+### `GET /api/v1/employee-registrations/branch/{branchId}`
+**Propósito:** Get employee registrations by branch
+
+*Returns all active employee registrations for a given branch ID*
 
 **📍 Parámetros (URL / Query):**
 - `branchId` (path):  (Requerido: true)
@@ -2121,15 +2140,204 @@ A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus p
 **📥 Qué vas a recibir (Responses):**
 - **Código HTTP 200**: OK
   ```json
+  [
+    {
+      "id": "string",
+      "employeeId": "string",
+      "branchId": "string",
+      "speciality": "string",
+      "specialityName": "string",
+      "salary": 0.0,
+      "status": "string",
+      "createdAt": "string",
+      "updatedAt": "string",
+      "deletedAt": "string"
+    }
+  ]
+  ```
+
+---
+
+### `GET /api/v1/employee-registrations/branch/{branchId}/status/{status}`
+**Propósito:** Get employee registrations by branch and status
+
+*Returns employee registrations filtered by branch ID and status. Values: ACTIVE, INACTIVE*
+
+**📍 Parámetros (URL / Query):**
+- `branchId` (path):  (Requerido: true)
+- `status` (path):  (Requerido: true)
+
+**📥 Qué vas a recibir (Responses):**
+- **Código HTTP 200**: OK
+  ```json
+  [
+    {
+      "id": "string",
+      "employeeId": "string",
+      "branchId": "string",
+      "speciality": "string",
+      "specialityName": "string",
+      "salary": 0.0,
+      "status": "string",
+      "createdAt": "string",
+      "updatedAt": "string",
+      "deletedAt": "string"
+    }
+  ]
+  ```
+
+---
+
+### `GET /api/v1/employee-registrations/{id}`
+**Propósito:** Get employee registration by ID
+
+*Returns the detail of a single employee registration by its ID*
+
+**📍 Parámetros (URL / Query):**
+- `id` (path):  (Requerido: true)
+
+**📥 Qué vas a recibir (Responses):**
+- **Código HTTP 200**: OK
+  ```json
   {
     "id": "string",
+    "employeeId": "string",
     "branchId": "string",
-    "planId": "string",
-    "billingCycle": "string",
+    "speciality": "string",
+    "specialityName": "string",
+    "salary": 0.0,
     "status": "string",
-    "startDate": "string",
-    "endDate": "string"
+    "createdAt": "string",
+    "updatedAt": "string",
+    "deletedAt": "string"
   }
+  ```
+
+---
+
+### `POST /api/v1/employee-registrations`
+**Propósito:** Create a new employee registration
+
+*Creates a new employee registration for a specific branch and employee*
+
+**📍 Parámetros:** Ninguno.
+
+**📤 Qué tienes que enviar (Request Body JSON):**
+```json
+{
+  "employeeId": "string_value",
+  "branchId": "string_value",
+  "speciality": "string_value",
+  "specialityName": "string_value",
+  "salary": 0
+}
+```
+
+**📥 Qué vas a recibir (Responses):**
+- **Código HTTP 200**: OK
+  ```json
+  {
+    "id": "string",
+    "employeeId": "string",
+    "branchId": "string",
+    "speciality": "string",
+    "specialityName": "string",
+    "salary": 0.0,
+    "status": "string",
+    "createdAt": "string",
+    "updatedAt": "string",
+    "deletedAt": "string"
+  }
+  ```
+
+---
+
+### `PUT /api/v1/employee-registrations/{id}`
+**Propósito:** Update an employee registration
+
+*Updates an existing employee registration by ID*
+
+**📍 Parámetros (URL / Query):**
+- `id` (path):  (Requerido: true)
+
+**📤 Qué tienes que enviar (Request Body JSON):**
+```json
+{
+  "speciality": "string_value",
+  "specialityName": "string_value",
+  "salary": 0
+}
+```
+
+**📥 Qué vas a recibir (Responses):**
+- **Código HTTP 200**: OK
+  ```json
+  {
+    "id": "string",
+    "employeeId": "string",
+    "branchId": "string",
+    "speciality": "string",
+    "specialityName": "string",
+    "salary": 0.0,
+    "status": "string",
+    "createdAt": "string",
+    "updatedAt": "string",
+    "deletedAt": "string"
+  }
+  ```
+
+---
+
+### `DELETE /api/v1/employee-registrations/{id}`
+**Propósito:** Delete an employee registration
+
+*Soft deletes an employee registration by ID, setting status to INACTIVE*
+
+**📍 Parámetros (URL / Query):**
+- `id` (path):  (Requerido: true)
+
+**📥 Qué vas a recibir (Responses):**
+- **Código HTTP 200**: OK
+  ```json
+  {
+    "id": "string",
+    "employeeId": "string",
+    "branchId": "string",
+    "speciality": "string",
+    "specialityName": "string",
+    "salary": 0.0,
+    "status": "string",
+    "createdAt": "string",
+    "updatedAt": "string",
+    "deletedAt": "string"
+  }
+  ```
+
+---
+
+### `GET /api/v1/appointments/vehicle/{vehicleId}`
+**Propósito:** Get appointments by vehicle
+
+*Returns all appointments for a given vehicle ID*
+
+**📍 Parámetros (URL / Query):**
+- `vehicleId` (path):  (Requerido: true)
+
+**📥 Qué vas a recibir (Responses):**
+- **Código HTTP 200**: OK
+  ```json
+  [
+    {
+      "id": "string",
+      "branchId": "string",
+      "customerId": "string",
+      "vehicleId": "string",
+      "scheduledStart": "string",
+      "scheduledEnd": "string",
+      "status": "string",
+      "notes": "string"
+    }
+  ]
   ```
 
 ---
