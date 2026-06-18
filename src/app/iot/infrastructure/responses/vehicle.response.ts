@@ -1,4 +1,4 @@
-export interface VehicleResponse {
+export interface VehicleResource {
   id: string;
   plateNumber: string;
   brand: string;

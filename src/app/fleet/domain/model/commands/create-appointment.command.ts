@@ -1,10 +1,11 @@
-export interface CreateAppointmentCommand {
-  branchId: string;
-  customerId: string;
-  vehicleId: string;
-  scheduledStart: string;
-  scheduledEnd: string;
-  notes?: string;
-  createdBy: string;
+export class CreateAppointmentCommand {
+  constructor(
+    public branchId: string,
+    public customerId: string,
+    public vehicleId: string,
+    public scheduledStart: string,
+    public scheduledEnd: string,
+    public notes: string,
+    public createdBy: string
+  ) {}
 }
-

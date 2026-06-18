@@ -1,37 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { EmployeeRegistrationResponse } from '../responses/employee-registration.response';
+import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+import { EmployeeRegistrationResource } from '../responses/employee-registration.response';
+import { CreateEmployeeRegistrationCommand } from '../../domain/model/commands/create-employee-registration.command';
+import { UpdateEmployeeRegistrationCommand } from '../../domain/model/commands/update-employee-registration.command';
+import { CreateEmployeeRegistrationRequestAssembler } from '../assemblers/create-employee-registration-request.assembler';
+import { UpdateEmployeeRegistrationRequestAssembler } from '../assemblers/update-employee-registration-request.assembler';
+
+@Injectable({ providedIn: 'root' })
 export class EmployeeRegistrationsApiEndpoint {
-  private readonly baseUrl = `${environment.apiBaseUrl}/employee-registrations`;
+  private readonly baseUrl = `${environment.apiBaseUrl}${environment.endpoints.fleet.employeeRegistrations}`;
 
   constructor(private http: HttpClient) {}
 
-  getByBranchId(branchId: string) {
-    return this.http.get<EmployeeRegistrationResponse[]>(`${this.baseUrl}/branch/${branchId}`);
+  getByBranchId(branchId: string): Observable<EmployeeRegistrationResource[]> {
+    return this.http.get<EmployeeRegistrationResource[]>(`${this.baseUrl}/branch/${branchId}`);
   }
 
-  getByBranchIdAndStatus(branchId: string, status: string) {
-    return this.http.get<EmployeeRegistrationResponse[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
+  getByEmployeeId(employeeId: string): Observable<EmployeeRegistrationResource> {
+    return this.http.get<EmployeeRegistrationResource>(`${this.baseUrl}/employee/${employeeId}`);
   }
 
-  getById(registrationId: string) {
-    return this.http.get<EmployeeRegistrationResponse>(`${this.baseUrl}/${registrationId}`);
+  getByBranchIdAndStatus(branchId: string, status: string): Observable<EmployeeRegistrationResource[]> {
+    return this.http.get<EmployeeRegistrationResource[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
   }
 
-  create(command: any) {
-    return this.http.post<EmployeeRegistrationResponse>(this.baseUrl, command);
+  getById(registrationId: string): Observable<EmployeeRegistrationResource> {
+    return this.http.get<EmployeeRegistrationResource>(`${this.baseUrl}/${registrationId}`);
   }
 
-  update(registrationId: string, command: any) {
-    return this.http.put<EmployeeRegistrationResponse>(`${this.baseUrl}/${registrationId}`, command);
+  create(command: CreateEmployeeRegistrationCommand): Observable<EmployeeRegistrationResource> {
+    const request = CreateEmployeeRegistrationRequestAssembler.toRequestFromCommand(command);
+    return this.http.post<EmployeeRegistrationResource>(this.baseUrl, request);
   }
 
-  delete(registrationId: string) {
+  update(registrationId: string, command: UpdateEmployeeRegistrationCommand): Observable<EmployeeRegistrationResource> {
+    const request = UpdateEmployeeRegistrationRequestAssembler.toRequestFromCommand(command);
+    return this.http.put<EmployeeRegistrationResource>(`${this.baseUrl}/${registrationId}`, request);
+  }
+
+  delete(registrationId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${registrationId}`);
   }
 }

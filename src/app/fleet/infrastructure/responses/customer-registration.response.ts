@@ -1,10 +1,9 @@
-export interface CustomerRegistrationResponse {
+export interface CustomerRegistrationResource {
   id: string;
   customerId: string;
   branchId: string;
-  status: 'ACTIVE' | 'INACTIVE' | string;
+  status: string;
   createdAt: string;
   updatedAt?: string;
   deletedAt?: string | null;
 }
-

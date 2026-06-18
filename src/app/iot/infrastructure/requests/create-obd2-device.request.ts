@@ -1,4 +1,4 @@
-export interface CreateObd2DeviceCommand {
+export interface CreateObd2DeviceRequest {
   branchId: string;
   macAddress: string;
 }

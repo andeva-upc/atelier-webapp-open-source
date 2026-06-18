@@ -1,26 +1,17 @@
-@if (currentBranch()) {
-  @if (activeRole.includes('OWNER')) {
-    <div class="toolbar-item branch-wrapper desktop-only">
-      <button [matMenuTriggerFor]="branchMenu" class="user-button" type="button">
-        <i class="pi pi-map-marker"></i>
-        <span class="branch-text">{{ currentBranch()?.name }}</span>
-        <i class="pi pi-chevron-down"></i>
-      </button>
-    </div>
+@if (activeRole.includes('OWNER') && currentBranch()) {
+  <div class="toolbar-item branch-wrapper desktop-only">
+    <button [matMenuTriggerFor]="branchMenu" class="user-button" type="button">
+      <i class="pi pi-map-marker"></i>
+      <span class="branch-text">{{ currentBranch()?.name }}</span>
+      <i class="pi pi-chevron-down"></i>
+    </button>
+  </div>
 
-    <mat-menu #branchMenu="matMenu" class="custom-menu">
-      @for (branch of currentWorkshopBranches(); track branch.id) {
-        <button mat-menu-item (click)="onBranchSelect(branch)">
-          <span class="menu-text">{{ branch.name }}</span>
-        </button>
-      }
-    </mat-menu>
-  } @else if (activeRole.includes('CUSTOMER') || activeRole.includes('EMPLOYEE')) {
-    <div class="toolbar-item branch-wrapper desktop-only">
-      <div class="user-button readonly">
-        <i class="pi pi-map-marker"></i>
-        <span class="branch-text">{{ currentBranch()?.name }}</span>
-      </div>
-    </div>
-  }
+  <mat-menu #branchMenu="matMenu" class="custom-menu">
+    @for (branch of currentWorkshopBranches(); track branch.id) {
+      <button mat-menu-item (click)="onBranchSelect(branch)">
+        <span class="menu-text">{{ branch.name }}</span>
+      </button>
+    }
+  </mat-menu>
 }

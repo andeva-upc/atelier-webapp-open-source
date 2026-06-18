@@ -1,4 +1,4 @@
-export interface TelemetrySnapshotResponse {
+export interface TelemetrySnapshotResource {
   id: string;
   obd2DeviceRegistrationId: string;
   branchId: string;

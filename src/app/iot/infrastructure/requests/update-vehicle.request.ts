@@ -1,6 +1,4 @@
-export interface Vehicle {
-  id: string;
-  customerId?: string;
+export interface UpdateVehicleRequest {
   plateNumber: string;
   brand: string;
   model: string;

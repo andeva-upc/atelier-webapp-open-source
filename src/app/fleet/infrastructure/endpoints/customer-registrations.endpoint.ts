@@ -1,39 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { CustomerRegistrationResponse } from '../responses/customer-registration.response';
+import { Observable } from 'rxjs';
+
+import { CustomerRegistrationResource } from '../responses/customer-registration.response';
 import { CreateCustomerRegistrationCommand } from '../../domain/model/commands/create-customer-registration.command';
 import { UpdateCustomerRegistrationCommand } from '../../domain/model/commands/update-customer-registration.command';
+import { CreateCustomerRegistrationRequestAssembler } from '../assemblers/create-customer-registration-request.assembler';
+import { UpdateCustomerRegistrationRequestAssembler } from '../assemblers/update-customer-registration-request.assembler';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CustomerRegistrationsApiEndpoint {
-  private readonly baseUrl = `${environment.apiBaseUrl}/customer-registrations`;
+  private readonly baseUrl = `${environment.apiBaseUrl}${environment.endpoints.fleet.customerRegistrations}`;
 
   constructor(private http: HttpClient) {}
 
-  getByBranchId(branchId: string) {
-    return this.http.get<CustomerRegistrationResponse[]>(`${this.baseUrl}/branch/${branchId}`);
+  getByBranchId(branchId: string): Observable<CustomerRegistrationResource[]> {
+    return this.http.get<CustomerRegistrationResource[]>(`${this.baseUrl}/branch/${branchId}`);
   }
 
-  getByBranchIdAndStatus(branchId: string, status: string) {
-    return this.http.get<CustomerRegistrationResponse[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
+  getByCustomerId(customerId: string): Observable<CustomerRegistrationResource> {
+    return this.http.get<CustomerRegistrationResource>(`${this.baseUrl}/customer/${customerId}`);
   }
 
-  getById(registrationId: string) {
-    return this.http.get<CustomerRegistrationResponse>(`${this.baseUrl}/${registrationId}`);
+  getByBranchIdAndStatus(branchId: string, status: string): Observable<CustomerRegistrationResource[]> {
+    return this.http.get<CustomerRegistrationResource[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
   }
 
-  create(command: CreateCustomerRegistrationCommand) {
-    return this.http.post<CustomerRegistrationResponse>(this.baseUrl, command);
+  getById(registrationId: string): Observable<CustomerRegistrationResource> {
+    return this.http.get<CustomerRegistrationResource>(`${this.baseUrl}/${registrationId}`);
   }
 
-  update(registrationId: string, command: UpdateCustomerRegistrationCommand) {
-    return this.http.put<CustomerRegistrationResponse>(`${this.baseUrl}/${registrationId}`, command);
+  create(command: CreateCustomerRegistrationCommand): Observable<CustomerRegistrationResource> {
+    const request = CreateCustomerRegistrationRequestAssembler.toRequestFromCommand(command);
+    return this.http.post<CustomerRegistrationResource>(this.baseUrl, request);
   }
 
-  delete(registrationId: string) {
+  update(registrationId: string, command: UpdateCustomerRegistrationCommand): Observable<CustomerRegistrationResource> {
+    const request = UpdateCustomerRegistrationRequestAssembler.toRequestFromCommand(command);
+    return this.http.put<CustomerRegistrationResource>(`${this.baseUrl}/${registrationId}`, request);
+  }
+
+  delete(registrationId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${registrationId}`);
   }
 }

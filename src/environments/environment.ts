@@ -24,6 +24,11 @@ export const environment = {
       services: '/services',
       workOrders: '/work-orders'
     },
+    fleet: {
+      appointments: '/appointments',
+      customerRegistrations: '/customer-registrations',
+      employeeRegistrations: '/employee-registrations'
+    },
     iot: {
       obd2Devices: '/obd2-devices',
       obd2DeviceRegistrations: '/obd2-device-registrations',

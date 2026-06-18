@@ -1,9 +1,9 @@
-export interface AppointmentResponse {
+export interface AppointmentResource {
   id: string;
   branchId: string;
   customerId: string;
   vehicleId: string;
-  status: 'PENDING' | 'APPROVED' | 'COMPLETED' | 'CANCELLED' | string;
+  status: string;
   scheduledStart: string; // ISO timestamp
   scheduledEnd: string; // ISO timestamp
   notes?: string;
@@ -14,4 +14,3 @@ export interface AppointmentResponse {
   updatedBy?: string | null;
   version?: number;
 }
-
