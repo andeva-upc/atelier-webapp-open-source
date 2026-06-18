@@ -21,10 +21,10 @@ export class ProductFormComponent implements OnInit {
 
   // Categories enum from backend
   categories = [
-    { value: 'FLUID', label: 'Fluidos/Aceites' },
-    { value: 'PART', label: 'Repuestos' },
-    { value: 'MOTOR', label: 'Motor' },
-    { value: 'OTHER', label: 'Otros' }
+    { value: 'FLUID', labelKey: 'inventory.categories.FLUID' },
+    { value: 'PART', labelKey: 'inventory.categories.PART' },
+    { value: 'MOTOR', labelKey: 'inventory.categories.MOTOR' },
+    { value: 'OTHER', labelKey: 'inventory.categories.OTHER' }
   ];
 
   constructor(private fb: FormBuilder) {}

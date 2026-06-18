@@ -1,12 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { InventoryStore } from '../../../application/inventory.store';
 
 @Component({
   selector: 'app-batch-list-view',
   standalone: true,
-  imports: [CommonModule, DatePipe, CurrencyPipe],
+  imports: [CommonModule, DatePipe, CurrencyPipe, TranslateModule],
   templateUrl: './batch-list-view.html',
   styleUrls: ['./batch-list-view.css']
 })

@@ -2,54 +2,54 @@
   
   <div class="form-grid">
     <div class="form-group">
-      <label for="name">Nombre del Producto *</label>
-      <input id="name" type="text" formControlName="name" placeholder="Ej. Filtro de Aceite Premium" [class.error]="hasError('name')">
-      <span class="error-msg" *ngIf="hasError('name')">El nombre es requerido</span>
+      <label for="name">{{ 'inventory.productForm.name' | translate }} *</label>
+      <input id="name" type="text" formControlName="name" [placeholder]="'inventory.productForm.namePlaceholder' | translate" [class.error]="hasError('name')">
+      <span class="error-msg" *ngIf="hasError('name')">{{ 'inventory.productForm.nameRequired' | translate }}</span>
     </div>
 
     <div class="form-group">
-      <label for="sku">SKU / Código *</label>
-      <input id="sku" type="text" formControlName="sku" placeholder="Ej. FLT-001" [class.error]="hasError('sku')">
-      <span class="error-msg" *ngIf="hasError('sku')">El SKU es requerido</span>
+      <label for="sku">{{ 'inventory.productForm.sku' | translate }} *</label>
+      <input id="sku" type="text" formControlName="sku" [placeholder]="'inventory.productForm.skuPlaceholder' | translate" [class.error]="hasError('sku')">
+      <span class="error-msg" *ngIf="hasError('sku')">{{ 'inventory.productForm.skuRequired' | translate }}</span>
     </div>
 
     <div class="form-group">
-      <label for="category">Categoría *</label>
+      <label for="category">{{ 'inventory.productForm.category' | translate }} *</label>
       <select id="category" formControlName="category" [class.error]="hasError('category')">
-        <option value="">Selecciona una categoría...</option>
-        <option *ngFor="let cat of categories" [value]="cat.value">{{ cat.label }}</option>
+        <option value="">{{ 'inventory.productForm.categoryPlaceholder' | translate }}</option>
+        <option *ngFor="let cat of categories" [value]="cat.value">{{ cat.labelKey | translate }}</option>
       </select>
-      <span class="error-msg" *ngIf="hasError('category')">Seleccione una categoría válida</span>
+      <span class="error-msg" *ngIf="hasError('category')">{{ 'inventory.productForm.categoryRequired' | translate }}</span>
     </div>
 
     <div class="form-group" *ngIf="productForm.get('category')?.value === 'OTHER'">
-      <label for="customCategory">Especificar Categoría *</label>
-      <input id="customCategory" type="text" formControlName="customCategory" placeholder="Ej. Baterías" [class.error]="hasError('customCategory')">
-      <span class="error-msg" *ngIf="hasError('customCategory')">Especifique su categoría</span>
+      <label for="customCategory">{{ 'inventory.productForm.customCategory' | translate }} *</label>
+      <input id="customCategory" type="text" formControlName="customCategory" [placeholder]="'inventory.productForm.customCategoryPlaceholder' | translate" [class.error]="hasError('customCategory')">
+      <span class="error-msg" *ngIf="hasError('customCategory')">{{ 'inventory.productForm.customCategoryRequired' | translate }}</span>
     </div>
 
     <div class="form-group">
-      <label for="salePrice">Precio de Venta ($) *</label>
-      <input id="salePrice" type="number" step="0.01" formControlName="salePrice" placeholder="0.00" [class.error]="hasError('salePrice')">
-      <span class="error-msg" *ngIf="hasError('salePrice')">El precio debe ser un número positivo</span>
+      <label for="salePrice">{{ 'inventory.productForm.salePrice' | translate }} *</label>
+      <input id="salePrice" type="number" step="0.01" formControlName="salePrice" [placeholder]="'inventory.productForm.salePricePlaceholder' | translate" [class.error]="hasError('salePrice')">
+      <span class="error-msg" *ngIf="hasError('salePrice')">{{ 'inventory.productForm.salePriceRequired' | translate }}</span>
     </div>
 
     <div class="form-group full-width">
-      <label for="description">Descripción</label>
-      <textarea id="description" formControlName="description" rows="3" placeholder="Detalles del producto..."></textarea>
+      <label for="description">{{ 'inventory.productForm.description' | translate }}</label>
+      <textarea id="description" formControlName="description" rows="3" [placeholder]="'inventory.productForm.descriptionPlaceholder' | translate"></textarea>
     </div>
 
     <div class="form-group">
-      <label for="minimumStock">Stock Mínimo de Alerta *</label>
-      <input id="minimumStock" type="number" formControlName="minimumStock" placeholder="Ej. 5" [class.error]="hasError('minimumStock')">
-      <span class="error-msg" *ngIf="hasError('minimumStock')">Ingrese un número positivo</span>
+      <label for="minimumStock">{{ 'inventory.productForm.minimumStock' | translate }} *</label>
+      <input id="minimumStock" type="number" formControlName="minimumStock" [placeholder]="'inventory.productForm.minimumStockPlaceholder' | translate" [class.error]="hasError('minimumStock')">
+      <span class="error-msg" *ngIf="hasError('minimumStock')">{{ 'inventory.productForm.minimumStockRequired' | translate }}</span>
     </div>
   </div>
 
   <div class="form-actions">
-    <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+    <button type="button" class="btn-cancel" (click)="onCancel()">{{ 'inventory.productForm.cancel' | translate }}</button>
     <button type="submit" class="btn-primary" [disabled]="productForm.invalid">
-      {{ isEditMode ? 'Guardar Cambios' : 'Crear Producto' }}
+      {{ isEditMode ? ('inventory.productForm.save' | translate) : ('inventory.productForm.create' | translate) }}
     </button>
   </div>
 

@@ -3,9 +3,9 @@
     <div class="header-titles">
       <button class="btn-back" (click)="onCancel()"><i class="pi pi-arrow-left"></i></button>
       <div>
-        <h2>Registrar Nuevo Lote</h2>
+        <h2>{{ 'inventory.batchForm.title' | translate }}</h2>
         <ng-container *ngIf="activeProduct()">
-          <p>Agrega stock al producto: <strong>{{ activeProduct()!.name }}</strong> (SKU: {{ activeProduct()!.sku }})</p>
+          <p>{{ 'inventory.batchForm.subtitle' | translate }} <strong>{{ activeProduct()!.name }}</strong> (SKU: {{ activeProduct()!.sku }})</p>
         </ng-container>
       </div>
     </div>
@@ -20,7 +20,7 @@
 
   <ng-template #loading>
     <div class="loading-state">
-      <i class="fas fa-spinner fa-spin"></i> Cargando producto...
+      <i class="fas fa-spinner fa-spin"></i> {{ 'inventory.batchForm.loading' | translate }}
     </div>
   </ng-template>
 </div>

@@ -1,20 +1,20 @@
 <form [formGroup]="batchForm" (ngSubmit)="onSubmit()" class="modern-form">
   <div class="form-grid">
     <div class="form-group">
-      <label for="initialQuantity">Cantidad Inicial *</label>
-      <input id="initialQuantity" type="number" formControlName="initialQuantity" placeholder="Ej. 100" [class.error]="hasError('initialQuantity')">
-      <span class="error-msg" *ngIf="hasError('initialQuantity')">Ingrese una cantidad mayor a 0</span>
+      <label for="initialQuantity">{{ 'inventory.batchForm.initialQuantity' | translate }} *</label>
+      <input id="initialQuantity" type="number" formControlName="initialQuantity" [placeholder]="'inventory.batchForm.initialQuantityPlaceholder' | translate" [class.error]="hasError('initialQuantity')">
+      <span class="error-msg" *ngIf="hasError('initialQuantity')">{{ 'inventory.batchForm.initialQuantityRequired' | translate }}</span>
     </div>
 
     <div class="form-group">
-      <label for="acquisitionCost">Costo de Adquisición ($) *</label>
-      <input id="acquisitionCost" type="number" step="0.01" formControlName="acquisitionCost" placeholder="0.00" [class.error]="hasError('acquisitionCost')">
-      <span class="error-msg" *ngIf="hasError('acquisitionCost')">El costo debe ser mayor o igual a 0</span>
+      <label for="acquisitionCost">{{ 'inventory.batchForm.acquisitionCost' | translate }} *</label>
+      <input id="acquisitionCost" type="number" step="0.01" formControlName="acquisitionCost" [placeholder]="'inventory.batchForm.acquisitionCostPlaceholder' | translate" [class.error]="hasError('acquisitionCost')">
+      <span class="error-msg" *ngIf="hasError('acquisitionCost')">{{ 'inventory.batchForm.acquisitionCostRequired' | translate }}</span>
     </div>
   </div>
 
   <div class="form-actions">
-    <button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
-    <button type="submit" class="btn-primary" [disabled]="batchForm.invalid">Agregar Lote</button>
+    <button type="button" class="btn-cancel" (click)="onCancel()">{{ 'inventory.batchForm.cancel' | translate }}</button>
+    <button type="submit" class="btn-primary" [disabled]="batchForm.invalid">{{ 'inventory.batchForm.save' | translate }}</button>
   </div>
 </form>

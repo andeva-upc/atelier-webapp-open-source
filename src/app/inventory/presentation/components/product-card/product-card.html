@@ -6,15 +6,15 @@
   
   <div class="product-body">
     <h3 class="product-name">{{ product.name }}</h3>
-    <p class="product-description">{{ product.description || 'Sin descripción' }}</p>
+    <p class="product-description">{{ product.description || ('inventory.productCard.noDescription' | translate) }}</p>
     
     <div class="product-stats">
       <div class="stat-item">
-        <span class="stat-label">Precio</span>
+        <span class="stat-label">{{ 'inventory.productCard.price' | translate }}</span>
         <span class="stat-value">${{ product.salePrice | number:'1.2-2' }}</span>
       </div>
       <div class="stat-item">
-        <span class="stat-label">Stock Actual</span>
+        <span class="stat-label">{{ 'inventory.productCard.currentStock' | translate }}</span>
         <span class="stat-value" [class.low-stock]="product.currentStock <= product.minimumStock">
           {{ product.currentStock }}
         </span>
@@ -24,7 +24,7 @@
 
   <div class="product-footer">
     <button class="add-batch-btn" (click)="onAddBatchClick($event)">
-      <i class="fas fa-plus-circle"></i> Agregar lote
+      <i class="fas fa-plus-circle"></i> {{ 'inventory.addBatch' | translate }}
     </button>
   </div>
 </div>

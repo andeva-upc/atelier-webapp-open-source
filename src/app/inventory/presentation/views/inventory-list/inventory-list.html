@@ -1,13 +1,13 @@
 <div class="inventory-container">
   <div class="inventory-header">
     <div class="header-titles">
-      <h1>Inventario</h1>
-      <p>Gestiona los productos y repuestos de tu sucursal</p>
+      <h1>{{ 'inventory.title' | translate }}</h1>
+      <p>{{ 'inventory.subtitle' | translate }}</p>
     </div>
     
     <button class="add-product-btn" (click)="onAddProduct()">
       <i class="fas fa-plus"></i>
-      Agregar Producto
+      {{ 'inventory.addProduct' | translate }}
     </button>
   </div>
 
@@ -26,10 +26,10 @@
       <div class="empty-icon">
         <i class="fas fa-box-open"></i>
       </div>
-      <h2>No hay productos en esta sucursal</h2>
-      <p>Comienza agregando tu primer producto al inventario.</p>
+      <h2>{{ 'inventory.emptyState.title' | translate }}</h2>
+      <p>{{ 'inventory.emptyState.subtitle' | translate }}</p>
       <button class="add-product-btn" (click)="onAddProduct()">
-        Agregar Producto
+        {{ 'inventory.addProduct' | translate }}
       </button>
     </div>
   </ng-template>

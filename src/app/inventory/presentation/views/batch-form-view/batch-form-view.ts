@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventoryStore } from '../../../application/inventory.store';
 import { BatchFormComponent } from '../../components/batch-form/batch-form';
@@ -8,7 +9,7 @@ import { AddBatchToProductCommand } from '../../../domain/model/commands/add-bat
 @Component({
   selector: 'app-batch-form-view',
   standalone: true,
-  imports: [CommonModule, BatchFormComponent],
+  imports: [CommonModule, TranslateModule, BatchFormComponent],
   templateUrl: './batch-form-view.html',
   styleUrls: ['./batch-form-view.css']
 })

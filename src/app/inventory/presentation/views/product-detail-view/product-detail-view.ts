@@ -1,12 +1,13 @@
 import { Component, OnInit, inject, computed } from '@angular/core';
-import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { InventoryStore } from '../../../application/inventory.store';
 
 @Component({
   selector: 'app-product-detail-view',
   standalone: true,
-  imports: [CommonModule, DatePipe, CurrencyPipe],
+  imports: [CommonModule, CurrencyPipe, TranslateModule],
   templateUrl: './product-detail-view.html',
   styleUrls: ['./product-detail-view.css']
 })

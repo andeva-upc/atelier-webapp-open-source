@@ -3,8 +3,8 @@
     <div class="header-titles">
       <button class="btn-back" (click)="onCancel()"><i class="pi pi-arrow-left"></i></button>
       <div>
-        <h2>{{ isEditMode ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
-        <p>{{ isEditMode ? 'Modifica los detalles del producto en el inventario.' : 'Agrega un nuevo producto al catálogo de la sucursal.' }}</p>
+        <h2>{{ isEditMode ? ('inventory.productForm.editTitle' | translate) : ('inventory.productForm.newTitle' | translate) }}</h2>
+        <p>{{ isEditMode ? ('inventory.productForm.editSubtitle' | translate) : ('inventory.productForm.newSubtitle' | translate) }}</p>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
     </ng-container>
     <ng-template #loading>
       <div class="loading-state">
-        <i class="fas fa-spinner fa-spin"></i> Cargando producto...
+        <i class="fas fa-spinner fa-spin"></i> {{ 'inventory.productDetail.loading' | translate }}
       </div>
     </ng-template>
   </ng-container>

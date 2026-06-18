@@ -1,6 +1,6 @@
 <div class="view-container">
   <button class="btn-back" (click)="onBack()">
-    <i class="fas fa-arrow-left"></i> Volver al inventario
+    <i class="fas fa-arrow-left"></i> {{ 'inventory.productDetail.backToInventory' | translate }}
   </button>
 
   <ng-container *ngIf="activeProduct(); else loading">
@@ -13,33 +13,33 @@
         </div>
         <div class="action-buttons">
           <button class="btn-secondary" (click)="onEdit()">
-            <i class="fas fa-edit"></i> Editar
+            <i class="fas fa-edit"></i> {{ 'inventory.productDetail.edit' | translate }}
           </button>
           <button class="btn-primary" (click)="onViewBatches()">
-            <i class="fas fa-boxes"></i> Ver lotes
+            <i class="fas fa-boxes"></i> {{ 'inventory.productDetail.viewBatches' | translate }}
           </button>
         </div>
       </div>
 
       <div class="detail-body">
         <div class="info-section">
-          <h3>Descripción</h3>
-          <p class="description">{{ activeProduct()!.description || 'Este producto no tiene descripción.' }}</p>
+          <h3>{{ 'inventory.productDetail.description' | translate }}</h3>
+          <p class="description">{{ activeProduct()!.description || ('inventory.productDetail.noDescription' | translate) }}</p>
         </div>
 
         <div class="stats-grid">
           <div class="stat-box">
-            <span class="stat-label">Precio de Venta</span>
+            <span class="stat-label">{{ 'inventory.productDetail.salePrice' | translate }}</span>
             <span class="stat-value highlight">{{ activeProduct()!.salePrice | currency }}</span>
           </div>
           <div class="stat-box">
-            <span class="stat-label">Stock Actual</span>
+            <span class="stat-label">{{ 'inventory.productDetail.currentStock' | translate }}</span>
             <span class="stat-value" [class.alert]="activeProduct()!.currentStock <= activeProduct()!.minimumStock">
               {{ activeProduct()!.currentStock }}
             </span>
           </div>
           <div class="stat-box">
-            <span class="stat-label">Stock Mínimo</span>
+            <span class="stat-label">{{ 'inventory.productDetail.minimumStock' | translate }}</span>
             <span class="stat-value">{{ activeProduct()!.minimumStock }}</span>
           </div>
           <div class="stat-box">
@@ -53,7 +53,7 @@
 
   <ng-template #loading>
     <div class="loading-state">
-      <i class="fas fa-spinner fa-spin"></i> Cargando detalles del producto...
+      <i class="fas fa-spinner fa-spin"></i> {{ 'inventory.productDetail.loading' | translate }}
     </div>
   </ng-template>
 </div>

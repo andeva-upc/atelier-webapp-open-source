@@ -1,43 +1,94 @@
 {
-  "title": "Inventory",
-  "addProduct": "Add Product",
-  "addBatch": "Add Batch",
-  "searchPlaceholder": "Search product...",
-  "noProductsFound": "No products found.",
-  "table": {
-    "sku": "SKU",
-    "name": "Name",
-    "category": "Category",
-    "stock": "Stock",
-    "price": "Price",
-    "actions": "Actions"
-  },
-  "productForm": {
-    "title": "New Product",
-    "category": "Category",
-    "categoryPlaceholder": "Select a category",
-    "categoryOther": "Other...",
-    "categoryCustom": "Type a category",
-    "name": "Name",
-    "sku": "SKU",
-    "description": "Description",
-    "salePrice": "Sale Price",
-    "minimumStock": "Minimum Stock",
-    "cancel": "Cancel",
-    "save": "Save Product"
-  },
-  "batchForm": {
-    "title": "Add Product Batch",
-    "product": "Product",
-    "productPlaceholder": "Select a product",
-    "quantity": "Quantity",
-    "acquisitionCost": "Acquisition Cost",
-    "cancel": "Cancel",
-    "save": "Add Batch"
-  },
-  "dialog": {
-    "detailsTitle": "Product Details",
-    "batchesTitle": "Registered Batches",
-    "close": "Close"
+  "inventory": {
+    "title": "Inventory",
+    "subtitle": "Manage products and spare parts for your branch",
+    "addProduct": "Add Product",
+    "addBatch": "Add batch",
+    "emptyState": {
+      "title": "No products in this branch",
+      "subtitle": "Start by adding your first product to the inventory."
+    },
+    "productCard": {
+      "price": "Price",
+      "currentStock": "Current Stock",
+      "noDescription": "No description"
+    },
+    "productForm": {
+      "newTitle": "New Product",
+      "editTitle": "Edit Product",
+      "newSubtitle": "Add a new product to the branch catalog.",
+      "editSubtitle": "Modify product details in the inventory.",
+      "name": "Product Name",
+      "namePlaceholder": "E.g. Premium Oil Filter",
+      "nameRequired": "Name is required",
+      "sku": "SKU / Code",
+      "skuPlaceholder": "E.g. FLT-001",
+      "skuRequired": "SKU is required",
+      "category": "Category",
+      "categoryPlaceholder": "Select a category...",
+      "categoryRequired": "Select a valid category",
+      "customCategory": "Specify Category",
+      "customCategoryPlaceholder": "E.g. Batteries",
+      "customCategoryRequired": "Specify your category",
+      "salePrice": "Sale Price ($)",
+      "salePricePlaceholder": "0.00",
+      "salePriceRequired": "Price must be a positive number",
+      "description": "Description",
+      "descriptionPlaceholder": "Product details...",
+      "minimumStock": "Minimum Stock Alert",
+      "minimumStockPlaceholder": "E.g. 5",
+      "minimumStockRequired": "Enter a positive number",
+      "cancel": "Cancel",
+      "create": "Create Product",
+      "save": "Save Changes"
+    },
+    "productDetail": {
+      "backToInventory": "Back to inventory",
+      "edit": "Edit",
+      "viewBatches": "View batches",
+      "description": "Description",
+      "noDescription": "This product has no description.",
+      "salePrice": "Sale Price",
+      "currentStock": "Current Stock",
+      "minimumStock": "Minimum Stock",
+      "loading": "Loading product details..."
+    },
+    "batchForm": {
+      "title": "Register New Batch",
+      "subtitle": "Add stock to product:",
+      "initialQuantity": "Initial Quantity",
+      "initialQuantityPlaceholder": "E.g. 100",
+      "initialQuantityRequired": "Enter a quantity greater than 0",
+      "acquisitionCost": "Acquisition Cost ($)",
+      "acquisitionCostPlaceholder": "0.00",
+      "acquisitionCostRequired": "Cost must be greater than or equal to 0",
+      "cancel": "Cancel",
+      "save": "Add Batch",
+      "loading": "Loading product..."
+    },
+    "batchList": {
+      "backToDetails": "Back to Details",
+      "title": "Batch History",
+      "subtitle": "Registered batches for product:",
+      "addBatch": "Add batch",
+      "columns": {
+        "batchId": "Batch ID",
+        "entryDate": "Entry Date",
+        "acquisitionCost": "Acquisition Cost",
+        "initialQuantity": "Initial Quantity",
+        "availableStock": "Available Stock"
+      },
+      "emptyState": {
+        "title": "No batches registered",
+        "subtitle": "This product has no batches in inventory."
+      },
+      "loading": "Loading batches..."
+    },
+    "categories": {
+      "FLUID": "Fluids/Oils",
+      "PART": "Spare Parts",
+      "MOTOR": "Motor",
+      "OTHER": "Other"
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InventoryStore } from '../../../application/inventory.store';
 import { ProductFormComponent } from '../../components/product-form/product-form';
@@ -9,7 +10,7 @@ import { UpdateProductCommand } from '../../../domain/model/commands/update-prod
 @Component({
   selector: 'app-product-form-view',
   standalone: true,
-  imports: [CommonModule, ProductFormComponent],
+  imports: [CommonModule, TranslateModule, ProductFormComponent],
   templateUrl: './product-form-view.html',
   styleUrls: ['./product-form-view.css']
 })

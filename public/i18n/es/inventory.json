@@ -1,43 +1,94 @@
 {
-  "title": "Inventario",
-  "addProduct": "Agregar Producto",
-  "addBatch": "Agregar Lote",
-  "searchPlaceholder": "Buscar producto...",
-  "noProductsFound": "No se encontraron productos.",
-  "table": {
-    "sku": "SKU",
-    "name": "Nombre",
-    "category": "Categoría",
-    "stock": "Stock",
-    "price": "Precio",
-    "actions": "Acciones"
-  },
-  "productForm": {
-    "title": "Nuevo Producto",
-    "category": "Categoría",
-    "categoryPlaceholder": "Selecciona una categoría",
-    "categoryOther": "Otro...",
-    "categoryCustom": "Escribe una categoría",
-    "name": "Nombre",
-    "sku": "SKU",
-    "description": "Descripción",
-    "salePrice": "Precio de Venta",
-    "minimumStock": "Stock Mínimo",
-    "cancel": "Cancelar",
-    "save": "Guardar Producto"
-  },
-  "batchForm": {
-    "title": "Agregar Lote de Producto",
-    "product": "Producto",
-    "productPlaceholder": "Selecciona un producto",
-    "quantity": "Cantidad",
-    "acquisitionCost": "Costo de Adquisición",
-    "cancel": "Cancelar",
-    "save": "Agregar Lote"
-  },
-  "dialog": {
-    "detailsTitle": "Detalles del Producto",
-    "batchesTitle": "Lotes Registrados",
-    "close": "Cerrar"
+  "inventory": {
+    "title": "Inventario",
+    "subtitle": "Gestiona los productos y repuestos de tu sucursal",
+    "addProduct": "Agregar Producto",
+    "addBatch": "Agregar lote",
+    "emptyState": {
+      "title": "No hay productos en esta sucursal",
+      "subtitle": "Comienza agregando tu primer producto al inventario."
+    },
+    "productCard": {
+      "price": "Precio",
+      "currentStock": "Stock Actual",
+      "noDescription": "Sin descripción"
+    },
+    "productForm": {
+      "newTitle": "Nuevo Producto",
+      "editTitle": "Editar Producto",
+      "newSubtitle": "Agrega un nuevo producto al catálogo de la sucursal.",
+      "editSubtitle": "Modifica los detalles del producto en el inventario.",
+      "name": "Nombre del Producto",
+      "namePlaceholder": "Ej. Filtro de Aceite Premium",
+      "nameRequired": "El nombre es requerido",
+      "sku": "SKU / Código",
+      "skuPlaceholder": "Ej. FLT-001",
+      "skuRequired": "El SKU es requerido",
+      "category": "Categoría",
+      "categoryPlaceholder": "Selecciona una categoría...",
+      "categoryRequired": "Seleccione una categoría válida",
+      "customCategory": "Especificar Categoría",
+      "customCategoryPlaceholder": "Ej. Baterías",
+      "customCategoryRequired": "Especifique su categoría",
+      "salePrice": "Precio de Venta ($)",
+      "salePricePlaceholder": "0.00",
+      "salePriceRequired": "El precio debe ser un número positivo",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Detalles del producto...",
+      "minimumStock": "Stock Mínimo de Alerta",
+      "minimumStockPlaceholder": "Ej. 5",
+      "minimumStockRequired": "Ingrese un número positivo",
+      "cancel": "Cancelar",
+      "create": "Crear Producto",
+      "save": "Guardar Cambios"
+    },
+    "productDetail": {
+      "backToInventory": "Volver al inventario",
+      "edit": "Editar",
+      "viewBatches": "Ver lotes",
+      "description": "Descripción",
+      "noDescription": "Este producto no tiene descripción.",
+      "salePrice": "Precio de Venta",
+      "currentStock": "Stock Actual",
+      "minimumStock": "Stock Mínimo",
+      "loading": "Cargando detalles del producto..."
+    },
+    "batchForm": {
+      "title": "Registrar Nuevo Lote",
+      "subtitle": "Agrega stock al producto:",
+      "initialQuantity": "Cantidad Inicial",
+      "initialQuantityPlaceholder": "Ej. 100",
+      "initialQuantityRequired": "Ingrese una cantidad mayor a 0",
+      "acquisitionCost": "Costo de Adquisición ($)",
+      "acquisitionCostPlaceholder": "0.00",
+      "acquisitionCostRequired": "El costo debe ser mayor o igual a 0",
+      "cancel": "Cancelar",
+      "save": "Agregar Lote",
+      "loading": "Cargando producto..."
+    },
+    "batchList": {
+      "backToDetails": "Volver a Detalles",
+      "title": "Historial de Lotes",
+      "subtitle": "Lotes registrados para el producto:",
+      "addBatch": "Agregar lote",
+      "columns": {
+        "batchId": "ID del Lote",
+        "entryDate": "Fecha de Ingreso",
+        "acquisitionCost": "Costo de Adquisición",
+        "initialQuantity": "Cantidad Inicial",
+        "availableStock": "Stock Disponible"
+      },
+      "emptyState": {
+        "title": "No hay lotes registrados",
+        "subtitle": "Este producto no tiene ningún lote en el inventario."
+      },
+      "loading": "Cargando lotes..."
+    },
+    "categories": {
+      "FLUID": "Fluidos/Aceites",
+      "PART": "Repuestos",
+      "MOTOR": "Motor",
+      "OTHER": "Otros"
+    }
   }
 }

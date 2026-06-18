@@ -1,16 +1,16 @@
 <div class="view-container">
   <button class="btn-back" (click)="onBack()">
-    <i class="fas fa-arrow-left"></i> Volver a Detalles
+    <i class="fas fa-arrow-left"></i> {{ 'inventory.batchList.backToDetails' | translate }}
   </button>
 
   <ng-container *ngIf="activeProduct(); else loading">
     <div class="header-section">
       <div class="titles">
-        <h2>Historial de Lotes</h2>
-        <p>Lotes registrados para el producto: <strong>{{ activeProduct()!.name }}</strong></p>
+        <h2>{{ 'inventory.batchList.title' | translate }}</h2>
+        <p>{{ 'inventory.batchList.subtitle' | translate }} <strong>{{ activeProduct()!.name }}</strong></p>
       </div>
       <button class="btn-primary" (click)="onAddBatch()">
-        <i class="fas fa-plus-circle"></i> Agregar lote
+        <i class="fas fa-plus-circle"></i> {{ 'inventory.batchList.addBatch' | translate }}
       </button>
     </div>
 
@@ -18,11 +18,11 @@
       <table class="batch-table">
         <thead>
           <tr>
-            <th>ID del Lote</th>
-            <th>Fecha de Ingreso</th>
-            <th>Costo de Adquisición</th>
-            <th>Cantidad Inicial</th>
-            <th>Stock Disponible</th>
+            <th>{{ 'inventory.batchList.columns.batchId' | translate }}</th>
+            <th>{{ 'inventory.batchList.columns.entryDate' | translate }}</th>
+            <th>{{ 'inventory.batchList.columns.acquisitionCost' | translate }}</th>
+            <th>{{ 'inventory.batchList.columns.initialQuantity' | translate }}</th>
+            <th>{{ 'inventory.batchList.columns.availableStock' | translate }}</th>
           </tr>
         </thead>
         <tbody>
@@ -45,14 +45,14 @@
   <ng-template #noBatches>
     <div class="empty-state">
       <div class="empty-icon"><i class="fas fa-boxes"></i></div>
-      <h3>No hay lotes registrados</h3>
-      <p>Este producto no tiene ningún lote en el inventario.</p>
+      <h3>{{ 'inventory.batchList.emptyState.title' | translate }}</h3>
+      <p>{{ 'inventory.batchList.emptyState.subtitle' | translate }}</p>
     </div>
   </ng-template>
 
   <ng-template #loading>
     <div class="loading-state">
-      <i class="fas fa-spinner fa-spin"></i> Cargando lotes...
+      <i class="fas fa-spinner fa-spin"></i> {{ 'inventory.batchList.loading' | translate }}
     </div>
   </ng-template>
 </div>
