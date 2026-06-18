@@ -10,30 +10,34 @@ import { RegisterVehicleCommand } from '../domain/model/commands/register-vehicl
 import { UpdateVehicleCommand } from '../domain/model/commands/update-vehicle.command';
 import { IngestTelemetryCommand } from '../domain/model/commands/ingest-telemetry.command';
 
-// Responses
-import { Obd2DeviceResponse } from '../infrastructure/responses/obd2-device.response';
-import { Obd2DeviceRegistrationResponse } from '../infrastructure/responses/obd2-registration.response';
-import { VehicleResponse } from '../infrastructure/responses/vehicle.response';
-import { TelemetrySnapshotResponse } from '../infrastructure/responses/telemetry-snapshot.response';
-import { DtcAlertResponse } from '../infrastructure/responses/dtc-alert.response';
+// Resources
+import { Obd2DeviceResource } from '../infrastructure/responses/obd2-device.response';
+import { Obd2DeviceRegistrationResource } from '../infrastructure/responses/obd2-registration.response';
+import { VehicleResource } from '../infrastructure/responses/vehicle.response';
+import { TelemetrySnapshotResource } from '../infrastructure/responses/telemetry-snapshot.response';
+import { DtcAlertResource } from '../infrastructure/responses/dtc-alert.response';
+import { VehicleRegistrationResource } from '../infrastructure/responses/vehicle-registration.response';
 
 @Injectable({ providedIn: 'root' })
 export class IotStore {
   // --- Signals ---
-  private readonly obd2DevicesSignal = signal<Obd2DeviceResponse[]>([]);
-  private readonly availableObd2DevicesSignal = signal<Obd2DeviceResponse[]>([]);
-  private readonly activeObd2DeviceSignal = signal<Obd2DeviceResponse | null>(null);
+  private readonly obd2DevicesSignal = signal<Obd2DeviceResource[]>([]);
+  private readonly availableObd2DevicesSignal = signal<Obd2DeviceResource[]>([]);
+  private readonly activeObd2DeviceSignal = signal<Obd2DeviceResource | null>(null);
 
-  private readonly registrationsSignal = signal<Obd2DeviceRegistrationResponse[]>([]);
-  private readonly activeRegistrationSignal = signal<Obd2DeviceRegistrationResponse | null>(null);
+  private readonly registrationsSignal = signal<Obd2DeviceRegistrationResource[]>([]);
+  private readonly activeRegistrationSignal = signal<Obd2DeviceRegistrationResource | null>(null);
 
-  private readonly vehiclesSignal = signal<VehicleResponse[]>([]);
-  private readonly availableVehiclesSignal = signal<VehicleResponse[]>([]);
-  private readonly activeVehicleSignal = signal<VehicleResponse | null>(null);
+  private readonly vehiclesSignal = signal<VehicleResource[]>([]);
+  private readonly availableVehiclesSignal = signal<VehicleResource[]>([]);
+  private readonly activeVehicleSignal = signal<VehicleResource | null>(null);
 
-  private readonly telemetrySnapshotsSignal = signal<TelemetrySnapshotResponse[]>([]);
-  private readonly latestTelemetrySignal = signal<TelemetrySnapshotResponse | null>(null);
-  private readonly dtcAlertsSignal = signal<DtcAlertResponse[]>([]);
+  private readonly vehicleRegistrationsSignal = signal<VehicleRegistrationResource[]>([]);
+  private readonly activeVehicleRegistrationSignal = signal<VehicleRegistrationResource | null>(null);
+
+  private readonly telemetrySnapshotsSignal = signal<TelemetrySnapshotResource[]>([]);
+  private readonly latestTelemetrySignal = signal<TelemetrySnapshotResource | null>(null);
+  private readonly dtcAlertsSignal = signal<DtcAlertResource[]>([]);
 
   // --- Exposed Readonly Signals ---
   readonly obd2Devices = this.obd2DevicesSignal.asReadonly();
@@ -46,6 +50,9 @@ export class IotStore {
   readonly vehicles = this.vehiclesSignal.asReadonly();
   readonly availableVehicles = this.availableVehiclesSignal.asReadonly();
   readonly activeVehicle = this.activeVehicleSignal.asReadonly();
+
+  readonly vehicleRegistrations = this.vehicleRegistrationsSignal.asReadonly();
+  readonly activeVehicleRegistration = this.activeVehicleRegistrationSignal.asReadonly();
 
   readonly telemetrySnapshots = this.telemetrySnapshotsSignal.asReadonly();
   readonly latestTelemetry = this.latestTelemetrySignal.asReadonly();
@@ -210,12 +217,14 @@ export class IotStore {
     });
   }
 
-  registerVehicle(command: RegisterVehicleCommand) {
+  registerVehicle(command: RegisterVehicleCommand, customerId: string) {
     this.api.vehicles.register(command).subscribe({
-      next: (vehicle) => {
-        this.vehiclesSignal.update((list) => [...list, vehicle]);
-        // Also initially available for linking
-        this.availableVehiclesSignal.update((list) => [...list, vehicle]);
+      next: (registration) => {
+        this.vehicleRegistrationsSignal.update((list) => [...list, registration]);
+        this.activeVehicleRegistrationSignal.set(registration);
+
+        // Reload the customer's vehicles list so the UI gets the updated list including the new vehicle with its full details
+        this.loadVehiclesByCustomerId(customerId);
       },
       error: (err) => console.error('Failed to register vehicle:', err)
     });
