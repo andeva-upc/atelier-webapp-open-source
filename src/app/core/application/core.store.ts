@@ -75,7 +75,12 @@ export class CoreStore {
 
   loadCustomerByUserId(userId: string) {
     this.coreApi.customers.getByUserId(userId).subscribe({
-      next: (resource) => this.currentCustomerSignal.set(resource),
+      next: (resource) => {
+        this.currentCustomerSignal.set(resource);
+        if (resource && resource.id) {
+          localStorage.setItem('customerId', resource.id);
+        }
+      },
       error: (err) => console.error('Failed to load customer by user id:', err)
     });
   }
@@ -144,7 +149,12 @@ export class CoreStore {
 
   loadEmployeeByUserId(userId: string) {
     this.coreApi.employees.getByUserId(userId).subscribe({
-      next: (resource) => this.currentEmployeeSignal.set(resource),
+      next: (resource) => {
+        this.currentEmployeeSignal.set(resource);
+        if (resource && resource.id) {
+          localStorage.setItem('employeeId', resource.id);
+        }
+      },
       error: (err) => console.error('Failed to load employee by user id:', err)
     });
   }
@@ -233,6 +243,18 @@ export class CoreStore {
     });
   }
 
+  loadBranchById(branchId: string) {
+    this.coreApi.branches.getById(branchId).subscribe({
+      next: (resource) => {
+        this.selectBranch(resource);
+      },
+      error: (err) => {
+        console.error('Failed to load branch by id:', err);
+        this.selectBranch(null);
+      }
+    });
+  }
+
   selectBranch(branch: BranchResource | null) {
     this.currentBranchSignal.set(branch);
     if (branch && branch.id) {
@@ -240,13 +262,6 @@ export class CoreStore {
     } else {
       localStorage.removeItem('tenantBranchId');
     }
-  }
-
-  loadBranchById(branchId: string) {
-    this.coreApi.branches.getById(branchId).subscribe({
-      next: (resource) => this.selectBranch(resource),
-      error: (err) => console.error('Failed to load branch by id:', err)
-    });
   }
 
   // Subscriptions
