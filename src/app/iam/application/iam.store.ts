@@ -98,6 +98,10 @@ export class IamStore {
   signOut(router: Router) {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    localStorage.removeItem('employeeId');
+    localStorage.removeItem('customerId');
+    localStorage.removeItem('tenantBranchId');
+    localStorage.removeItem('activeRole');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('userId');
     this.isSignedInSignal.set(false);
