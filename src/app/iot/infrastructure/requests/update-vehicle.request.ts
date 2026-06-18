@@ -1,4 +1,4 @@
-export interface CreateVehicleCommand {
+export interface UpdateVehicleRequest {
   plateNumber: string;
   brand: string;
   model: string;
