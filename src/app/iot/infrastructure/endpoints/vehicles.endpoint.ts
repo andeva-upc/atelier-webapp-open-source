@@ -4,9 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { RegisterVehicleCommand } from '../../domain/model/commands/register-vehicle.command';
 import { UpdateVehicleCommand } from '../../domain/model/commands/update-vehicle.command';
-import { VehicleResponse } from '../responses/vehicle.response';
-import { TelemetrySnapshotResponse } from '../responses/telemetry-snapshot.response';
-import { DtcAlertResponse } from '../responses/dtc-alert.response';
+import { RegisterVehicleRequestAssembler } from '../assemblers/register-vehicle-request.assembler';
+import { UpdateVehicleRequestAssembler } from '../assemblers/update-vehicle-request.assembler';
+import { VehicleResource } from '../responses/vehicle.response';
+import { TelemetrySnapshotResource } from '../responses/telemetry-snapshot.response';
+import { DtcAlertResource } from '../responses/dtc-alert.response';
+import { VehicleRegistrationResource } from '../responses/vehicle-registration.response';
 
 @Injectable({ providedIn: 'root' })
 export class VehiclesApiEndpoint {
@@ -15,33 +18,35 @@ export class VehiclesApiEndpoint {
 
   constructor(private http: HttpClient) {}
 
-  getAvailableForLinking(branchId: string): Observable<VehicleResponse[]> {
-    return this.http.get<VehicleResponse[]>(`${this.baseUrl}/available-for-linking`, {
+  getAvailableForLinking(branchId: string): Observable<VehicleResource[]> {
+    return this.http.get<VehicleResource[]>(`${this.baseUrl}/available-for-linking`, {
       params: { branchId }
     });
   }
 
-  register(command: RegisterVehicleCommand): Observable<VehicleResponse> {
-    return this.http.post<VehicleResponse>(this.baseUrl, command);
+  register(command: RegisterVehicleCommand): Observable<VehicleRegistrationResource> {
+    const request = RegisterVehicleRequestAssembler.toRequestFromCommand(command);
+    return this.http.post<VehicleRegistrationResource>(this.baseUrl, request);
   }
 
-  update(id: string, command: UpdateVehicleCommand): Observable<VehicleResponse> {
-    return this.http.put<VehicleResponse>(`${this.baseUrl}/${id}`, command);
+  update(id: string, command: UpdateVehicleCommand): Observable<VehicleResource> {
+    const request = UpdateVehicleRequestAssembler.toRequestFromCommand(command);
+    return this.http.put<VehicleResource>(`${this.baseUrl}/${id}`, request);
   }
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  getTelemetrySnapshotHistory(vehicleId: string): Observable<TelemetrySnapshotResponse[]> {
-    return this.http.get<TelemetrySnapshotResponse[]>(`${this.baseUrl}/${vehicleId}/telemetry-snapshots`);
+  getTelemetrySnapshotHistory(vehicleId: string): Observable<TelemetrySnapshotResource[]> {
+    return this.http.get<TelemetrySnapshotResource[]>(`${this.baseUrl}/${vehicleId}/telemetry-snapshots`);
   }
 
-  getDtcAlertHistory(vehicleId: string): Observable<DtcAlertResponse[]> {
-    return this.http.get<DtcAlertResponse[]>(`${this.baseUrl}/${vehicleId}/dtc-alerts`);
+  getDtcAlertHistory(vehicleId: string): Observable<DtcAlertResource[]> {
+    return this.http.get<DtcAlertResource[]>(`${this.baseUrl}/${vehicleId}/dtc-alerts`);
   }
 
-  getByCustomerId(customerId: string): Observable<VehicleResponse[]> {
-    return this.http.get<VehicleResponse[]>(`${this.customersUrl}/${customerId}/vehicles`);
+  getByCustomerId(customerId: string): Observable<VehicleResource[]> {
+    return this.http.get<VehicleResource[]>(`${this.customersUrl}/${customerId}/vehicles`);
   }
 }

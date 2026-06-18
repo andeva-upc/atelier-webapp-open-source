@@ -1,4 +1,4 @@
-export interface Obd2DeviceResponse {
+export interface Obd2DeviceResource {
   id: string;
   branchId: string;
   macAddress: string;

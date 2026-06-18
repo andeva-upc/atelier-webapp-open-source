@@ -1,4 +1,4 @@
-export interface DtcAlertResponse {
+export interface DtcAlertResource {
   id: string;
   telemetrySnapshotId: string;
   branchId: string;

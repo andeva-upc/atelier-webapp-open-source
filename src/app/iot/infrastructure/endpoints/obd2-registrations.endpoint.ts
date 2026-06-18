@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { LinkObd2DeviceCommand } from '../../domain/model/commands/link-obd2-device.command';
-import { Obd2DeviceRegistrationResponse } from '../responses/obd2-registration.response';
-import { TelemetrySnapshotResponse } from '../responses/telemetry-snapshot.response';
-import { DtcAlertResponse } from '../responses/dtc-alert.response';
+import { LinkObd2DeviceRequestAssembler } from '../assemblers/link-obd2-device-request.assembler';
+import { Obd2DeviceRegistrationResource } from '../responses/obd2-registration.response';
+import { TelemetrySnapshotResource } from '../responses/telemetry-snapshot.response';
+import { DtcAlertResource } from '../responses/dtc-alert.response';
 
 @Injectable({ providedIn: 'root' })
 export class Obd2DeviceRegistrationsApiEndpoint {
@@ -13,25 +14,26 @@ export class Obd2DeviceRegistrationsApiEndpoint {
 
   constructor(private http: HttpClient) {}
 
-  linkObd2Device(command: LinkObd2DeviceCommand): Observable<Obd2DeviceRegistrationResponse> {
-    return this.http.post<Obd2DeviceRegistrationResponse>(this.baseUrl, command);
+  linkObd2Device(command: LinkObd2DeviceCommand): Observable<Obd2DeviceRegistrationResource> {
+    const request = LinkObd2DeviceRequestAssembler.toRequestFromCommand(command);
+    return this.http.post<Obd2DeviceRegistrationResource>(this.baseUrl, request);
   }
 
-  deactivate(id: string): Observable<Obd2DeviceRegistrationResponse> {
-    return this.http.post<Obd2DeviceRegistrationResponse>(`${this.baseUrl}/${id}/deactivate`, {});
+  deactivate(id: string): Observable<Obd2DeviceRegistrationResource> {
+    return this.http.post<Obd2DeviceRegistrationResource>(`${this.baseUrl}/${id}/deactivate`, {});
   }
 
-  getByBranchIdAndStatus(branchId: string, status: string): Observable<Obd2DeviceRegistrationResponse[]> {
-    return this.http.get<Obd2DeviceRegistrationResponse[]>(this.baseUrl, {
+  getByBranchIdAndStatus(branchId: string, status: string): Observable<Obd2DeviceRegistrationResource[]> {
+    return this.http.get<Obd2DeviceRegistrationResource[]>(this.baseUrl, {
       params: { branchId, status }
     });
   }
 
-  getTelemetrySnapshots(id: string): Observable<TelemetrySnapshotResponse[]> {
-    return this.http.get<TelemetrySnapshotResponse[]>(`${this.baseUrl}/${id}/telemetry-snapshots`);
+  getTelemetrySnapshots(id: string): Observable<TelemetrySnapshotResource[]> {
+    return this.http.get<TelemetrySnapshotResource[]>(`${this.baseUrl}/${id}/telemetry-snapshots`);
   }
 
-  getDtcAlerts(id: string): Observable<DtcAlertResponse[]> {
-    return this.http.get<DtcAlertResponse[]>(`${this.baseUrl}/${id}/dtc-alerts`);
+  getDtcAlerts(id: string): Observable<DtcAlertResource[]> {
+    return this.http.get<DtcAlertResource[]>(`${this.baseUrl}/${id}/dtc-alerts`);
   }
 }
