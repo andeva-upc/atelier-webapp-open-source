@@ -11,6 +11,4 @@ export interface ProductResponse {
   currentStock: number;
   minimumStock: number;
   batches?: ProductBatchResponse[];
-  createdAt: string;
-  updatedAt: string;
 }
