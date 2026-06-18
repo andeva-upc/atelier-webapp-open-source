@@ -8,6 +8,7 @@ import { LinkObd2DeviceCommand } from '../domain/model/commands/link-obd2-device
 
 import { AppointmentResponse } from '../infrastructure/responses/appointment.response';
 import { CustomerRegistrationResponse } from '../infrastructure/responses/customer-registration.response';
+import { EmployeeRegistrationResponse } from '../infrastructure/responses/employee-registration.response';
 
 import { CreateAppointmentCommand } from '../domain/model/commands/create-appointment.command';
 import { UpdateAppointmentCommand } from '../domain/model/commands/update-appointment.command';
@@ -22,12 +23,14 @@ export class FleetStore {
 
   private readonly activeAppointmentSignal = signal<AppointmentResponse | null>(null);
   private readonly activeCustomerRegistrationSignal = signal<CustomerRegistrationResponse | null>(null);
+  private readonly activeEmployeeRegistrationSignal = signal<EmployeeRegistrationResponse | null>(null);
 
   readonly appointments = this.appointmentsSignal.asReadonly();
   readonly customerRegistrations = this.customerRegistrationsSignal.asReadonly();
 
   readonly activeAppointment = this.activeAppointmentSignal.asReadonly();
   readonly activeCustomerRegistration = this.activeCustomerRegistrationSignal.asReadonly();
+  readonly activeEmployeeRegistration = this.activeEmployeeRegistrationSignal.asReadonly();
 
   private readonly vehiclesSignal = signal<Vehicle[]>([]);
   private readonly customerVehiclesSignal = signal<Vehicle[]>([]);
@@ -128,6 +131,13 @@ export class FleetStore {
     this.api.customerRegistrations.getById(registrationId).subscribe({
       next: (registration) => this.activeCustomerRegistrationSignal.set(registration),
       error: (err) => console.error('Failed to load customer registration:', err)
+    });
+  }
+
+  loadEmployeeRegistrationById(employeeId: string) {
+    this.api.employeeRegistrations.getById(employeeId).subscribe({
+      next: (registration) => this.activeEmployeeRegistrationSignal.set(registration),
+      error: (err) => console.error('Failed to load employee registration:', err)
     });
   }
 
