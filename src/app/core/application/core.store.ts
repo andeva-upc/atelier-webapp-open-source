@@ -242,6 +242,13 @@ export class CoreStore {
     }
   }
 
+  loadBranchById(branchId: string) {
+    this.coreApi.branches.getById(branchId).subscribe({
+      next: (resource) => this.selectBranch(resource),
+      error: (err) => console.error('Failed to load branch by id:', err)
+    });
+  }
+
   // Subscriptions
   assignSubscription(branchId: string, command: AssignSubscriptionCommand) {
     this.coreApi.branches.assignSubscription(branchId, command).subscribe({

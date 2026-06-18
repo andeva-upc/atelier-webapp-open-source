@@ -77,6 +77,18 @@
   color: #71717a;
 }
 
+.user-button.readonly {
+  cursor: default;
+}
+
+.user-button.readonly:hover {
+  background: transparent;
+}
+
+.user-button.readonly:hover i {
+  color: #71717a;
+}
+
 @media (min-width: 768px) {
   .desktop-only {
     display: block;

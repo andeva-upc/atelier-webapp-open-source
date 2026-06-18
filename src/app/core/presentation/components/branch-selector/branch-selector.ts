@@ -13,7 +13,9 @@ import { BranchResource } from '../../../infrastructure/responses/branch-respons
 })
 export class CoreBranchSelectorComponent {
   private coreStore = inject(CoreStore);
-  activeRole = localStorage.getItem('activeRole') || '';
+  get activeRole(): string {
+    return localStorage.getItem('activeRole') || '';
+  }
   currentBranch = this.coreStore.currentBranch;
   currentWorkshopBranches = this.coreStore.currentWorkshopBranches;
 
