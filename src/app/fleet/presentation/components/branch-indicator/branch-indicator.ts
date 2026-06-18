@@ -21,40 +21,61 @@ export class FleetBranchIndicatorComponent implements OnInit {
   constructor() {
     effect(() => {
       const activeEmployeeReg = this.fleetStore.activeEmployeeRegistration();
-      if (this.activeRole.includes('EMPLOYEE') && activeEmployeeReg && activeEmployeeReg.branchId) {
+      console.log('[FleetBranchIndicator] activeEmployeeReg signal emitted:', activeEmployeeReg);
+      const activeRole = localStorage.getItem('activeRole') || '';
+      if (activeRole.includes('EMPLOYEE') && activeEmployeeReg && activeEmployeeReg.branchId) {
         this.fetchBranchName(activeEmployeeReg.branchId);
       }
     });
 
     effect(() => {
       const activeCustomerReg = this.fleetStore.activeCustomerRegistration();
-      if (this.activeRole.includes('CUSTOMER') && activeCustomerReg && activeCustomerReg.branchId) {
+      console.log('[FleetBranchIndicator] activeCustomerReg signal emitted:', activeCustomerReg);
+      const activeRole = localStorage.getItem('activeRole') || '';
+      if (activeRole.includes('CUSTOMER') && activeCustomerReg && activeCustomerReg.branchId) {
         this.fetchBranchName(activeCustomerReg.branchId);
       }
     });
   }
 
   ngOnInit() {
-    const employeeId = localStorage.getItem('employeeId');
-    const customerId = localStorage.getItem('customerId');
+    let attempts = 0;
+    console.log('[FleetBranchIndicator] OnInit started. activeRole:', this.activeRole);
+    const interval = setInterval(() => {
+      attempts++;
+      const activeRole = localStorage.getItem('activeRole') || '';
+      const employeeId = localStorage.getItem('employeeId');
+      const customerId = localStorage.getItem('customerId');
 
-    if (this.activeRole.includes('EMPLOYEE') && employeeId) {
-      this.fleetStore.loadEmployeeRegistrationByEmployeeId(employeeId);
-    } else if (this.activeRole.includes('CUSTOMER') && customerId) {
-      this.fleetStore.loadCustomerRegistrationByCustomerId(customerId);
-    }
+      if (activeRole.includes('EMPLOYEE') && employeeId) {
+        console.log('[FleetBranchIndicator] Polling found Employee role & employeeId:', employeeId);
+        this.fleetStore.loadEmployeeRegistrationByEmployeeId(employeeId);
+        clearInterval(interval);
+      } else if (activeRole.includes('CUSTOMER') && customerId) {
+        console.log('[FleetBranchIndicator] Polling found Customer role & customerId:', customerId);
+        this.fleetStore.loadCustomerRegistrationByCustomerId(customerId);
+        clearInterval(interval);
+      }
+
+      if (attempts >= 100) {
+        console.log('[FleetBranchIndicator] Polling timed out after 10s. activeRole:', activeRole, 'employeeId:', employeeId, 'customerId:', customerId);
+        clearInterval(interval);
+      }
+    }, 100);
   }
 
   private fetchBranchName(branchId: string) {
     const url = `${environment.apiBaseUrl}${environment.endpoints.core.branches}/${branchId}`;
+    console.log('[FleetBranchIndicator] Fetching branch name from:', url);
     this.http.get<any>(url).subscribe({
       next: (branch) => {
+        console.log('[FleetBranchIndicator] Branch fetched successfully:', branch);
         if (branch && branch.name) {
           this.branchName.set(branch.name);
           localStorage.setItem('tenantBranchId', branchId);
         }
       },
-      error: (err) => console.error('Failed to fetch branch name:', err)
+      error: (err) => console.error('[FleetBranchIndicator] Failed to fetch branch name:', err)
     });
   }
 }

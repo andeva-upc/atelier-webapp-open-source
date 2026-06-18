@@ -7,7 +7,7 @@
 
   <div class="toolbar-end">
     <app-core-branch-selector #branchSelector></app-core-branch-selector>
-    <app-fleet-branch-indicator></app-fleet-branch-indicator>
+    <app-fleet-branch-indicator #branchIndicator></app-fleet-branch-indicator>
     <app-shared-language-selector #languageSelector></app-shared-language-selector>
 
     <!-- Botón de notificaciones -->
@@ -39,6 +39,15 @@
             <span class="menu-item-content" style="display: flex; align-items: center; gap: 0.75rem;">
               <i class="pi pi-map-marker menu-icon" style="font-size: 1.2rem; color: #71717a;"></i>
               <span class="menu-text">{{ 'toolbar.branch' | translate }} {{ branchSelector.currentBranch()?.name }}</span>
+            </span>
+          </button>
+        }
+
+        @if (branchIndicator.branchName()) {
+          <button mat-menu-item class="mobile-only" style="pointer-events: none;">
+            <span class="menu-item-content" style="display: flex; align-items: center; gap: 0.75rem;">
+              <i class="pi pi-map-marker menu-icon" style="font-size: 1.2rem; color: #71717a;"></i>
+              <span class="menu-text">{{ 'toolbar.branch' | translate }} {{ branchIndicator.branchName() }}</span>
             </span>
           </button>
         }
