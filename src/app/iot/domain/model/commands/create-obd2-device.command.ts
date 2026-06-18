@@ -1,4 +1,6 @@
-export interface CreateObd2DeviceCommand {
-  branchId: string;
-  macAddress: string;
+export class CreateObd2DeviceCommand {
+  constructor(
+    public branchId: string,
+    public macAddress: string
+  ) {}
 }

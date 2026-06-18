@@ -1,3 +1,5 @@
-export interface UpdateObd2DeviceCommand {
-  macAddress: string;
+export class UpdateObd2DeviceCommand {
+  constructor(
+    public macAddress: string
+  ) {}
 }

@@ -1,17 +1,17 @@
-export class Obd2DeviceRegistration {
+export class VehicleRegistration {
   id: string;
-  obd2DeviceId: string;
-  branchId: string;
+  userId: string;
   vehicleId: string;
   status: string;
   createdAt: string;
+  deletedAt: string;
 
   constructor() {
     this.id = '';
-    this.obd2DeviceId = '';
-    this.branchId = '';
+    this.userId = '';
     this.vehicleId = '';
     this.status = '';
     this.createdAt = '';
+    this.deletedAt = '';
   }
 }

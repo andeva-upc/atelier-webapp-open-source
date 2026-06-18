@@ -1,5 +1,7 @@
-export interface LinkObd2DeviceCommand {
-  obd2DeviceId: string;
-  branchId: string;
-  vehicleId: string;
+export class LinkObd2DeviceCommand {
+  constructor(
+    public obd2DeviceId: string,
+    public branchId: string,
+    public vehicleId: string
+  ) {}
 }
