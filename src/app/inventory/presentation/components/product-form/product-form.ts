@@ -21,10 +21,9 @@ export class ProductFormComponent implements OnInit {
 
   // Categories enum from backend
   categories = [
-    { value: 'TIRES', label: 'Llantas' },
-    { value: 'SPARE_PARTS', label: 'Repuestos' },
-    { value: 'ACCESSORIES', label: 'Accesorios' },
-    { value: 'FLUIDS', label: 'Fluidos/Aceites' },
+    { value: 'FLUID', label: 'Fluidos/Aceites' },
+    { value: 'PART', label: 'Repuestos' },
+    { value: 'MOTOR', label: 'Motor' },
     { value: 'OTHER', label: 'Otros' }
   ];
 
