@@ -1,5 +1,6 @@
-export interface UpdateCustomerRegistrationCommand {
-  status?: 'ACTIVE' | 'INACTIVE' | string;
-  updatedBy?: string;
+export class UpdateCustomerRegistrationCommand {
+  constructor(
+    public status?: 'ACTIVE' | 'INACTIVE' | string,
+    public updatedBy?: string
+  ) {}
 }
-
