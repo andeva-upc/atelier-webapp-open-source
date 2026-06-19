@@ -1,0 +1,95 @@
+<div class="devices-list-container">
+  <!-- Top Navigation & Title -->
+  <header class="header-section">
+    <div class="title-area">
+      <button type="button" (click)="goBack()" class="btn-back">
+        <i class="pi pi-arrow-left"></i> {{ 'iot.dashboard.vehicleLabel' | translate }} (Dashboard)
+      </button>
+      <h2><i class="pi pi-cog"></i> {{ 'iot.obd2Dialog.title' | translate }}</h2>
+      <p class="subtitle-text">Administra y vincula los dispositivos OBD2 físicos de esta sede con los vehículos activos.</p>
+    </div>
+    
+    <div class="action-area">
+      <button type="button" (click)="openObd2Dialog()" class="btn-primary-gradient">
+        <i class="pi pi-plus"></i> {{ 'iot.obd2Dialog.add' | translate }} OBD2
+      </button>
+    </div>
+  </header>
+
+  <!-- Table Container (TABLA de OBD2s) -->
+  <main class="main-content-card">
+    <div class="table-header">
+      <h3><i class="pi pi-table"></i> {{ 'iot.obd2Dialog.listHeader' | translate }}</h3>
+      <span class="device-badge">{{ devicesWithCoupling().length }} {{ 'iot.obd2Dialog.devicesUnit' | translate }}</span>
+    </div>
+
+    @if (devicesWithCoupling().length === 0) {
+      <div class="empty-state">
+        <i class="pi pi-info-circle empty-icon"></i>
+        <p>{{ 'iot.obd2Dialog.empty' | translate }}</p>
+      </div>
+    } @else {
+      <div class="table-scroll-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>{{ 'iot.obd2Dialog.colMac' | translate }}</th>
+              <th>{{ 'iot.obd2Dialog.colStatus' | translate }}</th>
+              <th>Vehículo Asociado</th>
+              <th class="actions-col">Acción de Vinculación</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (device of devicesWithCoupling(); track device.id) {
+              <tr>
+                <td class="mac-cell">
+                  <code>{{ device.macAddress }}</code>
+                </td>
+                <td>
+                  <span class="status-badge" [ngClass]="device.status.toLowerCase()">
+                    {{ ('iot.status.' + device.status) | translate }}
+                  </span>
+                </td>
+                <td class="vehicle-cell">
+                  @if (device.linkedVehicle) {
+                    <span class="linked-vehicle-text">
+                      <i class="pi pi-car"></i> {{ device.linkedVehicle }}
+                    </span>
+                  } @else {
+                    <span class="muted-text">Ninguno</span>
+                  }
+                </td>
+                <td class="actions-cell">
+                  @if (device.status === 'AVAILABLE') {
+                    <button type="button" (click)="openLinkDialog()" class="btn-action-link">
+                      <i class="pi pi-link"></i> Vincular
+                    </button>
+                  } @else if (device.status === 'LINKED' && device.activeRegId) {
+                    <button type="button" (click)="unlinkDevice(device.activeRegId)" class="btn-action-unlink">
+                      <i class="pi pi-link-slash"></i> Desvincular
+                    </button>
+                  } @else {
+                    <span class="muted-text">-</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </main>
+</div>
+
+<!-- Modal Dialogs for hardware addition and linking -->
+<app-obd2-dialog
+  [isOpen]="isObd2DialogOpen"
+  [branchId]="branchId"
+  (close)="closeObd2Dialog()"
+></app-obd2-dialog>
+
+<app-link-dialog
+  [isOpen]="isLinkDialogOpen"
+  [branchId]="branchId"
+  (close)="closeLinkDialog()"
+></app-link-dialog>
