@@ -64,7 +64,7 @@
     <!-- Right Controls (Workshop Only) -->
     @if (!isCustomer) {
       <div class="right-controls">
-        <button type="button" (click)="openObd2Dialog()" class="btn-manage-obd2">
+        <button type="button" routerLink="/telemetry/odb2_devices" class="btn-manage-obd2">
           <i class="pi pi-cog"></i> {{ 'iot.dashboard.manageObd2Btn' | translate }}
         </button>
       </div>

@@ -8,6 +8,8 @@ import { LinkDialogComponent } from '../../components/link-dialog/link-dialog';
 import { VehicleResource } from '../../../infrastructure/responses/vehicle.response';
 import { Obd2DeviceRegistrationResource } from '../../../infrastructure/responses/obd2-registration.response';
 
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-telemetry-dashboard',
   standalone: true,
@@ -16,7 +18,8 @@ import { Obd2DeviceRegistrationResource } from '../../../infrastructure/response
     FormsModule,
     TranslateModule,
     Obd2DialogComponent,
-    LinkDialogComponent
+    LinkDialogComponent,
+    RouterLink
   ],
   templateUrl: './telemetry-dashboard.html',
   styleUrl: './telemetry-dashboard.css'
