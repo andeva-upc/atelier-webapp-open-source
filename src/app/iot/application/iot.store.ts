@@ -1,6 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { IotApi } from '../infrastructure/iot-api';
+import { forkJoin } from 'rxjs';
+import { CustomerRegistrationsApiEndpoint } from '../../fleet/infrastructure/endpoints/customer-registrations.endpoint';
 
 // Commands
 import { CreateObd2DeviceCommand } from '../domain/model/commands/create-obd2-device.command';
@@ -58,7 +60,14 @@ export class IotStore {
   readonly latestTelemetry = this.latestTelemetrySignal.asReadonly();
   readonly dtcAlerts = this.dtcAlertsSignal.asReadonly();
 
-  constructor(private api: IotApi, private router: Router) {}
+  private readonly branchVehiclesSignal = signal<VehicleResource[]>([]);
+  readonly branchVehicles = this.branchVehiclesSignal.asReadonly();
+
+  constructor(
+    private api: IotApi,
+    private router: Router,
+    private customerRegsApi: CustomerRegistrationsApiEndpoint
+  ) {}
 
   // ==========================================
   // OBD2 DEVICES
@@ -207,6 +216,30 @@ export class IotStore {
     this.api.vehicles.getAvailableForLinking(branchId).subscribe({
       next: (vehicles) => this.availableVehiclesSignal.set(vehicles),
       error: (err) => console.error('Failed to load available vehicles:', err)
+    });
+  }
+
+  loadBranchVehicles(branchId: string) {
+    this.customerRegsApi.getByBranchId(branchId).subscribe({
+      next: (regs) => {
+        const vehicleRequests = regs.map(reg => this.api.vehicles.getByCustomerId(reg.customerId));
+        if (vehicleRequests.length === 0) {
+          this.branchVehiclesSignal.set([]);
+          return;
+        }
+        
+        forkJoin(vehicleRequests).subscribe({
+          next: (vehiclesLists) => {
+            const allVehicles = vehiclesLists.flat();
+            const uniqueVehicles = allVehicles.filter((v, index, self) =>
+              self.findIndex(t => t.id === v.id) === index
+            );
+            this.branchVehiclesSignal.set(uniqueVehicles);
+          },
+          error: (err) => console.error('Failed to load branch vehicles:', err)
+        });
+      },
+      error: (err) => console.error('Failed to load branch customer registrations:', err)
     });
   }
 

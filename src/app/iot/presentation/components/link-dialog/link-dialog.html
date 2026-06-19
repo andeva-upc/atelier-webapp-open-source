@@ -1,0 +1,72 @@
+<app-modal [isOpen]="isOpen" (close)="onClose()">
+  <span modal-title class="dialog-title">
+    <i class="pi pi-link"></i> {{ 'iot.linkDialog.title' | translate }}
+  </span>
+
+  <div modal-body class="dialog-body">
+    <form [formGroup]="linkForm" (ngSubmit)="onSubmit()" class="link-form-container">
+      @if (errorMessage) {
+        <div class="alert-box error">
+          <i class="pi pi-exclamation-triangle"></i>
+          <span>{{ errorMessage | translate }}</span>
+        </div>
+      }
+
+      <!-- Select Vehicle -->
+      <div class="form-group">
+        <label for="vehicleId">{{ 'iot.linkDialog.selectVehicle' | translate }}</label>
+        <select id="vehicleId" formControlName="vehicleId" class="styled-select">
+          <option value="" disabled selected>{{ 'iot.linkDialog.placeholderVehicle' | translate }}</option>
+          @for (vehicle of store.availableVehicles(); track vehicle.id) {
+            <option [value]="vehicle.id">
+              {{ vehicle.brand }} {{ vehicle.model }} - {{ vehicle.plateNumber }} (VIN: {{ vehicle.vin }})
+            </option>
+          }
+        </select>
+        @if (store.availableVehicles().length === 0) {
+          <small class="hint-text info">
+            <i class="pi pi-info-circle"></i> {{ 'iot.linkDialog.noAvailableVehicles' | translate }}
+          </small>
+        }
+      </div>
+
+      <!-- Select OBD2 Device -->
+      <div class="form-group">
+        <label for="obd2DeviceId">{{ 'iot.linkDialog.selectDevice' | translate }}</label>
+        <select id="obd2DeviceId" formControlName="obd2DeviceId" class="styled-select">
+          <option value="" disabled selected>{{ 'iot.linkDialog.placeholderDevice' | translate }}</option>
+          @for (device of store.availableObd2Devices(); track device.id) {
+            <option [value]="device.id">
+              {{ device.macAddress }} ({{ 'iot.status.AVAILABLE' | translate }})
+            </option>
+          }
+        </select>
+        @if (store.availableObd2Devices().length === 0) {
+          <small class="hint-text info">
+            <i class="pi pi-info-circle"></i> {{ 'iot.linkDialog.noAvailableDevices' | translate }}
+          </small>
+        }
+      </div>
+
+      <div class="modal-info-box">
+        <i class="pi pi-shield"></i>
+        <p>{{ 'iot.linkDialog.disclaimer' | translate }}</p>
+      </div>
+    </form>
+  </div>
+
+  <div modal-actions class="dialog-actions">
+    <button type="button" (click)="onClose()" class="btn-secondary-flat">
+      {{ 'iot.linkDialog.cancel' | translate }}
+    </button>
+    <button
+      type="button"
+      (click)="onSubmit()"
+      [disabled]="linkForm.invalid"
+      class="btn-primary-gradient"
+    >
+      <i class="pi pi-link"></i>
+      {{ 'iot.linkDialog.confirm' | translate }}
+    </button>
+  </div>
+</app-modal>

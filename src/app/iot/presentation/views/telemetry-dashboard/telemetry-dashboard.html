@@ -1,1 +1,260 @@
-<div>Telemetry Dashboard Placeholder</div>
+<div class="telemetry-dashboard-container">
+  <!-- Top Header / Control Bar -->
+  <header class="control-bar">
+    <div class="left-controls">
+      <div class="selector-wrapper">
+        <label for="vehicleSelect"><i class="pi pi-car"></i> {{ 'iot.dashboard.vehicleLabel' | translate }}</label>
+        <select
+          id="vehicleSelect"
+          [value]="selectedVehicleId()"
+          (change)="onVehicleChange($event)"
+          class="styled-select"
+        >
+          <option value="" disabled selected>{{ 'iot.dashboard.selectVehicle' | translate }}</option>
+          @for (vehicle of (isCustomer ? store.vehicles() : store.branchVehicles()); track vehicle.id) {
+            <option [value]="vehicle.id">
+              {{ vehicle.brand }} {{ vehicle.model }} ({{ vehicle.plateNumber }})
+            </option>
+          }
+        </select>
+      </div>
+
+      <!-- Connection Status Area -->
+      @if (selectedVehicleId()) {
+        <div class="connection-status-card">
+          @if (!isCustomer) {
+            @if (activeCoupling()) {
+              <div class="status-indicator connected">
+                <span class="pulse-dot"></span>
+                <span class="status-text">
+                  <strong>OBD2 {{ 'iot.status.CONNECTED' | translate }}</strong>
+                  <span class="mac-text">{{ activeObd2Device()?.macAddress }}</span>
+                </span>
+              </div>
+              <button type="button" (click)="unlinkObd2()" class="btn-unlink">
+                <i class="pi pi-link-slash"></i> {{ 'iot.dashboard.unlinkBtn' | translate }}
+              </button>
+            } @else {
+              <div class="status-indicator disconnected">
+                <span class="static-dot"></span>
+                <span class="status-text">{{ 'iot.dashboard.noObd2Linked' | translate }}</span>
+              </div>
+              <button type="button" (click)="openLinkDialog()" class="btn-link">
+                <i class="pi pi-link"></i> {{ 'iot.dashboard.linkBtn' | translate }}
+              </button>
+            }
+          } @else {
+            <!-- Customer Mode Status -->
+            @if (latestSnapshot()) {
+              <div class="status-indicator connected">
+                <span class="pulse-dot"></span>
+                <span class="status-text"><strong>{{ 'iot.status.ACTIVE_TELEMETRY' | translate }}</strong></span>
+              </div>
+            } @else {
+              <div class="status-indicator disconnected">
+                <span class="static-dot"></span>
+                <span class="status-text">{{ 'iot.dashboard.noActiveTelemetry' | translate }}</span>
+              </div>
+            }
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Right Controls (Workshop Only) -->
+    @if (!isCustomer) {
+      <div class="right-controls">
+        <button type="button" (click)="openObd2Dialog()" class="btn-manage-obd2">
+          <i class="pi pi-cog"></i> {{ 'iot.dashboard.manageObd2Btn' | translate }}
+        </button>
+      </div>
+    }
+  </header>
+
+  @if (!selectedVehicleId()) {
+    <div class="no-selection-state">
+      <i class="pi pi-search empty-icon"></i>
+      <h2>{{ 'iot.dashboard.noVehicleSelectedTitle' | translate }}</h2>
+      <p>{{ 'iot.dashboard.noVehicleSelectedSubtitle' | translate }}</p>
+    </div>
+  } @else {
+    <!-- Stat Cards Grid -->
+    <section class="metrics-grid">
+      <!-- RPM Card -->
+      <div class="metric-card rpm-card">
+        <div class="card-header">
+          <span class="card-title">{{ 'iot.metrics.rpm' | translate }}</span>
+          <i class="pi pi-gauge card-icon"></i>
+        </div>
+        <div class="card-value">
+          {{ latestSnapshot() ? latestSnapshot()!.rpm : '--' }}
+          <span class="card-unit">RPM</span>
+        </div>
+        <div class="card-progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="latestSnapshot() ? (latestSnapshot()!.rpm / 8000 * 100) : 0"
+            [ngClass]="latestSnapshot() && latestSnapshot()!.rpm > 5500 ? 'danger' : 'normal'"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Temperature Card -->
+      <div class="metric-card temp-card">
+        <div class="card-header">
+          <span class="card-title">{{ 'iot.metrics.temperature' | translate }}</span>
+          <i class="pi pi-compass card-icon"></i>
+        </div>
+        <div class="card-value">
+          {{ latestSnapshot() ? latestSnapshot()!.temperature : '--' }}
+          <span class="card-unit">°C</span>
+        </div>
+        <div class="card-progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="latestSnapshot() ? (latestSnapshot()!.temperature / 150 * 100) : 0"
+            [ngClass]="latestSnapshot() && latestSnapshot()!.temperature > 105 ? 'danger' : 'normal'"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Speed Card -->
+      <div class="metric-card speed-card">
+        <div class="card-header">
+          <span class="card-title">{{ 'iot.metrics.speed' | translate }}</span>
+          <i class="pi pi-bolt card-icon"></i>
+        </div>
+        <div class="card-value">
+          {{ latestSnapshot() ? latestSnapshot()!.speedKmh : '--' }}
+          <span class="card-unit">km/h</span>
+        </div>
+        <div class="card-progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="latestSnapshot() ? (latestSnapshot()!.speedKmh / 220 * 100) : 0"
+            [ngClass]="latestSnapshot() && latestSnapshot()!.speedKmh > 120 ? 'warning' : 'normal'"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Fuel Level / Odometer Card -->
+      <div class="metric-card fuel-card">
+        <div class="card-header">
+          <span class="card-title">{{ 'iot.metrics.fuel' | translate }}</span>
+          <i class="pi pi-filter-fill card-icon"></i>
+        </div>
+        <div class="card-value">
+          {{ latestSnapshot() ? latestSnapshot()!.fuelLevelPercent : '--' }}
+          <span class="card-unit">%</span>
+        </div>
+        <div class="card-progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="latestSnapshot() ? latestSnapshot()!.fuelLevelPercent : 0"
+            [ngClass]="latestSnapshot() && latestSnapshot()!.fuelLevelPercent < 15 ? 'danger' : 'normal'"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Details Sections (Telemetry History & DTC Alerts) -->
+    <div class="details-row">
+      <!-- Telemetry Snapshots History -->
+      <section class="details-section telemetry-history">
+        <div class="section-header">
+          <h3><i class="pi pi-history"></i> {{ 'iot.dashboard.telemetryHistory' | translate }}</h3>
+          <span class="record-count">{{ store.telemetrySnapshots().length }} {{ 'iot.dashboard.recordsUnit' | translate }}</span>
+        </div>
+
+        @if (store.telemetrySnapshots().length === 0) {
+          <div class="empty-section-state">
+            <i class="pi pi-database empty-icon-small"></i>
+            <p>{{ 'iot.dashboard.noTelemetryRecords' | translate }}</p>
+          </div>
+        } @else {
+          <div class="table-scroll-container">
+            <table class="details-table">
+              <thead>
+                <tr>
+                  <th>{{ 'iot.dashboard.colTime' | translate }}</th>
+                  <th>{{ 'iot.metrics.rpm' | translate }}</th>
+                  <th>{{ 'iot.metrics.temperature' | translate }}</th>
+                  <th>{{ 'iot.metrics.speed' | translate }}</th>
+                  <th>{{ 'iot.metrics.fuel' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (snapshot of store.telemetrySnapshots(); track snapshot.id) {
+                  <tr>
+                    <td class="time-cell">{{ snapshot.createdAt | date:'mediumTime' }}</td>
+                    <td>{{ snapshot.rpm }} <span class="muted">RPM</span></td>
+                    <td>{{ snapshot.temperature }} <span class="muted">°C</span></td>
+                    <td>{{ snapshot.speedKmh }} <span class="muted">km/h</span></td>
+                    <td>{{ snapshot.fuelLevelPercent }} <span class="muted">%</span></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </section>
+
+      <!-- DTC Alerts History -->
+      <section class="details-section dtc-alerts">
+        <div class="section-header">
+          <h3><i class="pi pi-exclamation-triangle"></i> {{ 'iot.dashboard.dtcAlerts' | translate }}</h3>
+          <span class="record-count alert-count" [class.has-alerts]="store.dtcAlerts().length > 0">
+            {{ store.dtcAlerts().length }} {{ 'iot.dashboard.alertsUnit' | translate }}
+          </span>
+        </div>
+
+        @if (store.dtcAlerts().length === 0) {
+          <div class="empty-section-state success-state">
+            <i class="pi pi-check-circle empty-icon-small text-green"></i>
+            <p>{{ 'iot.dashboard.noDtcAlerts' | translate }}</p>
+          </div>
+        } @else {
+          <div class="table-scroll-container">
+            <table class="details-table">
+              <thead>
+                <tr>
+                  <th>{{ 'iot.dashboard.colDtcCode' | translate }}</th>
+                  <th>{{ 'iot.dashboard.colDescription' | translate }}</th>
+                  <th>{{ 'iot.dashboard.colSeverity' | translate }}</th>
+                  <th>{{ 'iot.dashboard.colTime' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (alert of store.dtcAlerts(); track alert.id) {
+                  <tr class="alert-row">
+                    <td><span class="dtc-code-badge">{{ alert.dtcCode }}</span></td>
+                    <td>{{ alert.description }}</td>
+                    <td>
+                      <span class="severity-badge" [ngClass]="alert.severity.toLowerCase()">
+                        {{ ('iot.severity.' + alert.severity) | translate }}
+                      </span>
+                    </td>
+                    <td class="time-cell">{{ alert.createdAt | date:'shortTime' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </section>
+    </div>
+  }
+</div>
+
+<!-- Modal Dialogs -->
+<app-obd2-dialog
+  [isOpen]="isObd2DialogOpen"
+  [branchId]="branchId"
+  (close)="closeObd2Dialog()"
+></app-obd2-dialog>
+
+<app-link-dialog
+  [isOpen]="isLinkDialogOpen"
+  [branchId]="branchId"
+  (close)="closeLinkDialog()"
+></app-link-dialog>

@@ -1,0 +1,101 @@
+<app-modal [isOpen]="isOpen" (close)="onClose()">
+  <span modal-title class="dialog-title">
+    <i class="pi pi-cog"></i> {{ 'iot.obd2Dialog.title' | translate }}
+  </span>
+
+  <div modal-body class="dialog-body">
+    <!-- Form Area -->
+    <form [formGroup]="obd2Form" (ngSubmit)="onSubmit()" class="obd2-form-container">
+      <div class="form-group">
+        <label for="macAddress">{{ 'iot.obd2Dialog.macLabel' | translate }}</label>
+        <div class="input-wrapper">
+          <input
+            id="macAddress"
+            type="text"
+            formControlName="macAddress"
+            placeholder="XX:XX:XX:XX:XX:XX"
+            class="styled-input"
+          />
+          <button type="submit" [disabled]="obd2Form.invalid" class="btn-primary-gradient">
+            <i [class]="editingDeviceId ? 'pi pi-check' : 'pi pi-plus'"></i>
+            {{ (editingDeviceId ? 'iot.obd2Dialog.save' : 'iot.obd2Dialog.add') | translate }}
+          </button>
+          @if (editingDeviceId) {
+            <button type="button" (click)="resetForm()" class="btn-cancel">
+              {{ 'iot.obd2Dialog.cancel' | translate }}
+            </button>
+          }
+        </div>
+        @if (obd2Form.get('macAddress')?.touched && obd2Form.get('macAddress')?.invalid) {
+          <small class="error-text">{{ 'iot.obd2Dialog.invalidMacPattern' | translate }}</small>
+        }
+        @if (errorMessage) {
+          <small class="error-text">{{ errorMessage | translate }}</small>
+        }
+      </div>
+    </form>
+
+    <div class="divider"></div>
+
+    <!-- Device List Area -->
+    <div class="list-header">
+      <h3>{{ 'iot.obd2Dialog.listHeader' | translate }}</h3>
+      <span class="device-count">{{ store.obd2Devices().length }} {{ 'iot.obd2Dialog.devicesUnit' | translate }}</span>
+    </div>
+
+    @if (store.obd2Devices().length === 0) {
+      <div class="empty-state">
+        <i class="pi pi-info-circle empty-icon"></i>
+        <p>{{ 'iot.obd2Dialog.empty' | translate }}</p>
+      </div>
+    } @else {
+      <div class="table-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>{{ 'iot.obd2Dialog.colMac' | translate }}</th>
+              <th>{{ 'iot.obd2Dialog.colStatus' | translate }}</th>
+              <th class="actions-col">{{ 'iot.obd2Dialog.colActions' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (device of store.obd2Devices(); track device.id) {
+              <tr [class.editing-row]="editingDeviceId === device.id">
+                <td class="mac-cell">{{ device.macAddress }}</td>
+                <td>
+                  <span class="status-badge" [ngClass]="device.status.toLowerCase()">
+                    {{ ('iot.status.' + device.status) | translate }}
+                  </span>
+                </td>
+                <td class="actions-cell">
+                  <button
+                    type="button"
+                    (click)="startEdit(device)"
+                    class="action-btn edit-btn"
+                    [title]="'iot.obd2Dialog.editTooltip' | translate"
+                  >
+                    <i class="pi pi-pencil"></i>
+                  </button>
+                  <button
+                    type="button"
+                    (click)="deleteDevice(device.id)"
+                    class="action-btn delete-btn"
+                    [title]="'iot.obd2Dialog.deleteTooltip' | translate"
+                  >
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+
+  <div modal-actions>
+    <button type="button" (click)="onClose()" class="btn-secondary-flat">
+      {{ 'iot.obd2Dialog.close' | translate }}
+    </button>
+  </div>
+</app-modal>
