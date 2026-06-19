@@ -1,73 +1,75 @@
 {
-  "status": {
-    "AVAILABLE": "Available",
-    "LINKED": "Linked",
-    "NOT_AVAILABLE": "Not Available",
-    "CONNECTED": "Connected",
-    "ACTIVE_TELEMETRY": "Active Telemetry"
-  },
-  "severity": {
-    "LOW": "Low",
-    "MEDIUM": "Medium",
-    "HIGH": "High",
-    "CRITICAL": "Critical"
-  },
-  "obd2Dialog": {
-    "title": "OBD2 Device Management",
-    "macLabel": "Device MAC Address",
-    "save": "Save",
-    "add": "Register",
-    "cancel": "Cancel",
-    "invalidMac": "Invalid MAC Address.",
-    "invalidMacPattern": "MAC address must match XX:XX:XX:XX:XX:XX format.",
-    "listHeader": "Registered Devices",
-    "devicesUnit": "devices",
-    "empty": "No OBD2 devices registered in this branch.",
-    "colMac": "MAC Address",
-    "colStatus": "Status",
-    "colActions": "Actions",
-    "editTooltip": "Edit MAC address",
-    "deleteTooltip": "Deregister device",
-    "close": "Close"
-  },
-  "linkDialog": {
-    "title": "Link OBD2 to Vehicle",
-    "selectVehicle": "Select Vehicle",
-    "placeholderVehicle": "Choose an available vehicle",
-    "noAvailableVehicles": "No available vehicles to link in this branch.",
-    "selectDevice": "Select OBD2 Device",
-    "placeholderDevice": "Choose an available OBD2 device",
-    "noAvailableDevices": "No available OBD2 devices to link.",
-    "disclaimer": "Once linked, OBD2 telemetry will start associating with this vehicle in real-time.",
-    "cancel": "Cancel",
-    "confirm": "Link Device",
-    "errorAllRequired": "All fields are required to link."
-  },
-  "dashboard": {
-    "vehicleLabel": "Selected Vehicle",
-    "selectVehicle": "Select a vehicle",
-    "unlinkBtn": "Unlink Device",
-    "linkBtn": "Link OBD2",
-    "noObd2Linked": "No OBD2 linked (Disconnected)",
-    "noActiveTelemetry": "No active telemetry",
-    "manageObd2Btn": "OBD2 Devices",
-    "noVehicleSelectedTitle": "No vehicle selected",
-    "noVehicleSelectedSubtitle": "Select a vehicle from the dropdown to inspect its telemetry and diagnostic codes.",
-    "telemetryHistory": "Telemetry History",
-    "recordsUnit": "records",
-    "noTelemetryRecords": "No telemetry snapshots recorded for this vehicle.",
-    "dtcAlerts": "Engine Diagnostic Codes (DTC)",
-    "alertsUnit": "alerts",
-    "noDtcAlerts": "No active engine alerts detected. Vehicle operating normally!",
-    "colTime": "Time",
-    "colDtcCode": "Code",
-    "colDescription": "Description",
-    "colSeverity": "Severity"
-  },
-  "metrics": {
-    "rpm": "RPM",
-    "temperature": "Temperature",
-    "speed": "Speed",
-    "fuel": "Fuel Level"
+  "iot": {
+    "status": {
+      "AVAILABLE": "Available",
+      "LINKED": "Linked",
+      "NOT_AVAILABLE": "Not Available",
+      "CONNECTED": "Connected",
+      "ACTIVE_TELEMETRY": "Active Telemetry"
+    },
+    "severity": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "CRITICAL": "Critical"
+    },
+    "obd2Dialog": {
+      "title": "OBD2 Device Management",
+      "macLabel": "Device MAC Address",
+      "save": "Save",
+      "add": "Register",
+      "cancel": "Cancel",
+      "invalidMac": "Invalid MAC Address.",
+      "invalidMacPattern": "MAC address must match XX:XX:XX:XX:XX:XX format.",
+      "listHeader": "Registered Devices",
+      "devicesUnit": "devices",
+      "empty": "No OBD2 devices registered in this branch.",
+      "colMac": "MAC Address",
+      "colStatus": "Status",
+      "colActions": "Actions",
+      "editTooltip": "Edit MAC address",
+      "deleteTooltip": "Deregister device",
+      "close": "Close"
+    },
+    "linkDialog": {
+      "title": "Link OBD2 to Vehicle",
+      "selectVehicle": "Select Vehicle",
+      "placeholderVehicle": "Choose an available vehicle",
+      "noAvailableVehicles": "No available vehicles to link in this branch.",
+      "selectDevice": "Select OBD2 Device",
+      "placeholderDevice": "Choose an available OBD2 device",
+      "noAvailableDevices": "No available OBD2 devices to link.",
+      "disclaimer": "Once linked, OBD2 telemetry will start associating with this vehicle in real-time.",
+      "cancel": "Cancel",
+      "confirm": "Link Device",
+      "errorAllRequired": "All fields are required to link."
+    },
+    "dashboard": {
+      "vehicleLabel": "Selected Vehicle",
+      "selectVehicle": "Select a vehicle",
+      "unlinkBtn": "Unlink Device",
+      "linkBtn": "Link OBD2",
+      "noObd2Linked": "No OBD2 linked (Disconnected)",
+      "noActiveTelemetry": "No active telemetry",
+      "manageObd2Btn": "OBD2 Devices",
+      "noVehicleSelectedTitle": "No vehicle selected",
+      "noVehicleSelectedSubtitle": "Select a vehicle from the dropdown to inspect its telemetry and diagnostic codes.",
+      "telemetryHistory": "Telemetry History",
+      "recordsUnit": "records",
+      "noTelemetryRecords": "No telemetry snapshots recorded for this vehicle.",
+      "dtcAlerts": "Engine Diagnostic Codes (DTC)",
+      "alertsUnit": "alerts",
+      "noDtcAlerts": "No active engine alerts detected. Vehicle operating normally!",
+      "colTime": "Time",
+      "colDtcCode": "Code",
+      "colDescription": "Description",
+      "colSeverity": "Severity"
+    },
+    "metrics": {
+      "rpm": "RPM",
+      "temperature": "Temperature",
+      "speed": "Speed",
+      "fuel": "Fuel Level"
+    }
   }
 }
