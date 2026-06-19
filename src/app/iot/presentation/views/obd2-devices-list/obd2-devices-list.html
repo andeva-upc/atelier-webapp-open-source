@@ -10,7 +10,7 @@
     </div>
     
     <div class="action-area">
-      <button type="button" (click)="openObd2Dialog()" class="btn-primary-gradient">
+      <button type="button" [routerLink]="['/telemetry/odb2_devices/new']" class="btn-primary-gradient">
         <i class="pi pi-plus"></i> {{ 'iot.obd2Dialog.add' | translate }} OBD2
       </button>
     </div>
@@ -82,12 +82,6 @@
 </div>
 
 <!-- Modal Dialogs for hardware addition and linking -->
-<app-obd2-dialog
-  [isOpen]="isObd2DialogOpen"
-  [branchId]="branchId"
-  (close)="closeObd2Dialog()"
-></app-obd2-dialog>
-
 <app-link-dialog
   [isOpen]="isLinkDialogOpen"
   [branchId]="branchId"

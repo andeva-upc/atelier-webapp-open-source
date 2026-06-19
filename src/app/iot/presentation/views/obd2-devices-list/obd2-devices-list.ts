@@ -1,9 +1,8 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { IotStore } from '../../../application/iot.store';
-import { Obd2DialogComponent } from '../../components/obd2-dialog/obd2-dialog';
 import { LinkDialogComponent } from '../../components/link-dialog/link-dialog';
 
 @Component({
@@ -12,8 +11,8 @@ import { LinkDialogComponent } from '../../components/link-dialog/link-dialog';
   imports: [
     CommonModule,
     TranslateModule,
-    Obd2DialogComponent,
-    LinkDialogComponent
+    LinkDialogComponent,
+    RouterLink
   ],
   templateUrl: './obd2-devices-list.html',
   styleUrl: './obd2-devices-list.css'
@@ -23,7 +22,6 @@ export class Obd2DevicesListComponent implements OnInit {
   private router = inject(Router);
 
   branchId = '';
-  isObd2DialogOpen = false;
   isLinkDialogOpen = false;
 
   // Compute the list of OBD2 devices with linked vehicle details and active registration IDs
@@ -51,18 +49,6 @@ export class Obd2DevicesListComponent implements OnInit {
       this.store.loadObd2Devices(this.branchId);
       this.store.loadRegistrations(this.branchId, 'ACTIVE');
       this.store.loadBranchVehicles(this.branchId);
-    }
-  }
-
-  openObd2Dialog(): void {
-    this.isObd2DialogOpen = true;
-  }
-
-  closeObd2Dialog(): void {
-    this.isObd2DialogOpen = false;
-    // Reload state on dialog close
-    if (this.branchId) {
-      this.store.loadObd2Devices(this.branchId);
     }
   }
 
