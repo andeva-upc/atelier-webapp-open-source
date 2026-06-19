@@ -6,5 +6,9 @@ export const TELEMETRY_ROUTES: Routes = [
   {
     path: 'odb2_devices',
     loadComponent: () => import('./presentation/views/obd2-devices-list/obd2-devices-list').then(m => m.Obd2DevicesListComponent)
+  },
+  {
+    path: 'odb2_devices/new',
+    loadComponent: () => import('./presentation/views/obd2-device-create/obd2-device-create').then(m => m.Obd2DeviceCreateComponent)
   }
 ];
