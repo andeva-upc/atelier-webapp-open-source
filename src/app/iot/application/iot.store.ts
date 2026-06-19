@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { IotApi } from '../infrastructure/iot-api';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable, tap } from 'rxjs';
 import { CustomerRegistrationsApiEndpoint } from '../../fleet/infrastructure/endpoints/customer-registrations.endpoint';
 
 // Commands
@@ -94,51 +94,57 @@ export class IotStore {
     });
   }
 
-  createObd2Device(command: CreateObd2DeviceCommand) {
-    this.api.obd2Devices.create(command).subscribe({
-      next: (device) => {
-        const current = this.obd2DevicesSignal();
-        this.obd2DevicesSignal.set([...current, device]);
-        
-        // Also refresh available list since new device is AVAILABLE by default
-        const currentAvailable = this.availableObd2DevicesSignal();
-        this.availableObd2DevicesSignal.set([...currentAvailable, device]);
-      },
-      error: (err) => console.error('Failed to create OBD2 device:', err)
-    });
+  createObd2Device(command: CreateObd2DeviceCommand): Observable<Obd2DeviceResource> {
+    return this.api.obd2Devices.create(command).pipe(
+      tap({
+        next: (device) => {
+          const current = this.obd2DevicesSignal();
+          this.obd2DevicesSignal.set([...current, device]);
+          
+          // Also refresh available list since new device is AVAILABLE by default
+          const currentAvailable = this.availableObd2DevicesSignal();
+          this.availableObd2DevicesSignal.set([...currentAvailable, device]);
+        },
+        error: (err) => console.error('Failed to create OBD2 device:', err)
+      })
+    );
   }
 
-  updateObd2Device(id: string, command: UpdateObd2DeviceCommand) {
-    this.api.obd2Devices.update(id, command).subscribe({
-      next: (updatedDevice) => {
-        // Update main devices list
-        this.obd2DevicesSignal.update((list) =>
-          list.map((d) => (d.id === updatedDevice.id ? updatedDevice : d))
-        );
-        // Update available list if present
-        this.availableObd2DevicesSignal.update((list) =>
-          list.map((d) => (d.id === updatedDevice.id ? updatedDevice : d))
-        );
-        // Update active device if open
-        if (this.activeObd2DeviceSignal()?.id === id) {
-          this.activeObd2DeviceSignal.set(updatedDevice);
-        }
-      },
-      error: (err) => console.error('Failed to update OBD2 device:', err)
-    });
+  updateObd2Device(id: string, command: UpdateObd2DeviceCommand): Observable<Obd2DeviceResource> {
+    return this.api.obd2Devices.update(id, command).pipe(
+      tap({
+        next: (updatedDevice) => {
+          // Update main devices list
+          this.obd2DevicesSignal.update((list) =>
+            list.map((d) => (d.id === updatedDevice.id ? updatedDevice : d))
+          );
+          // Update available list if present
+          this.availableObd2DevicesSignal.update((list) =>
+            list.map((d) => (d.id === updatedDevice.id ? updatedDevice : d))
+          );
+          // Update active device if open
+          if (this.activeObd2DeviceSignal()?.id === id) {
+            this.activeObd2DeviceSignal.set(updatedDevice);
+          }
+        },
+        error: (err) => console.error('Failed to update OBD2 device:', err)
+      })
+    );
   }
 
-  deleteObd2Device(id: string) {
-    this.api.obd2Devices.delete(id).subscribe({
-      next: () => {
-        this.obd2DevicesSignal.update((list) => list.filter((d) => d.id !== id));
-        this.availableObd2DevicesSignal.update((list) => list.filter((d) => d.id !== id));
-        if (this.activeObd2DeviceSignal()?.id === id) {
-          this.activeObd2DeviceSignal.set(null);
-        }
-      },
-      error: (err) => console.error('Failed to delete OBD2 device:', err)
-    });
+  deleteObd2Device(id: string): Observable<void> {
+    return this.api.obd2Devices.delete(id).pipe(
+      tap({
+        next: () => {
+          this.obd2DevicesSignal.update((list) => list.filter((d) => d.id !== id));
+          this.availableObd2DevicesSignal.update((list) => list.filter((d) => d.id !== id));
+          if (this.activeObd2DeviceSignal()?.id === id) {
+            this.activeObd2DeviceSignal.set(null);
+          }
+        },
+        error: (err) => console.error('Failed to delete OBD2 device:', err)
+      })
+    );
   }
 
   // ==========================================
@@ -152,46 +158,50 @@ export class IotStore {
     });
   }
 
-  linkObd2Device(command: LinkObd2DeviceCommand) {
-    this.api.obd2Registrations.linkObd2Device(command).subscribe({
-      next: (reg) => {
-        this.registrationsSignal.update((list) => [...list, reg]);
-        this.activeRegistrationSignal.set(reg);
+  linkObd2Device(command: LinkObd2DeviceCommand): Observable<Obd2DeviceRegistrationResource> {
+    return this.api.obd2Registrations.linkObd2Device(command).pipe(
+      tap({
+        next: (reg) => {
+          this.registrationsSignal.update((list) => [...list, reg]);
+          this.activeRegistrationSignal.set(reg);
 
-        // Remove linked OBD2 and Vehicle from available lists
-        this.availableObd2DevicesSignal.update((list) =>
-          list.filter((d) => d.id !== command.obd2DeviceId)
-        );
-        this.availableVehiclesSignal.update((list) =>
-          list.filter((v) => v.id !== command.vehicleId)
-        );
+          // Remove linked OBD2 and Vehicle from available lists
+          this.availableObd2DevicesSignal.update((list) =>
+            list.filter((d) => d.id !== command.obd2DeviceId)
+          );
+          this.availableVehiclesSignal.update((list) =>
+            list.filter((v) => v.id !== command.vehicleId)
+          );
 
-        // Refresh devices list states
-        this.obd2DevicesSignal.update((list) =>
-          list.map((d) => d.id === command.obd2DeviceId ? { ...d, status: 'LINKED' } : d)
-        );
-      },
-      error: (err) => console.error('Failed to link OBD2 device to vehicle:', err)
-    });
+          // Refresh devices list states
+          this.obd2DevicesSignal.update((list) =>
+            list.map((d) => d.id === command.obd2DeviceId ? { ...d, status: 'LINKED' } : d)
+          );
+        },
+        error: (err) => console.error('Failed to link OBD2 device to vehicle:', err)
+      })
+    );
   }
 
-  deactivateRegistration(id: string) {
-    this.api.obd2Registrations.deactivate(id).subscribe({
-      next: (updatedReg) => {
-        this.registrationsSignal.update((list) =>
-          list.map((r) => (r.id === updatedReg.id ? updatedReg : r))
-        );
-        if (this.activeRegistrationSignal()?.id === id) {
-          this.activeRegistrationSignal.set(updatedReg);
-        }
+  deactivateRegistration(id: string): Observable<Obd2DeviceRegistrationResource> {
+    return this.api.obd2Registrations.deactivate(id).pipe(
+      tap({
+        next: (updatedReg) => {
+          this.registrationsSignal.update((list) =>
+            list.map((r) => (r.id === updatedReg.id ? updatedReg : r))
+          );
+          if (this.activeRegistrationSignal()?.id === id) {
+            this.activeRegistrationSignal.set(updatedReg);
+          }
 
-        // Trigger updates to reload available device/vehicle state lists in UI
-        this.loadAvailableObd2Devices(updatedReg.branchId);
-        this.loadAvailableVehicles(updatedReg.branchId);
-        this.loadObd2Devices(updatedReg.branchId);
-      },
-      error: (err) => console.error('Failed to deactivate registration:', err)
-    });
+          // Trigger updates to reload available device/vehicle state lists in UI
+          this.loadAvailableObd2Devices(updatedReg.branchId);
+          this.loadAvailableVehicles(updatedReg.branchId);
+          this.loadObd2Devices(updatedReg.branchId);
+        },
+        error: (err) => console.error('Failed to deactivate registration:', err)
+      })
+    );
   }
 
   loadTelemetrySnapshotsForRegistration(registrationId: string) {

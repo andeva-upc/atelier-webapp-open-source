@@ -55,8 +55,20 @@ export class LinkDialogComponent implements OnChanges {
       this.linkForm.value.vehicleId
     );
 
-    this.store.linkObd2Device(command);
-    this.close.emit();
+    this.errorMessage = null;
+    this.store.linkObd2Device(command).subscribe({
+      next: () => {
+        this.close.emit();
+      },
+      error: (err) => {
+        console.error(err);
+        if (err.status === 409) {
+          this.errorMessage = 'iot.linkDialog.errorConflict';
+        } else {
+          this.errorMessage = 'iot.linkDialog.errorLinking';
+        }
+      }
+    });
   }
 
   onClose(): void {

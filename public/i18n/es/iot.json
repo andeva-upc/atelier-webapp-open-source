@@ -29,7 +29,10 @@
       "colActions": "Acciones",
       "editTooltip": "Editar dirección MAC",
       "deleteTooltip": "Dar de baja",
-      "close": "Cerrar"
+      "close": "Cerrar",
+      "errorSaving": "Error al guardar el dispositivo OBD2.",
+      "errorConflict": "El dispositivo con esta dirección MAC ya está registrado.",
+      "errorBadRequest": "Datos no válidos. Verifica la sede y la dirección MAC."
     },
     "linkDialog": {
       "title": "Vincular OBD2 a Vehículo",
@@ -42,7 +45,9 @@
       "disclaimer": "Al vincular el dispositivo, la telemetría del OBD2 comenzará a asociarse con este vehículo y se reflejará en tiempo real.",
       "cancel": "Cancelar",
       "confirm": "Vincular Dispositivo",
-      "errorAllRequired": "Todos los campos son obligatorios para realizar la vinculación."
+      "errorAllRequired": "Todos los campos son obligatorios para realizar la vinculación.",
+      "errorConflict": "Este vehículo o dispositivo OBD2 ya se encuentra vinculado de manera activa.",
+      "errorLinking": "Error al vincular el dispositivo OBD2 al vehículo."
     },
     "dashboard": {
       "vehicleLabel": "Vehículo Seleccionado",

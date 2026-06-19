@@ -29,7 +29,10 @@
       "colActions": "Actions",
       "editTooltip": "Edit MAC address",
       "deleteTooltip": "Deregister device",
-      "close": "Close"
+      "close": "Close",
+      "errorSaving": "Error saving OBD2 device.",
+      "errorConflict": "The device with this MAC address is already registered.",
+      "errorBadRequest": "Invalid data. Verify branch and MAC address."
     },
     "linkDialog": {
       "title": "Link OBD2 to Vehicle",
@@ -42,7 +45,9 @@
       "disclaimer": "Once linked, OBD2 telemetry will start associating with this vehicle in real-time.",
       "cancel": "Cancel",
       "confirm": "Link Device",
-      "errorAllRequired": "All fields are required to link."
+      "errorAllRequired": "All fields are required to link.",
+      "errorConflict": "This vehicle or OBD2 device is already actively linked.",
+      "errorLinking": "Error linking OBD2 device to vehicle."
     },
     "dashboard": {
       "vehicleLabel": "Selected Vehicle",

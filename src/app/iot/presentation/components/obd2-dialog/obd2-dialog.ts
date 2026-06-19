@@ -55,16 +55,37 @@ export class Obd2DialogComponent implements OnChanges {
     }
 
     const mac = this.obd2Form.value.macAddress.trim().toUpperCase();
+    this.errorMessage = null;
 
     if (this.editingDeviceId) {
       const command = new UpdateObd2DeviceCommand(mac);
-      this.store.updateObd2Device(this.editingDeviceId, command);
+      this.store.updateObd2Device(this.editingDeviceId, command).subscribe({
+        next: () => {
+          this.resetForm();
+        },
+        error: (err) => {
+          console.error(err);
+          this.errorMessage = 'iot.obd2Dialog.errorSaving';
+        }
+      });
     } else {
       const command = new CreateObd2DeviceCommand(this.branchId, mac);
-      this.store.createObd2Device(command);
+      this.store.createObd2Device(command).subscribe({
+        next: () => {
+          this.resetForm();
+        },
+        error: (err) => {
+          console.error(err);
+          if (err.status === 409) {
+            this.errorMessage = 'iot.obd2Dialog.errorConflict';
+          } else if (err.status === 400) {
+            this.errorMessage = 'iot.obd2Dialog.errorBadRequest';
+          } else {
+            this.errorMessage = 'iot.obd2Dialog.errorSaving';
+          }
+        }
+      });
     }
-    
-    this.resetForm();
   }
 
   startEdit(device: any): void {
@@ -76,7 +97,12 @@ export class Obd2DialogComponent implements OnChanges {
 
   deleteDevice(id: string): void {
     if (confirm('¿Estás seguro de que deseas dar de baja este dispositivo OBD2?')) {
-      this.store.deleteObd2Device(id);
+      this.store.deleteObd2Device(id).subscribe({
+        error: (err) => {
+          console.error(err);
+          alert('No se pudo dar de baja el dispositivo.');
+        }
+      });
     }
   }
 
