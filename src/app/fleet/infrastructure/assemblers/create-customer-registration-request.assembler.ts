@@ -5,8 +5,7 @@ export class CreateCustomerRegistrationRequestAssembler {
   static toRequestFromCommand(command: CreateCustomerRegistrationCommand): CreateCustomerRegistrationRequest {
     return {
       customerId: command.customerId,
-      branchId: command.branchId,
-      status: command.status
+      branchId: command.branchId
     };
   }
 }

@@ -3,6 +3,5 @@ export interface CreateAppointmentRequest {
   customerId: string;
   vehicleId: string;
   scheduledStart: string;
-  scheduledEnd: string;
-  notes: string;
+  notes?: string | null;
 }

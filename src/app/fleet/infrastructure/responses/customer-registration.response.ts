@@ -4,6 +4,5 @@ export interface CustomerRegistrationResource {
   branchId: string;
   status: string;
   createdAt: string;
-  updatedAt?: string;
   deletedAt?: string | null;
 }
