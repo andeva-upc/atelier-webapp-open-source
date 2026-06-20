@@ -18,7 +18,15 @@ const workOrdersRoutes = () => import('./operations/presentation/work-orders.rou
  * @see https://angular.io/guide/router for more information on Angular routing.
  */
 export const routes: Routes = [
-  { path: 'home', component: Home,    canActivate: [iamGuard] },
+  { path: 'home', redirectTo: 'telemetry', pathMatch: 'full' },
+  {
+    path: 'vehicles',
+    component: Home,
+    canActivate: [iamGuard],
+    children: [
+      { path: '', loadChildren: telemetryRoutes }
+    ]
+  },
   {
     path: 'inventory',
     component: Home,

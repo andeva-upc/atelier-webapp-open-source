@@ -1,0 +1,91 @@
+<div class="devices-list-container">
+  <!-- Top Navigation & Title -->
+  <header class="header-section">
+    <div class="title-area">
+      <button type="button" (click)="goBack()" class="btn-back">
+        <i class="pi pi-arrow-left"></i> {{ 'iot.dashboard.vehicleLabel' | translate }} (Dashboard)
+      </button>
+      <h2><i class="pi pi-cog"></i> {{ 'iot.obd2Dialog.title' | translate }}</h2>
+      <p class="subtitle-text">Administra y vincula los dispositivos OBD2 físicos de esta sede con los vehículos activos.</p>
+    </div>
+    
+    <div class="action-area">
+      <button type="button" [routerLink]="['/telemetry/odb2_devices/new']" class="btn-primary-gradient">
+        <i class="pi pi-plus"></i> {{ 'iot.obd2Dialog.add' | translate }} OBD2
+      </button>
+    </div>
+  </header>
+
+  <!-- Table Container (TABLA de OBD2s) -->
+  <main class="main-content-card">
+    <div class="table-header">
+      <h3><i class="pi pi-table"></i> {{ 'iot.obd2Dialog.listHeader' | translate }}</h3>
+      <span class="device-badge">{{ devicesWithCoupling().length }} {{ 'iot.obd2Dialog.devicesUnit' | translate }}</span>
+    </div>
+
+    @if (devicesWithCoupling().length === 0) {
+      <div class="empty-state">
+        <i class="pi pi-info-circle empty-icon"></i>
+        <p>{{ 'iot.obd2Dialog.empty' | translate }}</p>
+      </div>
+    } @else {
+      <div class="table-scroll-container">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>{{ 'iot.obd2Dialog.colMac' | translate }}</th>
+              <th>{{ 'iot.obd2Dialog.colStatus' | translate }}</th>
+              <th>Vehículo Asociado</th>
+              <th class="actions-col">Acción de Vinculación</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (device of devicesWithCoupling(); track device.id) {
+              <tr>
+                <td class="mac-cell">
+                  <code>{{ device.macAddress }}</code>
+                </td>
+                <td>
+                  <span class="status-badge" [ngClass]="device.status.toLowerCase()">
+                    {{ ('iot.status.' + device.status) | translate }}
+                  </span>
+                </td>
+                <td class="vehicle-cell">
+                  @if (device.linkedVehicle) {
+                    <span class="linked-vehicle-text">
+                      <i class="pi pi-car"></i> {{ device.linkedVehicle }}
+                    </span>
+                  } @else {
+                    <span class="muted-text">Ninguno</span>
+                  }
+                </td>
+                <td class="actions-cell">
+                  <div class="actions-wrapper">
+                    @if (device.status === 'AVAILABLE') {
+                      <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ obd2DeviceId: device.id }" class="btn-action-link" title="Vincular">
+                        <i class="pi pi-link"></i> Vincular
+                      </a>
+                    } @else if (device.status === 'LINKED' && device.activeRegId) {
+                      <button type="button" (click)="unlinkDevice(device.activeRegId)" class="btn-action-unlink" title="Desvincular">
+                        <i class="pi pi-link-slash"></i> Desvincular
+                      </button>
+                    }
+
+                    <a [routerLink]="['/telemetry/odb2_devices', device.id, 'edit']" class="btn-action-edit" title="Editar MAC">
+                      <i class="pi pi-pencil"></i>
+                    </a>
+                    <button type="button" (click)="deleteDevice(device.id)" class="btn-action-delete" title="Dar de baja">
+                      <i class="pi pi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </main>
+</div>
+
+

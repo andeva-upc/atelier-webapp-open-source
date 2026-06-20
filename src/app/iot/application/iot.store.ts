@@ -1,6 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { IotApi } from '../infrastructure/iot-api';
+import { forkJoin, Observable, tap, catchError, switchMap, map, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { CustomerRegistrationsApiEndpoint } from '../../fleet/infrastructure/endpoints/customer-registrations.endpoint';
 
 // Commands
 import { CreateObd2DeviceCommand } from '../domain/model/commands/create-obd2-device.command';
@@ -58,7 +62,15 @@ export class IotStore {
   readonly latestTelemetry = this.latestTelemetrySignal.asReadonly();
   readonly dtcAlerts = this.dtcAlertsSignal.asReadonly();
 
-  constructor(private api: IotApi, private router: Router) {}
+  private readonly branchVehiclesSignal = signal<VehicleResource[]>([]);
+  readonly branchVehicles = this.branchVehiclesSignal.asReadonly();
+
+  constructor(
+    private api: IotApi,
+    private router: Router,
+    private customerRegsApi: CustomerRegistrationsApiEndpoint,
+    private http: HttpClient
+  ) {}
 
   // ==========================================
   // OBD2 DEVICES
@@ -85,51 +97,57 @@ export class IotStore {
     });
   }
 
-  createObd2Device(command: CreateObd2DeviceCommand) {
-    this.api.obd2Devices.create(command).subscribe({
-      next: (device) => {
-        const current = this.obd2DevicesSignal();
-        this.obd2DevicesSignal.set([...current, device]);
-        
-        // Also refresh available list since new device is AVAILABLE by default
-        const currentAvailable = this.availableObd2DevicesSignal();
-        this.availableObd2DevicesSignal.set([...currentAvailable, device]);
-      },
-      error: (err) => console.error('Failed to create OBD2 device:', err)
-    });
+  createObd2Device(command: CreateObd2DeviceCommand): Observable<Obd2DeviceResource> {
+    return this.api.obd2Devices.create(command).pipe(
+      tap({
+        next: (device) => {
+          const current = this.obd2DevicesSignal();
+          this.obd2DevicesSignal.set([...current, device]);
+          
+          // Also refresh available list since new device is AVAILABLE by default
+          const currentAvailable = this.availableObd2DevicesSignal();
+          this.availableObd2DevicesSignal.set([...currentAvailable, device]);
+        },
+        error: (err) => console.error('Failed to create OBD2 device:', err)
+      })
+    );
   }
 
-  updateObd2Device(id: string, command: UpdateObd2DeviceCommand) {
-    this.api.obd2Devices.update(id, command).subscribe({
-      next: (updatedDevice) => {
-        // Update main devices list
-        this.obd2DevicesSignal.update((list) =>
-          list.map((d) => (d.id === updatedDevice.id ? updatedDevice : d))
-        );
-        // Update available list if present
-        this.availableObd2DevicesSignal.update((list) =>
-          list.map((d) => (d.id === updatedDevice.id ? updatedDevice : d))
-        );
-        // Update active device if open
-        if (this.activeObd2DeviceSignal()?.id === id) {
-          this.activeObd2DeviceSignal.set(updatedDevice);
-        }
-      },
-      error: (err) => console.error('Failed to update OBD2 device:', err)
-    });
+  updateObd2Device(id: string, command: UpdateObd2DeviceCommand): Observable<Obd2DeviceResource> {
+    return this.api.obd2Devices.update(id, command).pipe(
+      tap({
+        next: (updatedDevice) => {
+          // Update main devices list
+          this.obd2DevicesSignal.update((list) =>
+            list.map((d) => (d.id === updatedDevice.id ? updatedDevice : d))
+          );
+          // Update available list if present
+          this.availableObd2DevicesSignal.update((list) =>
+            list.map((d) => (d.id === updatedDevice.id ? updatedDevice : d))
+          );
+          // Update active device if open
+          if (this.activeObd2DeviceSignal()?.id === id) {
+            this.activeObd2DeviceSignal.set(updatedDevice);
+          }
+        },
+        error: (err) => console.error('Failed to update OBD2 device:', err)
+      })
+    );
   }
 
-  deleteObd2Device(id: string) {
-    this.api.obd2Devices.delete(id).subscribe({
-      next: () => {
-        this.obd2DevicesSignal.update((list) => list.filter((d) => d.id !== id));
-        this.availableObd2DevicesSignal.update((list) => list.filter((d) => d.id !== id));
-        if (this.activeObd2DeviceSignal()?.id === id) {
-          this.activeObd2DeviceSignal.set(null);
-        }
-      },
-      error: (err) => console.error('Failed to delete OBD2 device:', err)
-    });
+  deleteObd2Device(id: string): Observable<void> {
+    return this.api.obd2Devices.delete(id).pipe(
+      tap({
+        next: () => {
+          this.obd2DevicesSignal.update((list) => list.filter((d) => d.id !== id));
+          this.availableObd2DevicesSignal.update((list) => list.filter((d) => d.id !== id));
+          if (this.activeObd2DeviceSignal()?.id === id) {
+            this.activeObd2DeviceSignal.set(null);
+          }
+        },
+        error: (err) => console.error('Failed to delete OBD2 device:', err)
+      })
+    );
   }
 
   // ==========================================
@@ -143,46 +161,50 @@ export class IotStore {
     });
   }
 
-  linkObd2Device(command: LinkObd2DeviceCommand) {
-    this.api.obd2Registrations.linkObd2Device(command).subscribe({
-      next: (reg) => {
-        this.registrationsSignal.update((list) => [...list, reg]);
-        this.activeRegistrationSignal.set(reg);
+  linkObd2Device(command: LinkObd2DeviceCommand): Observable<Obd2DeviceRegistrationResource> {
+    return this.api.obd2Registrations.linkObd2Device(command).pipe(
+      tap({
+        next: (reg) => {
+          this.registrationsSignal.update((list) => [...list, reg]);
+          this.activeRegistrationSignal.set(reg);
 
-        // Remove linked OBD2 and Vehicle from available lists
-        this.availableObd2DevicesSignal.update((list) =>
-          list.filter((d) => d.id !== command.obd2DeviceId)
-        );
-        this.availableVehiclesSignal.update((list) =>
-          list.filter((v) => v.id !== command.vehicleId)
-        );
+          // Remove linked OBD2 and Vehicle from available lists
+          this.availableObd2DevicesSignal.update((list) =>
+            list.filter((d) => d.id !== command.obd2DeviceId)
+          );
+          this.availableVehiclesSignal.update((list) =>
+            list.filter((v) => v.id !== command.vehicleId)
+          );
 
-        // Refresh devices list states
-        this.obd2DevicesSignal.update((list) =>
-          list.map((d) => d.id === command.obd2DeviceId ? { ...d, status: 'LINKED' } : d)
-        );
-      },
-      error: (err) => console.error('Failed to link OBD2 device to vehicle:', err)
-    });
+          // Refresh devices list states
+          this.obd2DevicesSignal.update((list) =>
+            list.map((d) => d.id === command.obd2DeviceId ? { ...d, status: 'LINKED' } : d)
+          );
+        },
+        error: (err) => console.error('Failed to link OBD2 device to vehicle:', err)
+      })
+    );
   }
 
-  deactivateRegistration(id: string) {
-    this.api.obd2Registrations.deactivate(id).subscribe({
-      next: (updatedReg) => {
-        this.registrationsSignal.update((list) =>
-          list.map((r) => (r.id === updatedReg.id ? updatedReg : r))
-        );
-        if (this.activeRegistrationSignal()?.id === id) {
-          this.activeRegistrationSignal.set(updatedReg);
-        }
+  deactivateRegistration(id: string): Observable<Obd2DeviceRegistrationResource> {
+    return this.api.obd2Registrations.deactivate(id).pipe(
+      tap({
+        next: (updatedReg) => {
+          this.registrationsSignal.update((list) =>
+            list.map((r) => (r.id === updatedReg.id ? updatedReg : r))
+          );
+          if (this.activeRegistrationSignal()?.id === id) {
+            this.activeRegistrationSignal.set(updatedReg);
+          }
 
-        // Trigger updates to reload available device/vehicle state lists in UI
-        this.loadAvailableObd2Devices(updatedReg.branchId);
-        this.loadAvailableVehicles(updatedReg.branchId);
-        this.loadObd2Devices(updatedReg.branchId);
-      },
-      error: (err) => console.error('Failed to deactivate registration:', err)
-    });
+          // Trigger updates to reload available device/vehicle state lists in UI
+          this.loadAvailableObd2Devices(updatedReg.branchId);
+          this.loadAvailableVehicles(updatedReg.branchId);
+          this.loadObd2Devices(updatedReg.branchId);
+        },
+        error: (err) => console.error('Failed to deactivate registration:', err)
+      })
+    );
   }
 
   loadTelemetrySnapshotsForRegistration(registrationId: string) {
@@ -207,6 +229,30 @@ export class IotStore {
     this.api.vehicles.getAvailableForLinking(branchId).subscribe({
       next: (vehicles) => this.availableVehiclesSignal.set(vehicles),
       error: (err) => console.error('Failed to load available vehicles:', err)
+    });
+  }
+
+  loadBranchVehicles(branchId: string) {
+    this.customerRegsApi.getByBranchId(branchId).subscribe({
+      next: (regs) => {
+        const vehicleRequests = regs.map(reg => this.api.vehicles.getByCustomerId(reg.customerId));
+        if (vehicleRequests.length === 0) {
+          this.branchVehiclesSignal.set([]);
+          return;
+        }
+        
+        forkJoin(vehicleRequests).subscribe({
+          next: (vehiclesLists) => {
+            const allVehicles = vehiclesLists.flat();
+            const uniqueVehicles = allVehicles.filter((v, index, self) =>
+              self.findIndex(t => t.id === v.id) === index
+            );
+            this.branchVehiclesSignal.set(uniqueVehicles);
+          },
+          error: (err) => console.error('Failed to load branch vehicles:', err)
+        });
+      },
+      error: (err) => console.error('Failed to load branch customer registrations:', err)
     });
   }
 
@@ -272,6 +318,99 @@ export class IotStore {
       next: (alerts) => this.dtcAlertsSignal.set(alerts),
       error: (err) => console.error('Failed to load vehicle DTC alerts history:', err)
     });
+  }
+
+  createTestVehicleForBranch(branchId: string): Observable<any> {
+    const userId = localStorage.getItem('userId') || '';
+    
+    // Generate a random 8-digit document number and a random 9-digit phone number
+    const randomDoc = Math.floor(10000000 + Math.random() * 90000000).toString();
+    const randomPhone = '9' + Math.floor(10000000 + Math.random() * 89999999).toString();
+    
+    // 1. Create customer profile (ignore duplicate/Conflict if already exists)
+    const customerPayload = {
+      userId: userId,
+      isCorporate: false,
+      firstName: 'Cliente',
+      lastName: 'Taller',
+      businessName: '',
+      documentType: 'DNI',
+      documentNumber: randomDoc,
+      phone: randomPhone
+    };
+    
+    console.log('[IotStore] Creating customer profile:', customerPayload);
+    
+    return this.http.post<any>(`${environment.apiBaseUrl}${environment.endpoints.core.customers}`, customerPayload).pipe(
+      catchError(err => {
+        console.warn('[IotStore] Customer creation error:', err);
+        const errStr = JSON.stringify(err).toLowerCase();
+        const isAlreadyExists = err.status === 409 || (err.status === 400 && errStr.includes('already exists'));
+        
+        if (isAlreadyExists) {
+          console.log('[IotStore] Customer profile already exists, fetching by userId:', userId);
+          return this.http.get<any>(`${environment.apiBaseUrl}${environment.endpoints.core.customers}/user/${userId}`);
+        }
+        throw err;
+      }),
+      switchMap((customer: any) => {
+        const customerId = customer.id;
+        console.log('[IotStore] Customer resolved:', customerId);
+        // Save customerId in localStorage for convenience
+        localStorage.setItem('customerId', customerId);
+        
+        if (!branchId) {
+          console.log('[IotStore] No branchId provided, skipping branch registration.');
+          return of(customerId);
+        }
+        
+        // 2. Register customer in branch
+        const regPayload = {
+          customerId: customerId,
+          branchId: branchId
+        };
+        console.log('[IotStore] Registering customer in branch:', regPayload);
+        return this.http.post(`${environment.apiBaseUrl}${environment.endpoints.fleet.customerRegistrations}`, regPayload).pipe(
+          catchError(err => {
+            console.warn('[IotStore] Customer branch registration error:', err);
+            const errStr = JSON.stringify(err).toLowerCase();
+            if (err.status === 409 || errStr.includes('already exists')) {
+              return of(null); // Already registered
+            }
+            throw err;
+          }),
+          map(() => customerId)
+        );
+      }),
+      switchMap((customerId: string) => {
+        // 3. Register vehicle for this user
+        const vehiclePayload = {
+          brand: 'Toyota',
+          model: 'Corolla',
+          plateNumber: 'ABC-' + Math.floor(100 + Math.random() * 900),
+          vin: '1HGBH41JXMN' + Math.random().toString().substring(2, 9),
+          year: 2020
+        };
+        console.log('[IotStore] Registering vehicle:', vehiclePayload);
+        return this.http.post<any>(`${environment.apiBaseUrl}${environment.endpoints.iot.vehicles}`, vehiclePayload).pipe(
+          tap({
+            next: (res) => {
+              console.log('[IotStore] Vehicle registered successfully:', res);
+              // Reload list states
+              if (branchId) {
+                this.loadAvailableVehicles(branchId);
+                this.loadBranchVehicles(branchId);
+              }
+              const currentCustomerId = localStorage.getItem('customerId');
+              if (currentCustomerId) {
+                this.loadVehiclesByCustomerId(currentCustomerId);
+              }
+            },
+            error: (err) => console.error('[IotStore] Vehicle registration failed:', err)
+          })
+        );
+      })
+    );
   }
 
   // ==========================================

@@ -1,1 +1,80 @@
-{}
+{
+  "iot": {
+    "status": {
+      "AVAILABLE": "Disponible",
+      "LINKED": "Vinculado",
+      "NOT_AVAILABLE": "No Disponible",
+      "CONNECTED": "Conectado",
+      "ACTIVE_TELEMETRY": "Telemetría Activa"
+    },
+    "severity": {
+      "LOW": "Bajo",
+      "MEDIUM": "Medio",
+      "HIGH": "Alto",
+      "CRITICAL": "Crítico"
+    },
+    "obd2Dialog": {
+      "title": "Gestión de Dispositivos OBD2",
+      "macLabel": "Dirección MAC del Dispositivo",
+      "save": "Guardar",
+      "add": "Registrar",
+      "cancel": "Cancelar",
+      "invalidMac": "Dirección MAC no válida.",
+      "invalidMacPattern": "La dirección MAC debe cumplir con el formato XX:XX:XX:XX:XX:XX.",
+      "listHeader": "Dispositivos Registrados",
+      "devicesUnit": "dispositivos",
+      "empty": "No hay dispositivos OBD2 registrados en esta sede.",
+      "colMac": "Dirección MAC",
+      "colStatus": "Estado",
+      "colActions": "Acciones",
+      "editTooltip": "Editar dirección MAC",
+      "deleteTooltip": "Dar de baja",
+      "close": "Cerrar",
+      "errorSaving": "Error al guardar el dispositivo OBD2.",
+      "errorConflict": "El dispositivo con esta dirección MAC ya está registrado.",
+      "errorBadRequest": "Datos no válidos. Verifica la sede y la dirección MAC."
+    },
+    "linkDialog": {
+      "title": "Vincular OBD2 a Vehículo",
+      "selectVehicle": "Seleccionar Vehículo",
+      "placeholderVehicle": "Selecciona un vehículo disponible",
+      "noAvailableVehicles": "No hay vehículos disponibles para vincular en esta sede.",
+      "selectDevice": "Seleccionar Dispositivo OBD2",
+      "placeholderDevice": "Selecciona un dispositivo OBD2 disponible",
+      "noAvailableDevices": "No hay dispositivos OBD2 disponibles para vincular.",
+      "disclaimer": "Al vincular el dispositivo, la telemetría del OBD2 comenzará a asociarse con este vehículo y se reflejará en tiempo real.",
+      "cancel": "Cancelar",
+      "confirm": "Vincular Dispositivo",
+      "errorAllRequired": "Todos los campos son obligatorios para realizar la vinculación.",
+      "errorConflict": "Este vehículo o dispositivo OBD2 ya se encuentra vinculado de manera activa.",
+      "errorLinking": "Error al vincular el dispositivo OBD2 al vehículo."
+    },
+    "dashboard": {
+      "vehicleLabel": "Vehículo Seleccionado",
+      "selectVehicle": "Selecciona un vehículo",
+      "unlinkBtn": "Desvincular",
+      "linkBtn": "Vincular OBD2",
+      "noObd2Linked": "Sin OBD2 vinculado (Desconectado)",
+      "noActiveTelemetry": "Sin telemetría activa",
+      "manageObd2Btn": "Dispositivos OBD2",
+      "noVehicleSelectedTitle": "Ningún vehículo seleccionado",
+      "noVehicleSelectedSubtitle": "Selecciona un vehículo del menú desplegable para inspeccionar su telemetría y códigos de diagnóstico.",
+      "telemetryHistory": "Historial de Telemetría",
+      "recordsUnit": "registros",
+      "noTelemetryRecords": "No se han registrado snapshots de telemetría para este vehículo.",
+      "dtcAlerts": "Códigos de Falla de Motor (DTC)",
+      "alertsUnit": "alertas",
+      "noDtcAlerts": "No se han detectado alertas de motor activas. ¡El vehículo funciona correctamente!",
+      "colTime": "Hora",
+      "colDtcCode": "Código",
+      "colDescription": "Descripción",
+      "colSeverity": "Severidad"
+    },
+    "metrics": {
+      "rpm": "Revoluciones",
+      "temperature": "Temperatura",
+      "speed": "Velocidad",
+      "fuel": "Nivel Combustible"
+    }
+  }
+}
