@@ -1,1 +1,22 @@
-{}
+{
+  "fleet": {
+    "customers": {
+      "title": "Customers",
+      "subtitle": "View and manage the customers registered in your branch",
+      "searchPlaceholder": "Search by name, document or phone...",
+      "addCustomer": "Add Customer",
+      "corporate": "Company",
+      "personal": "Personal",
+      "emptyState": {
+        "title": "No customers in this branch",
+        "subtitle": "Start by associating your first customer."
+      },
+      "card": {
+        "phone": "Phone",
+        "document": "Document",
+        "date": "Registered",
+        "status": "Status"
+      }
+    }
+  }
+}
