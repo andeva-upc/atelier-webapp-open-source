@@ -44,7 +44,7 @@
           </div>
           <div class="stat-box">
             <span class="stat-label">Última Actualización</span>
-            <span class="stat-value text-sm">{{ activeProduct()!.updatedAt | date:'medium' }}</span>
+            <span class="stat-value text-sm">{{ $any(activeProduct()!).updatedAt | date:'medium' }}</span>
           </div>
         </div>
       </div>

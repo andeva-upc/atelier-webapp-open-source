@@ -15,8 +15,8 @@ export class CoreUserInfoComponent implements OnInit {
   activeRole = signal<string>('');
 
   ngOnInit() {
-    const userId = localStorage.getItem('userId');
-    const role = localStorage.getItem('activeRole') || '';
+    const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+    const role = localStorage.getItem('activeRole') || sessionStorage.getItem('activeRole') || '';
     this.activeRole.set(role);
     if (userId) {
       if (role.includes('OWNER')) {

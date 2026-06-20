@@ -1,0 +1,126 @@
+<div class="work-order-form-container">
+  <!-- Cabecera -->
+   <div class="work-order-form-header">
+     <div class="header-left">
+       <a class="btn-back" [routerLink]="['/work-orders']">
+         <i class="pi pi-arrow-left"></i>
+         Back to Orders
+       </a>
+       <h1 class="page-title">{{ isEditMode() ? 'Editar Work Order' : 'Create Work Order' }}</h1>
+     </div>
+   </div>
+
+   <div class="form-card">
+
+     <!-- Selector de Cliente (Customer) -->
+     <div class="form-group">
+       <label class="form-label">Customer</label>
+       <div class="autocomplete-wrapper">
+         <i class="pi pi-user input-icon"></i>
+         <input
+           type="text"
+           placeholder="Customer V"
+           class="form-control autocomplete-input"
+           [disabled]="isEditMode()"
+           [ngModel]="customerInput()"
+           (ngModelChange)="customerInput.set($event)"
+           (focus)="isCustomerDropdownOpen.set(true)"
+           (blur)="onCustomerBlur()"
+         />
+         @if (!isEditMode() && isCustomerDropdownOpen() && filteredCustomers().length > 0) {
+           <div class="autocomplete-dropdown">
+             @for (cust of filteredCustomers(); track cust.id) {
+               <div class="dropdown-item" (mousedown)="selectCustomer(cust)">
+                 {{ cust.name }}
+               </div>
+             }
+           </div>
+         }
+       </div>
+     </div>
+
+     <!-- Fila para Vehículo y Kilometraje -->
+     <div class="form-row">
+       <!-- Selector de Vehículo (Vehicle) -->
+       <div class="form-group flex-1">
+         <label class="form-label">Vehicle</label>
+         <div class="autocomplete-wrapper">
+           <i class="pi pi-car input-icon"></i>
+           <input
+             type="text"
+             placeholder="Vehicle V"
+             class="form-control autocomplete-input"
+             [disabled]="isEditMode()"
+             [ngModel]="vehicleInput()"
+             (ngModelChange)="vehicleInput.set($event)"
+             (focus)="isVehicleDropdownOpen.set(true)"
+             (blur)="onVehicleBlur()"
+           />
+           @if (!isEditMode() && isVehicleDropdownOpen() && filteredVehicles().length > 0) {
+             <div class="autocomplete-dropdown">
+               @for (veh of filteredVehicles(); track veh.id) {
+                 <div class="dropdown-item" (mousedown)="selectVehicle(veh)">
+                   {{ veh.name }}
+                 </div>
+               }
+             </div>
+           }
+         </div>
+       </div>
+
+       <!-- Kilometraje Actual (Current Mileage) -->
+       <div class="form-group flex-1">
+         <label class="form-label">Current Mileage</label>
+         <div class="input-wrapper">
+           <i class="pi pi-compass input-icon-mileage"></i>
+           <input
+             type="number"
+             placeholder="current mileage"
+             class="form-control mileage-input"
+             [ngModel]="currentMileage()"
+             (ngModelChange)="currentMileage.set($event)"
+           />
+         </div>
+       </div>
+     </div>
+
+     <!-- Diagnóstico (Diagnosis) -->
+     <div class="form-group">
+       <label class="form-label">Diagnosis</label>
+       <textarea
+         placeholder="diagnosis"
+         class="form-control textarea-control"
+         rows="4"
+         [ngModel]="diagnosis()"
+         (ngModelChange)="diagnosis.set($event)"
+       ></textarea>
+     </div>
+
+     <!-- Selector de Estado (Status V) - Solo en Modo Edición (Solo Lectura) -->
+     @if (isEditMode()) {
+       <div class="form-group">
+         <label class="form-label">Status</label>
+         <div class="select-wrapper">
+           <button
+             type="button"
+             class="form-control select-trigger"
+             style="cursor: not-allowed; opacity: 0.8;"
+             disabled
+           >
+             <span class="trigger-text">
+               {{ selectedStatus() === 'IN_PROGRESS' ? 'IN PROGRESS' : selectedStatus() }}
+             </span>
+           </button>
+         </div>
+       </div>
+     }
+
+     <!-- Botones de Acción -->
+     <div class="form-actions">
+       <button class="btn btn-primary btn-save" (click)="saveWorkOrder()">
+         {{ isEditMode() ? 'Guardar Cambios' : 'Crear Work Order' }}
+       </button>
+     </div>
+   </div>
+ </div>
+

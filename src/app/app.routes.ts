@@ -7,6 +7,7 @@ const pageNotFound = () => import('./shared/presentation/views/page-not-found/pa
 const iamRoutes = () => import('./iam/presentation/iam.routes').then((m) => m.iamRoutes);
 const inventoryRoutes = () => import('./inventory/inventory.routes').then((m) => m.INVENTORY_ROUTES);
 const billingRoutes = () => import('./billing/billing.routes').then((m) => m.BILLING_ROUTES);
+const workOrdersRoutes = () => import('./operations/presentation/work-orders.routes').then((m) => m.WORK_ORDERS_ROUTES);
 
 /**
  * Defines the application routes. Each route is associated with a component that will be displayed when the route is accessed. The title property is used to set the document title when the route is active.
@@ -31,6 +32,14 @@ export const routes: Routes = [
     canActivate: [iamGuard],
     children: [
       { path: '', loadChildren: billingRoutes }
+    ]
+  },
+  {
+    path: 'work-orders',
+    component: Home,
+    canActivate: [iamGuard],
+    children: [
+      { path: '', loadChildren: workOrdersRoutes }
     ]
   },
   { path: 'role-selection', loadComponent: () => import('./core/presentation/views/role-selection/role-selection').then(m => m.RoleSelectionComponent), canActivate: [iamGuard] },

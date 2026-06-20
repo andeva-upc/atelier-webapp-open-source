@@ -12,4 +12,6 @@ export interface WorkOrderResource {
   mileageIn: number;
   totalAmount: number;
   tasks: WorkOrderTaskResource[];
+  createdAt?: string;
+  formattedNumber?: string;
 }

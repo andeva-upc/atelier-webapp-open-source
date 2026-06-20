@@ -16,7 +16,7 @@ export class LeftSidebar {
   options = signal<{link: string, label: string, icon: string}[]>([]);
 
   ngOnInit() {
-    const activeRole = localStorage.getItem('activeRole') || '';
+    const activeRole = localStorage.getItem('activeRole') || sessionStorage.getItem('activeRole') || '';
     
     if (activeRole.includes('CUSTOMER')) {
       this.options.set([
