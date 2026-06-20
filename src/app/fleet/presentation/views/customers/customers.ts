@@ -159,14 +159,24 @@ export class CustomersViewComponent implements OnInit {
   }
 
   onRegisterCustomer(): void {
+    console.log('[CustomersViewComponent] onRegisterCustomer called');
     const profile = this.searchedCustomer();
     const branch = this.coreStore.currentBranch();
     
-    if (!profile || !branch?.id) {
+    console.log('[CustomersViewComponent] searchedCustomer profile:', profile);
+    console.log('[CustomersViewComponent] current branch:', branch);
+
+    if (!profile) {
+      console.warn('[CustomersViewComponent] Registration aborted: profile is null');
+      return;
+    }
+    if (!branch || !branch.id) {
+      console.warn('[CustomersViewComponent] Registration aborted: branch or branch.id is null/undefined');
       return;
     }
 
     const command = new CreateCustomerRegistrationCommand(profile.id, branch.id.toString());
+    console.log('[CustomersViewComponent] Dispatching CreateCustomerRegistrationCommand:', command);
     
     this.fleetStore.createCustomerRegistration(command);
     this.closeAddModal();
