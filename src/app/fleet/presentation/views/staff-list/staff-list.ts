@@ -77,6 +77,7 @@ export class StaffListComponent implements OnInit {
           employeeId: result.employeeId,
           speciality: result.speciality,
           salary: result.salary,
+          createdBy: localStorage.getItem('userId') || 'system',
           status: result.status
         });
         this.snackBar.open('Empleado registrado exitosamente', 'Cerrar', { duration: 3000 });
@@ -95,7 +96,8 @@ export class StaffListComponent implements OnInit {
         this.store.updateEmployeeRegistration(element.id, {
           speciality: result.speciality,
           salary: result.salary,
-          status: result.status
+          status: result.status,
+          updatedBy: localStorage.getItem('userId') || 'system'
         });
         this.snackBar.open('Empleado actualizado exitosamente', 'Cerrar', { duration: 3000 });
       }

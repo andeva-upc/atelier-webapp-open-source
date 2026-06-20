@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { EmployeeRegistrationResource } from '../../../../infrastructure/responses/employee-registration.response';
+import { EmployeeRegistrationResource } from '../../../infrastructure/responses/employee-registration.response';
 
 export interface StaffFormDialogData {
   branchId: string;
