@@ -1,6 +1,7 @@
-import { Component, OnInit, computed, inject } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { InventoryStore } from '../../../application/inventory.store';
 import { ProductCardComponent } from '../../components/product-card/product-card';
@@ -11,6 +12,7 @@ import { ProductResponse } from '../../../infrastructure/responses/product.respo
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     TranslateModule,
     ProductCardComponent
   ],
@@ -21,8 +23,29 @@ export class InventoryListComponent implements OnInit {
   private store = inject(InventoryStore);
   private router = inject(Router);
 
-  // Expose the signal from the store
-  products = this.store.branchProducts;
+  // Filters state
+  searchQuery = signal<string>('');
+  selectedCategory = signal<string>('');
+
+  // Computed categories from the store
+  categories = computed(() => {
+    const products = this.store.branchProducts();
+    const cats = products.map(p => p.category).filter(c => !!c);
+    return [...new Set(cats)];
+  });
+
+  // Filtered products
+  products = computed(() => {
+    const allProducts = this.store.branchProducts();
+    const query = this.searchQuery().toLowerCase();
+    const category = this.selectedCategory();
+
+    return allProducts.filter(p => {
+      const matchesSearch = p.name.toLowerCase().includes(query) || p.sku.toLowerCase().includes(query);
+      const matchesCategory = category ? p.category === category : true;
+      return matchesSearch && matchesCategory;
+    });
+  });
 
   ngOnInit(): void {
     const branchId = localStorage.getItem('tenantBranchId') || sessionStorage.getItem('tenantBranchId');
