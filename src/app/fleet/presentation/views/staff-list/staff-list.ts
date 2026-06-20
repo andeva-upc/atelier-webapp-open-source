@@ -1,5 +1,6 @@
 import { Component, OnInit, effect, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,6 +22,7 @@ export interface StaffCardData extends EmployeeRegistrationResource {
   standalone: true,
   imports: [
     CommonModule, 
+    TranslateModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -35,6 +37,7 @@ export class StaffListComponent implements OnInit {
   private coreApi = inject(CoreApi);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
+  private translate = inject(TranslateService);
   private currentBranchId: string = '';
   
   private employeeProfiles = signal<Map<string, EmployeeResource>>(new Map());
@@ -97,7 +100,7 @@ export class StaffListComponent implements OnInit {
 
   onAddStaff() {
     if (!this.currentBranchId) {
-      this.snackBar.open('No se encontró la sucursal actual', 'Cerrar', { duration: 3000 });
+      this.snackBar.open(this.translate.instant('fleet.staffList.noBranchId'), this.translate.instant('fleet.staffList.close'), { duration: 3000 });
       return;
     }
 
@@ -116,7 +119,7 @@ export class StaffListComponent implements OnInit {
           createdBy: localStorage.getItem('userId') || 'system',
           status: result.status
         });
-        this.snackBar.open('Empleado registrado exitosamente', 'Cerrar', { duration: 3000 });
+        this.snackBar.open(this.translate.instant('fleet.staffList.successRegister'), this.translate.instant('fleet.staffList.close'), { duration: 3000 });
       }
     });
   }
@@ -135,16 +138,17 @@ export class StaffListComponent implements OnInit {
           status: result.status,
           updatedBy: localStorage.getItem('userId') || 'system'
         });
-        this.snackBar.open('Empleado actualizado exitosamente', 'Cerrar', { duration: 3000 });
+        this.snackBar.open(this.translate.instant('fleet.staffList.successUpdate'), this.translate.instant('fleet.staffList.close'), { duration: 3000 });
       }
     });
   }
 
-  onDeleteStaff(element: EmployeeRegistrationResource) {
-    const confirmed = window.confirm(`¿Estás seguro de que deseas eliminar el registro del empleado con ID: ${element.employeeId}?`);
+  onDeleteStaff(staff: StaffCardData) {
+    const confirmMessage = this.translate.instant('fleet.staffList.confirmDelete', { id: staff.employeeId });
+    const confirmed = window.confirm(confirmMessage);
     if (confirmed) {
-      this.store.deleteEmployeeRegistration(element.id);
-      this.snackBar.open('Registro de empleado eliminado exitosamente', 'Cerrar', { duration: 3000 });
+      this.store.deleteEmployeeRegistration(staff.id);
+      this.snackBar.open(this.translate.instant('fleet.staffList.successDelete'), this.translate.instant('fleet.staffList.close'), { duration: 3000 });
     }
   }
 }

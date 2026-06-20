@@ -21,12 +21,12 @@
         
         <div class="staff-body">
           <h3 class="staff-name">
-            {{ staff.firstName && staff.lastName ? staff.firstName + ' ' + staff.lastName : 'Cargando datos...' }}
+            {{ staff.firstName && staff.lastName ? staff.firstName + ' ' + staff.lastName : ('fleet.staffList.loadingData' | translate) }}
           </h3>
           
           <div class="staff-stats">
             <div class="stat-item">
-              <span class="stat-label">Salario</span>
+              <span class="stat-label">{{ 'fleet.staffList.salary' | translate }}</span>
               <span class="stat-value">{{ staff.salary | currency }}</span>
             </div>
           </div>
@@ -34,7 +34,7 @@
         
         <div class="staff-footer">
           <button class="action-btn edit-btn" (click)="onEditStaff(staff)">
-            <mat-icon>edit</mat-icon> Editar
+            <mat-icon>edit</mat-icon> {{ 'fleet.staffList.edit' | translate }}
           </button>
           <button class="action-btn delete-btn" (click)="onDeleteStaff(staff)">
             <mat-icon>delete</mat-icon>
@@ -47,7 +47,7 @@
   <ng-template #emptyState>
     <div class="empty-state">
       <mat-icon class="empty-icon">group_off</mat-icon>
-      <p>No se encontraron empleados registrados en esta sucursal.</p>
+      <p>{{ 'fleet.staffList.emptyState' | translate }}</p>
     </div>
   </ng-template>
 </div>

@@ -1,46 +1,46 @@
-<h2 mat-dialog-title>{{ isEditMode ? 'Editar Personal' : 'Nuevo Personal' }}</h2>
+<h2 mat-dialog-title>{{ isEditMode ? ('fleet.staffForm.titleEdit' | translate) : ('fleet.staffForm.titleNew' | translate) }}</h2>
 
 <mat-dialog-content>
   <form [formGroup]="form" class="staff-form">
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>ID de Empleado (UUID)</mat-label>
-      <input matInput formControlName="employeeId" placeholder="Ej. 123e4567-e89b-12d3-a456-426614174000" [readonly]="isEditMode">
-      <mat-error *ngIf="form.get('employeeId')?.hasError('required')">El ID de empleado es requerido</mat-error>
+      <mat-label>{{ 'fleet.staffForm.employeeId' | translate }}</mat-label>
+      <input matInput formControlName="employeeId" [placeholder]="'fleet.staffForm.employeeIdPlaceholder' | translate" [readonly]="isEditMode">
+      <mat-error *ngIf="form.get('employeeId')?.hasError('required')">{{ 'fleet.staffForm.employeeIdRequired' | translate }}</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Especialidad</mat-label>
+      <mat-label>{{ 'fleet.staffForm.speciality' | translate }}</mat-label>
       <mat-select formControlName="speciality">
-        <mat-option value="MECHANIC">Mecánico</mat-option>
-        <mat-option value="ELECTRICIAN">Electricista</mat-option>
-        <mat-option value="MANAGER">Gerente</mat-option>
-        <mat-option value="SUPERVISOR">Supervisor</mat-option>
+        <mat-option value="MECHANIC">{{ 'fleet.staffForm.roles.MECHANIC' | translate }}</mat-option>
+        <mat-option value="ELECTRICIAN">{{ 'fleet.staffForm.roles.ELECTRICIAN' | translate }}</mat-option>
+        <mat-option value="MANAGER">{{ 'fleet.staffForm.roles.MANAGER' | translate }}</mat-option>
+        <mat-option value="SUPERVISOR">{{ 'fleet.staffForm.roles.SUPERVISOR' | translate }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="form.get('speciality')?.hasError('required')">La especialidad es requerida</mat-error>
+      <mat-error *ngIf="form.get('speciality')?.hasError('required')">{{ 'fleet.staffForm.specialityRequired' | translate }}</mat-error>
     </mat-form-field>
 
     <div class="row">
       <mat-form-field appearance="outline" class="half-width">
-        <mat-label>Salario</mat-label>
+        <mat-label>{{ 'fleet.staffForm.salary' | translate }}</mat-label>
         <input matInput type="number" formControlName="salary" min="0">
-        <mat-error *ngIf="form.get('salary')?.hasError('required')">El salario es requerido</mat-error>
+        <mat-error *ngIf="form.get('salary')?.hasError('required')">{{ 'fleet.staffForm.salaryRequired' | translate }}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="half-width">
-        <mat-label>Estado</mat-label>
+        <mat-label>{{ 'fleet.staffForm.status' | translate }}</mat-label>
         <mat-select formControlName="status">
-          <mat-option value="ACTIVE">Activo</mat-option>
-          <mat-option value="INACTIVE">Inactivo</mat-option>
+          <mat-option value="ACTIVE">{{ 'fleet.staffForm.statuses.ACTIVE' | translate }}</mat-option>
+          <mat-option value="INACTIVE">{{ 'fleet.staffForm.statuses.INACTIVE' | translate }}</mat-option>
         </mat-select>
-        <mat-error *ngIf="form.get('status')?.hasError('required')">El estado es requerido</mat-error>
+        <mat-error *ngIf="form.get('status')?.hasError('required')">{{ 'fleet.staffForm.statusRequired' | translate }}</mat-error>
       </mat-form-field>
     </div>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button (click)="onCancel()">{{ 'fleet.staffForm.cancel' | translate }}</button>
   <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
-    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+    {{ isEditMode ? ('fleet.staffForm.update' | translate) : ('fleet.staffForm.save' | translate) }}
   </button>
 </mat-dialog-actions>

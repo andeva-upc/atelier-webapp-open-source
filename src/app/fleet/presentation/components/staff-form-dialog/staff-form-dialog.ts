@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
+import { TranslateModule } from '@ngx-translate/core';
 import { EmployeeRegistrationResource } from '../../../infrastructure/responses/employee-registration.response';
 
 export interface StaffFormDialogData {
@@ -23,7 +24,8 @@ export interface StaffFormDialogData {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    TranslateModule
   ],
   templateUrl: './staff-form-dialog.html',
   styleUrls: ['./staff-form-dialog.css']
