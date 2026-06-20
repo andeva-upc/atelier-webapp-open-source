@@ -1,10 +1,72 @@
 <div class="staff-container">
   <div class="header">
-    <h1>Personal</h1>
-    <p>Gestiona el personal y técnicos de la sucursal.</p>
+    <div class="title-section">
+      <h1>Personal</h1>
+      <p>Gestiona el personal y técnicos de la sucursal.</p>
+    </div>
+    <button mat-flat-button color="primary" (click)="onAddStaff()">
+      <mat-icon>add</mat-icon>
+      Nuevo Empleado
+    </button>
   </div>
   
   <mat-card class="content-card">
-    <p>La lista de empleados se mostrará aquí.</p>
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Employee ID Column -->
+        <ng-container matColumnDef="employeeId">
+          <th mat-header-cell *matHeaderCellDef> ID de Empleado </th>
+          <td mat-cell *matCellDef="let element"> {{element.employeeId}} </td>
+        </ng-container>
+
+        <!-- Speciality Column -->
+        <ng-container matColumnDef="specialityName">
+          <th mat-header-cell *matHeaderCellDef> Especialidad </th>
+          <td mat-cell *matCellDef="let element"> {{element.specialityName}} </td>
+        </ng-container>
+
+        <!-- Salary Column -->
+        <ng-container matColumnDef="salary">
+          <th mat-header-cell *matHeaderCellDef> Salario </th>
+          <td mat-cell *matCellDef="let element"> {{element.salary | currency}} </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let element"> 
+            <span class="status-badge" [class]="element.status.toLowerCase()">
+              {{element.status}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions-col"> Acciones </th>
+          <td mat-cell *matCellDef="let element" class="actions-col">
+            <button mat-icon-button color="primary" (click)="onEditStaff(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDeleteStaff(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell empty-cell" colspan="5">No se encontraron empleados registrados.</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                     showFirstLastButtons
+                     aria-label="Seleccionar página de personal">
+      </mat-paginator>
+    </div>
   </mat-card>
 </div>

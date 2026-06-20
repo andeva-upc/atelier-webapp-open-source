@@ -4,6 +4,9 @@
 
 .header {
   margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header h1 {
@@ -20,5 +23,44 @@
 
 .content-card {
   border-radius: 9px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.actions-col {
+  width: 120px;
+  text-align: right;
+}
+
+.empty-cell {
+  text-align: center;
   padding: 24px;
+  color: var(--mat-sys-on-surface-variant, #666);
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge.active {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+}
+
+.status-badge.inactive {
+  background: rgba(244, 67, 54, 0.1);
+  color: #F44336;
 }
