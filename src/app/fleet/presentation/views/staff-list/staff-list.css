@@ -10,15 +10,16 @@
 }
 
 .header h1 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--mat-sys-on-surface);
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary, #111827);
 }
 
 .header p {
-  margin: 8px 0 0;
-  color: var(--mat-sys-on-surface-variant, #666);
+  margin: 0;
+  font-size: 1rem;
+  color: #6b7280;
 }
 
 .cards-grid {
