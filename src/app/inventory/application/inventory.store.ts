@@ -83,16 +83,18 @@ export class InventoryStore {
   // BATCHES
   // ==========================================
 
-  addBatchToProduct(productId: string, command: AddBatchToProductCommand) {
-    this.api.products.addBatch(productId, command).subscribe({
-      next: (product) => {
-        const currentProducts = this.branchProductsSignal().map(p => p.id === product.id ? product : p);
-        this.branchProductsSignal.set(currentProducts);
-        if (this.activeProductSignal()?.id === productId) {
-            this.activeProductSignal.set(product);
-        }
-      },
-      error: (err) => console.error('Failed to add batch to product:', err)
-    });
+  addBatchToProduct(productId: string, command: AddBatchToProductCommand): Observable<ProductResponse> {
+    return this.api.products.addBatch(productId, command).pipe(
+      tap({
+        next: (product) => {
+          const currentProducts = this.branchProductsSignal().map(p => p.id === product.id ? product : p);
+          this.branchProductsSignal.set(currentProducts);
+          if (this.activeProductSignal()?.id === productId) {
+              this.activeProductSignal.set(product);
+          }
+        },
+        error: (err) => console.error('Failed to add batch to product:', err)
+      })
+    );
   }
 }
