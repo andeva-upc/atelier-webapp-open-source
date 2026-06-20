@@ -103,6 +103,10 @@ export class StaffListComponent implements OnInit {
   }
 
   onDeleteStaff(element: EmployeeRegistrationResource) {
-    // To be implemented in next commit
+    const confirmed = window.confirm(`¿Estás seguro de que deseas eliminar el registro del empleado con ID: ${element.employeeId}?`);
+    if (confirmed) {
+      this.store.deleteEmployeeRegistration(element.id);
+      this.snackBar.open('Registro de empleado eliminado exitosamente', 'Cerrar', { duration: 3000 });
+    }
   }
 }
