@@ -131,5 +131,27 @@ export class TelemetryDashboardComponent implements OnInit {
     this.isObd2DialogOpen = false;
   }
 
-
+  isCreatingTestVehicle = false;
+  createTestVehicle(): void {
+    if (this.isCreatingTestVehicle) return;
+    this.isCreatingTestVehicle = true;
+    this.store.createTestVehicleForBranch(this.branchId).subscribe({
+      next: (res) => {
+        this.isCreatingTestVehicle = false;
+        // In the backend response, it could be a VehicleRegistration or the vehicle object.
+        // Let's get vehicles from the store to find the newly registered one
+        setTimeout(() => {
+          const list = this.isCustomer ? this.store.vehicles() : this.store.branchVehicles();
+          if (list.length > 0) {
+            this.selectedVehicleId.set(list[list.length - 1].id);
+          }
+        }, 1000);
+      },
+      error: (err) => {
+        this.isCreatingTestVehicle = false;
+        console.error('Failed to create test vehicle:', err);
+        alert('Error al registrar vehículo de prueba.');
+      }
+    });
+  }
 }

@@ -1,7 +1,9 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { IotApi } from '../infrastructure/iot-api';
-import { forkJoin, Observable, tap } from 'rxjs';
+import { forkJoin, Observable, tap, catchError, switchMap, map, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { CustomerRegistrationsApiEndpoint } from '../../fleet/infrastructure/endpoints/customer-registrations.endpoint';
 
 // Commands
@@ -66,7 +68,8 @@ export class IotStore {
   constructor(
     private api: IotApi,
     private router: Router,
-    private customerRegsApi: CustomerRegistrationsApiEndpoint
+    private customerRegsApi: CustomerRegistrationsApiEndpoint,
+    private http: HttpClient
   ) {}
 
   // ==========================================
@@ -315,6 +318,82 @@ export class IotStore {
       next: (alerts) => this.dtcAlertsSignal.set(alerts),
       error: (err) => console.error('Failed to load vehicle DTC alerts history:', err)
     });
+  }
+
+  createTestVehicleForBranch(branchId: string): Observable<any> {
+    const userId = localStorage.getItem('userId') || '';
+    
+    // Generate a random 8-digit document number and a random 9-digit phone number
+    const randomDoc = Math.floor(10000000 + Math.random() * 90000000).toString();
+    const randomPhone = '9' + Math.floor(10000000 + Math.random() * 89999999).toString();
+    
+    // 1. Create customer profile (ignore 409 Conflict if already exists)
+    const customerPayload = {
+      userId: userId,
+      isCorporate: false,
+      firstName: 'Cliente',
+      lastName: 'Taller',
+      businessName: '',
+      documentType: 'DNI',
+      documentNumber: randomDoc,
+      phone: randomPhone
+    };
+    
+    console.log('[IotStore] Creating customer profile:', customerPayload);
+    
+    return this.http.post<any>(`${environment.apiBaseUrl}${environment.endpoints.core.customers}`, customerPayload).pipe(
+      catchError(err => {
+        console.warn('[IotStore] Customer creation error:', err);
+        // If 409, it already exists, so we proceed by fetching the customer by userId
+        if (err.status === 409 || (err.error && err.error.message && err.error.message.includes('already exists'))) {
+          return this.http.get<any>(`${environment.apiBaseUrl}${environment.endpoints.core.customers}/user/${userId}`);
+        }
+        throw err;
+      }),
+      switchMap((customer: any) => {
+        const customerId = customer.id;
+        console.log('[IotStore] Customer resolved:', customerId);
+        // Save customerId in localStorage for convenience
+        localStorage.setItem('customerId', customerId);
+        
+        // 2. Register customer in branch
+        const regPayload = {
+          customerId: customerId,
+          branchId: branchId
+        };
+        console.log('[IotStore] Registering customer in branch:', regPayload);
+        return this.http.post(`${environment.apiBaseUrl}${environment.endpoints.fleet.customerRegistrations}`, regPayload).pipe(
+          catchError(err => {
+            console.warn('[IotStore] Customer branch registration error:', err);
+            if (err.status === 409) return of(null); // Already registered
+            throw err;
+          }),
+          map(() => customerId)
+        );
+      }),
+      switchMap((customerId: string) => {
+        // 3. Register vehicle for this user
+        const vehiclePayload = {
+          brand: 'Toyota',
+          model: 'Corolla',
+          plateNumber: 'ABC-' + Math.floor(100 + Math.random() * 900),
+          vin: '1HGBH41JXMN' + Math.random().toString().substring(2, 9),
+          year: 2020
+        };
+        console.log('[IotStore] Registering vehicle:', vehiclePayload);
+        return this.http.post<any>(`${environment.apiBaseUrl}${environment.endpoints.iot.vehicles}`, vehiclePayload).pipe(
+          tap({
+            next: (res) => {
+              console.log('[IotStore] Vehicle registered successfully:', res);
+              // Reload list states
+              this.loadAvailableVehicles(branchId);
+              this.loadBranchVehicles(branchId);
+            },
+            error: (err) => console.error('[IotStore] Vehicle registration failed:', err)
+          })
+        );
+      })
+    );
   }
 
   // ==========================================

@@ -76,6 +76,13 @@
       <i class="pi pi-search empty-icon"></i>
       <h2>{{ 'iot.dashboard.noVehicleSelectedTitle' | translate }}</h2>
       <p>{{ 'iot.dashboard.noVehicleSelectedSubtitle' | translate }}</p>
+      
+      @if ((isCustomer ? store.vehicles().length : store.branchVehicles().length) === 0) {
+        <button type="button" (click)="createTestVehicle()" [disabled]="isCreatingTestVehicle" class="btn-primary-gradient" style="margin-top: 1.5rem;">
+          <i class="pi" [ngClass]="isCreatingTestVehicle ? 'pi-spin pi-spinner' : 'pi-plus-circle'"></i>
+          {{ isCreatingTestVehicle ? ' Creando vehículo...' : ' Crear Vehículo de Prueba' }}
+        </button>
+      }
     </div>
   } @else {
     @if (!isCustomer && !activeCoupling()) {

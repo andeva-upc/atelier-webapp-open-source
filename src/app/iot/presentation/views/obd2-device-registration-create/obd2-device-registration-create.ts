@@ -85,4 +85,27 @@ export class Obd2DeviceRegistrationCreateComponent implements OnInit {
   goBack(): void {
     this.router.navigate(['/telemetry']);
   }
+
+  isCreatingTestVehicle = false;
+  createTestVehicle(): void {
+    if (this.isCreatingTestVehicle) return;
+    this.isCreatingTestVehicle = true;
+    this.errorMessage = null;
+    this.store.createTestVehicleForBranch(this.branchId).subscribe({
+      next: (res) => {
+        this.isCreatingTestVehicle = false;
+        setTimeout(() => {
+          const list = this.store.availableVehicles();
+          if (list.length > 0) {
+            this.linkForm.patchValue({ vehicleId: list[list.length - 1].id });
+          }
+        }, 1000);
+      },
+      error: (err) => {
+        this.isCreatingTestVehicle = false;
+        console.error('Failed to create test vehicle:', err);
+        this.errorMessage = 'Error al registrar vehículo de prueba.';
+      }
+    });
+  }
 }

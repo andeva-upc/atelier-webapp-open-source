@@ -30,9 +30,15 @@
           }
         </select>
         @if (store.availableVehicles().length === 0) {
-          <small class="hint-text info">
-            <i class="pi pi-info-circle"></i> {{ 'iot.linkDialog.noAvailableVehicles' | translate }}
-          </small>
+          <div class="test-vehicle-helper" style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+            <small class="hint-text info">
+              <i class="pi pi-info-circle"></i> {{ 'iot.linkDialog.noAvailableVehicles' | translate }}
+            </small>
+            <button type="button" (click)="createTestVehicle()" [disabled]="isCreatingTestVehicle" class="btn-primary-gradient" style="align-self: flex-start; padding: 0.5rem 1rem; font-size: 0.85rem;">
+              <i class="pi" [ngClass]="isCreatingTestVehicle ? 'pi-spin pi-spinner' : 'pi-plus-circle'"></i>
+              {{ isCreatingTestVehicle ? ' Creando vehículo...' : ' Crear Vehículo de Prueba' }}
+            </button>
+          </div>
         }
       </div>
 
