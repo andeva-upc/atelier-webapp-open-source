@@ -1,4 +1,9 @@
-<div class="product-card" (click)="onCardClick()">
+<div class="product-card" (click)="onCardClick()" [class.has-low-stock]="product.currentStock <= product.minimumStock">
+  <div class="low-stock-alert" *ngIf="product.currentStock <= product.minimumStock">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span>{{ 'inventory.productCard.lowStock' | translate }}</span>
+  </div>
+
   <div class="product-header">
     <span class="product-category">{{ product.category }}</span>
     <span class="product-sku">{{ product.sku }}</span>

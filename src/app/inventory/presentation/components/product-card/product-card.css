@@ -19,6 +19,33 @@
   border-color: var(--primary-color, #4f46e5);
 }
 
+.product-card.has-low-stock {
+  border-color: #fca5a5;
+}
+
+.product-card.has-low-stock:hover {
+  border-color: #ef4444;
+}
+
+.low-stock-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #fef2f2;
+  color: #ef4444;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid #fecaca;
+}
+
+.low-stock-alert i {
+  font-size: 0.875rem;
+}
+
 .product-header {
   display: flex;
   justify-content: space-between;
