@@ -1,4 +1,84 @@
-<div class="customers-container">
-  <h1>{{ 'fleet.customers.title' | translate }}</h1>
-  <p>{{ 'fleet.customers.subtitle' | translate }}</p>
+<div class="customers-view-container">
+  <div class="customers-header">
+    <div class="header-titles">
+      <h1>{{ 'fleet.customers.title' | translate }}</h1>
+      <p>{{ 'fleet.customers.subtitle' | translate }}</p>
+    </div>
+    
+    <div class="header-actions">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input 
+          type="text" 
+          [ngModel]="searchQuery()" 
+          (ngModelChange)="searchQuery.set($event)" 
+          [placeholder]="'fleet.customers.searchPlaceholder' | translate"
+        >
+      </div>
+      
+      <button class="add-customer-btn">
+        <i class="fas fa-user-plus"></i>
+        {{ 'fleet.customers.addCustomer' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="isLoading(); else contentLoaded">
+    <div class="loading-state">
+      <i class="fas fa-spinner fa-spin"></i>
+      <span>{{ 'fleet.customers.loading' | translate }}</span>
+    </div>
+  </ng-container>
+
+  <ng-template #contentLoaded>
+    <div class="customers-grid" *ngIf="filteredCustomers() && filteredCustomers().length > 0; else emptyState">
+      @for (customer of filteredCustomers(); track customer.registrationId) {
+        <div class="customer-card">
+          <div class="card-header">
+            <span class="customer-badge" [class.corporate-badge]="customer.isCorporate">
+              <i class="fas" [class.fa-building]="customer.isCorporate" [class.fa-user]="!customer.isCorporate"></i>
+              {{ (customer.isCorporate ? 'fleet.customers.corporate' : 'fleet.customers.personal') | translate }}
+            </span>
+          </div>
+
+          <div class="card-body">
+            <h3 class="customer-name">
+              {{ customer.isCorporate ? customer.businessName : (customer.firstName + ' ' + customer.lastName) }}
+            </h3>
+            
+            <div class="customer-info-item">
+              <span class="info-label">{{ 'fleet.customers.card.document' | translate }}:</span>
+              <span class="info-value">{{ customer.documentType }} {{ customer.documentNumber }}</span>
+            </div>
+            
+            <div class="customer-info-item">
+              <span class="info-label">{{ 'fleet.customers.card.phone' | translate }}:</span>
+              <span class="info-value">{{ customer.phone }}</span>
+            </div>
+
+            <div class="customer-info-item">
+              <span class="info-label">{{ 'fleet.customers.card.date' | translate }}:</span>
+              <span class="info-value">{{ customer.createdAt | date:'mediumDate' }}</span>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="btn-card-action">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </ng-template>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fas fa-users-slash"></i>
+      </div>
+      <h2>{{ 'fleet.customers.emptyState.title' | translate }}</h2>
+      <p>{{ 'fleet.customers.emptyState.subtitle' | translate }}</p>
+    </div>
+  </ng-template>
 </div>
