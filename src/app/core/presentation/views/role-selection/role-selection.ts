@@ -48,6 +48,7 @@ export class RoleSelectionComponent implements OnInit {
   selectRole(role: string) {
     // Guardar el rol seleccionado (podemos almacenarlo en localStorage temporalmente o en un LayoutStore futuro)
     localStorage.setItem('activeRole', role);
+    sessionStorage.setItem('activeRole', role);
     
     // Redirigir al dashboard general (Sidebar se encargará de mostrar items según el rol)
     this.router.navigate(['/home']).then(success => {

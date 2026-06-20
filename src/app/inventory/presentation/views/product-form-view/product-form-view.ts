@@ -41,7 +41,7 @@ export class ProductFormViewComponent implements OnInit {
         error: (err) => console.error('Failed to update product:', err)
       });
     } else {
-      const branchId = localStorage.getItem('tenantBranchId');
+      const branchId = localStorage.getItem('tenantBranchId') || sessionStorage.getItem('tenantBranchId');
       if (!branchId) {
         console.error('No branch selected!');
         return;
