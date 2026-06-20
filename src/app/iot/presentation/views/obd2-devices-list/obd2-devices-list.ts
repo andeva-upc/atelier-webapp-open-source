@@ -69,6 +69,22 @@ export class Obd2DevicesListComponent implements OnInit {
     }
   }
 
+  deleteDevice(id: string): void {
+    if (confirm('¿Estás seguro de que deseas dar de baja este dispositivo OBD2?')) {
+      this.store.deleteObd2Device(id).subscribe({
+        next: () => {
+          if (this.branchId) {
+            this.store.loadObd2Devices(this.branchId);
+          }
+        },
+        error: (err) => {
+          console.error('Failed to delete OBD2 device:', err);
+          alert('Error al dar de baja el dispositivo.');
+        }
+      });
+    }
+  }
+
   goBack(): void {
     this.router.navigate(['/telemetry']);
   }

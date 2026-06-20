@@ -60,17 +60,24 @@
                   }
                 </td>
                 <td class="actions-cell">
-                  @if (device.status === 'AVAILABLE') {
-                    <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ obd2DeviceId: device.id }" class="btn-action-link">
-                      <i class="pi pi-link"></i> Vincular
+                  <div class="actions-wrapper">
+                    @if (device.status === 'AVAILABLE') {
+                      <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ obd2DeviceId: device.id }" class="btn-action-link" title="Vincular">
+                        <i class="pi pi-link"></i> Vincular
+                      </a>
+                    } @else if (device.status === 'LINKED' && device.activeRegId) {
+                      <button type="button" (click)="unlinkDevice(device.activeRegId)" class="btn-action-unlink" title="Desvincular">
+                        <i class="pi pi-link-slash"></i> Desvincular
+                      </button>
+                    }
+
+                    <a [routerLink]="['/telemetry/odb2_devices', device.id, 'edit']" class="btn-action-edit" title="Editar MAC">
+                      <i class="pi pi-pencil"></i>
                     </a>
-                  } @else if (device.status === 'LINKED' && device.activeRegId) {
-                    <button type="button" (click)="unlinkDevice(device.activeRegId)" class="btn-action-unlink">
-                      <i class="pi pi-link-slash"></i> Desvincular
+                    <button type="button" (click)="deleteDevice(device.id)" class="btn-action-delete" title="Dar de baja">
+                      <i class="pi pi-trash"></i>
                     </button>
-                  } @else {
-                    <span class="muted-text">-</span>
-                  }
+                  </div>
                 </td>
               </tr>
             }
