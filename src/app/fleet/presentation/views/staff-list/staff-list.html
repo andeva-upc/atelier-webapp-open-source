@@ -1,12 +1,12 @@
 <div class="staff-container">
   <div class="header">
     <div class="title-section">
-      <h1>Personal</h1>
-      <p>Gestiona el personal y técnicos de la sucursal.</p>
+      <h1>{{ 'fleet.staffList.title' | translate }}</h1>
+      <p>{{ 'fleet.staffList.subtitle' | translate }}</p>
     </div>
     <button mat-flat-button color="primary" (click)="onAddStaff()">
       <mat-icon>add</mat-icon>
-      Nuevo Empleado
+      {{ 'fleet.staffList.addEmployee' | translate }}
     </button>
   </div>
   

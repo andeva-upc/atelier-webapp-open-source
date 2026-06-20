@@ -1,40 +1,45 @@
 {
-  "staffList": {
-    "loadingData": "Cargando datos...",
-    "salary": "Salario",
-    "edit": "Editar",
-    "emptyState": "No se encontraron empleados registrados en esta sucursal.",
-    "noBranchId": "No se encontró la sucursal actual",
-    "successRegister": "Empleado registrado exitosamente",
-    "successUpdate": "Empleado actualizado exitosamente",
-    "confirmDelete": "¿Estás seguro de que deseas eliminar el registro del empleado con ID: {{id}}?",
-    "successDelete": "Registro de empleado eliminado exitosamente",
-    "close": "Cerrar"
-  },
-  "staffForm": {
-    "titleEdit": "Editar Personal",
-    "titleNew": "Nuevo Personal",
-    "employeeId": "ID de Empleado (UUID)",
-    "employeeIdPlaceholder": "Ej. 123e4567-e89b-12d3-a456-426614174000",
-    "employeeIdRequired": "El ID de empleado es requerido",
-    "speciality": "Especialidad",
-    "specialityRequired": "La especialidad es requerida",
-    "roles": {
-      "MECHANIC": "Mecánico",
-      "ELECTRICIAN": "Electricista",
-      "MANAGER": "Gerente",
-      "SUPERVISOR": "Supervisor"
+  "fleet": {
+    "staffList": {
+      "title": "Personal",
+      "subtitle": "Gestiona el personal y técnicos de la sucursal.",
+      "addEmployee": "Nuevo Empleado",
+      "loadingData": "Cargando datos...",
+      "salary": "Salario",
+      "edit": "Editar",
+      "emptyState": "No se encontraron empleados registrados en esta sucursal.",
+      "noBranchId": "No se encontró la sucursal actual",
+      "successRegister": "Empleado registrado exitosamente",
+      "successUpdate": "Empleado actualizado exitosamente",
+      "confirmDelete": "¿Estás seguro de que deseas eliminar el registro del empleado con ID: {{id}}?",
+      "successDelete": "Registro de empleado eliminado exitosamente",
+      "close": "Cerrar"
     },
-    "salary": "Salario",
-    "salaryRequired": "El salario es requerido",
-    "status": "Estado",
-    "statusRequired": "El estado es requerido",
-    "statuses": {
-      "ACTIVE": "Activo",
-      "INACTIVE": "Inactivo"
-    },
-    "cancel": "Cancelar",
-    "update": "Actualizar",
-    "save": "Guardar"
+    "staffForm": {
+      "titleEdit": "Editar Personal",
+      "titleNew": "Nuevo Personal",
+      "employeeId": "ID de Empleado (UUID)",
+      "employeeIdPlaceholder": "Ej. 123e4567-e89b-12d3-a456-426614174000",
+      "employeeIdRequired": "El ID de empleado es requerido",
+      "speciality": "Especialidad",
+      "specialityRequired": "La especialidad es requerida",
+      "roles": {
+        "MECHANIC": "Mecánico",
+        "ELECTRICIAN": "Electricista",
+        "MANAGER": "Gerente",
+        "SUPERVISOR": "Supervisor"
+      },
+      "salary": "Salario",
+      "salaryRequired": "El salario es requerido",
+      "status": "Estado",
+      "statusRequired": "El estado es requerido",
+      "statuses": {
+        "ACTIVE": "Activo",
+        "INACTIVE": "Inactivo"
+      },
+      "cancel": "Cancelar",
+      "update": "Actualizar",
+      "save": "Guardar"
+    }
   }
 }
