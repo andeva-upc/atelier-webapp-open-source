@@ -39,10 +39,6 @@ export class StaffListComponent implements OnInit {
   
   private employeeProfiles = signal<Map<string, EmployeeResource>>(new Map());
 
-  // Pagination state
-  currentPage = signal<number>(0);
-  pageSize = signal<number>(10);
-
   staffCards = computed(() => {
     const registrations = this.store.employeeRegistrations();
     const profiles = this.employeeProfiles();
@@ -55,16 +51,6 @@ export class StaffListComponent implements OnInit {
         lastName: profile?.lastName
       } as StaffCardData;
     });
-  });
-
-  paginatedCards = computed(() => {
-    const all = this.staffCards();
-    const start = this.currentPage() * this.pageSize();
-    return all.slice(start, start + this.pageSize());
-  });
-
-  totalPages = computed(() => {
-    return Math.ceil(this.staffCards().length / this.pageSize()) || 1;
   });
 
   constructor() {
@@ -107,25 +93,6 @@ export class StaffListComponent implements OnInit {
     } else {
       console.warn('No branchId found to load staff.');
     }
-  }
-
-  // Custom Pagination logic
-  nextPage() {
-    if (this.currentPage() < this.totalPages() - 1) {
-      this.currentPage.update(p => p + 1);
-    }
-  }
-
-  prevPage() {
-    if (this.currentPage() > 0) {
-      this.currentPage.update(p => p - 1);
-    }
-  }
-
-  onPageSizeChange(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    this.pageSize.set(Number(target.value));
-    this.currentPage.set(0);
   }
 
   onAddStaff() {

@@ -10,41 +10,38 @@
     </button>
   </div>
   
-  <div class="cards-grid" *ngIf="paginatedCards().length > 0; else emptyState">
-    @for (staff of paginatedCards(); track staff.id) {
-      <mat-card class="staff-card">
-        <mat-card-header>
-          <div mat-card-avatar class="staff-avatar">
-            <mat-icon>person</mat-icon>
-          </div>
-          <mat-card-title>
+  <div class="cards-grid" *ngIf="staffCards().length > 0; else emptyState">
+    @for (staff of staffCards(); track staff.id) {
+      <div class="staff-card" [class.inactive-staff]="staff.status === 'INACTIVE'">
+        
+        <div class="staff-header">
+          <span class="staff-speciality">{{ staff.specialityName }}</span>
+          <span class="staff-status" [class]="staff.status.toLowerCase()">{{ staff.status }}</span>
+        </div>
+        
+        <div class="staff-body">
+          <h3 class="staff-name">
             {{ staff.firstName && staff.lastName ? staff.firstName + ' ' + staff.lastName : 'Cargando datos...' }}
-          </mat-card-title>
-          <mat-card-subtitle>{{ staff.specialityName }}</mat-card-subtitle>
-        </mat-card-header>
-        
-        <mat-card-content class="card-content">
-          <div class="info-row">
-            <span class="label">Salario:</span>
-            <span class="value">{{ staff.salary | currency }}</span>
+          </h3>
+          <p class="staff-id">{{ staff.employeeId }}</p>
+          
+          <div class="staff-stats">
+            <div class="stat-item">
+              <span class="stat-label">Salario</span>
+              <span class="stat-value">{{ staff.salary | currency }}</span>
+            </div>
           </div>
-          <div class="info-row">
-            <span class="label">Estado:</span>
-            <span class="status-badge" [class]="staff.status.toLowerCase()">
-              {{ staff.status }}
-            </span>
-          </div>
-        </mat-card-content>
+        </div>
         
-        <mat-card-actions align="end">
-          <button mat-icon-button color="primary" (click)="onEditStaff(staff)">
-            <mat-icon>edit</mat-icon>
+        <div class="staff-footer">
+          <button class="action-btn edit-btn" (click)="onEditStaff(staff)">
+            <mat-icon>edit</mat-icon> Editar
           </button>
-          <button mat-icon-button color="warn" (click)="onDeleteStaff(staff)">
+          <button class="action-btn delete-btn" (click)="onDeleteStaff(staff)">
             <mat-icon>delete</mat-icon>
           </button>
-        </mat-card-actions>
-      </mat-card>
+        </div>
+      </div>
     }
   </div>
 
@@ -54,25 +51,4 @@
       <p>No se encontraron empleados registrados en esta sucursal.</p>
     </div>
   </ng-template>
-
-  <!-- Custom Paginator -->
-  <div class="custom-paginator" *ngIf="staffCards().length > 0">
-    <div class="page-size-selector">
-      <span>Elementos por página:</span>
-      <select (change)="onPageSizeChange($event)">
-        <option value="5">5</option>
-        <option value="10" selected>10</option>
-        <option value="20">20</option>
-      </select>
-    </div>
-    <div class="page-controls">
-      <span>Página {{ currentPage() + 1 }} de {{ totalPages() }}</span>
-      <button mat-icon-button (click)="prevPage()" [disabled]="currentPage() === 0">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      <button mat-icon-button (click)="nextPage()" [disabled]="currentPage() >= totalPages() - 1">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-    </div>
-  </div>
 </div>
