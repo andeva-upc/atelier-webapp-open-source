@@ -30,7 +30,7 @@ export class Obd2DeviceCreateComponent implements OnInit {
     this.obd2Form = this.fb.group({
       macAddress: ['', [
         Validators.required,
-        Validators.pattern(/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/)
+        Validators.pattern(/^([0-9A-Fa-f]{2}\s*[:-]\s*){5}([0-9A-Fa-f]{2})$/)
       ]]
     });
   }
@@ -45,7 +45,7 @@ export class Obd2DeviceCreateComponent implements OnInit {
       return;
     }
 
-    const mac = this.obd2Form.value.macAddress.trim().toUpperCase();
+    const mac = this.obd2Form.value.macAddress.replace(/\s+/g, '').toUpperCase();
     this.errorMessage = null;
 
     if (!this.branchId) {
