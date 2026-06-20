@@ -1,0 +1,24 @@
+.staff-container {
+  padding: 24px;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+}
+
+.header p {
+  margin: 8px 0 0;
+  color: var(--mat-sys-on-surface-variant, #666);
+}
+
+.content-card {
+  border-radius: 9px;
+  padding: 24px;
+}
