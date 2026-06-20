@@ -39,9 +39,9 @@
                 <span class="static-dot"></span>
                 <span class="status-text">{{ 'iot.dashboard.noObd2Linked' | translate }}</span>
               </div>
-              <button type="button" (click)="openLinkDialog()" class="btn-link">
+              <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ vehicleId: selectedVehicleId() }" class="btn-link">
                 <i class="pi pi-link"></i> {{ 'iot.dashboard.linkBtn' | translate }}
-              </button>
+              </a>
             }
           } @else {
             <!-- Customer Mode Status -->
@@ -78,8 +78,20 @@
       <p>{{ 'iot.dashboard.noVehicleSelectedSubtitle' | translate }}</p>
     </div>
   } @else {
-    <!-- Stat Cards Grid -->
-    <section class="metrics-grid">
+    @if (!isCustomer && !activeCoupling()) {
+      <div class="no-obd-connected-panel">
+        <div class="empty-state-card">
+          <i class="pi pi-link-slash empty-icon"></i>
+          <h2>No tiene OBD2 conectado</h2>
+          <p>Para visualizar las métricas y reportes en tiempo real, vincula un dispositivo OBD2 a este vehículo.</p>
+          <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ vehicleId: selectedVehicleId() }" class="btn-primary-gradient">
+            <i class="pi pi-link"></i> Vincular
+          </a>
+        </div>
+      </div>
+    } @else {
+      <!-- Stat Cards Grid -->
+      <section class="metrics-grid">
       <!-- RPM Card -->
       <div class="metric-card rpm-card">
         <div class="card-header">
@@ -243,6 +255,7 @@
         }
       </section>
     </div>
+    }
   }
 </div>
 
@@ -252,9 +265,3 @@
   [branchId]="branchId"
   (close)="closeObd2Dialog()"
 ></app-obd2-dialog>
-
-<app-link-dialog
-  [isOpen]="isLinkDialogOpen"
-  [branchId]="branchId"
-  (close)="closeLinkDialog()"
-></app-link-dialog>

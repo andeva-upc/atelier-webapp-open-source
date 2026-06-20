@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { IotStore } from '../../../application/iot.store';
 import { Obd2DialogComponent } from '../../components/obd2-dialog/obd2-dialog';
-import { LinkDialogComponent } from '../../components/link-dialog/link-dialog';
+
 import { VehicleResource } from '../../../infrastructure/responses/vehicle.response';
 import { Obd2DeviceRegistrationResource } from '../../../infrastructure/responses/obd2-registration.response';
 
@@ -18,7 +18,6 @@ import { RouterLink } from '@angular/router';
     FormsModule,
     TranslateModule,
     Obd2DialogComponent,
-    LinkDialogComponent,
     RouterLink
   ],
   templateUrl: './telemetry-dashboard.html',
@@ -34,7 +33,6 @@ export class TelemetryDashboardComponent implements OnInit {
   // UI state
   selectedVehicleId = signal<string>('');
   isObd2DialogOpen = false;
-  isLinkDialogOpen = false;
 
   // Selected vehicle details
   selectedVehicle = computed<VehicleResource | null>(() => {
@@ -133,11 +131,5 @@ export class TelemetryDashboardComponent implements OnInit {
     this.isObd2DialogOpen = false;
   }
 
-  openLinkDialog(): void {
-    this.isLinkDialogOpen = true;
-  }
 
-  closeLinkDialog(): void {
-    this.isLinkDialogOpen = false;
-  }
 }
