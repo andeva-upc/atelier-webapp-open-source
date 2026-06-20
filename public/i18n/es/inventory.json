@@ -2,6 +2,8 @@
   "inventory": {
     "title": "Inventario",
     "subtitle": "Gestiona los productos y repuestos de tu sucursal",
+    "searchPlaceholder": "Buscar por nombre o SKU...",
+    "allCategories": "Todas las Categorías",
     "addProduct": "Agregar Producto",
     "addBatch": "Agregar lote",
     "emptyState": {
@@ -11,6 +13,7 @@
     "productCard": {
       "price": "Precio",
       "currentStock": "Stock Actual",
+      "lowStock": "¡Stock Bajo!",
       "noDescription": "Sin descripción"
     },
     "productForm": {

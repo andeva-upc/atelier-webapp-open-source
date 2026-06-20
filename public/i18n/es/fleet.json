@@ -1,1 +1,23 @@
-{}
+{
+  "fleet": {
+    "customers": {
+      "title": "Clientes",
+      "subtitle": "Visualiza y gestiona los clientes registrados en tu sucursal",
+      "searchPlaceholder": "Buscar por nombre, documento o teléfono...",
+      "addCustomer": "Agregar Cliente",
+      "corporate": "Empresa",
+      "personal": "Personal",
+      "loading": "Cargando clientes...",
+      "emptyState": {
+        "title": "No hay clientes en esta sucursal",
+        "subtitle": "Comienza asociando tu primer cliente."
+      },
+      "card": {
+        "phone": "Teléfono",
+        "document": "Documento",
+        "date": "Registrado",
+        "status": "Estado"
+      }
+    }
+  }
+}

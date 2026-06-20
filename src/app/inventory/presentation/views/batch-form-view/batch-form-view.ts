@@ -35,8 +35,11 @@ export class BatchFormViewComponent implements OnInit {
         acquisitionCost: formData.acquisitionCost
       };
       
-      this.store.addBatchToProduct(this.productId, command);
-      this.router.navigate(['/inventory/products', this.productId, 'batches']);
+      this.store.addBatchToProduct(this.productId, command).subscribe({
+        next: () => {
+          this.router.navigate(['/inventory/products', this.productId, 'batches']);
+        }
+      });
     }
   }
 

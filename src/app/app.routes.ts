@@ -59,6 +59,14 @@ export const routes: Routes = [
       { path: '', loadChildren: workOrdersRoutes }
     ]
   },
+  {
+    path: 'customers',
+    component: Home,
+    canActivate: [iamGuard],
+    children: [
+      { path: '', loadChildren: () => import('./fleet/fleet.routes').then(m => m.FLEET_ROUTES) }
+    ]
+  },
   { path: 'role-selection', loadComponent: () => import('./core/presentation/views/role-selection/role-selection').then(m => m.RoleSelectionComponent), canActivate: [iamGuard] },
   { path: '',  loadChildren: iamRoutes },
   { path: '',     redirectTo: 'home', pathMatch: 'full'},

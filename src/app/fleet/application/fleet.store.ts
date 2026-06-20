@@ -142,12 +142,14 @@ export class FleetStore {
   }
 
   createCustomerRegistration(command: CreateCustomerRegistrationCommand) {
+    console.log('[FleetStore] createCustomerRegistration called with command:', command);
     this.api.customerRegistrations.create(command).subscribe({
       next: (registration) => {
+        console.log('[FleetStore] createCustomerRegistration API call success:', registration);
         this.customerRegistrationsSignal.update((list) => [...list, registration]);
         this.activeCustomerRegistrationSignal.set(registration);
       },
-      error: (err) => console.error('Failed to create customer registration:', err)
+      error: (err) => console.error('[FleetStore] Failed to create customer registration API call:', err)
     });
   }
 

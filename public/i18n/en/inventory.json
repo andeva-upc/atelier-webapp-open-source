@@ -2,6 +2,8 @@
   "inventory": {
     "title": "Inventory",
     "subtitle": "Manage products and spare parts for your branch",
+    "searchPlaceholder": "Search by name or SKU...",
+    "allCategories": "All Categories",
     "addProduct": "Add Product",
     "addBatch": "Add batch",
     "emptyState": {
@@ -11,6 +13,7 @@
     "productCard": {
       "price": "Price",
       "currentStock": "Current Stock",
+      "lowStock": "Low Stock!",
       "noDescription": "No description"
     },
     "productForm": {
