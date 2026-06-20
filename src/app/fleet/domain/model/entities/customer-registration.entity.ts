@@ -4,8 +4,7 @@ export class CustomerRegistration {
   branchId: string;
   status: string;
   createdAt: string;
-  updatedAt: string;
-  deletedAt: string;
+  deletedAt: string | null;
 
   constructor() {
     this.id = '';
@@ -13,7 +12,6 @@ export class CustomerRegistration {
     this.branchId = '';
     this.status = 'ACTIVE';
     this.createdAt = '';
-    this.updatedAt = '';
-    this.deletedAt = '';
+    this.deletedAt = null;
   }
 }

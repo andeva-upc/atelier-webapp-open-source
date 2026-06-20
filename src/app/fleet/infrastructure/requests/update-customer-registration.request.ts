@@ -1,3 +1,3 @@
 export interface UpdateCustomerRegistrationRequest {
-  status?: string;
+  status: string;
 }
