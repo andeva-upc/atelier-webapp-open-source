@@ -1,0 +1,52 @@
+<div class="edit-device-container">
+  <!-- Top Navigation & Header -->
+  <header class="header-section">
+    <button type="button" (click)="goBack()" class="btn-back">
+      <i class="pi pi-arrow-left"></i> {{ 'iot.obd2Dialog.title' | translate }} (Listado)
+    </button>
+    <h2><i class="pi pi-pencil"></i> Editar Dispositivo OBD2</h2>
+    <p class="subtitle-text">Modifica la dirección MAC del dispositivo físico registrado en esta sede.</p>
+  </header>
+
+  <!-- Main Form Card -->
+  <main class="form-content-card">
+    <form [formGroup]="obd2Form" (ngSubmit)="onSubmit()" class="edit-form">
+      <div class="form-group">
+        <label for="macAddress">{{ 'iot.obd2Dialog.macLabel' | translate }}</label>
+        <input
+          id="macAddress"
+          type="text"
+          formControlName="macAddress"
+          placeholder="XX:XX:XX:XX:XX:XX"
+          class="styled-input-large"
+        />
+        @if (obd2Form.get('macAddress')?.touched && obd2Form.get('macAddress')?.invalid) {
+          <small class="error-text-large">
+            <i class="pi pi-exclamation-triangle"></i>
+            {{ 'iot.obd2Dialog.invalidMacPattern' | translate }}
+          </small>
+        }
+        @if (errorMessage) {
+          <small class="error-text-large">
+            <i class="pi pi-exclamation-triangle"></i>
+            {{ errorMessage | translate }}
+          </small>
+        }
+      </div>
+
+      <div class="form-actions">
+        <button type="button" (click)="goBack()" class="btn-cancel-flat">
+          {{ 'iot.obd2Dialog.cancel' | translate }}
+        </button>
+        <button
+          type="submit"
+          [disabled]="obd2Form.invalid"
+          class="btn-primary-gradient"
+        >
+          <i class="pi pi-check"></i>
+          Guardar cambios
+        </button>
+      </div>
+    </form>
+  </main>
+</div>
