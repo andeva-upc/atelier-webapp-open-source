@@ -4,10 +4,11 @@ import { UpdateAppointmentRequest } from '../requests/update-appointment.request
 export class UpdateAppointmentRequestAssembler {
   static toRequestFromCommand(command: UpdateAppointmentCommand): UpdateAppointmentRequest {
     return {
+      branchId: command.branchId,
+      customerId: command.customerId,
+      vehicleId: command.vehicleId,
       scheduledStart: command.scheduledStart,
-      scheduledEnd: command.scheduledEnd,
-      notes: command.notes,
-      status: command.status
+      notes: command.notes
     };
   }
 }

@@ -124,14 +124,14 @@ export class WorkOrderFormViewComponent implements OnInit {
         this.diagnosis.set(order.diagnosticSummary || '');
         this.currentMileage.set(order.mileageIn || null);
         this.selectedStatus.set(order.status || 'PENDING');
-        
+
         if (order.customerId) {
           this.selectedCustomerId.set(order.customerId);
           this.coreApi.customers.getById(order.customerId).subscribe({
             next: (c) => this.customerInput.set(`${c.firstName} ${c.lastName}`),
             error: (err) => console.error('Failed to load customer for order:', err)
           });
-          
+
           this.iotApi.vehicles.getByCustomerId(order.customerId).subscribe({
             next: (vehicles) => {
               const mapped = vehicles.map(v => ({
@@ -139,7 +139,7 @@ export class WorkOrderFormViewComponent implements OnInit {
                 name: `${v.brand} ${v.model} (${v.plateNumber})`
               }));
               this.vehiclesList.set(mapped);
-              
+
               // Encontrar el vehículo correspondiente
               const matched = mapped.find(v => v.id === order.vehicleId);
               if (matched) {
@@ -173,7 +173,7 @@ export class WorkOrderFormViewComponent implements OnInit {
     this.customerInput.set(cust.name);
     this.selectedCustomerId.set(cust.id);
     this.isCustomerDropdownOpen.set(false);
-    
+
     // Limpiar selección de vehículo anterior
     this.vehicleInput.set('');
     this.selectedVehicleId.set('');
@@ -238,16 +238,13 @@ export class WorkOrderFormViewComponent implements OnInit {
       // 1. Crear una cita Walk-in en el backend para obtener el appointmentId
       const now = new Date();
       const scheduledStart = now.toISOString().slice(0, 19); // yyyy-MM-ddTHH:mm:ss
-      const scheduledEnd = new Date(now.getTime() + 60 * 60 * 1000).toISOString().slice(0, 19);
 
       const appointmentCommand: CreateAppointmentCommand = {
         branchId: branchId,
         customerId: this.selectedCustomerId(),
         vehicleId: this.selectedVehicleId(),
         scheduledStart: scheduledStart,
-        scheduledEnd: scheduledEnd,
-        notes: 'Walk-in direct Work Order creation',
-        createdBy: 'SYSTEM'
+        notes: 'Walk-in direct Work Order creation'
       };
 
       this.fleetApi.appointments.create(appointmentCommand).subscribe({

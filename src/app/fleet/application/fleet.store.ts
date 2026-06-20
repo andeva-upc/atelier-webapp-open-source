@@ -45,6 +45,13 @@ export class FleetStore {
     });
   }
 
+  loadAppointmentsByBranchIdAndStatus(branchId: string, status: string) {
+    this.api.appointments.getByBranchIdAndStatus(branchId, status).subscribe({
+      next: (appointments) => this.appointmentsSignal.set(appointments),
+      error: (err) => console.error('Failed to load appointments by branch and status:', err)
+    });
+  }
+
   loadAppointmentById(appointmentId: string) {
     this.api.appointments.getById(appointmentId).subscribe({
       next: (appointment) => this.activeAppointmentSignal.set(appointment),
@@ -56,6 +63,13 @@ export class FleetStore {
     this.api.appointments.getByVehicleId(vehicleId).subscribe({
       next: (appointments) => this.appointmentsSignal.set(appointments),
       error: (err) => console.error('Failed to load appointments by vehicle:', err)
+    });
+  }
+
+  loadAppointmentsByCustomerId(customerId: string) {
+    this.api.appointments.getByCustomerId(customerId).subscribe({
+      next: (appointments) => this.appointmentsSignal.set(appointments),
+      error: (err) => console.error('Failed to load appointments by customer:', err)
     });
   }
 

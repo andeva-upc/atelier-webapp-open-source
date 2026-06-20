@@ -4,8 +4,6 @@ export class CreateAppointmentCommand {
     public customerId: string,
     public vehicleId: string,
     public scheduledStart: string,
-    public scheduledEnd: string,
-    public notes: string,
-    public createdBy: string
+    public notes?: string | null
   ) {}
 }

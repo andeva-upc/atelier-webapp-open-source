@@ -8,7 +8,6 @@ export class CreateAppointmentRequestAssembler {
       customerId: command.customerId,
       vehicleId: command.vehicleId,
       scheduledStart: command.scheduledStart,
-      scheduledEnd: command.scheduledEnd,
       notes: command.notes
     };
   }

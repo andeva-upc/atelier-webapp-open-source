@@ -19,8 +19,16 @@ export class AppointmentsApiEndpoint {
     return this.http.get<AppointmentResource[]>(`${this.baseUrl}/branch/${branchId}`);
   }
 
+  getByBranchIdAndStatus(branchId: string, status: string): Observable<AppointmentResource[]> {
+    return this.http.get<AppointmentResource[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
+  }
+
   getById(appointmentId: string): Observable<AppointmentResource> {
     return this.http.get<AppointmentResource>(`${this.baseUrl}/${appointmentId}`);
+  }
+
+  getByCustomerId(customerId: string): Observable<AppointmentResource[]> {
+    return this.http.get<AppointmentResource[]>(`${this.baseUrl}/customer/${customerId}`);
   }
 
   getByVehicleId(vehicleId: string): Observable<AppointmentResource[]> {
