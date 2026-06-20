@@ -327,7 +327,7 @@ export class IotStore {
     const randomDoc = Math.floor(10000000 + Math.random() * 90000000).toString();
     const randomPhone = '9' + Math.floor(10000000 + Math.random() * 89999999).toString();
     
-    // 1. Create customer profile (ignore 409 Conflict if already exists)
+    // 1. Create customer profile (ignore duplicate/Conflict if already exists)
     const customerPayload = {
       userId: userId,
       isCorporate: false,
@@ -344,8 +344,11 @@ export class IotStore {
     return this.http.post<any>(`${environment.apiBaseUrl}${environment.endpoints.core.customers}`, customerPayload).pipe(
       catchError(err => {
         console.warn('[IotStore] Customer creation error:', err);
-        // If 409, it already exists, so we proceed by fetching the customer by userId
-        if (err.status === 409 || (err.error && err.error.message && err.error.message.includes('already exists'))) {
+        const errStr = JSON.stringify(err).toLowerCase();
+        const isAlreadyExists = err.status === 409 || (err.status === 400 && errStr.includes('already exists'));
+        
+        if (isAlreadyExists) {
+          console.log('[IotStore] Customer profile already exists, fetching by userId:', userId);
           return this.http.get<any>(`${environment.apiBaseUrl}${environment.endpoints.core.customers}/user/${userId}`);
         }
         throw err;
@@ -356,6 +359,11 @@ export class IotStore {
         // Save customerId in localStorage for convenience
         localStorage.setItem('customerId', customerId);
         
+        if (!branchId) {
+          console.log('[IotStore] No branchId provided, skipping branch registration.');
+          return of(customerId);
+        }
+        
         // 2. Register customer in branch
         const regPayload = {
           customerId: customerId,
@@ -365,7 +373,10 @@ export class IotStore {
         return this.http.post(`${environment.apiBaseUrl}${environment.endpoints.fleet.customerRegistrations}`, regPayload).pipe(
           catchError(err => {
             console.warn('[IotStore] Customer branch registration error:', err);
-            if (err.status === 409) return of(null); // Already registered
+            const errStr = JSON.stringify(err).toLowerCase();
+            if (err.status === 409 || errStr.includes('already exists')) {
+              return of(null); // Already registered
+            }
             throw err;
           }),
           map(() => customerId)
@@ -386,8 +397,14 @@ export class IotStore {
             next: (res) => {
               console.log('[IotStore] Vehicle registered successfully:', res);
               // Reload list states
-              this.loadAvailableVehicles(branchId);
-              this.loadBranchVehicles(branchId);
+              if (branchId) {
+                this.loadAvailableVehicles(branchId);
+                this.loadBranchVehicles(branchId);
+              }
+              const currentCustomerId = localStorage.getItem('customerId');
+              if (currentCustomerId) {
+                this.loadVehiclesByCustomerId(currentCustomerId);
+              }
             },
             error: (err) => console.error('[IotStore] Vehicle registration failed:', err)
           })

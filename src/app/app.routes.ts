@@ -17,7 +17,15 @@ const telemetryRoutes = () => import('./iot/iot-telemetry.routes').then((m) => m
  * @see https://angular.io/guide/router for more information on Angular routing.
  */
 export const routes: Routes = [
-  { path: 'home', component: Home,    canActivate: [iamGuard] },
+  { path: 'home', redirectTo: 'telemetry', pathMatch: 'full' },
+  {
+    path: 'vehicles',
+    component: Home,
+    canActivate: [iamGuard],
+    children: [
+      { path: '', loadChildren: telemetryRoutes }
+    ]
+  },
   {
     path: 'inventory',
     component: Home,
