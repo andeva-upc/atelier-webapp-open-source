@@ -1,0 +1,79 @@
+<div class="registration-create-container">
+  <!-- Top Navigation & Header -->
+  <header class="header-section">
+    <button type="button" (click)="goBack()" class="btn-back">
+      <i class="pi pi-arrow-left"></i> {{ 'iot.dashboard.vehicleLabel' | translate }} (Dashboard)
+    </button>
+    <h2><i class="pi pi-link"></i> {{ 'iot.linkDialog.title' | translate }}</h2>
+    <p class="subtitle-text">Establece una conexión activa entre uno de los vehículos de la sede y un dispositivo OBD2 disponible.</p>
+  </header>
+
+  <!-- Main Card with Form -->
+  <main class="form-card">
+    @if (errorMessage) {
+      <div class="alert-box error">
+        <i class="pi pi-exclamation-triangle"></i>
+        <span>{{ errorMessage | translate }}</span>
+      </div>
+    }
+
+    <form [formGroup]="linkForm" (ngSubmit)="onSubmit()" class="registration-form">
+      <!-- Select Vehicle -->
+      <div class="form-group">
+        <label for="vehicleId">{{ 'iot.linkDialog.selectVehicle' | translate }}</label>
+        <select id="vehicleId" formControlName="vehicleId" class="styled-select">
+          <option value="" disabled selected>{{ 'iot.linkDialog.placeholderVehicle' | translate }}</option>
+          @for (vehicle of store.availableVehicles(); track vehicle.id) {
+            <option [value]="vehicle.id">
+              {{ vehicle.brand }} {{ vehicle.model }} - {{ vehicle.plateNumber }} (VIN: {{ vehicle.vin }})
+            </option>
+          }
+        </select>
+        @if (store.availableVehicles().length === 0) {
+          <small class="hint-text info">
+            <i class="pi pi-info-circle"></i> {{ 'iot.linkDialog.noAvailableVehicles' | translate }}
+          </small>
+        }
+      </div>
+
+      <!-- Select OBD2 Device -->
+      <div class="form-group">
+        <label for="obd2DeviceId">{{ 'iot.linkDialog.selectDevice' | translate }}</label>
+        <select id="obd2DeviceId" formControlName="obd2DeviceId" class="styled-select">
+          <option value="" disabled selected>{{ 'iot.linkDialog.placeholderDevice' | translate }}</option>
+          @for (device of store.availableObd2Devices(); track device.id) {
+            <option [value]="device.id">
+              {{ device.macAddress }} ({{ 'iot.status.AVAILABLE' | translate }})
+            </option>
+          }
+        </select>
+        @if (store.availableObd2Devices().length === 0) {
+          <small class="hint-text info">
+            <i class="pi pi-info-circle"></i> {{ 'iot.linkDialog.noAvailableDevices' | translate }}
+          </small>
+        }
+      </div>
+
+      <!-- Information disclaimer box -->
+      <div class="info-disclaimer-box">
+        <i class="pi pi-shield info-icon"></i>
+        <p>{{ 'iot.linkDialog.disclaimer' | translate }}</p>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="form-actions">
+        <button type="button" (click)="goBack()" class="btn-secondary-flat">
+          {{ 'iot.linkDialog.cancel' | translate }}
+        </button>
+        <button
+          type="submit"
+          [disabled]="linkForm.invalid"
+          class="btn-primary-gradient"
+        >
+          <i class="pi pi-link"></i>
+          {{ 'iot.linkDialog.confirm' | translate }}
+        </button>
+      </div>
+    </form>
+  </main>
+</div>
