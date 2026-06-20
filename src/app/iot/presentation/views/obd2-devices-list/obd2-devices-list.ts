@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { IotStore } from '../../../application/iot.store';
-import { LinkDialogComponent } from '../../components/link-dialog/link-dialog';
+
 
 @Component({
   selector: 'app-obd2-devices-list',
@@ -11,7 +11,6 @@ import { LinkDialogComponent } from '../../components/link-dialog/link-dialog';
   imports: [
     CommonModule,
     TranslateModule,
-    LinkDialogComponent,
     RouterLink
   ],
   templateUrl: './obd2-devices-list.html',
@@ -22,7 +21,6 @@ export class Obd2DevicesListComponent implements OnInit {
   private router = inject(Router);
 
   branchId = '';
-  isLinkDialogOpen = false;
 
   // Compute the list of OBD2 devices with linked vehicle details and active registration IDs
   devicesWithCoupling = computed(() => {
@@ -52,18 +50,7 @@ export class Obd2DevicesListComponent implements OnInit {
     }
   }
 
-  openLinkDialog(): void {
-    this.isLinkDialogOpen = true;
-  }
 
-  closeLinkDialog(): void {
-    this.isLinkDialogOpen = false;
-    // Reload state on dialog close
-    if (this.branchId) {
-      this.store.loadObd2Devices(this.branchId);
-      this.store.loadRegistrations(this.branchId, 'ACTIVE');
-    }
-  }
 
   unlinkDevice(regId: string): void {
     if (confirm('¿Estás seguro de que deseas desvincular este dispositivo OBD2 de su vehículo?')) {

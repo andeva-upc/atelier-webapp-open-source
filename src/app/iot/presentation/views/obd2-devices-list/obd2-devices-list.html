@@ -61,9 +61,9 @@
                 </td>
                 <td class="actions-cell">
                   @if (device.status === 'AVAILABLE') {
-                    <button type="button" (click)="openLinkDialog()" class="btn-action-link">
+                    <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ obd2DeviceId: device.id }" class="btn-action-link">
                       <i class="pi pi-link"></i> Vincular
-                    </button>
+                    </a>
                   } @else if (device.status === 'LINKED' && device.activeRegId) {
                     <button type="button" (click)="unlinkDevice(device.activeRegId)" class="btn-action-unlink">
                       <i class="pi pi-link-slash"></i> Desvincular
@@ -81,9 +81,4 @@
   </main>
 </div>
 
-<!-- Modal Dialogs for hardware addition and linking -->
-<app-link-dialog
-  [isOpen]="isLinkDialogOpen"
-  [branchId]="branchId"
-  (close)="closeLinkDialog()"
-></app-link-dialog>
+
