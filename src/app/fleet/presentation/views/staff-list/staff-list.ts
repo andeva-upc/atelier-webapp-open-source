@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild, effect, inject } from '@angular/core';
+import { Component, OnInit, effect, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -10,6 +8,13 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FleetStore } from '../../../application/fleet.store';
 import { EmployeeRegistrationResource } from '../../../infrastructure/responses/employee-registration.response';
 import { StaffFormDialogComponent } from '../../components/staff-form-dialog/staff-form-dialog';
+import { CoreApi } from '../../../../core/infrastructure/core-api';
+import { EmployeeResource } from '../../../../core/infrastructure/responses/employee-response';
+
+export interface StaffCardData extends EmployeeRegistrationResource {
+  firstName?: string;
+  lastName?: string;
+}
 
 @Component({
   selector: 'app-staff-list',
@@ -17,8 +22,6 @@ import { StaffFormDialogComponent } from '../../components/staff-form-dialog/sta
   imports: [
     CommonModule, 
     MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
@@ -29,20 +32,71 @@ import { StaffFormDialogComponent } from '../../components/staff-form-dialog/sta
 })
 export class StaffListComponent implements OnInit {
   private store = inject(FleetStore);
+  private coreApi = inject(CoreApi);
   private dialog = inject(MatDialog);
   private snackBar = inject(MatSnackBar);
   private currentBranchId: string = '';
   
-  displayedColumns: string[] = ['employeeId', 'specialityName', 'salary', 'status', 'actions'];
-  dataSource = new MatTableDataSource<EmployeeRegistrationResource>([]);
+  private employeeProfiles = signal<Map<string, EmployeeResource>>(new Map());
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // Pagination state
+  currentPage = signal<number>(0);
+  pageSize = signal<number>(10);
+
+  staffCards = computed(() => {
+    const registrations = this.store.employeeRegistrations();
+    const profiles = this.employeeProfiles();
+    
+    return registrations.map(reg => {
+      const profile = profiles.get(reg.employeeId);
+      return {
+        ...reg,
+        firstName: profile?.firstName,
+        lastName: profile?.lastName
+      } as StaffCardData;
+    });
+  });
+
+  paginatedCards = computed(() => {
+    const all = this.staffCards();
+    const start = this.currentPage() * this.pageSize();
+    return all.slice(start, start + this.pageSize());
+  });
+
+  totalPages = computed(() => {
+    return Math.ceil(this.staffCards().length / this.pageSize()) || 1;
+  });
 
   constructor() {
     effect(() => {
-      // Update dataSource when signal changes
-      this.dataSource.data = this.store.employeeRegistrations();
-    });
+      const registrations = this.store.employeeRegistrations();
+      const profilesMap = this.employeeProfiles();
+      let hasNewProfiles = false;
+      const newMap = new Map(profilesMap);
+
+      registrations.forEach(reg => {
+        if (!newMap.has(reg.employeeId)) {
+          // Temporarily set empty to avoid multiple calls
+          newMap.set(reg.employeeId, {} as EmployeeResource);
+          hasNewProfiles = true;
+          
+          this.coreApi.employees.getById(reg.employeeId).subscribe({
+            next: (profile) => {
+              this.employeeProfiles.update(map => {
+                const updated = new Map(map);
+                updated.set(reg.employeeId, profile);
+                return updated;
+              });
+            },
+            error: (err) => console.error('Failed to load employee profile', err)
+          });
+        }
+      });
+
+      if (hasNewProfiles) {
+         this.employeeProfiles.set(newMap);
+      }
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {
@@ -55,8 +109,23 @@ export class StaffListComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  // Custom Pagination logic
+  nextPage() {
+    if (this.currentPage() < this.totalPages() - 1) {
+      this.currentPage.update(p => p + 1);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage() > 0) {
+      this.currentPage.update(p => p - 1);
+    }
+  }
+
+  onPageSizeChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    this.pageSize.set(Number(target.value));
+    this.currentPage.set(0);
   }
 
   onAddStaff() {
