@@ -1,0 +1,244 @@
+<div class="task-form-container">
+  <!-- Cabecera -->
+  <div class="task-form-header">
+    <div class="header-left">
+      <a class="btn-back" [routerLink]="['/work-orders']" [queryParams]="{ expandedOrderId: workOrderId }">
+        <i class="pi pi-arrow-left"></i>
+        Back to Work Orders
+      </a>
+      <h1 class="page-title">{{ isEditMode() ? 'Edit Work Order Task' : 'Create Work Order Task' }}</h1>
+    </div>
+    
+    <!-- Precio Total Automático -->
+    <div class="price-display">
+      <span class="price-label">Total Price</span>
+      <span class="price-value">${{ totalPrice() | number: '1.2-2' }}</span>
+    </div>
+  </div>
+
+  @if (isLoading()) {
+    <div class="loading-state">
+      <i class="pi pi-spin pi-spinner"></i>
+      <span>Cargando datos de la tarea...</span>
+    </div>
+  } @else {
+  <div class="form-card">
+    <!-- Selector de Mecánico (Buscador + Selector) -->
+    <div class="form-group">
+      <label class="form-label">Mechanic</label>
+      <div class="autocomplete-wrapper">
+        <i class="pi pi-user input-icon"></i>
+        <input
+          type="text"
+          placeholder="Search mechanic..."
+          class="form-control autocomplete-input"
+          [ngModel]="mechanicInput()"
+          (ngModelChange)="mechanicInput.set($event)"
+          (focus)="isMechanicDropdownOpen.set(true)"
+          (blur)="onMechanicBlur()"
+        />
+        @if (isMechanicDropdownOpen() && filteredMechanics().length > 0) {
+          <div class="autocomplete-dropdown">
+            @for (mech of filteredMechanics(); track mech.id) {
+              <div class="dropdown-item" (mousedown)="selectMechanic(mech)">
+                <span class="item-name">{{ mech.name }}</span>
+                @if (mech.speciality) {
+                  <span class="item-price">{{ mech.speciality }}</span>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Fila para Servicio y Estado -->
+    <div class="form-row">
+      <!-- Selector de Servicio -->
+      <div class="form-group flex-1">
+        <label class="form-label">Service</label>
+        <div class="select-wrapper">
+          <button
+            type="button"
+            class="form-control select-trigger"
+            (click)="isServiceDropdownOpen.set(!isServiceDropdownOpen())"
+          >
+            <span class="trigger-text">
+              @if (selectedService()) {
+                {{ selectedService()?.name }} (${{ selectedService()?.price }})
+              } @else {
+                Select service...
+              }
+            </span>
+            <i class="pi pi-chevron-down trigger-icon"></i>
+          </button>
+          
+          @if (isServiceDropdownOpen()) {
+            <div class="select-dropdown">
+              @if (servicesList().length === 0) {
+                <div class="select-item" style="color: #888; font-style: italic;">
+                  No hay servicios disponibles en esta sucursal
+                </div>
+              }
+              @for (srv of servicesList(); track srv.id) {
+                <div class="select-item" (click)="selectService(srv)">
+                  <span class="item-name">{{ srv.name }}</span>
+                  <span class="item-price">${{ srv.price }}</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Selector de Estado (Solo en Modo Edición) -->
+      @if (isEditMode()) {
+        <div class="form-group flex-1">
+          <label class="form-label">Status</label>
+          <div class="select-wrapper">
+            <button
+              type="button"
+              class="form-control select-trigger"
+              (click)="isStatusDropdownOpen.set(!isStatusDropdownOpen())"
+            >
+              <span class="trigger-text">
+                {{ selectedStatus() === 'IN_PROGRESS' ? 'IN PROGRESS' : selectedStatus() }}
+              </span>
+              <i class="pi pi-chevron-down trigger-icon"></i>
+            </button>
+            
+            @if (isStatusDropdownOpen()) {
+              <div class="select-dropdown">
+                @for (st of statusList; track st) {
+                  <div class="select-item" (click)="selectStatus(st)">
+                    <span class="item-name">
+                      {{ st === 'IN_PROGRESS' ? 'IN PROGRESS' : st }}
+                    </span>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label class="form-label">Description</label>
+      <textarea
+        placeholder="Describe the work to be done (min. 5 characters)"
+        class="form-control textarea-control"
+        rows="4"
+        [ngModel]="description()"
+        (ngModelChange)="description.set($event)"
+      ></textarea>
+    </div>
+
+    <!-- Sección de Productos -->
+    <div class="form-group">
+      <label class="form-label">Products &amp; Parts</label>
+      <div class="products-panel">
+        
+        <!-- Listado de productos agregados -->
+        @if (addedProducts().length > 0) {
+          <div class="added-products-list">
+            @for (prod of addedProducts(); track prod.id; let i = $index) {
+              <div class="added-product-row clickable-product-row" (click)="openEditProductModal(prod, i)">
+                <div class="prod-details">
+                  <span class="prod-name">{{ prod.name }}</span>
+                  <span class="prod-qty-price">Cantidad: {{ prod.quantity }} &times; ${{ prod.price }}</span>
+                </div>
+                <button type="button" class="btn-remove-prod" (click)="removeProduct(prod.id); $event.stopPropagation()">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-products-msg">
+            No products added to this task yet.
+          </div>
+        }
+
+        <!-- Botón Agregar Producto -->
+        <button type="button" class="btn btn-secondary btn-add-prod" (click)="openProductModal()">
+          Add Product
+        </button>
+      </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="form-actions">
+      <button class="btn btn-primary btn-save" (click)="saveChanges()">
+        {{ isEditMode() ? 'Save Changes' : 'Create Work Order Task' }}
+      </button>
+    </div>
+  </div>
+  }
+</div>
+
+<!-- Modal para Seleccionar / Editar Producto -->
+@if (isProductModalOpen()) {
+  <div class="modal-backdrop" (click)="closeProductModal()"></div>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <h3>Products</h3>
+      <button class="btn-close-modal" (click)="closeProductModal()">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Selector de Producto (Buscador + Selector) -->
+      <div class="form-group">
+        <label class="form-label">Product Name / SKU</label>
+        <div class="autocomplete-wrapper">
+          <i class="pi pi-box input-icon"></i>
+          <input
+            type="text"
+            placeholder="Search by name or SKU..."
+            class="form-control autocomplete-input"
+            [ngModel]="productSearchInput()"
+            (ngModelChange)="productSearchInput.set($event)"
+            (focus)="isProductDropdownOpen.set(true)"
+            (blur)="onProductSearchBlur()"
+          />
+          @if (isProductDropdownOpen() && filteredProducts().length > 0) {
+            <div class="autocomplete-dropdown">
+              @for (prod of filteredProducts(); track prod.id) {
+                <div class="dropdown-item" (mousedown)="selectModalProduct(prod)">
+                  <span class="item-name">{{ prod.name }}</span>
+                  <span class="item-price">${{ prod.price }} · Stock: {{ prod.currentStock }}</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Cantidad -->
+      <div class="form-group">
+        <label class="form-label">Quantity</label>
+        <input
+          type="number"
+          min="1"
+          class="form-control"
+          placeholder="Quantity"
+          [ngModel]="tempProductQuantity()"
+          (ngModelChange)="tempProductQuantity.set($event)"
+        />
+      </div>
+
+      <!-- Precio Total del Producto Automático -->
+      <div class="modal-price-display">
+        <span class="price-label">Total Price</span>
+        <span class="price-value">${{ modalProductTotalPrice() | number: '1.2-2' }}</span>
+      </div>
+
+      <!-- Botón de acción del modal -->
+      <button class="btn-modal-action" (click)="saveProductModalChanges()">
+        {{ isEditingProduct() ? 'Save Changes' : 'Add Product' }}
+      </button>
+    </div>
+  </div>
+}

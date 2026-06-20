@@ -79,6 +79,7 @@ export class CoreStore {
         this.currentCustomerSignal.set(resource);
         if (resource && resource.id) {
           localStorage.setItem('customerId', resource.id);
+          sessionStorage.setItem('customerId', resource.id);
         }
       },
       error: (err) => console.error('Failed to load customer by user id:', err)
@@ -153,6 +154,7 @@ export class CoreStore {
         this.currentEmployeeSignal.set(resource);
         if (resource && resource.id) {
           localStorage.setItem('employeeId', resource.id);
+          sessionStorage.setItem('employeeId', resource.id);
         }
       },
       error: (err) => console.error('Failed to load employee by user id:', err)
@@ -225,7 +227,7 @@ export class CoreStore {
       next: (resources) => {
         this.currentWorkshopBranchesSignal.set(resources);
         if (resources && resources.length > 0) {
-          const savedBranchId = localStorage.getItem('tenantBranchId');
+          const savedBranchId = localStorage.getItem('tenantBranchId') || sessionStorage.getItem('tenantBranchId');
           const matchedBranch = resources.find(b => b.id.toString() === savedBranchId);
           if (matchedBranch) {
             this.selectBranch(matchedBranch);
@@ -259,8 +261,10 @@ export class CoreStore {
     this.currentBranchSignal.set(branch);
     if (branch && branch.id) {
       localStorage.setItem('tenantBranchId', branch.id.toString());
+      sessionStorage.setItem('tenantBranchId', branch.id.toString());
     } else {
       localStorage.removeItem('tenantBranchId');
+      sessionStorage.removeItem('tenantBranchId');
     }
   }
 

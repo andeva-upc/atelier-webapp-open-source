@@ -25,11 +25,11 @@ export class InventoryListComponent implements OnInit {
   products = this.store.branchProducts;
 
   ngOnInit(): void {
-    const branchId = localStorage.getItem('tenantBranchId');
+    const branchId = localStorage.getItem('tenantBranchId') || sessionStorage.getItem('tenantBranchId');
     if (branchId) {
       this.store.loadProductsByBranchId(branchId);
     } else {
-      console.warn('No branchId found in localStorage for inventory load');
+      console.warn('No branchId found in localStorage or sessionStorage for inventory load');
     }
   }
 

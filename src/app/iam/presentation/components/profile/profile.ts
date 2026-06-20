@@ -30,7 +30,7 @@ export class Profile implements OnInit {
   currentWorkshopBranches = this.coreStore.currentWorkshopBranches;
 
   ngOnInit() {
-    const role = localStorage.getItem('activeRole') || '';
+    const role = localStorage.getItem('activeRole') || sessionStorage.getItem('activeRole') || '';
     this.activeRole.set(role);
   }
 
