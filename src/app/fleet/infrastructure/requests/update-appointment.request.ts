@@ -1,6 +1,7 @@
 export interface UpdateAppointmentRequest {
-  scheduledStart?: string;
-  scheduledEnd?: string;
+  branchId: string;
+  customerId: string;
+  vehicleId: string;
+  scheduledStart: string;
   notes?: string | null;
-  status?: string;
 }
