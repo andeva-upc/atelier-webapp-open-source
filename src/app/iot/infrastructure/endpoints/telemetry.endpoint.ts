@@ -8,20 +8,27 @@ import { TelemetrySnapshotResource } from '../responses/telemetry-snapshot.respo
 
 @Injectable({ providedIn: 'root' })
 export class TelemetryApiEndpoint {
-  private readonly baseUrl = `${environment.apiBaseUrl}${environment.endpoints.iot.vhTelemetryBatches}`;
+  private readonly ingestUrl = `${environment.apiBaseUrl}${environment.endpoints.iot.vhTelemetryBatches}`;
+  private readonly obd2DevicesUrl = `${environment.apiBaseUrl}${environment.endpoints.iot.obd2Devices}`;
 
   constructor(private http: HttpClient) {}
 
   ingest(command: IngestTelemetryCommand): Observable<any> {
     const request = IngestTelemetryRequestAssembler.toRequestFromCommand(command);
-    return this.http.post<any>(this.baseUrl, request);
+    return this.http.post<any>(this.ingestUrl, request);
   }
 
+  // GET /api/v1/obd2-devices/{deviceId}/telemetry-snapshots/latest
   getLatest(deviceId: string): Observable<TelemetrySnapshotResource> {
-    return this.http.get<TelemetrySnapshotResource>(`${this.baseUrl}/latest/${deviceId}`);
+    return this.http.get<TelemetrySnapshotResource>(
+      `${this.obd2DevicesUrl}/${deviceId}/telemetry-snapshots/latest`
+    );
   }
 
+  // GET /api/v1/obd2-devices/{deviceId}/telemetry-snapshots
   getHistory(deviceId: string): Observable<TelemetrySnapshotResource[]> {
-    return this.http.get<TelemetrySnapshotResource[]>(`${this.baseUrl}/history/${deviceId}`);
+    return this.http.get<TelemetrySnapshotResource[]>(
+      `${this.obd2DevicesUrl}/${deviceId}/telemetry-snapshots`
+    );
   }
 }
