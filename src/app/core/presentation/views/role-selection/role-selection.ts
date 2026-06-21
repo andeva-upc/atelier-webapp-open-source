@@ -1,7 +1,7 @@
 import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { CoreStore } from '../../../application/core.store';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-role-selection',
@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class RoleSelectionComponent implements OnInit {
   public coreStore = inject(CoreStore);
   private router = inject(Router);
+  private translate = inject(TranslateService);
 
   public isLoading = signal(true);
 
@@ -53,10 +54,10 @@ export class RoleSelectionComponent implements OnInit {
     // Redirigir al dashboard general (Sidebar se encargará de mostrar items según el rol)
     this.router.navigate(['/home']).then(success => {
       if (!success) {
-        alert('Error: La navegación fue bloqueada o cancelada silenciosamente por Angular. Revisa la consola (F12).');
+        alert(this.translate.instant('role-selection.error_nav_blocked'));
       }
     }).catch(err => {
-      alert('Error en ejecución al navegar: ' + err.message);
+      alert(this.translate.instant('role-selection.error_nav_exec') + err.message);
       console.error(err);
     });
   }
