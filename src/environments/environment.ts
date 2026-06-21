@@ -3,11 +3,11 @@ export const environment = {
   apiBaseUrl: 'https://atelier-platform.onrender.com/api/v1',
   endpoints: {
     iam: {
-      signIn: '/authentication/sign-in',
-      signUp: '/authentication/sign-up',
-      googleSignIn: '/authentication/google-sign-in',
-      forgotPassword: '/authentication/forgot-password',
-      resetPassword: '/authentication/reset-password',
+      signIn: '/authentication/sessions',
+      signUp: '/users',
+      googleSignIn: '/authentication/sessions/google',
+      forgotPassword: '/authentication/password-recoveries',
+      resetPassword: '/authentication/password-resets',
       getByUserId: '/users',
       updateUserEmail: '/users',
       updateUserPassword: '/users',

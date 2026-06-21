@@ -8,36 +8,36 @@
 
 CREATE TABLE appointments
 (
-    id              uuid        NOT NULL UNIQUE,
-    branch_id       uuid        NOT NULL,
-    customer_id     uuid        NOT NULL,
-    vehicle_id      uuid        NOT NULL,
-    status          varchar(20) NOT NULL DEFAULT 'PENDING',
-    scheduled_start timestamp   NOT NULL,
-    scheduled_end   timestamp   NOT NULL,
-    notes           text       ,
-    created_at      timestamp   NOT NULL,
-    updated_at      timestamp   NOT NULL,
-    deleted_at      timestamp  ,
-    created_by      uuid        NOT NULL,
-    updated_by      uuid       ,
-    version         bigint      NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id              uuid        NOT NULL UNIQUE,
+  branch_id       uuid        NOT NULL,
+  customer_id     uuid        NOT NULL,
+  vehicle_id      uuid        NOT NULL,
+  status          varchar(20) NOT NULL DEFAULT 'PENDING',
+  scheduled_start timestamp   NOT NULL,
+  scheduled_end   timestamp   NOT NULL,
+  notes           text       ,
+  created_at      timestamp   NOT NULL,
+  updated_at      timestamp   NOT NULL,
+  deleted_at      timestamp  ,
+  created_by      uuid        NOT NULL,
+  updated_by      uuid       ,
+  version         bigint      NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN appointments.status IS 'enum: PENDING, COMPLETED, CANCELED';
 
 CREATE TABLE branch_subscriptions
 (
-    id            uuid        NOT NULL UNIQUE,
-    branch_id     uuid        NOT NULL,
-    plan_id       uuid        NOT NULL,
-    status        varchar(20) NOT NULL DEFAULT 'ACTIVE',
-    billing_cycle varchar(20) NOT NULL,
-    start_date    timestamp   NOT NULL,
-    end_date      timestamp   NOT NULL,
-    canceled_at   timestamp  ,
-    PRIMARY KEY (id)
+  id            uuid        NOT NULL UNIQUE,
+  branch_id     uuid        NOT NULL,
+  plan_id       uuid        NOT NULL,
+  status        varchar(20) NOT NULL DEFAULT 'ACTIVE',
+  billing_cycle varchar(20) NOT NULL,
+  start_date    timestamp   NOT NULL,
+  end_date      timestamp   NOT NULL,
+  canceled_at   timestamp  ,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN branch_subscriptions.status IS 'enum: ACTIVE, CANCELED, EXPIRED';
@@ -45,82 +45,82 @@ COMMENT ON COLUMN branch_subscriptions.billing_cycle IS 'enum: MONTHLY, ANNUAL';
 
 CREATE TABLE branches
 (
-    id          uuid         NOT NULL UNIQUE,
-    workshop_id uuid         NOT NULL,
-    code        varchar(20)  NOT NULL UNIQUE,
-    name        varchar(100) NOT NULL,
-    address     varchar(100),
-    phone       char(9)      UNIQUE,
-    created_at  timestamp    NOT NULL,
-    updated_at  timestamp    NOT NULL,
-    deleted_at  timestamp   ,
-    created_by  uuid         NOT NULL,
-    updated_by  uuid        ,
-    version     bigint      ,
-    PRIMARY KEY (id)
+  id          uuid         NOT NULL UNIQUE,
+  workshop_id uuid         NOT NULL,
+  code        varchar(20)  NOT NULL UNIQUE,
+  name        varchar(100) NOT NULL,
+  address     varchar(100),
+  phone       char(9)      UNIQUE,
+  created_at  timestamp    NOT NULL,
+  updated_at  timestamp    NOT NULL,
+  deleted_at  timestamp   ,
+  created_by  uuid         NOT NULL,
+  updated_by  uuid        ,
+  version     bigint      ,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE customer_registrations
 (
-    id          uuid        NOT NULL UNIQUE,
-    customer_id uuid        NOT NULL,
-    branch_id   uuid        NOT NULL,
-    created_at  timestamp   NOT NULL,
-    status      varchar(20) NOT NULL DEFAULT 'ACTIVE',
-    updated_at  timestamp   NOT NULL,
-    deleted_at  timestamp  ,
-    PRIMARY KEY (id)
+  id          uuid        NOT NULL UNIQUE,
+  customer_id uuid        NOT NULL,
+  branch_id   uuid        NOT NULL,
+  created_at  timestamp   NOT NULL,
+  status      varchar(20) NOT NULL DEFAULT 'ACTIVE',
+  updated_at  timestamp   NOT NULL,
+  deleted_at  timestamp  ,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN customer_registrations.status IS 'enum: ACTIVE, INACTIVE';
 
 CREATE TABLE customers
 (
-    id            uuid         NOT NULL UNIQUE,
-    user_id       uuid         NOT NULL,
-    first_name    varchar(100),
-    last_name     varchar(100),
-    is_corporate  boolean      NOT NULL,
-    business_name varchar(100),
-    document_type   varchar(20)  NOT NULL,
-    document_number varchar(50)  NOT NULL,
-    phone           char(9)      NOT NULL,
-    created_at      timestamp    NOT NULL,
-    updated_at      timestamp    NOT NULL,
-    deleted_at      timestamp   ,
-    version         bigint       NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id            uuid         NOT NULL UNIQUE,
+  user_id       uuid         NOT NULL,
+  first_name    varchar(100),
+  last_name     varchar(100),
+  is_corporate  boolean      NOT NULL,
+  business_name varchar(100),
+  document_type   varchar(20)  NOT NULL,
+  document_number varchar(50)  NOT NULL,
+  phone           char(9)      NOT NULL,
+  created_at      timestamp    NOT NULL,
+  updated_at      timestamp    NOT NULL,
+  deleted_at      timestamp   ,
+  version         bigint       NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN customers.document_type IS 'enum: DNI, RUC, CE, PASSPORT';
 
 CREATE TABLE dtc_alerts
 (
-    id                    uuid        NOT NULL,
-    telemetry_snapshot_id uuid        NOT NULL,
-    branch_id             uuid        NOT NULL,
-    dtc_code              varchar(10) NOT NULL,
-    description           text        NOT NULL,
-    severity              varchar(20) NOT NULL,
-    created_at            timestamp   NOT NULL,
-    PRIMARY KEY (id)
+  id                    uuid        NOT NULL,
+  telemetry_snapshot_id uuid        NOT NULL,
+  branch_id             uuid        NOT NULL,
+  dtc_code              varchar(10) NOT NULL,
+  description           text        NOT NULL,
+  severity              varchar(20) NOT NULL,
+  created_at            timestamp   NOT NULL,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN dtc_alerts.severity IS 'enum: LOW, MEDIUM, HIGH, CRITICAL';
 
 CREATE TABLE employee_registrations
 (
-    id              uuid          NOT NULL UNIQUE,
-    employee_id     uuid          NOT NULL,
-    branch_id       uuid          NOT NULL,
-    speciality      varchar(50)   NOT NULL,
-    speciality_name varchar(50)  ,
-    salary          decimal(10,2) NOT NULL,
-    status          varchar(20)   NOT NULL DEFAULT 'ACTIVE',
-    created_at      timestamp     NOT NULL,
-    updated_at      timestamp     NOT NULL,
-    deleted_at      timestamp    ,
-    PRIMARY KEY (id)
+  id              uuid          NOT NULL UNIQUE,
+  employee_id     uuid          NOT NULL,
+  branch_id       uuid          NOT NULL,
+  speciality      varchar(50)   NOT NULL,
+  speciality_name varchar(50)  ,
+  salary          decimal(10,2) NOT NULL,
+  status          varchar(20)   NOT NULL DEFAULT 'ACTIVE',
+  created_at      timestamp     NOT NULL,
+  updated_at      timestamp     NOT NULL,
+  deleted_at      timestamp    ,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN employee_registrations.speciality IS 'enum: ADMINISTRATOR, RECEPTIONIST, GENERAL_MECHANIC, PAINTER, ELECTRICIAN_MECHANIC, OTHER';
@@ -128,256 +128,256 @@ COMMENT ON COLUMN employee_registrations.status IS 'enum: ACTIVE, INACTIVE';
 
 CREATE TABLE employees
 (
-    id         uuid         NOT NULL UNIQUE,
-    user_id    uuid         NOT NULL,
-    first_name varchar(100) NOT NULL,
-    last_name  varchar(100) NOT NULL,
-    document_type   varchar(20)  NOT NULL,
-    document_number varchar(50)  NOT NULL,
-    phone           char(9)      NOT NULL,
-    created_at      timestamp    NOT NULL,
-    updated_at      timestamp    NOT NULL,
-    deleted_at      timestamp   ,
-    version         bigint       NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id         uuid         NOT NULL UNIQUE,
+  user_id    uuid         NOT NULL,
+  first_name varchar(100) NOT NULL,
+  last_name  varchar(100) NOT NULL,
+  document_type   varchar(20)  NOT NULL,
+  document_number varchar(50)  NOT NULL,
+  phone           char(9)      NOT NULL,
+  created_at      timestamp    NOT NULL,
+  updated_at      timestamp    NOT NULL,
+  deleted_at      timestamp   ,
+  version         bigint       NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN employees.document_type IS 'enum: DNI, RUC, CE, PASSPORT';
 
 CREATE TABLE obd2_device_registrations
 (
-    id             uuid        NOT NULL UNIQUE,
-    obd2_device_id uuid        NOT NULL,
-    branch_id      uuid        NOT NULL,
-    vehicle_id     uuid        NOT NULL,
-    status         varchar(20) NOT NULL DEFAULT 'ACTIVE',
-    created_at     timestamp   NOT NULL,
-    deleted_at     timestamp  ,
-    PRIMARY KEY (id)
+  id             uuid        NOT NULL UNIQUE,
+  obd2_device_id uuid        NOT NULL,
+  branch_id      uuid        NOT NULL,
+  vehicle_id     uuid        NOT NULL,
+  status         varchar(20) NOT NULL DEFAULT 'ACTIVE',
+  created_at     timestamp   NOT NULL,
+  deleted_at     timestamp  ,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN obd2_device_registrations.status IS 'enum: ACTIVE, INACTIVE';
 
 CREATE TABLE obd2_devices
 (
-    id          uuid        NOT NULL UNIQUE,
-    branch_id   uuid        NOT NULL,
-    mac_address varchar(17) NOT NULL UNIQUE,
-    last_ping   timestamp  ,
-    status      varchar(20) NOT NULL DEFAULT 'AVAILABLE',
-    created_at  timestamp   NOT NULL,
-    updated_at  timestamp   NOT NULL,
-    deleted_at  timestamp  ,
-    version     bigint      NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id          uuid        NOT NULL UNIQUE,
+  branch_id   uuid        NOT NULL,
+  mac_address varchar(17) NOT NULL UNIQUE,
+  last_ping   timestamp  ,
+  status      varchar(20) NOT NULL DEFAULT 'AVAILABLE',
+  created_at  timestamp   NOT NULL,
+  updated_at  timestamp   NOT NULL,
+  deleted_at  timestamp  ,
+  version     bigint      NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN obd2_devices.status IS 'enum: AVAILABLE, LINKED, NOT_AVAILABLE';
 
 CREATE TABLE owners
 (
-    id         uuid         NOT NULL UNIQUE,
-    user_id    uuid         NOT NULL,
-    first_name varchar(100) NOT NULL,
-    last_name  varchar(100) NOT NULL,
-    document_type   varchar(20)  NOT NULL,
-    document_number varchar(50)  NOT NULL,
-    phone           char(9)      NOT NULL,
-    created_at      timestamp    NOT NULL,
-    updated_at      timestamp    NOT NULL,
-    deleted_at      timestamp   ,
-    version         bigint       NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id         uuid         NOT NULL UNIQUE,
+  user_id    uuid         NOT NULL,
+  first_name varchar(100) NOT NULL,
+  last_name  varchar(100) NOT NULL,
+  document_type   varchar(20)  NOT NULL,
+  document_number varchar(50)  NOT NULL,
+  phone           char(9)      NOT NULL,
+  created_at      timestamp    NOT NULL,
+  updated_at      timestamp    NOT NULL,
+  deleted_at      timestamp   ,
+  version         bigint       NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN owners.document_type IS 'enum: DNI, RUC, CE, PASSPORT';
 
 CREATE TABLE password_recovery_tokens
 (
-    id         uuid         NOT NULL UNIQUE,
-    token_hash varchar(255) NOT NULL,
-    created_at timestamp    NOT NULL,
-    expires_at timestamp    NOT NULL,
-    is_used    boolean      NOT NULL DEFAULT false,
-    user_id    uuid         NOT NULL,
-    PRIMARY KEY (id)
+  id         uuid         NOT NULL UNIQUE,
+  token_hash varchar(255) NOT NULL,
+  created_at timestamp    NOT NULL,
+  expires_at timestamp    NOT NULL,
+  is_used    boolean      NOT NULL DEFAULT false,
+  user_id    uuid         NOT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE payments
 (
-    id         uuid          NOT NULL UNIQUE,
-    voucher_id uuid          NOT NULL,
-    branch_id  uuid          NOT NULL,
-    amount     decimal(10,2) NOT NULL,
-    currency   char(3)       NOT NULL,
-    method     varchar(20)   NOT NULL,
-    paid_at    timestamp     NOT NULL,
-    PRIMARY KEY (id)
+  id         uuid          NOT NULL UNIQUE,
+  voucher_id uuid          NOT NULL,
+  branch_id  uuid          NOT NULL,
+  amount     decimal(10,2) NOT NULL,
+  currency   char(3)       NOT NULL,
+  method     varchar(20)   NOT NULL,
+  paid_at    timestamp     NOT NULL,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN payments.method IS 'enum: CASH, CREDIT_CARD, DEBIT_CARD, BANK_TRANSFER';
 
 CREATE TABLE product_batches
 (
-    id                 uuid          NOT NULL UNIQUE,
-    product_id         uuid          NOT NULL,
-    branch_id          uuid          NOT NULL,
-    initial_quantity   int           NOT NULL,
-    available_quantity int           NOT NULL,
-    acquisition_cost   decimal(10,2) NOT NULL,
-    created_at         timestamp     NOT NULL,
-    updated_at         timestamp     NOT NULL,
-    deleted_at         timestamp    ,
-    version            bigint        NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id                 uuid          NOT NULL UNIQUE,
+  product_id         uuid          NOT NULL,
+  branch_id          uuid          NOT NULL,
+  initial_quantity   int           NOT NULL,
+  available_quantity int           NOT NULL,
+  acquisition_cost   decimal(10,2) NOT NULL,
+  created_at         timestamp     NOT NULL,
+  updated_at         timestamp     NOT NULL,
+  deleted_at         timestamp    ,
+  version            bigint        NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE products
 (
-    id                    uuid          NOT NULL UNIQUE,
-    branch_id             uuid          NOT NULL,
-    category              varchar(50)   NOT NULL,
-    name                  varchar(50)   NOT NULL,
-    sku                   varchar(50)   NOT NULL,
-    description           text         ,
-    current_selling_price decimal(10,2) NOT NULL,
-    current_stock         int           NOT NULL DEFAULT 0,
-    minimum_stock         int           NOT NULL,
-    created_at            timestamp     NOT NULL,
-    updated_at            timestamp     NOT NULL,
-    deleted_at            timestamp    ,
-    created_by            uuid          NOT NULL,
-    updated_by            uuid         ,
-    version               bigint        NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id                    uuid          NOT NULL UNIQUE,
+  branch_id             uuid          NOT NULL,
+  category              varchar(50)   NOT NULL,
+  name                  varchar(50)   NOT NULL,
+  sku                   varchar(50)   NOT NULL,
+  description           text         ,
+  current_selling_price decimal(10,2) NOT NULL,
+  current_stock         int           NOT NULL DEFAULT 0,
+  minimum_stock         int           NOT NULL,
+  created_at            timestamp     NOT NULL,
+  updated_at            timestamp     NOT NULL,
+  deleted_at            timestamp    ,
+  created_by            uuid          NOT NULL,
+  updated_by            uuid         ,
+  version               bigint        NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN products.category IS 'enum: FLUID, PART, MOTOR, OTHER';
 
 CREATE TABLE quotes
 (
-    id                  uuid          NOT NULL UNIQUE,
-    work_order_id       uuid          NOT NULL,
-    branch_id           uuid          NOT NULL,
-    subtotal_amount     decimal(10,2) NOT NULL,
-    discount_percentage decimal(5,2)  NOT NULL,
-    total_amount        decimal(10,2) NOT NULL,
-    status              varchar(20)   NOT NULL DEFAULT 'DRAFT',
-    created_at          timestamp     NOT NULL,
-    updated_at          timestamp     NOT NULL,
-    deleted_at          timestamp    ,
-    created_by          uuid          NOT NULL,
-    updated_by          uuid         ,
-    version             bigint        NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id                  uuid          NOT NULL UNIQUE,
+  work_order_id       uuid          NOT NULL,
+  branch_id           uuid          NOT NULL,
+  subtotal_amount     decimal(10,2) NOT NULL,
+  discount_percentage decimal(5,2)  NOT NULL,
+  total_amount        decimal(10,2) NOT NULL,
+  status              varchar(20)   NOT NULL DEFAULT 'DRAFT',
+  created_at          timestamp     NOT NULL,
+  updated_at          timestamp     NOT NULL,
+  deleted_at          timestamp    ,
+  created_by          uuid          NOT NULL,
+  updated_by          uuid         ,
+  version             bigint        NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN quotes.status IS 'enum: DRAFT, APPROVED, CANCELED';
 
 CREATE TABLE services
 (
-    id         uuid          NOT NULL UNIQUE,
-    branch_id  uuid          NOT NULL,
-    name       varchar(50)   NOT NULL,
-    price      decimal(10,2) NOT NULL,
-    created_at timestamp     NOT NULL,
-    updated_at timestamp     NOT NULL,
-    deleted_at timestamp    ,
-    version    bigint        NOT NULL DEFAULT 0,
-    created_by uuid          NOT NULL,
-    updated_by uuid         ,
-    PRIMARY KEY (id)
+  id         uuid          NOT NULL UNIQUE,
+  branch_id  uuid          NOT NULL,
+  name       varchar(50)   NOT NULL,
+  price      decimal(10,2) NOT NULL,
+  created_at timestamp     NOT NULL,
+  updated_at timestamp     NOT NULL,
+  deleted_at timestamp    ,
+  version    bigint        NOT NULL DEFAULT 0,
+  created_by uuid          NOT NULL,
+  updated_by uuid         ,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE subscription_plans
 (
-    id                                uuid           NOT NULL UNIQUE,
-    name                              varchar(50)    NOT NULL,
-    monthly_price                     decimal(10, 2) NOT NULL,
-    max_obd2_devices                  int            NOT NULL,
-    max_monthly_snapshots_per_vehicle int            NOT NULL,
-    max_customers                     int            NOT NULL,
-    max_staff_accounts                int            NOT NULL,
-    is_active                         boolean        NOT NULL DEFAULT true,
-    PRIMARY KEY (id)
+  id                                uuid           NOT NULL UNIQUE,
+  name                              varchar(50)    NOT NULL,
+  monthly_price                     decimal(10, 2) NOT NULL,
+  max_obd2_devices                  int            NOT NULL,
+  max_monthly_snapshots_per_vehicle int            NOT NULL,
+  max_customers                     int            NOT NULL,
+  max_staff_accounts                int            NOT NULL,
+  is_active                         boolean        NOT NULL DEFAULT true,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE telemetry_snapshots
 (
-    id                          uuid             NOT NULL UNIQUE,
-    obd2_device_registration_id uuid             NOT NULL,
-    branch_id                   uuid             NOT NULL,
-    rpm                         int              NOT NULL,
-    temperature                 int              NOT NULL,
-    speed_kmh                   double precision,
-    odometer_km                 int             ,
-    fuel_level_percent          double precision NOT NULL,
-    created_at                  timestamp        NOT NULL,
-    PRIMARY KEY (id)
+  id                          uuid             NOT NULL UNIQUE,
+  obd2_device_registration_id uuid             NOT NULL,
+  branch_id                   uuid             NOT NULL,
+  rpm                         int              NOT NULL,
+  temperature                 int              NOT NULL,
+  speed_kmh                   double precision,
+  odometer_km                 int             ,
+  fuel_level_percent          double precision NOT NULL,
+  created_at                  timestamp        NOT NULL,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE users
 (
-    id              uuid         NOT NULL UNIQUE,
-    email           varchar(100) NOT NULL UNIQUE,
-    password_hash   varchar(255) NOT NULL UNIQUE,
-    google_id       varchar(255) UNIQUE,
-    status          varchar(20)  NOT NULL DEFAULT 'ACTIVE',
-    created_at      timestamp    NOT NULL,
-    updated_at      timestamp    NOT NULL,
-    deleted_at      timestamp   ,
-    version         bigint       NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id              uuid         NOT NULL UNIQUE,
+  email           varchar(100) NOT NULL UNIQUE,
+  password_hash   varchar(255) NOT NULL UNIQUE,
+  google_id       varchar(255) UNIQUE,
+  status          varchar(20)  NOT NULL DEFAULT 'ACTIVE',
+  created_at      timestamp    NOT NULL,
+  updated_at      timestamp    NOT NULL,
+  deleted_at      timestamp   ,
+  version         bigint       NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN users.status IS 'enum: ACTIVE, INACTIVE';
 
 CREATE TABLE vehicle_registrations
 (
-    id         uuid        NOT NULL UNIQUE,
-    user_id    uuid        NOT NULL,
-    vehicle_id uuid        NOT NULL,
-    status     varchar(20) NOT NULL DEFAULT 'ACTIVE',
-    created_at timestamp   NOT NULL,
-    deleted_at timestamp  ,
-    PRIMARY KEY (id)
+  id         uuid        NOT NULL UNIQUE,
+  user_id    uuid        NOT NULL,
+  vehicle_id uuid        NOT NULL,
+  status     varchar(20) NOT NULL DEFAULT 'ACTIVE',
+  created_at timestamp   NOT NULL,
+  deleted_at timestamp  ,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN vehicle_registrations.status IS 'enum: ACTIVE, PREVIOUS';
 
 CREATE TABLE vehicles
 (
-    id           uuid        NOT NULL UNIQUE,
-    plate_number varchar(20) NOT NULL,
-    vin          varchar(50) NOT NULL UNIQUE,
-    year         int         NOT NULL,
-    brand        varchar(50) NOT NULL,
-    model        varchar(50) NOT NULL,
-    created_at   timestamp   NOT NULL,
-    updated_at   timestamp   NOT NULL,
-    deleted_at   timestamp  ,
-    version      bigint      NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id           uuid        NOT NULL UNIQUE,
+  plate_number varchar(20) NOT NULL,
+  vin          varchar(50) NOT NULL UNIQUE,
+  year         int         NOT NULL,
+  brand        varchar(50) NOT NULL,
+  model        varchar(50) NOT NULL,
+  created_at   timestamp   NOT NULL,
+  updated_at   timestamp   NOT NULL,
+  deleted_at   timestamp  ,
+  version      bigint      NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE vouchers
 (
-    id              uuid          NOT NULL UNIQUE,
-    quote_id        uuid          NOT NULL,
-    branch_id       uuid          NOT NULL,
-    voucher_number  int           NOT NULL,
-    subtotal_amount decimal(10,2) NOT NULL,
-    total_amount    decimal(10,2) NOT NULL,
-    type            varchar(20)   NOT NULL,
-    status          varchar(20)   NOT NULL DEFAULT 'PENDING',
-    currency        char(3)       NOT NULL,
-    created_at      timestamp     NOT NULL,
-    updated_at      timestamp     NOT NULL,
-    deleted_at      timestamp    ,
-    created_by      uuid          NOT NULL,
-    updated_by      uuid         ,
-    version         bigint        DEFAULT 0,
-    PRIMARY KEY (id)
+  id              uuid          NOT NULL UNIQUE,
+  quote_id        uuid          NOT NULL,
+  branch_id       uuid          NOT NULL,
+  voucher_number  int           NOT NULL,
+  subtotal_amount decimal(10,2) NOT NULL,
+  total_amount    decimal(10,2) NOT NULL,
+  type            varchar(20)   NOT NULL,
+  status          varchar(20)   NOT NULL DEFAULT 'PENDING',
+  currency        char(3)       NOT NULL,
+  created_at      timestamp     NOT NULL,
+  updated_at      timestamp     NOT NULL,
+  deleted_at      timestamp    ,
+  created_by      uuid          NOT NULL,
+  updated_by      uuid         ,
+  version         bigint        DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN vouchers.total_amount IS 'subtotal_amount + 18%*subtotal_amount';
@@ -387,79 +387,79 @@ COMMENT ON COLUMN vouchers.currency IS 'enum: PEN, USD';
 
 CREATE TABLE work_order_task_products
 (
-    id                 uuid          NOT NULL UNIQUE,
-    product_id         uuid          NOT NULL,
-    work_order_task_id uuid          NOT NULL,
-    branch_id          uuid          NOT NULL,
-    quantity           int           NOT NULL,
-    unit_price         decimal(10,2) NOT NULL,
-    total_amount       decimal(10,2) NOT NULL,
-    created_at         timestamp     NOT NULL,
-    updated_at         timestamp     NOT NULL,
-    deleted_at         timestamp    ,
-    version            bigint        NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id                 uuid          NOT NULL UNIQUE,
+  product_id         uuid          NOT NULL,
+  work_order_task_id uuid          NOT NULL,
+  branch_id          uuid          NOT NULL,
+  quantity           int           NOT NULL,
+  unit_price         decimal(10,2) NOT NULL,
+  total_amount       decimal(10,2) NOT NULL,
+  created_at         timestamp     NOT NULL,
+  updated_at         timestamp     NOT NULL,
+  deleted_at         timestamp    ,
+  version            bigint        NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE work_order_tasks
 (
-    id                   uuid          NOT NULL UNIQUE,
-    work_order_id        uuid          NOT NULL,
-    service_id           uuid          NOT NULL,
-    branch_id            uuid          NOT NULL,
-    assigned_mechanic_id uuid          NOT NULL,
-    status               varchar(20)   NOT NULL DEFAULT 'PENDING',
-    description          text          NOT NULL,
-    started_at           timestamp    ,
-    completed_at         timestamp    ,
-    price                decimal(10,2) NOT NULL DEFAULT 0,
-    created_at           timestamp     NOT NULL,
-    updated_at           timestamp     NOT NULL,
-    deleted_at           timestamp    ,
-    created_by           uuid          NOT NULL,
-    updated_by           uuid         ,
-    version              bigint        NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id                   uuid          NOT NULL UNIQUE,
+  work_order_id        uuid          NOT NULL,
+  service_id           uuid          NOT NULL,
+  branch_id            uuid          NOT NULL,
+  assigned_mechanic_id uuid          NOT NULL,
+  status               varchar(20)   NOT NULL DEFAULT 'PENDING',
+  description          text          NOT NULL,
+  started_at           timestamp    ,
+  completed_at         timestamp    ,
+  price                decimal(10,2) NOT NULL DEFAULT 0,
+  created_at           timestamp     NOT NULL,
+  updated_at           timestamp     NOT NULL,
+  deleted_at           timestamp    ,
+  created_by           uuid          NOT NULL,
+  updated_by           uuid         ,
+  version              bigint        NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN work_order_tasks.status IS 'enum: PENDING, DOING, COMPLETED';
 
 CREATE TABLE work_orders
 (
-    id                 uuid          NOT NULL UNIQUE,
-    appointment_id     uuid          NOT NULL,
-    branch_id          uuid          NOT NULL,
-    vehicle_id         uuid          NOT NULL,
-    customer_id        uuid          NOT NULL,
-    internal_number    int           NOT NULL,
-    status             varchar(20)   DEFAULT 'PENDING',
-    diagnostic_summary text          NOT NULL,
-    mileage_in         int           NOT NULL,
-    total_amount       decimal(10,2) NOT NULL DEFAULT 0,
-    created_at         timestamp     NOT NULL,
-    updated_at         timestamp     NOT NULL,
-    deleted_at         timestamp    ,
-    created_by         uuid          NOT NULL,
-    updated_by         uuid         ,
-    version            bigint        NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id                 uuid          NOT NULL UNIQUE,
+  appointment_id     uuid          NOT NULL,
+  branch_id          uuid          NOT NULL,
+  vehicle_id         uuid          NOT NULL,
+  customer_id        uuid          NOT NULL,
+  internal_number    int           NOT NULL,
+  status             varchar(20)   DEFAULT 'PENDING',
+  diagnostic_summary text          NOT NULL,
+  mileage_in         int           NOT NULL,
+  total_amount       decimal(10,2) NOT NULL DEFAULT 0,
+  created_at         timestamp     NOT NULL,
+  updated_at         timestamp     NOT NULL,
+  deleted_at         timestamp    ,
+  created_by         uuid          NOT NULL,
+  updated_by         uuid         ,
+  version            bigint        NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN work_orders.status IS 'enum: PENDING, IN_PROGRESS, COMPLETED, PAID';
 
 CREATE TABLE workshops
 (
-    id                      uuid         NOT NULL UNIQUE,
-    owner_id                uuid         NOT NULL,
-    business_name           varchar(100) NOT NULL,
-    brand_name              varchar(100) NOT NULL,
-    tax_id                  varchar(50)  NOT NULL,
-    mileage_interval_config int          DEFAULT 1,
-    created_at              timestamp    NOT NULL,
-    updated_at              timestamp    NOT NULL,
-    deleted_at              timestamp   ,
-    version                 bigint       NOT NULL DEFAULT 0,
-    PRIMARY KEY (id)
+  id                      uuid         NOT NULL UNIQUE,
+  owner_id                uuid         NOT NULL,
+  business_name           varchar(100) NOT NULL,
+  brand_name              varchar(100) NOT NULL,
+  tax_id                  varchar(50)  NOT NULL,
+  mileage_interval_config int          DEFAULT 1,
+  created_at              timestamp    NOT NULL,
+  updated_at              timestamp    NOT NULL,
+  deleted_at              timestamp   ,
+  version                 bigint       NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
 );
 
 COMMENT ON COLUMN workshops.tax_id IS 'RUC';
@@ -627,5 +627,5 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trg_sync_product_stock
-    AFTER INSERT OR UPDATE OR DELETE ON product_batches
-    FOR EACH ROW EXECUTE FUNCTION sync_product_stock();
+  AFTER INSERT OR UPDATE OR DELETE ON product_batches
+  FOR EACH ROW EXECUTE FUNCTION sync_product_stock();
