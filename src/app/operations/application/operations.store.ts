@@ -37,6 +37,10 @@ export class OperationsStore {
 
   constructor(private api: OperationsApi, private router: Router) {}
 
+  getOperationsApi() {
+    return this.api;
+  }
+
   // ==========================================
   // SERVICES
   // ==========================================
@@ -103,21 +107,28 @@ export class OperationsStore {
     });
   }
 
-  createWorkOrder(command: CreateWorkOrderCommand) {
+  getWorkOrderByIdObservable(id: string) {
+    return this.api.workOrders.getById(id);
+  }
+
+  createWorkOrder(command: CreateWorkOrderCommand, router: Router) {
     this.api.workOrders.create(command).subscribe({
       next: (order) => {
         const currentOrders = this.branchWorkOrdersSignal();
         this.branchWorkOrdersSignal.set([...currentOrders, order]);
         this.activeWorkOrderSignal.set(order);
-        // this.router.navigate(['/work-orders', order.id]).then();
+        router.navigate(['/work-orders'], { queryParams: { expandedOrderId: order.id } }).then();
       },
       error: (err) => console.error('Failed to create work order:', err)
     });
   }
 
-  updateWorkOrderDetails(id: string, command: UpdateWorkOrderDetailsCommand) {
+  updateWorkOrderDetails(id: string, command: UpdateWorkOrderDetailsCommand, router: Router) {
     this.api.workOrders.updateDetails(id, command).subscribe({
-      next: (order) => this.activeWorkOrderSignal.set(order),
+      next: (order) => {
+        this.activeWorkOrderSignal.set(order);
+        router.navigate(['/work-orders'], { queryParams: { expandedOrderId: order.id } }).then();
+      },
       error: (err) => console.error('Failed to update work order details:', err)
     });
   }
@@ -156,33 +167,27 @@ export class OperationsStore {
 
   removeTaskFromWorkOrder(workOrderId: string, taskId: string) {
     this.api.workOrders.removeTask(workOrderId, taskId).subscribe({
-      next: (order) => {
-         // Some endpoints return the updated work order, others just void. 
-         // Assuming our backend is returning the WorkOrderResponse or we reload.
-         // If it returns void, we'd need to call loadWorkOrderById(workOrderId) here.
-         // Let's assume we reload it to be safe.
-         this.loadWorkOrderById(workOrderId);
-      },
+      next: (order) => this.activeWorkOrderSignal.set(order),
       error: (err) => console.error('Failed to remove task:', err)
     });
   }
 
-  startTask(workOrderId: string, taskId: string) {
-    this.api.workOrders.startTask(workOrderId, taskId).subscribe({
+  startTask(taskId: string) {
+    this.api.workOrderTasks.startTask(taskId).subscribe({
       next: (order) => this.activeWorkOrderSignal.set(order),
       error: (err) => console.error('Failed to start task:', err)
     });
   }
 
-  completeTask(workOrderId: string, taskId: string) {
-    this.api.workOrders.completeTask(workOrderId, taskId).subscribe({
+  completeTask(taskId: string) {
+    this.api.workOrderTasks.completeTask(taskId).subscribe({
       next: (order) => this.activeWorkOrderSignal.set(order),
       error: (err) => console.error('Failed to complete task:', err)
     });
   }
 
-  reopenTask(workOrderId: string, taskId: string) {
-    this.api.workOrders.reopenTask(workOrderId, taskId).subscribe({
+  reopenTask(taskId: string) {
+    this.api.workOrderTasks.reopenTask(taskId).subscribe({
       next: (order) => this.activeWorkOrderSignal.set(order),
       error: (err) => console.error('Failed to reopen task:', err)
     });
@@ -192,26 +197,23 @@ export class OperationsStore {
   // PRODUCTS
   // ==========================================
 
-  addProductToTask(workOrderId: string, taskId: string, command: AddProductToTaskCommand) {
-    this.api.workOrders.addProductToTask(workOrderId, taskId, command).subscribe({
+  addProductToTask(taskId: string, command: AddProductToTaskCommand) {
+    this.api.workOrderTasks.addProductToTask(taskId, command).subscribe({
       next: (order) => this.activeWorkOrderSignal.set(order),
       error: (err) => console.error('Failed to add product to task:', err)
     });
   }
 
-  updateProductQuantityInTask(workOrderId: string, taskId: string, productId: string, command: UpdateProductQuantityInTaskCommand) {
-    this.api.workOrders.updateProductQuantityInTask(workOrderId, taskId, productId, command).subscribe({
+  updateProductQuantityInTask(taskId: string, productId: string, command: UpdateProductQuantityInTaskCommand) {
+    this.api.workOrderTasks.updateProductQuantityInTask(taskId, productId, command).subscribe({
       next: (order) => this.activeWorkOrderSignal.set(order),
       error: (err) => console.error('Failed to update product quantity:', err)
     });
   }
 
-  removeProductFromTask(workOrderId: string, taskId: string, productId: string) {
-    this.api.workOrders.removeProductFromTask(workOrderId, taskId, productId).subscribe({
-      next: () => {
-         // Again, assuming void return, we reload the order.
-         this.loadWorkOrderById(workOrderId);
-      },
+  removeProductFromTask(taskId: string, productId: string) {
+    this.api.workOrderTasks.removeProductFromTask(taskId, productId).subscribe({
+      next: (order) => this.activeWorkOrderSignal.set(order),
       error: (err) => console.error('Failed to remove product from task:', err)
     });
   }
