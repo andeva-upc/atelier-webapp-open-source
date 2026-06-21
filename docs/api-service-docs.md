@@ -89,7 +89,7 @@ Toma el total acumulado de la Orden de Trabajo y genera una proforma.
 
 ### Paso 2: Aprobar la Cotización (APPROVED)
 El cliente acepta el presupuesto.
-* **Endpoint:** `POST /api/v1/quotes/{quoteId}/approve`
+* **Endpoint:** `POST /api/v1/quotes/{quoteId}/approvals`
 * *(No requiere body)*
 
 ### Paso 3: Emitir el Comprobante (Voucher) a SUNAT
@@ -160,6 +160,7 @@ Para que tengas una visión global, aquí tienes el listado de todas las rutas (
 - `/api/v1/services`
 
 **Cotizaciones y Facturación (Billing Context)**
+- `/api/v1/checkouts`
 - `/api/v1/quotes`
 - `/api/v1/vouchers`
 - `/api/v1/vouchers/{voucherId}/payments`
@@ -184,6 +185,31 @@ Para que tengas una visión global, aquí tienes el listado de todas las rutas (
 ## 📚 Referencia Completa de Endpoints
 
 A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus parámetros, body a enviar y lo que vas a recibir.
+
+### `GET /api/v1/profiles`
+**Propósito:** Get profile by document number
+
+*Searches for a user profile using their DNI/RUC. Useful for finding a user before registering them as an employee.*
+
+**📍 Parámetros (URL / Query):**
+- `documentNumber` (query):  (Requerido: true)
+
+**📥 Qué vas a recibir (Responses):**
+- **Código HTTP 200**: OK
+  ```json
+  {
+    "profileId": "string",
+    "userId": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "documentType": "string",
+    "documentNumber": "string",
+    "profileType": "CUSTOMER"
+  }
+  ```
+- **Código HTTP 404**: Not Found
+
+---
 
 ### `GET /api/v1/workshops/{workshopId}`
 **Propósito:** Get a workshop by ID
@@ -1117,7 +1143,7 @@ A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus p
 
 ---
 
-### `POST /api/v1/vouchers/checkout`
+### `POST /api/v1/checkouts`
 **Propósito:** Process checkout
 
 *Generates a voucher and records a full payment in a single transaction*
@@ -1234,7 +1260,7 @@ A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus p
 
 ---
 
-### `POST /api/v1/quotes/{id}/cancel`
+### `POST /api/v1/quotes/{id}/cancellations`
 **Propósito:** Cancel a quote
 
 *Cancels a Quote, transitioning its state to CANCELED*
@@ -1249,7 +1275,7 @@ A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus p
 
 ---
 
-### `POST /api/v1/quotes/{id}/approve`
+### `POST /api/v1/quotes/{id}/approvals`
 **Propósito:** Approve a quote
 
 *Approves a Quote, transitioning its state from DRAFT to APPROVED*
