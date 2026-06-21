@@ -1,0 +1,26 @@
+/* Reuses the shared vehicle form styles */
+@import url('../vehicle-create/vehicle-create.css');
+
+/* Edit-specific overrides */
+.form-icon.edit-icon {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+}
+
+.form-icon.edit-icon .pi {
+  color: #d97706;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
+  color: #64748b;
+}
+
+.loading-spinner {
+  font-size: 2rem;
+  color: #3b82f6;
+}

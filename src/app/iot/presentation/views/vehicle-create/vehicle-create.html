@@ -1,0 +1,172 @@
+<div class="vehicle-form-page">
+  <!-- Back Navigation -->
+  <a routerLink="/vehicles" class="back-link">
+    <i class="pi pi-arrow-left"></i>
+    {{ 'iot.vehicles.backToList' | translate }}
+  </a>
+
+  <!-- Form Card -->
+  <div class="form-card">
+    <div class="form-card-header">
+      <div class="form-icon">
+        <i class="pi pi-car"></i>
+      </div>
+      <div>
+        <h1 class="form-title">{{ 'iot.vehicles.formCreateTitle' | translate }}</h1>
+        <p class="form-subtitle">{{ 'iot.vehicles.formCreateSubtitle' | translate }}</p>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+      <!-- Plate Number — full width -->
+      <div class="form-group full-width">
+        <label class="form-label" for="plateNumber">
+          {{ 'iot.vehicles.fieldPlate' | translate }}
+          <span class="required-mark">*</span>
+        </label>
+        <input
+          id="plateNumber"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="f['plateNumber'].invalid && f['plateNumber'].touched"
+          formControlName="plateNumber"
+          placeholder="ej. ABC-123"
+          autocomplete="off"
+        />
+        @if (f['plateNumber'].invalid && f['plateNumber'].touched) {
+          <span class="error-msg">
+            @if (f['plateNumber'].errors?.['required']) {
+              {{ 'iot.vehicles.errorRequired' | translate }}
+            } @else {
+              Máximo 10 caracteres.
+            }
+          </span>
+        }
+      </div>
+
+      <!-- VIN — full width -->
+      <div class="form-group full-width">
+        <label class="form-label" for="vin">
+          {{ 'iot.vehicles.fieldVin' | translate }}
+          <span class="required-mark">*</span>
+        </label>
+        <input
+          id="vin"
+          type="text"
+          class="form-control vin-input"
+          [class.is-invalid]="f['vin'].invalid && f['vin'].touched"
+          formControlName="vin"
+          placeholder="17 caracteres alfanuméricos"
+          maxlength="17"
+          autocomplete="off"
+        />
+        @if (f['vin'].invalid && f['vin'].touched) {
+          <span class="error-msg">
+            @if (f['vin'].errors?.['required']) {
+              {{ 'iot.vehicles.errorRequired' | translate }}
+            } @else {
+              El VIN debe tener exactamente 17 caracteres alfanuméricos.
+            }
+          </span>
+        }
+      </div>
+
+      <!-- Brand + Year row -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="brand">
+            {{ 'iot.vehicles.fieldBrand' | translate }}
+            <span class="required-mark">*</span>
+          </label>
+          <input
+            id="brand"
+            type="text"
+            class="form-control"
+            [class.is-invalid]="f['brand'].invalid && f['brand'].touched"
+            formControlName="brand"
+            placeholder="ej. Toyota"
+            autocomplete="off"
+          />
+          @if (f['brand'].invalid && f['brand'].touched) {
+            <span class="error-msg">{{ 'iot.vehicles.errorRequired' | translate }}</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="year">
+            {{ 'iot.vehicles.fieldYear' | translate }}
+            <span class="required-mark">*</span>
+          </label>
+          <input
+            id="year"
+            type="number"
+            class="form-control"
+            [class.is-invalid]="f['year'].invalid && f['year'].touched"
+            formControlName="year"
+            placeholder="ej. 2021"
+            min="1950"
+            [max]="2026"
+          />
+          @if (f['year'].invalid && f['year'].touched) {
+            <span class="error-msg">
+              @if (f['year'].errors?.['required']) {
+                {{ 'iot.vehicles.errorRequired' | translate }}
+              } @else {
+                Ingresa un año válido (1950–{{ 2026 }}).
+              }
+            </span>
+          }
+        </div>
+      </div>
+
+      <!-- Model — full width -->
+      <div class="form-group full-width">
+        <label class="form-label" for="model">
+          {{ 'iot.vehicles.fieldModel' | translate }}
+          <span class="required-mark">*</span>
+        </label>
+        <input
+          id="model"
+          type="text"
+          class="form-control"
+          [class.is-invalid]="f['model'].invalid && f['model'].touched"
+          formControlName="model"
+          placeholder="ej. Corolla"
+          autocomplete="off"
+        />
+        @if (f['model'].invalid && f['model'].touched) {
+          <span class="error-msg">{{ 'iot.vehicles.errorRequired' | translate }}</span>
+        }
+      </div>
+
+      <!-- Error Banner -->
+      @if (errorMessage) {
+        <div class="error-banner">
+          <i class="pi pi-exclamation-circle"></i>
+          {{ errorMessage }}
+        </div>
+      }
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="cancel()">
+          {{ 'iot.vehicles.cancelBtn' | translate }}
+        </button>
+        <button
+          type="submit"
+          class="btn-submit"
+          id="submitVehicleBtn"
+          [disabled]="form.invalid || isSubmitting"
+        >
+          @if (isSubmitting) {
+            <i class="pi pi-spin pi-spinner"></i>
+          } @else {
+            <i class="pi pi-check"></i>
+          }
+          {{ 'iot.vehicles.submitBtn' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

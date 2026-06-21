@@ -9,6 +9,22 @@
   box-sizing: border-box;
 }
 
+/* Back to Vehicles link */
+.back-to-vehicles-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #3b82f6;
+  text-decoration: none;
+  transition: gap 0.15s;
+}
+
+.back-to-vehicles-link:hover {
+  gap: 0.6rem;
+}
+
 /* Control Bar */
 .control-bar {
   display: flex;

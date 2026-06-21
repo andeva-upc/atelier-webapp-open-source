@@ -8,7 +8,7 @@ import { Obd2DialogComponent } from '../../components/obd2-dialog/obd2-dialog';
 import { VehicleResource } from '../../../infrastructure/responses/vehicle.response';
 import { Obd2DeviceRegistrationResource } from '../../../infrastructure/responses/obd2-registration.response';
 
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-telemetry-dashboard',
@@ -25,6 +25,7 @@ import { RouterLink } from '@angular/router';
 })
 export class TelemetryDashboardComponent implements OnInit {
   protected store = inject(IotStore);
+  private route = inject(ActivatedRoute);
 
   isCustomer = false;
   branchId = '';
@@ -33,6 +34,8 @@ export class TelemetryDashboardComponent implements OnInit {
   // UI state
   selectedVehicleId = signal<string>('');
   isObd2DialogOpen = false;
+  /** True when this component is loaded as /vehicles/:id/telemetry */
+  isVehicleRoute = false;
 
   // Selected vehicle details
   selectedVehicle = computed<VehicleResource | null>(() => {
@@ -96,6 +99,13 @@ export class TelemetryDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Check if we're in the /vehicles/:id/telemetry sub-route
+    const routeVehicleId = this.route.snapshot.paramMap.get('id');
+    if (routeVehicleId) {
+      this.isVehicleRoute = true;
+      this.selectedVehicleId.set(routeVehicleId);
+    }
+
     if (this.isCustomer) {
       if (this.customerId) {
         this.store.loadVehiclesByCustomerId(this.customerId);

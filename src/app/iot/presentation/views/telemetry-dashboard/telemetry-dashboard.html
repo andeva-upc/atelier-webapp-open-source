@@ -1,4 +1,11 @@
 <div class="telemetry-dashboard-container">
+  <!-- Back to Vehicles (only when accessed from /vehicles/:id/telemetry) -->
+  @if (isVehicleRoute) {
+    <a routerLink="/vehicles" class="back-to-vehicles-link">
+      <i class="pi pi-arrow-left"></i>
+      {{ 'iot.vehicles.backToList' | translate }}
+    </a>
+  }
   <!-- Top Header / Control Bar -->
   <header class="control-bar">
     <div class="left-controls">

@@ -1,0 +1,120 @@
+<div class="vehicles-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="header-left">
+      <h1 class="page-title">
+        <i class="pi pi-car title-icon"></i>
+        {{ 'iot.vehicles.listTitle' | translate }}
+      </h1>
+      <p class="page-subtitle">{{ 'iot.vehicles.listSubtitle' | translate }}</p>
+    </div>
+    <div class="header-right">
+      <a routerLink="/vehicles/new" class="btn-primary">
+        <i class="pi pi-plus"></i>
+        {{ 'iot.vehicles.registerBtn' | translate }}
+      </a>
+    </div>
+  </header>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <div class="search-wrapper">
+      <i class="pi pi-search search-icon"></i>
+      <input
+        id="vehicleSearchInput"
+        type="text"
+        class="search-input"
+        [placeholder]="'iot.vehicles.searchPlaceholder' | translate"
+        [value]="searchQuery()"
+        (input)="onSearch($event)"
+      />
+    </div>
+    <span class="results-count">
+      {{ filteredVehicles().length }} {{ 'iot.vehicles.resultsUnit' | translate }}
+    </span>
+  </div>
+
+  <!-- Table / Empty State -->
+  @if (filteredVehicles().length === 0) {
+    <div class="empty-state">
+      <div class="empty-state-icon">
+        <i class="pi pi-car"></i>
+      </div>
+      @if (store.vehicles().length === 0) {
+        <h2>{{ 'iot.vehicles.noVehicles' | translate }}</h2>
+        <p>{{ 'iot.vehicles.noVehiclesSubtitle' | translate }}</p>
+        <a routerLink="/vehicles/new" class="btn-primary">
+          <i class="pi pi-plus"></i>
+          {{ 'iot.vehicles.registerBtn' | translate }}
+        </a>
+      } @else {
+        <h2>{{ 'iot.vehicles.noResults' | translate }}</h2>
+        <p>{{ 'iot.vehicles.noResultsSubtitle' | translate }}</p>
+      }
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <table class="vehicles-table" id="vehiclesTable">
+        <thead>
+          <tr>
+            <th>{{ 'iot.vehicles.colBrand' | translate }}</th>
+            <th>{{ 'iot.vehicles.colModel' | translate }}</th>
+            <th>{{ 'iot.vehicles.colPlate' | translate }}</th>
+            <th>{{ 'iot.vehicles.colVin' | translate }}</th>
+            <th>{{ 'iot.vehicles.colYear' | translate }}</th>
+            <th class="col-actions">{{ 'iot.vehicles.colActions' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (vehicle of filteredVehicles(); track vehicle.id) {
+            <tr class="vehicle-row" [class.deleting]="isDeletingId() === vehicle.id">
+              <td>
+                <div class="brand-cell">
+                  <span class="brand-avatar">{{ vehicle.brand[0] }}</span>
+                  <strong>{{ vehicle.brand }}</strong>
+                </div>
+              </td>
+              <td class="model-cell">{{ vehicle.model }}</td>
+              <td>
+                <span class="plate-badge">{{ vehicle.plateNumber }}</span>
+              </td>
+              <td class="vin-cell">{{ vehicle.vin }}</td>
+              <td class="year-cell">{{ vehicle.year }}</td>
+              <td class="actions-cell">
+                <button
+                  type="button"
+                  class="action-btn telemetry-btn"
+                  [id]="'telemetryBtn-' + vehicle.id"
+                  (click)="viewTelemetry(vehicle.id)"
+                  title="{{ 'iot.vehicles.viewTelemetry' | translate }}"
+                >
+                  <i class="pi pi-chart-line"></i>
+                  <span>{{ 'iot.vehicles.viewTelemetry' | translate }}</span>
+                </button>
+                <button
+                  type="button"
+                  class="action-btn edit-btn"
+                  [id]="'editBtn-' + vehicle.id"
+                  (click)="editVehicle(vehicle.id)"
+                  title="{{ 'iot.vehicles.editBtn' | translate }}"
+                >
+                  <i class="pi pi-pencil"></i>
+                </button>
+                <button
+                  type="button"
+                  class="action-btn delete-btn"
+                  [id]="'deleteBtn-' + vehicle.id"
+                  (click)="deleteVehicle(vehicle.id)"
+                  [disabled]="isDeletingId() === vehicle.id"
+                  title="{{ 'iot.vehicles.deleteBtn' | translate }}"
+                >
+                  <i class="pi pi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
