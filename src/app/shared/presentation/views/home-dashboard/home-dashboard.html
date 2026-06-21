@@ -1,0 +1,21 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>{{ 'home-dashboard.title' | translate }}</h1>
+  </div>
+
+  <div class="dashboard-content">
+    @if (activeRole.includes('CUSTOMER')) {
+      <div class="welcome-card customer-card">
+        <i class="pi pi-car welcome-icon"></i>
+        <h2>{{ 'home-dashboard.customer_subtitle' | translate }}</h2>
+        <p>{{ 'home-dashboard.customer_desc' | translate }}</p>
+      </div>
+    } @else {
+      <div class="welcome-card staff-card">
+        <i class="pi pi-wrench welcome-icon"></i>
+        <h2>{{ 'home-dashboard.staff_subtitle' | translate }}</h2>
+        <p>{{ 'home-dashboard.staff_desc' | translate }}</p>
+      </div>
+    }
+  </div>
+</div>
