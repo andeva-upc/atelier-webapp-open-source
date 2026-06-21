@@ -13,8 +13,8 @@ import { UpdateWorkOrderTaskDetailsCommand } from '../../../domain/model/command
 import { AddProductToTaskCommand } from '../../../domain/model/commands/add-product-to-task.command';
 import { UpdateProductQuantityInTaskCommand } from '../../../domain/model/commands/update-product-quantity-in-task.command';
 
-import { MechanicSelectorComponent } from '../../../../fleet/presentation/components/mechanic-selector/mechanic-selector.component';
-import { ProductSelectorComponent } from '../../../../inventory/presentation/components/product-selector/product-selector.component';
+import { MechanicSelectorComponent } from '../../../../fleet/presentation/components/mechanic-selector/mechanic-selector';
+import { ProductSelectorComponent } from '../../../../inventory/presentation/components/product-selector/product-selector';
 
 interface AddedProduct {
   id: string;

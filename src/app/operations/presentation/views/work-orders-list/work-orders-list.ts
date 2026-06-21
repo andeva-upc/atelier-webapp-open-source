@@ -6,8 +6,8 @@ import { RouterModule, ActivatedRoute } from '@angular/router';
 import { OperationsStore } from '../../../application/operations.store';
 import { CoreStore } from '../../../../core/application/core.store';
 import { WorkOrderResource } from '../../../infrastructure/responses/work-order.response';
-import { EmployeeNameComponent } from '../../../../core/presentation/components/employee-name/employee-name.component';
-import { CustomerNameComponent } from '../../../../core/presentation/components/customer-name/customer-name.component';
+import { EmployeeNameComponent } from '../../../../core/presentation/components/employee-name/employee-name';
+import { CustomerNameComponent } from '../../../../core/presentation/components/customer-name/customer-name';
 
 // ---- View Model -------------------------------------------------------
 interface WorkOrderTask {

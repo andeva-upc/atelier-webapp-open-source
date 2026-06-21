@@ -8,9 +8,9 @@ import { OperationsStore } from '../../../application/operations.store';
 import { CreateWorkOrderCommand } from '../../../domain/model/commands/create-work-order.command';
 import { UpdateWorkOrderDetailsCommand } from '../../../domain/model/commands/update-work-order-details.command';
 
-import { AppointmentSelectorComponent } from '../../../../fleet/presentation/components/appointment-selector/appointment-selector.component';
-import { CustomerNameComponent } from '../../../../core/presentation/components/customer-name/customer-name.component';
-import { VehiclePlateComponent } from '../../../../iot/presentation/components/vehicle-plate/vehicle-plate.component';
+import { AppointmentSelectorComponent } from '../../../../fleet/presentation/components/appointment-selector/appointment-selector';
+import { CustomerNameComponent } from '../../../../core/presentation/components/customer-name/customer-name';
+import { VehiclePlateComponent } from '../../../../iot/presentation/components/vehicle-plate/vehicle-plate';
 
 @Component({
   selector: 'app-work-order-form-view',
