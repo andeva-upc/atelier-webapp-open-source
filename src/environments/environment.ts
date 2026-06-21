@@ -36,7 +36,7 @@ export const environment = {
       obd2DeviceRegistrations: '/obd2-device-registrations',
       vehicles: '/vehicles',
       customers: '/customers',
-      vhTelemetryBatches: '/vh_telemetry_batches'
+      vhTelemetryBatches: '/telemetry-batches'
     }
   }
 };

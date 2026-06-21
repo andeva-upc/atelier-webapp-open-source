@@ -20,7 +20,7 @@ export class Obd2DeviceRegistrationsApiEndpoint {
   }
 
   deactivate(id: string): Observable<Obd2DeviceRegistrationResource> {
-    return this.http.post<Obd2DeviceRegistrationResource>(`${this.baseUrl}/${id}/deactivate`, {});
+    return this.http.patch<Obd2DeviceRegistrationResource>(`${this.baseUrl}/${id}`, { status: 'INACTIVE' });
   }
 
   getByBranchIdAndStatus(branchId: string, status: string): Observable<Obd2DeviceRegistrationResource[]> {

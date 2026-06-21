@@ -39,8 +39,8 @@ export class Obd2DevicesApiEndpoint {
   }
 
   getAvailable(branchId: string): Observable<Obd2DeviceResource[]> {
-    return this.http.get<Obd2DeviceResource[]>(`${this.baseUrl}/available`, {
-      params: { branchId }
+    return this.http.get<Obd2DeviceResource[]>(this.baseUrl, {
+      params: { branchId, status: 'AVAILABLE' }
     });
   }
 }

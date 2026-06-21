@@ -1,0 +1,61 @@
+<div class="dtc-alerts-page">
+  <!-- Back Navigation -->
+  <a routerLink="/vehicles" class="back-link">
+    <i class="pi pi-arrow-left"></i>
+    {{ 'iot.vehicles.backToList' | translate }}
+  </a>
+
+  <!-- Header Section -->
+  <header class="page-header">
+    <div class="header-left">
+      <h1 class="page-title">
+        <i class="pi pi-exclamation-triangle title-icon"></i>
+        {{ 'iot.vehicles.dtcTitle' | translate }}
+      </h1>
+      <p class="page-subtitle">
+        @if (selectedVehicle()) {
+          {{ 'iot.vehicles.dtcSubtitle' | translate }} {{ selectedVehicle()?.brand }} {{ selectedVehicle()?.model }} ({{ selectedVehicle()?.plateNumber }})
+        } @else {
+          {{ 'iot.vehicles.dtcLoading' | translate }}
+        }
+      </p>
+    </div>
+    
+    <div class="header-right">
+      <button class="btn-calendar" type="button" title="{{ 'iot.vehicles.dtcCalendarBtn' | translate }}">
+        <i class="pi pi-calendar"></i>
+        {{ 'iot.vehicles.dtcCalendarBtn' | translate }}
+      </button>
+    </div>
+  </header>
+
+  <!-- Alerts List -->
+  <div class="alerts-container">
+    @if (store.dtcAlerts().length === 0) {
+      <div class="empty-state">
+        <div class="empty-state-icon">
+          <i class="pi pi-check-circle"></i>
+        </div>
+        <h2>{{ 'iot.vehicles.dtcEmptyTitle' | translate }}</h2>
+        <p>{{ 'iot.vehicles.dtcEmptySubtitle' | translate }}</p>
+      </div>
+    } @else {
+      <div class="alerts-grid">
+        @for (alert of store.dtcAlerts(); track alert.id) {
+          <div class="alert-card" [ngClass]="'severity-' + alert.severity">
+            <div class="alert-header">
+              <span class="alert-code">{{ alert.dtcCode }}</span>
+              <span class="alert-time">{{ alert.createdAt | date:'short' }}</span>
+            </div>
+            <div class="alert-body">
+              <p class="alert-desc">{{ alert.description }}</p>
+            </div>
+            <div class="alert-footer">
+              <span class="severity-badge">{{ alert.severity }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

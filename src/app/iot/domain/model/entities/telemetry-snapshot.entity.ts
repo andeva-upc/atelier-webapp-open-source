@@ -1,5 +1,6 @@
-export class TelemetrySnapshot {
-  id: string;
+import { BaseEntity } from '../../../../shared/domain/model/base-entity';
+
+export class TelemetrySnapshot extends BaseEntity {
   obd2DeviceRegistrationId: string;
   branchId: string;
   rpm: number;
@@ -10,7 +11,7 @@ export class TelemetrySnapshot {
   createdAt: string;
 
   constructor() {
-    this.id = '';
+    super({ id: '' });
     this.obd2DeviceRegistrationId = '';
     this.branchId = '';
     this.rpm = 0;

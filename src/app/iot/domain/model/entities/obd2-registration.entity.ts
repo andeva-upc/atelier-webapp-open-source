@@ -1,5 +1,6 @@
-export class Obd2DeviceRegistration {
-  id: string;
+import { BaseEntity } from '../../../../shared/domain/model/base-entity';
+
+export class Obd2DeviceRegistration extends BaseEntity {
   obd2DeviceId: string;
   branchId: string;
   vehicleId: string;
@@ -7,7 +8,7 @@ export class Obd2DeviceRegistration {
   createdAt: string;
 
   constructor() {
-    this.id = '';
+    super({ id: '' });
     this.obd2DeviceId = '';
     this.branchId = '';
     this.vehicleId = '';

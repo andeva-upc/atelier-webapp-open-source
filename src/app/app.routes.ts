@@ -8,6 +8,7 @@ const iamRoutes = () => import('./iam/presentation/iam.routes').then((m) => m.ia
 const inventoryRoutes = () => import('./inventory/inventory.routes').then((m) => m.INVENTORY_ROUTES);
 const billingRoutes = () => import('./billing/billing.routes').then((m) => m.BILLING_ROUTES);
 const telemetryRoutes = () => import('./iot/iot-telemetry.routes').then((m) => m.TELEMETRY_ROUTES);
+const vehiclesRoutes = () => import('./iot/iot-vehicles.routes').then((m) => m.VEHICLES_ROUTES);
 const workOrdersRoutes = () => import('./operations/presentation/work-orders.routes').then((m) => m.WORK_ORDERS_ROUTES);
 const fleetRoutes = () => import('./fleet/fleet.routes').then((m) => m.FLEET_ROUTES);
 
@@ -32,7 +33,7 @@ export const routes: Routes = [
     component: Home,
     canActivate: [iamGuard],
     children: [
-      { path: '', loadChildren: telemetryRoutes }
+      { path: '', loadChildren: vehiclesRoutes }
     ]
   },
   {

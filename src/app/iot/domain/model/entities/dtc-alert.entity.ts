@@ -1,5 +1,6 @@
-export class DtcAlert {
-  id: string;
+import { BaseEntity } from '../../../../shared/domain/model/base-entity';
+
+export class DtcAlert extends BaseEntity {
   telemetrySnapshotId: string;
   branchId: string;
   dtcCode: string;
@@ -8,7 +9,7 @@ export class DtcAlert {
   createdAt: string;
 
   constructor() {
-    this.id = '';
+    super({ id: '' });
     this.telemetrySnapshotId = '';
     this.branchId = '';
     this.dtcCode = '';
