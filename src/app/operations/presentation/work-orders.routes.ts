@@ -6,7 +6,7 @@ import { WorkOrderFormViewComponent } from './views/work-order-form-view/work-or
 export const WORK_ORDERS_ROUTES: Routes = [
   { path: '', component: WorkOrdersListComponent },
   { path: 'new', component: WorkOrderFormViewComponent },
-  { path: ':id/edit', component: WorkOrderFormViewComponent },
-  { path: 'tasks/new', component: TaskFormViewComponent },
-  { path: 'tasks/:id/edit', component: TaskFormViewComponent }
+  { path: ':id', component: WorkOrderFormViewComponent },
+  { path: ':workOrderId/tasks/new', component: TaskFormViewComponent },
+  { path: ':workOrderId/tasks/:id/edit', component: TaskFormViewComponent }
 ];

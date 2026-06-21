@@ -23,33 +23,15 @@
     </div>
   } @else {
   <div class="form-card">
-    <!-- Selector de Mecánico (Buscador + Selector) -->
+    <!-- Selector de Mecánico -->
     <div class="form-group">
-      <label class="form-label">Mechanic</label>
-      <div class="autocomplete-wrapper">
-        <i class="pi pi-user input-icon"></i>
-        <input
-          type="text"
-          placeholder="Search mechanic..."
-          class="form-control autocomplete-input"
-          [ngModel]="mechanicInput()"
-          (ngModelChange)="mechanicInput.set($event)"
-          (focus)="isMechanicDropdownOpen.set(true)"
-          (blur)="onMechanicBlur()"
-        />
-        @if (isMechanicDropdownOpen() && filteredMechanics().length > 0) {
-          <div class="autocomplete-dropdown">
-            @for (mech of filteredMechanics(); track mech.id) {
-              <div class="dropdown-item" (mousedown)="selectMechanic(mech)">
-                <span class="item-name">{{ mech.name }}</span>
-                @if (mech.speciality) {
-                  <span class="item-price">{{ mech.speciality }}</span>
-                }
-              </div>
-            }
-          </div>
-        }
-      </div>
+      @if (branchId()) {
+        <app-mechanic-selector
+          [branchId]="branchId()!"
+          [selectedMechanicId]="selectedMechanicId()"
+          (mechanicSelected)="onMechanicSelected($event)"
+        ></app-mechanic-selector>
+      }
     </div>
 
     <!-- Fila para Servicio y Estado -->
@@ -75,12 +57,12 @@
           
           @if (isServiceDropdownOpen()) {
             <div class="select-dropdown">
-              @if (servicesList().length === 0) {
+              @if (servicesList.length === 0) {
                 <div class="select-item" style="color: #888; font-style: italic;">
                   No hay servicios disponibles en esta sucursal
                 </div>
               }
-              @for (srv of servicesList(); track srv.id) {
+              @for (srv of servicesList; track srv.id) {
                 <div class="select-item" (click)="selectService(srv)">
                   <span class="item-name">{{ srv.name }}</span>
                   <span class="item-price">${{ srv.price }}</span>
@@ -99,25 +81,13 @@
             <button
               type="button"
               class="form-control select-trigger"
-              (click)="isStatusDropdownOpen.set(!isStatusDropdownOpen())"
+              style="cursor: not-allowed; opacity: 0.8;"
+              disabled
             >
               <span class="trigger-text">
                 {{ selectedStatus() === 'IN_PROGRESS' ? 'IN PROGRESS' : selectedStatus() }}
               </span>
-              <i class="pi pi-chevron-down trigger-icon"></i>
             </button>
-            
-            @if (isStatusDropdownOpen()) {
-              <div class="select-dropdown">
-                @for (st of statusList; track st) {
-                  <div class="select-item" (click)="selectStatus(st)">
-                    <span class="item-name">
-                      {{ st === 'IN_PROGRESS' ? 'IN PROGRESS' : st }}
-                    </span>
-                  </div>
-                }
-              </div>
-            }
           </div>
         </div>
       }
@@ -189,31 +159,16 @@
       </button>
     </div>
     <div class="modal-body">
-      <!-- Selector de Producto (Buscador + Selector) -->
+      <!-- Selector de Producto -->
       <div class="form-group">
-        <label class="form-label">Product Name / SKU</label>
-        <div class="autocomplete-wrapper">
-          <i class="pi pi-box input-icon"></i>
-          <input
-            type="text"
-            placeholder="Search by name or SKU..."
-            class="form-control autocomplete-input"
-            [ngModel]="productSearchInput()"
-            (ngModelChange)="productSearchInput.set($event)"
-            (focus)="isProductDropdownOpen.set(true)"
-            (blur)="onProductSearchBlur()"
-          />
-          @if (isProductDropdownOpen() && filteredProducts().length > 0) {
-            <div class="autocomplete-dropdown">
-              @for (prod of filteredProducts(); track prod.id) {
-                <div class="dropdown-item" (mousedown)="selectModalProduct(prod)">
-                  <span class="item-name">{{ prod.name }}</span>
-                  <span class="item-price">${{ prod.price }} · Stock: {{ prod.currentStock }}</span>
-                </div>
-              }
-            </div>
-          }
-        </div>
+        @if (branchId()) {
+          <app-product-selector
+            [branchId]="branchId()!"
+            [selectedProductId]="selectedProductForModal()?.id || null"
+            (productSelected)="onModalProductSelected($event)"
+            [disabled]="isEditingProduct()"
+          ></app-product-selector>
+        }
       </div>
 
       <!-- Cantidad -->

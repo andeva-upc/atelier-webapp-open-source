@@ -283,3 +283,20 @@
     gap: 0;
   }
 }
+
+.auto-filled-info {
+  background-color: #f8fafc;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e1;
+  margin-bottom: 1.5rem;
+}
+
+.read-only-field {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #334155;
+  font-weight: 500;
+  padding: 0.5rem 0;
+}
