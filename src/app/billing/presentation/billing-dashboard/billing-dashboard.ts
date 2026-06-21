@@ -6,10 +6,10 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BillingStore } from '../../application/billing.store';
 import { FinancialKpiCardsComponent } from '../components/financial-kpi-cards/financial-kpi-cards';
 import { IncomeExpenseChartComponent } from '../components/income-expense-chart/income-expense-chart';
-import { IncomeListComponent } from '../components/income-list/income-list.component';
-import { ExpenseListComponent } from '../components/expense-list/expense-list.component';
-import { QuoteListComponent } from '../components/quote-list/quote-list.component';
-import { CheckoutDialogComponent } from '../components/checkout-dialog/checkout-dialog.component';
+import { IncomeListComponent } from '../components/income-list/income-list';
+import { ExpenseListComponent } from '../components/expense-list/expense-list';
+import { QuoteListComponent } from '../components/quote-list/quote-list';
+import { CheckoutDialogComponent } from '../components/checkout-dialog/checkout-dialog';
 
 @Component({
   selector: 'app-billing-dashboard',

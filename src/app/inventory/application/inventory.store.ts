@@ -38,6 +38,10 @@ export class InventoryStore {
     });
   }
 
+  getProductByIdObservable(productId: string) {
+    return this.api.products.getById(productId);
+  }
+
   createProduct(command: CreateProductCommand): Observable<ProductResponse> {
     return this.api.products.create(command).pipe(
       tap({

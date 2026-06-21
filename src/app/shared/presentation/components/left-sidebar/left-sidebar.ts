@@ -31,7 +31,7 @@ export class LeftSidebar {
         { link: '/work-orders', label: 'option.work-orders', icon: 'pi pi-wrench' },
         { link: '/inventory', label: 'option.inventory', icon: 'pi pi-box' },
         { link: '/fleet/customers', label: 'option.customers', icon: 'pi pi-users' },
-        { link: '/staff', label: 'option.staff', icon: 'pi pi-briefcase' },
+        { link: '/fleet/staff', label: 'option.staff', icon: 'pi pi-briefcase' },
         { link: '/fleet/appointments', label: 'option.appointments', icon: 'pi pi-calendar' },
         { link: '/telemetry', label: 'option.telemetry', icon: 'pi pi-chart-line' },
         { link: '/billing', label: 'option.billing', icon: 'pi pi-receipt' },

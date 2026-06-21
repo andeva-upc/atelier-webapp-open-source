@@ -68,15 +68,15 @@
 
   <!-- Lista de Órdenes de Trabajo -->
   <div class="work-orders-list">
-    @if (isLoading()) {
-      <div class="empty-state">
-        <i class="pi pi-spin pi-spinner empty-icon"></i>
-        <p>Cargando órdenes de trabajo...</p>
-      </div>
-    } @else if (filteredWorkOrders().length === 0) {
+    @if (!workOrders() || workOrders().length === 0) {
       <div class="empty-state">
         <i class="pi pi-inbox empty-icon"></i>
         <p>No se encontraron órdenes de trabajo.</p>
+      </div>
+    } @else if (filteredWorkOrders().length === 0) {
+      <div class="empty-state">
+        <i class="pi pi-search empty-icon"></i>
+        <p>No se encontraron resultados para la búsqueda.</p>
       </div>
     } @else {
       @for (order of filteredWorkOrders(); track order.id) {
@@ -92,16 +92,16 @@
               </div>
               <h3 class="order-title">{{ order.title }}</h3>
               <div class="meta-row">
+                @if (order.customerId) {
+                  <span class="meta-item">
+                    <i class="pi pi-user icon-meta"></i>
+                    <app-customer-name [customerId]="order.customerId"></app-customer-name>
+                  </span>
+                }
                 @if (order.date) {
                   <span class="meta-item">
                     <i class="pi pi-calendar icon-meta"></i>
                     {{ order.date }}
-                  </span>
-                }
-                @if (order.mechanicName) {
-                  <span class="meta-item">
-                    <i class="pi pi-user icon-meta"></i>
-                    {{ order.mechanicName }}
                   </span>
                 }
               </div>
@@ -110,7 +110,7 @@
               @if (order.status === 'COMPLETED') {
                 <a 
                   class="btn btn-primary btn-open-edit" 
-                  [routerLink]="['/work-orders', order.id, 'edit']"
+                  [routerLink]="['/work-orders', order.id]"
                   (click)="$event.stopPropagation()"
                 >
                   Open edit
@@ -138,7 +138,7 @@
 
                 <!-- Botón Agregar Tarea -->
                 @if (order.status !== 'COMPLETED' && order.status !== 'PAID') {
-                  <a class="btn btn-secondary btn-add-task" [routerLink]="['/work-orders/tasks/new']" [queryParams]="{ workOrderId: order.id }">
+                  <a class="btn btn-secondary btn-add-task" [routerLink]="['/work-orders', order.id, 'tasks', 'new']">
                     <i class="pi pi-plus-circle icon-add"></i>
                     Add Work Order Task
                   </a>
@@ -172,6 +172,14 @@
         <span class="detail-value">{{ selectedOrderForDetails()?.title }}</span>
       </div>
       <div class="detail-row">
+        <span class="detail-label">Cliente:</span>
+        <span class="detail-value">
+          @if (selectedOrderForDetails()?.customerId) {
+            <app-customer-name [customerId]="selectedOrderForDetails()!.customerId!"></app-customer-name>
+          }
+        </span>
+      </div>
+      <div class="detail-row">
         <span class="detail-label">Status:</span>
         <span class="status-badge" [class]="selectedOrderForDetails()?.status?.toLowerCase()">
           {{ selectedOrderForDetails()?.status === 'IN_PROGRESS' ? 'IN PROGRESS' : selectedOrderForDetails()?.status }}
@@ -184,7 +192,7 @@
     </div>
     @if (selectedOrderForDetails()?.status !== 'COMPLETED' && selectedOrderForDetails()?.status !== 'PAID') {
       <div class="modal-footer">
-        <a class="btn btn-primary btn-edit-order" [routerLink]="['/work-orders', selectedOrderForDetails()?.id, 'edit']" (click)="closeDetails()">
+        <a class="btn btn-primary btn-edit-order" [routerLink]="['/work-orders', selectedOrderForDetails()?.id]" (click)="closeDetails()">
           Edit
         </a>
       </div>
@@ -215,7 +223,13 @@
       </div>
       <div class="detail-row">
         <span class="detail-label">Mecánico:</span>
-        <span class="detail-value">{{ selectedTaskForDetails()?.mechanicName }}</span>
+        <span class="detail-value">
+          @if (selectedTaskForDetails()?.assignedMechanicId) {
+            <app-employee-name [employeeId]="selectedTaskForDetails()!.assignedMechanicId!"></app-employee-name>
+          } @else {
+            No asignado
+          }
+        </span>
       </div>
       <div class="detail-row">
         <span class="detail-label">Descripción:</span>
@@ -226,8 +240,7 @@
       <div class="modal-footer">
         <a 
           class="btn btn-primary btn-edit-order" 
-          [routerLink]="['/work-orders/tasks', selectedTaskForDetails()?.id, 'edit']"
-          [queryParams]="{ workOrderId: selectedTaskOrderContext()?.id }"
+          [routerLink]="['/work-orders', selectedTaskOrderContext()?.id, 'tasks', selectedTaskForDetails()?.id, 'edit']"
           (click)="closeTaskDetails()"
         >
           Edit

@@ -68,15 +68,15 @@ export class StaffFormDialogComponent {
     this.foundProfileName = null;
     this.form.get('employeeId')?.setValue('');
 
-    this.coreApi.profiles.getProfileByDocumentNumber(docNumber).subscribe({
-      next: (profile) => {
+    this.coreApi.employees.getByDocumentNumber(docNumber).subscribe({
+      next: (employee) => {
         this.isSearching = false;
-        this.foundProfileName = `${profile.firstName} ${profile.lastName}`;
-        this.form.get('employeeId')?.setValue(profile.userId);
+        this.foundProfileName = `${employee.firstName} ${employee.lastName}`;
+        this.form.get('employeeId')?.setValue(employee.id);
       },
       error: () => {
         this.isSearching = false;
-        this.searchError = 'Perfil no encontrado o DNI inválido';
+        this.searchError = 'Empleado no encontrado. Asegúrese de que esté registrado en el sistema.';
       }
     });
   }

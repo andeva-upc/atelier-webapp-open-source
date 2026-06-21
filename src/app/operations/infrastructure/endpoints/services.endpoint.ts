@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 
@@ -22,14 +22,15 @@ export class ServicesApiEndpoint {
 
   update(serviceId: string, command: UpdateServiceCommand): Observable<ServiceResource> {
     const request = UpdateServiceRequestAssembler.toRequestFromCommand(command);
-    return this.http.put<ServiceResource>(`${this.baseUrl}/service/${serviceId}`, request);
+    return this.http.put<ServiceResource>(`${this.baseUrl}/${serviceId}`, request);
   }
 
   delete(serviceId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/service/${serviceId}`);
+    return this.http.delete<void>(`${this.baseUrl}/${serviceId}`);
   }
 
   getByBranchId(branchId: string): Observable<ServiceResource[]> {
-    return this.http.get<ServiceResource[]>(`${this.baseUrl}/service/${branchId}`);
+    const params = new HttpParams().set('branchId', branchId);
+    return this.http.get<ServiceResource[]>(`${this.baseUrl}`, { params });
   }
 }

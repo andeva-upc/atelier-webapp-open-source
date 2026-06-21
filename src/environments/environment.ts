@@ -23,7 +23,8 @@ export const environment = {
     },
     operations: {
       services: '/services',
-      workOrders: '/work-orders'
+      workOrders: '/work-orders',
+      workOrderTasks: '/work-order-tasks'
     },
     fleet: {
       appointments: '/appointments',

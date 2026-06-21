@@ -24,6 +24,10 @@ export class VehiclesApiEndpoint {
     });
   }
 
+  getById(id: string): Observable<VehicleResource> {
+    return this.http.get<VehicleResource>(`${this.baseUrl}/${id}`);
+  }
+
   register(command: RegisterVehicleCommand): Observable<VehicleRegistrationResource> {
     const request = RegisterVehicleRequestAssembler.toRequestFromCommand(command);
     return this.http.post<VehicleRegistrationResource>(this.baseUrl, request);

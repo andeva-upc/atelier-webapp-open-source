@@ -1,0 +1,15 @@
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Vehículo</mat-label>
+      <mat-select [ngModel]="selectedVehicleId" (ngModelChange)="onSelectionChange($event)" [disabled]="disabled || !customerId">
+        @for (vehicle of iotStore.vehicles(); track vehicle.id) {
+          <mat-option [value]="vehicle.id">
+            {{ vehicle.plateNumber }} ({{ vehicle.brand }} {{ vehicle.model }})
+          </mat-option>
+        }
+        @empty {
+          <mat-option disabled>No hay vehículos registrados para este cliente</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  

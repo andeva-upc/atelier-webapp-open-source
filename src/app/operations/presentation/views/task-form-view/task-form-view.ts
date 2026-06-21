@@ -5,47 +5,29 @@ import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 import { CoreStore } from '../../../../core/application/core.store';
-import { CoreApi } from '../../../../core/infrastructure/core-api';
-import { FleetApi } from '../../../../fleet/infrastructure/fleet-api';
-import { OperationsApi } from '../../../infrastructure/operations-api';
-import { InventoryApi } from '../../../../inventory/infrastructure/inventory-api';
+import { OperationsStore } from '../../../application/operations.store';
+import { InventoryStore } from '../../../../inventory/application/inventory.store';
 
 import { AddTaskToWorkOrderCommand } from '../../../domain/model/commands/add-task-to-work-order.command';
 import { UpdateWorkOrderTaskDetailsCommand } from '../../../domain/model/commands/update-work-order-task-details.command';
 import { AddProductToTaskCommand } from '../../../domain/model/commands/add-product-to-task.command';
 import { UpdateProductQuantityInTaskCommand } from '../../../domain/model/commands/update-product-quantity-in-task.command';
 
-// ---- View Models -------------------------------------------------------
-interface ServiceOption {
+import { MechanicSelectorComponent } from '../../../../fleet/presentation/components/mechanic-selector/mechanic-selector';
+import { ProductSelectorComponent } from '../../../../inventory/presentation/components/product-selector/product-selector';
+
+interface AddedProduct {
   id: string;
   name: string;
   price: number;
-}
-
-interface MechanicOption {
-  id: string;       // employeeId (UUID used in API calls)
-  name: string;     // "firstName lastName"
-  speciality: string;
-}
-
-interface ProductOption {
-  id: string;
-  name: string;
-  price: number;
-  sku: string;
-  currentStock: number;
-}
-
-interface AddedProduct extends ProductOption {
   quantity: number;
-  taskProductId?: string; // set when loaded in edit mode (for DELETE calls)
+  taskProductId?: string;
 }
-// -----------------------------------------------------------------------
 
 @Component({
   selector: 'app-task-form-view',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, MechanicSelectorComponent, ProductSelectorComponent],
   templateUrl: './task-form-view.html',
   styleUrl: './task-form-view.css'
 })
@@ -53,69 +35,34 @@ export class TaskFormViewComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private coreStore = inject(CoreStore);
-  private coreApi = inject(CoreApi);
-  private fleetApi = inject(FleetApi);
-  private operationsApi = inject(OperationsApi);
-  private inventoryApi = inject(InventoryApi);
+  private operationsStore = inject(OperationsStore);
+  private inventoryStore = inject(InventoryStore);
 
   workOrderId: string | null = null;
   taskId: string | null = null;
+  branchId = signal<string | null>(null);
 
-  // --- Modo Edición vs Creación ---
   isEditMode = signal<boolean>(false);
   isLoading = signal<boolean>(false);
 
-  // --- Campos del Formulario ---
-  mechanicInput = signal<string>('');
   selectedMechanicId = signal<string>('');
-  selectedService = signal<ServiceOption | null>(null);
+  selectedService = signal<{ id: string, name: string, price: number } | null>(null);
   selectedStatus = signal<string>('PENDING');
   description = signal<string>('');
   addedProducts = signal<AddedProduct[]>([]);
 
-  // Productos originales (edit mode) para comparar y gestionar diffs
   private originalProducts: AddedProduct[] = [];
 
-  // --- Listas del Backend ---
-  servicesList = signal<ServiceOption[]>([]);
-  mechanicsList = signal<MechanicOption[]>([]);
-  productsList = signal<ProductOption[]>([]);
+  isServiceDropdownOpen = signal<boolean>(false);
+  isProductModalOpen = signal<boolean>(false);
+
+  isEditingProduct = signal<boolean>(false);
+  editingProductIndex = signal<number | null>(null);
+  selectedProductForModal = signal<{ id: string, name: string, price: number } | null>(null);
+  tempProductQuantity = signal<number>(1);
 
   statusList = ['PENDING', 'IN_PROGRESS', 'COMPLETED'];
 
-  // --- Estados de Modales / Dropdowns ---
-  isMechanicDropdownOpen = signal<boolean>(false);
-  isServiceDropdownOpen = signal<boolean>(false);
-  isStatusDropdownOpen = signal<boolean>(false);
-  isProductModalOpen = signal<boolean>(false);
-
-  // --- Para Agregar/Editar Producto en Modal ---
-  isEditingProduct = signal<boolean>(false);
-  editingProductIndex = signal<number | null>(null);
-  productSearchInput = signal<string>('');
-  selectedProductForModal = signal<ProductOption | null>(null);
-  tempProductQuantity = signal<number>(1);
-  isProductDropdownOpen = signal<boolean>(false);
-
-  // --- Filtros Reactivos ---
-  filteredMechanics = computed(() => {
-    const search = this.mechanicInput().toLowerCase().trim();
-    const list = this.mechanicsList();
-    if (search === '') return list;
-    return list.filter(m => m.name.toLowerCase().includes(search));
-  });
-
-  filteredProducts = computed(() => {
-    const search = this.productSearchInput().toLowerCase().trim();
-    const list = this.productsList();
-    if (search === '') return list;
-    return list.filter(p =>
-      p.name.toLowerCase().includes(search) ||
-      p.sku.toLowerCase().includes(search)
-    );
-  });
-
-  // --- Precio Total Automático ---
   totalPrice = computed(() => {
     const servicePrice = this.selectedService()?.price || 0;
     const productsPrice = this.addedProducts().reduce(
@@ -130,21 +77,17 @@ export class TaskFormViewComponent implements OnInit {
   });
 
   constructor() {
-    // Reactively load services, mechanics and products when branch changes
     effect(() => {
       const branch = this.coreStore.currentBranch();
       if (branch?.id) {
-        this.loadBranchData(branch.id.toString());
+        this.branchId.set(branch.id.toString());
+        this.operationsStore.loadServicesByBranchId(branch.id.toString());
       }
-    });
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit() {
-    // workOrderId comes from query params (both create and edit)
-    this.route.queryParams.subscribe(qParams => {
-      this.workOrderId = qParams['workOrderId'] || null;
-    });
-
+    this.workOrderId = this.route.snapshot.paramMap.get('workOrderId');
     this.taskId = this.route.snapshot.paramMap.get('id');
 
     if (this.taskId && this.workOrderId) {
@@ -153,59 +96,13 @@ export class TaskFormViewComponent implements OnInit {
     }
   }
 
-  // ---- Data Loading ----------------------------------------------------
-
-  private loadBranchData(branchId: string) {
-    // Load services, mechanics (employee registrations), and products in parallel
-    forkJoin({
-      services: this.operationsApi.services.getByBranchId(branchId),
-      employeeRegs: this.fleetApi.employeeRegistrations.getByBranchId(branchId),
-      products: this.inventoryApi.products.getByBranchId(branchId)
-    }).subscribe({
-      next: ({ services, employeeRegs, products }) => {
-        // Map services
-        this.servicesList.set(services.map(s => ({
-          id: s.id,
-          name: s.name,
-          price: s.price
-        })));
-
-        // Map products
-        this.productsList.set(products.map(p => ({
-          id: p.id,
-          name: p.name,
-          price: p.salePrice,
-          sku: p.sku,
-          currentStock: p.currentStock
-        })));
-
-        // Load employee profiles for each active registration to get names
-        const activeRegs = employeeRegs.filter(r => r.status === 'ACTIVE');
-        if (activeRegs.length === 0) {
-          this.mechanicsList.set([]);
-          return;
-        }
-
-        const profileRequests = activeRegs.map(r => this.coreApi.employees.getById(r.employeeId));
-        forkJoin(profileRequests).subscribe({
-          next: (profiles) => {
-            const mechanics = profiles.map((p, i) => ({
-              id: activeRegs[i].employeeId,
-              name: `${p.firstName} ${p.lastName}`,
-              speciality: activeRegs[i].speciality
-            }));
-            this.mechanicsList.set(mechanics);
-          },
-          error: (err) => console.error('Failed to load mechanic profiles:', err)
-        });
-      },
-      error: (err) => console.error('Failed to load branch data for task form:', err)
-    });
+  get servicesList() {
+    return this.operationsStore.currentBranchServices();
   }
 
   private loadTaskData(workOrderId: string, taskId: string) {
     this.isLoading.set(true);
-    this.operationsApi.workOrders.getById(workOrderId).subscribe({
+    this.operationsStore.getWorkOrderByIdObservable(workOrderId).subscribe({
       next: (order) => {
         const task = (order.tasks || []).find((t: any) => t.id === taskId);
         if (!task) {
@@ -217,33 +114,25 @@ export class TaskFormViewComponent implements OnInit {
         this.selectedStatus.set(task.status || 'PENDING');
         this.description.set(task.description || '');
 
-        // Pre-select mechanic
         if (task.assignedMechanicId) {
           this.selectedMechanicId.set(task.assignedMechanicId);
-          this.coreApi.employees.getById(task.assignedMechanicId).subscribe({
-            next: (emp) => this.mechanicInput.set(`${emp.firstName} ${emp.lastName}`),
-            error: () => this.mechanicInput.set(task.assignedMechanicId)
-          });
         }
 
-        // Pre-select service (wait for servicesList to load)
         if (task.serviceId) {
           const trySelectService = () => {
-            const matched = this.servicesList().find(s => s.id === task.serviceId);
+            const matched = this.servicesList.find(s => s.id === task.serviceId);
             if (matched) {
-              this.selectedService.set(matched);
-            } else if (this.servicesList().length === 0) {
-              // Services not loaded yet, retry after a tick
+              this.selectedService.set({ id: matched.id, name: matched.name, price: matched.price });
+            } else if (this.servicesList.length === 0) {
               setTimeout(trySelectService, 300);
             }
           };
           trySelectService();
         }
 
-        // Load existing products
         if (task.products && task.products.length > 0) {
           const productProfileRequests = task.products.map((tp: any) =>
-            this.inventoryApi.products.getById(tp.productId)
+            this.inventoryStore.getProductByIdObservable(tp.productId)
           );
           forkJoin(productProfileRequests).subscribe({
             next: (prods: any[]) => {
@@ -251,8 +140,6 @@ export class TaskFormViewComponent implements OnInit {
                 id: p.id,
                 name: p.name,
                 price: p.salePrice,
-                sku: p.sku,
-                currentStock: p.currentStock,
                 quantity: task.products[i].quantity,
                 taskProductId: task.products[i].id
               }));
@@ -272,40 +159,26 @@ export class TaskFormViewComponent implements OnInit {
     });
   }
 
-  // ---- Mechanic Selection ----------------------------------------------
-  selectMechanic(mech: MechanicOption) {
-    this.mechanicInput.set(mech.name);
-    this.selectedMechanicId.set(mech.id);
-    this.isMechanicDropdownOpen.set(false);
+  onMechanicSelected(mechanicId: string) {
+    this.selectedMechanicId.set(mechanicId);
   }
 
-  // ---- Service Selection -----------------------------------------------
-  selectService(service: ServiceOption) {
-    this.selectedService.set(service);
+  selectService(service: any) {
+    this.selectedService.set({ id: service.id, name: service.name, price: service.price });
     this.isServiceDropdownOpen.set(false);
     if (this.description().trim() === '') {
       this.description.set(`Perform standard ${service.name}.`);
     }
   }
 
-  // ---- Status Selection -----------------------------------------------
   selectStatus(status: string) {
     this.selectedStatus.set(status);
-    this.isStatusDropdownOpen.set(false);
   }
 
-  // ---- Product Modal ---------------------------------------------------
   openProductModal() {
     this.isEditingProduct.set(false);
     this.editingProductIndex.set(null);
-    const list = this.productsList();
-    if (list.length > 0) {
-      this.selectedProductForModal.set(list[0]);
-      this.productSearchInput.set(list[0].name);
-    } else {
-      this.selectedProductForModal.set(null);
-      this.productSearchInput.set('');
-    }
+    this.selectedProductForModal.set(null);
     this.tempProductQuantity.set(1);
     this.isProductModalOpen.set(true);
   }
@@ -313,16 +186,17 @@ export class TaskFormViewComponent implements OnInit {
   openEditProductModal(product: AddedProduct, index: number) {
     this.isEditingProduct.set(true);
     this.editingProductIndex.set(index);
-    const original = this.productsList().find(p => p.id === product.id) || product;
-    this.selectedProductForModal.set(original);
-    this.productSearchInput.set(original.name);
+    this.selectedProductForModal.set({ id: product.id, name: product.name, price: product.price });
     this.tempProductQuantity.set(product.quantity);
     this.isProductModalOpen.set(true);
   }
 
   closeProductModal() {
     this.isProductModalOpen.set(false);
-    this.isProductDropdownOpen.set(false);
+  }
+
+  onModalProductSelected(productInfo: {id: string, name: string, stockQuantity: number, price: number}) {
+    this.selectedProductForModal.set({ id: productInfo.id, name: productInfo.name, price: productInfo.price });
   }
 
   saveProductModalChanges() {
@@ -334,42 +208,26 @@ export class TaskFormViewComponent implements OnInit {
       const idx = this.editingProductIndex();
       if (idx !== null) {
         this.addedProducts.update(products =>
-          products.map((p, i) => i === idx
-            ? { ...p, quantity: qty }
-            : p
-          )
+          products.map((p, i) => i === idx ? { ...p, quantity: qty } : p)
         );
       }
     } else {
       this.addedProducts.update(products => {
         const existing = products.find(p => p.id === selectedProd.id);
         if (existing) {
-          return products.map(p =>
-            p.id === selectedProd.id ? { ...p, quantity: p.quantity + qty } : p
-          );
+          return products.map(p => p.id === selectedProd.id ? { ...p, quantity: p.quantity + qty } : p);
         } else {
-          return [...products, { ...selectedProd, quantity: qty }];
+          return [...products, { id: selectedProd.id, name: selectedProd.name, price: selectedProd.price, quantity: qty }];
         }
       });
     }
     this.closeProductModal();
   }
 
-  selectModalProduct(prod: ProductOption) {
-    this.selectedProductForModal.set(prod);
-    this.productSearchInput.set(prod.name);
-    this.isProductDropdownOpen.set(false);
-  }
-
-  onProductSearchBlur() {
-    setTimeout(() => this.isProductDropdownOpen.set(false), 200);
-  }
-
   removeProduct(prodId: string) {
     this.addedProducts.update(products => products.filter(p => p.id !== prodId));
   }
 
-  // ---- Save (Create / Edit) -------------------------------------------
   saveChanges() {
     if (!this.workOrderId) {
       alert('Error: No se encontró el ID de la orden de trabajo.');
@@ -400,13 +258,12 @@ export class TaskFormViewComponent implements OnInit {
     const command = new AddTaskToWorkOrderCommand(
       this.selectedService()!.id,
       this.selectedMechanicId(),
-      this.description().trim(),
-      this.selectedService()!.price
+      this.description().trim()
     );
 
-    this.operationsApi.workOrders.addTask(this.workOrderId!, command).subscribe({
+    // Using Observable to chain products
+    this.operationsStore.getOperationsApi().workOrders.addTask(this.workOrderId!, command).subscribe({
       next: (updatedOrder) => {
-        // Find the newly created task (last in the list)
         const tasks = updatedOrder.tasks || [];
         const newTask = tasks[tasks.length - 1];
 
@@ -427,11 +284,10 @@ export class TaskFormViewComponent implements OnInit {
     const command = new UpdateWorkOrderTaskDetailsCommand(
       this.selectedService()!.id,
       this.selectedMechanicId(),
-      this.description().trim(),
-      this.selectedService()!.price
+      this.description().trim()
     );
 
-    this.operationsApi.workOrders.updateTaskDetails(this.workOrderId!, this.taskId!, command).subscribe({
+    this.operationsStore.getOperationsApi().workOrders.updateTaskDetails(this.workOrderId!, this.taskId!, command).subscribe({
       next: () => {
         this.syncProducts();
       },
@@ -443,16 +299,17 @@ export class TaskFormViewComponent implements OnInit {
   }
 
   private addProductsToTask(workOrderId: string, taskId: string, products: AddedProduct[]) {
+    const api = this.operationsStore.getOperationsApi();
     const addCalls = products.map(p => {
-      const cmd = new AddProductToTaskCommand(p.id, p.quantity, p.price);
-      return this.operationsApi.workOrders.addProductToTask(workOrderId, taskId, cmd);
+      const cmd = new AddProductToTaskCommand(p.id, p.quantity);
+      return api.workOrderTasks.addProductToTask(taskId, cmd);
     });
 
     forkJoin(addCalls).subscribe({
       next: () => this.goBack(),
       error: (err) => {
         console.error('Failed to add products to task:', err);
-        this.goBack(); // Still navigate even if products failed
+        this.goBack(); 
       }
     });
   }
@@ -460,6 +317,7 @@ export class TaskFormViewComponent implements OnInit {
   private syncProducts() {
     const current = this.addedProducts();
     const original = this.originalProducts;
+    const api = this.operationsStore.getOperationsApi();
 
     const toAdd = current.filter(p => !original.find(o => o.id === p.id));
     const toRemove = original.filter(o => !current.find(p => p.id === o.id));
@@ -470,29 +328,22 @@ export class TaskFormViewComponent implements OnInit {
 
     const calls: any[] = [];
 
-    // Add new products
     toAdd.forEach(p => {
-      const cmd = new AddProductToTaskCommand(p.id, p.quantity, p.price);
-      calls.push(this.operationsApi.workOrders.addProductToTask(this.workOrderId!, this.taskId!, cmd));
+      const cmd = new AddProductToTaskCommand(p.id, p.quantity);
+      calls.push(api.workOrderTasks.addProductToTask(this.taskId!, cmd));
     });
 
-    // Remove deleted products
     toRemove.forEach(p => {
       if (p.taskProductId) {
-        calls.push(this.operationsApi.workOrders.removeProductFromTask(
-          this.workOrderId!, this.taskId!, p.taskProductId
-        ));
+        calls.push(api.workOrderTasks.removeProductFromTask(this.taskId!, p.taskProductId));
       }
     });
 
-    // Update changed quantities
     toUpdate.forEach(p => {
       const orig = original.find(o => o.id === p.id);
       if (orig?.taskProductId) {
         const cmd = new UpdateProductQuantityInTaskCommand(p.id, p.quantity);
-        calls.push(this.operationsApi.workOrders.updateProductQuantityInTask(
-          this.workOrderId!, this.taskId!, orig.taskProductId, cmd
-        ));
+        calls.push(api.workOrderTasks.updateProductQuantityInTask(this.taskId!, orig.taskProductId, cmd));
       }
     });
 
@@ -514,9 +365,5 @@ export class TaskFormViewComponent implements OnInit {
     this.router.navigate(['/work-orders'], {
       queryParams: { expandedOrderId: this.workOrderId }
     });
-  }
-
-  onMechanicBlur() {
-    setTimeout(() => this.isMechanicDropdownOpen.set(false), 200);
   }
 }

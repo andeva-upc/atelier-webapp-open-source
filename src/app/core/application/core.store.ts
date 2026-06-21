@@ -74,6 +74,10 @@ export class CoreStore {
     });
   }
 
+  getCustomerByIdObservable(customerId: string) {
+    return this.coreApi.customers.getById(customerId);
+  }
+
   loadCustomerByUserId(userId: string) {
     this.coreApi.customers.getByUserId(userId).subscribe({
       next: (resource) => {
@@ -147,6 +151,10 @@ export class CoreStore {
       next: (resource) => this.currentEmployeeSignal.set(resource),
       error: (err) => console.error('Failed to load employee:', err)
     });
+  }
+
+  getEmployeeByIdObservable(employeeId: string) {
+    return this.coreApi.employees.getById(employeeId);
   }
 
   loadEmployeeByUserId(userId: string) {

@@ -3,7 +3,6 @@ export interface CreateWorkOrderRequest {
   branchId: string;
   vehicleId: string;
   customerId: string;
-  internalNumber: number;
   diagnosticSummary: string;
   mileageIn: number;
 }

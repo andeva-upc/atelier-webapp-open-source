@@ -1,6 +1,5 @@
 export interface UpdateWorkOrderTaskDetailsRequest {
   serviceId: string;
-  mechanicId: string;
+  assignedMechanicId: string;
   description: string;
-  newLaborPrice: number;
 }

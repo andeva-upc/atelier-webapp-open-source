@@ -7,8 +7,8 @@ export class CreateEmployeeRegistrationRequestAssembler {
       employeeId: command.employeeId,
       branchId: command.branchId,
       speciality: command.speciality,
-      salary: command.salary,
-      status: command.status
+      specialityName: command.specialityName,
+      salary: command.salary
     };
   }
 }
