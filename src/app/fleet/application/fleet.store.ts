@@ -154,7 +154,8 @@ export class FleetStore {
   }
 
   updateCustomerRegistration(registrationId: string, command: UpdateCustomerRegistrationCommand) {
-    this.api.customerRegistrations.update(registrationId, command).subscribe({
+    const request = this.api.customerRegistrations.update(registrationId, command);
+    request.subscribe({
       next: (registration) => {
         this.customerRegistrationsSignal.update((list) =>
           list.map((item) => item.id === registration.id ? registration : item)
@@ -163,10 +164,12 @@ export class FleetStore {
       },
       error: (err) => console.error('Failed to update customer registration:', err)
     });
+    return request;
   }
 
   deleteCustomerRegistration(registrationId: string) {
-    this.api.customerRegistrations.delete(registrationId).subscribe({
+    const request = this.api.customerRegistrations.delete(registrationId);
+    request.subscribe({
       next: () => {
         this.customerRegistrationsSignal.update((list) =>
           list.filter((item) => item.id !== registrationId)
@@ -175,8 +178,9 @@ export class FleetStore {
           this.activeCustomerRegistrationSignal.set(null);
         }
       },
-      error: (err) => console.error('Failed to delete customer registration:', err)
+      error: (err) => console.error('[FleetStore] Failed to delete customer registration:', err)
     });
+    return request;
   }
 
   // ==========================================

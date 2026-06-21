@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, computed, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
 import { CoreStore } from '../../../../core/application/core.store';
@@ -44,17 +44,27 @@ export class CustomersViewComponent implements OnInit {
   private coreApi = inject(CoreApi);
   private fleetApi = inject(FleetApi);
   private fleetStore = inject(FleetStore);
+  private translate = inject(TranslateService);
 
   isLoading = signal<boolean>(false);
   customers = signal<CustomerViewModel[]>([]);
   searchQuery = signal<string>('');
 
-  // --- Modal State Signals ---
+  // --- Add Modal State Signals ---
   isAddModalOpen = signal<boolean>(false);
   searchCustomerId = signal<string>('');
   searchedCustomer = signal<CustomerResource | null>(null);
   isSearching = signal<boolean>(false);
   modalErrorMessage = signal<string>('');
+
+  // --- Dropdown State Signals ---
+  openDropdownId = signal<string | null>(null);
+
+  // --- Deregister Modal State Signals ---
+  isDeregisterModalOpen = signal<boolean>(false);
+  customerToDeregister = signal<CustomerViewModel | null>(null);
+  isDeregistering = signal<boolean>(false);
+  deregisterErrorMessage = signal<string>('');
 
   constructor() {
     // Reactively load registrations when active branch changes
@@ -74,6 +84,7 @@ export class CustomersViewComponent implements OnInit {
       
       if (activeRegs.length === 0) {
         this.customers.set([]);
+        this.isLoading.set(false);
         return;
       }
 
@@ -112,7 +123,7 @@ export class CustomersViewComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  // --- Modal Action Methods ---
+  // --- Add Modal Action Methods ---
   
   openAddModal(): void {
     this.isAddModalOpen.set(true);
@@ -139,7 +150,7 @@ export class CustomersViewComponent implements OnInit {
     // 1. Check local duplicates (already registered in this branch)
     const isAlreadyRegistered = this.customers().some(c => c.customerId === id);
     if (isAlreadyRegistered) {
-      this.modalErrorMessage.set('El cliente ya está registrado en esta sucursal.');
+      this.modalErrorMessage.set(this.translate.instant('fleet.customers.addModal.alreadyRegistered'));
       this.isSearching.set(false);
       return;
     }
@@ -152,34 +163,70 @@ export class CustomersViewComponent implements OnInit {
       },
       error: (err) => {
         console.error('Customer search failed:', err);
-        this.modalErrorMessage.set('Cliente no encontrado en la plataforma.');
+        this.modalErrorMessage.set(this.translate.instant('fleet.customers.addModal.notFound'));
         this.isSearching.set(false);
       }
     });
   }
 
   onRegisterCustomer(): void {
-    console.log('[CustomersViewComponent] onRegisterCustomer called');
     const profile = this.searchedCustomer();
     const branch = this.coreStore.currentBranch();
     
-    console.log('[CustomersViewComponent] searchedCustomer profile:', profile);
-    console.log('[CustomersViewComponent] current branch:', branch);
-
-    if (!profile) {
-      console.warn('[CustomersViewComponent] Registration aborted: profile is null');
-      return;
-    }
-    if (!branch || !branch.id) {
-      console.warn('[CustomersViewComponent] Registration aborted: branch or branch.id is null/undefined');
-      return;
-    }
+    if (!profile || !branch?.id) return;
 
     const command = new CreateCustomerRegistrationCommand(profile.id, branch.id.toString());
-    console.log('[CustomersViewComponent] Dispatching CreateCustomerRegistrationCommand:', command);
-    
     this.fleetStore.createCustomerRegistration(command);
     this.closeAddModal();
+  }
+
+  // --- Dropdown Methods ---
+
+  toggleDropdown(registrationId: string, event: Event): void {
+    event.stopPropagation();
+    if (this.openDropdownId() === registrationId) {
+      this.openDropdownId.set(null);
+    } else {
+      this.openDropdownId.set(registrationId);
+    }
+  }
+
+  closeDropdown(): void {
+    this.openDropdownId.set(null);
+  }
+
+  // --- Deregister Modal Methods ---
+
+  openDeregisterModal(customer: CustomerViewModel): void {
+    this.closeDropdown();
+    this.customerToDeregister.set(customer);
+    this.isDeregisterModalOpen.set(true);
+  }
+
+  closeDeregisterModal(): void {
+    this.isDeregisterModalOpen.set(false);
+    this.customerToDeregister.set(null);
+  }
+
+  onDeregisterCustomer(): void {
+    const customer = this.customerToDeregister();
+    if (!customer) return;
+
+    this.isDeregistering.set(true);
+    this.deregisterErrorMessage.set('');
+    
+    // El backend de Render no tiene el DELETE activado, así que hacemos un "Soft Delete" actualizando el estado a INACTIVE
+    this.fleetStore.updateCustomerRegistration(customer.registrationId, { status: 'INACTIVE' }).subscribe({
+      next: () => {
+        this.isDeregistering.set(false);
+        this.closeDeregisterModal();
+      },
+      error: (err) => {
+        console.error('Deregister failed', err);
+        this.isDeregistering.set(false);
+        this.deregisterErrorMessage.set(err.message || 'Error al intentar desvincular al cliente. Revisa la consola.');
+      }
+    });
   }
 
   // --- Computed filter logic ---

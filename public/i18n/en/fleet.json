@@ -58,6 +58,24 @@
         "document": "Document",
         "date": "Registered",
         "status": "Status"
+      },
+      "actions": {
+        "deregister": "Deregister"
+      },
+      "addModal": {
+        "searchLabel": "Search by Customer ID (UUID)",
+        "searchPlaceholderInput": "E.g. 123e4567-e89b-12d3-a456-426614174000",
+        "searchBtn": "Search",
+        "cancel": "Cancel",
+        "register": "Register",
+        "alreadyRegistered": "Customer is already registered in this branch.",
+        "notFound": "Customer not found on the platform."
+      },
+      "deregisterModal": {
+        "title": "Deregister Customer",
+        "subtitle": "This action will unlink the customer from this branch. Do you want to continue?",
+        "confirm": "Deregister",
+        "cancel": "Cancel"
       }
     },
     "appointments": {
@@ -95,7 +113,6 @@
       "emptyState": {
         "title": "No scheduled appointments",
         "subtitle": "Start by scheduling your first appointment."
-      }
       }
     }
   }
