@@ -44,6 +44,13 @@ export class EmployeesApiEndpoint extends BaseApi {
     );
   }
 
+  getByDocumentNumber(documentNumber: string): Observable<EmployeeResource> {
+    const params = new HttpParams().set('documentNumber', documentNumber);
+    return this.http.get<EmployeeResource>(baseUrl, { params }).pipe(
+      catchError(this.handleError('Failed to get employee by document number'))
+    );
+  }
+
   delete(employeeId: string): Observable<any> {
     return this.http.delete(`${baseUrl}/${employeeId}`).pipe(
       catchError(this.handleError('Failed to delete employee'))
