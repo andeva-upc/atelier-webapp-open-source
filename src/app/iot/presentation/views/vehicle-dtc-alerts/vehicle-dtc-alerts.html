@@ -10,21 +10,21 @@
     <div class="header-left">
       <h1 class="page-title">
         <i class="pi pi-exclamation-triangle title-icon"></i>
-        Alertas DTC (Engine)
+        {{ 'iot.vehicles.dtcTitle' | translate }}
       </h1>
       <p class="page-subtitle">
         @if (selectedVehicle()) {
-          Historial de códigos de diagnóstico para {{ selectedVehicle()?.brand }} {{ selectedVehicle()?.model }} ({{ selectedVehicle()?.plateNumber }})
+          {{ 'iot.vehicles.dtcSubtitle' | translate }} {{ selectedVehicle()?.brand }} {{ selectedVehicle()?.model }} ({{ selectedVehicle()?.plateNumber }})
         } @else {
-          Cargando detalles del vehículo...
+          {{ 'iot.vehicles.dtcLoading' | translate }}
         }
       </p>
     </div>
     
     <div class="header-right">
-      <button class="btn-calendar" type="button" title="Filtrar por fecha">
+      <button class="btn-calendar" type="button" title="{{ 'iot.vehicles.dtcCalendarBtn' | translate }}">
         <i class="pi pi-calendar"></i>
-        Calendario
+        {{ 'iot.vehicles.dtcCalendarBtn' | translate }}
       </button>
     </div>
   </header>
@@ -36,8 +36,8 @@
         <div class="empty-state-icon">
           <i class="pi pi-check-circle"></i>
         </div>
-        <h2>Sin alertas registradas</h2>
-        <p>No se han detectado códigos de falla de motor. ¡El vehículo funciona correctamente!</p>
+        <h2>{{ 'iot.vehicles.dtcEmptyTitle' | translate }}</h2>
+        <p>{{ 'iot.vehicles.dtcEmptySubtitle' | translate }}</p>
       </div>
     } @else {
       <div class="alerts-grid">

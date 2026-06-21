@@ -108,14 +108,14 @@
             </button>
             <button type="button" class="modal-btn modal-btn-danger" (click)="deleteVehicle()">
               <i class="pi pi-trash"></i>
-              Desregistrar
+              {{ 'iot.vehicles.deleteBtn' | translate }}
             </button>
           </div>
 
           <div class="modal-links-container">
             <a href="javascript:void(0)" class="modal-text-link" (click)="viewDtcAlerts()">
               <i class="pi pi-exclamation-triangle"></i>
-              Ver dtc_alets
+              {{ 'iot.vehicles.viewDtcAlerts' | translate }}
             </a>
             <a href="javascript:void(0)" class="modal-text-link" (click)="viewTelemetry()">
               <i class="pi pi-chart-line"></i>

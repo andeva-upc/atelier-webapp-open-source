@@ -110,7 +110,14 @@
       "backToList": "My Vehicles",
       "errorRequired": "This field is required.",
       "errorConflict": "A vehicle with this plate or VIN already exists.",
-      "errorGeneric": "Error saving vehicle. Please try again."
+      "errorGeneric": "Error saving vehicle. Please try again.",
+      "viewDtcAlerts": "View DTC Alerts",
+      "dtcTitle": "DTC Alerts (Engine)",
+      "dtcSubtitle": "Diagnostic trouble codes history for",
+      "dtcLoading": "Loading vehicle details...",
+      "dtcCalendarBtn": "Calendar",
+      "dtcEmptyTitle": "No alerts registered",
+      "dtcEmptySubtitle": "No engine fault codes detected. The vehicle is running smoothly!"
     }
   }
 }

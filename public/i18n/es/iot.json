@@ -110,7 +110,14 @@
       "backToList": "Mis Vehículos",
       "errorRequired": "Este campo es obligatorio.",
       "errorConflict": "Ya existe un vehículo con esta placa o VIN.",
-      "errorGeneric": "Error al guardar el vehículo. Inténtalo de nuevo."
+      "errorGeneric": "Error al guardar el vehículo. Inténtalo de nuevo.",
+      "viewDtcAlerts": "Ver Alertas DTC",
+      "dtcTitle": "Alertas DTC (Motor)",
+      "dtcSubtitle": "Historial de códigos de diagnóstico para",
+      "dtcLoading": "Cargando detalles del vehículo...",
+      "dtcCalendarBtn": "Calendario",
+      "dtcEmptyTitle": "Sin alertas registradas",
+      "dtcEmptySubtitle": "No se han detectado códigos de falla de motor. ¡El vehículo funciona correctamente!"
     }
   }
 }
