@@ -1,0 +1,65 @@
+<div class="appointments-container">
+  <div class="appointments-header">
+    <div class="header-titles">
+      <h1>{{ 'fleet.appointments.title' | translate }}</h1>
+      <p>{{ 'fleet.appointments.subtitle' | translate }}</p>
+    </div>
+    
+    <div class="header-actions">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" [placeholder]="'fleet.appointments.searchPlaceholder' | translate">
+      </div>
+      
+      <select [ngModel]="selectedStatus()" (ngModelChange)="selectedStatus.set($event)" class="status-select">
+        <option value="">{{ 'fleet.appointments.allStatuses' | translate }}</option>
+        @for (status of statuses; track status) {
+          <option [value]="status">{{ 'fleet.appointments.status.' + status | translate }}</option>
+        }
+      </select>
+
+      <button class="add-appointment-btn" (click)="onAddAppointment()">
+        <i class="fas fa-plus"></i>
+        {{ 'fleet.appointments.add' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="appointments-grid" *ngIf="!isLoading() && filteredAppointments() && filteredAppointments().length > 0; else emptyState">
+    @for (appointment of filteredAppointments(); track appointment.id) {
+      <div class="appointment-card">
+        <div class="card-header">
+          <span class="status-badge" [ngClass]="appointment.status.toLowerCase()">
+            {{ 'fleet.appointments.status.' + appointment.status | translate }}
+          </span>
+          <span class="date">{{ appointment.scheduledStart | date:'medium' }}</span>
+        </div>
+        <div class="card-body">
+          <p><strong>{{ 'fleet.appointments.customer' | translate }}:</strong> {{ appointment.customerId }}</p>
+          <p><strong>{{ 'fleet.appointments.vehicle' | translate }}:</strong> {{ appointment.vehicleId }}</p>
+        </div>
+        <div class="card-footer">
+          <button class="edit-btn" (click)="onEdit(appointment)">
+            <i class="fas fa-edit"></i> {{ 'fleet.appointments.edit' | translate }}
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state" *ngIf="!isLoading()">
+      <div class="empty-icon">
+        <i class="fas fa-calendar-alt"></i>
+      </div>
+      <h2>{{ 'fleet.appointments.emptyState.title' | translate }}</h2>
+      <p>{{ 'fleet.appointments.emptyState.subtitle' | translate }}</p>
+      <button class="add-appointment-btn" (click)="onAddAppointment()">
+        {{ 'fleet.appointments.add' | translate }}
+      </button>
+    </div>
+    <div class="loading-state" *ngIf="isLoading()">
+      <p>{{ 'fleet.appointments.loading' | translate }}</p>
+    </div>
+  </ng-template>
+</div>
