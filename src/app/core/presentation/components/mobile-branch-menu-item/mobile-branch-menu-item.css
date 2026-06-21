@@ -1,0 +1,27 @@
+app-core-mobile-branch-menu-item {
+  display: contents;
+}
+
+app-core-mobile-branch-menu-item .mobile-only {
+  display: none !important;
+}
+@media (max-width: 768px) {
+  app-core-mobile-branch-menu-item .mobile-only {
+    display: flex !important;
+  }
+}
+app-core-mobile-branch-menu-item .menu-item-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+app-core-mobile-branch-menu-item .menu-icon {
+  font-size: 1.1rem;
+  color: #555;
+}
+app-core-mobile-branch-menu-item .menu-text {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+}
