@@ -39,5 +39,35 @@
     "sign_in_btn": "Sign In",
     "social_login": "Or sign in with",
     "google_aria": "Sign in with Google"
+  },
+  "forgot-password": {
+    "title1": "Forgot your ",
+    "title_brand": "password",
+    "title2": "?",
+    "title3": "Enter your details to recover it.",
+    "subtitle": "Enter your email to continue",
+    "email_label": "Email",
+    "email_required": "Email is required",
+    "email_invalid": "Invalid email format",
+    "submit_btn": "Recover password",
+    "social_login": "Or sign in with",
+    "google_aria": "Sign in with Google",
+    "success_message": "Recovery link successfully sent to your email.",
+    "error_default": "An error occurred while processing your request. Please try again.",
+    "error_not_found": "User not found"
+  },
+  "reset-password": {
+    "title1": "Create a new ",
+    "title_brand": "password",
+    "subtitle": "Make sure it is secure and easy to remember.",
+    "new_password_label": "New Password",
+    "new_password_required": "New password is required",
+    "new_password_min": "Must be at least 6 characters",
+    "confirm_password_label": "Confirm Password",
+    "confirm_password_required": "Confirmation is required",
+    "password_mismatch": "Passwords do not match",
+    "submit_btn": "Reset password",
+    "error_invalid_token": "The recovery link is invalid or has expired.",
+    "error_missing_token": "Invalid or missing recovery token."
   }
 }

@@ -17,7 +17,7 @@
     "password_required": "La contraseña es requerida",
     "password_min": "Mínimo 6 caracteres",
     "remember_me": "Recuérdame",
-    "recover_password": "Recover password",
+    "recover_password": "Recuperar contraseña",
     "sign_in_btn": "Iniciar Sesión",
     "sign_up_btn": "Registrarse",
     "social_login": "O ingresa con",
@@ -39,5 +39,35 @@
     "sign_in_btn": "Iniciar Sesión",
     "social_login": "O ingresa con",
     "google_aria": "Ingresa con Google"
+  },
+  "forgot-password": {
+    "title1": "¿Has olvidado tu ",
+    "title_brand": "contraseña",
+    "title2": "?",
+    "title3": "Introduce tus datos para recuperarla.",
+    "subtitle": "Ingrese su correo electrónico para continuar",
+    "email_label": "Email",
+    "email_required": "El correo electrónico es requerido",
+    "email_invalid": "Formato de correo inválido",
+    "submit_btn": "Recuperar contraseña",
+    "social_login": "O ingresa con",
+    "google_aria": "Ingresa con Google",
+    "success_message": "Enlace de recuperación enviado exitosamente a tu correo.",
+    "error_default": "Ocurrió un error al procesar la solicitud. Por favor intenta de nuevo.",
+    "error_not_found": "Usuario no encontrado"
+  },
+  "reset-password": {
+    "title1": "Crea una nueva ",
+    "title_brand": "contraseña",
+    "subtitle": "Asegúrate de que sea segura y fácil de recordar.",
+    "new_password_label": "Nueva Contraseña",
+    "new_password_required": "La nueva contraseña es requerida",
+    "new_password_min": "Debe tener al menos 6 caracteres",
+    "confirm_password_label": "Confirmar Contraseña",
+    "confirm_password_required": "La confirmación es requerida",
+    "password_mismatch": "Las contraseñas no coinciden",
+    "submit_btn": "Restablecer contraseña",
+    "error_invalid_token": "El enlace de recuperación es inválido o ha expirado.",
+    "error_missing_token": "Token de recuperación inválido o inexistente."
   }
 }

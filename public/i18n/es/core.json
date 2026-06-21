@@ -6,10 +6,15 @@
     "no_roles": "No tienes perfiles asociados a esta cuenta.",
     "sign_out": "Cerrar Sesión",
     "title": "¿Con qué perfil deseas ingresar?",
+    "error_nav_blocked": "Error: La navegación fue bloqueada o cancelada silenciosamente por Angular. Revisa la consola (F12).",
+    "error_nav_exec": "Error en ejecución al navegar: ",
     "roles": {
       "CUSTOMER": "Cliente",
       "OWNER": "Propietario",
       "EMPLOYEE": "Mecánico"
     }
+  },
+  "mobile-branch-menu-item": {
+    "branch": "Sede:"
   }
 }
