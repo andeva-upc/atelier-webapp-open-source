@@ -2095,16 +2095,51 @@ A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus p
 
 ---
 
-### `GET /api/v1/appointments/branch/{branchId}`
-**Propósito:** Get appointments by branch
+### `GET /api/v1/appointments`
+**Propósito:** Buscar y filtrar Citas (Appointments)
 
-*Returns all active appointments for a given branch ID*
+*Este es un endpoint unificado que permite buscar citas utilizando diferentes combinaciones de Query Parameters (filtros en la URL). Solo debes usar una de las siguientes combinaciones válidas a la vez. Si no envías ningún parámetro, el servidor retornará un error 400 (INVALID_QUERY_PARAMS).*
+
+**🎯 Escenarios de Búsqueda Soportados:**
+
+1. **Por Sucursal (Branch):** 
+   - **Request:** `GET /api/v1/appointments?branchId={branchId}`
+   - **Retorna:** Un arreglo con TODAS las citas registradas en esa sucursal, sin importar su estado.
+
+2. **Por Sucursal y Estado:** 
+   - **Request:** `GET /api/v1/appointments?branchId={branchId}&status={status}`
+   - **Retorna:** Un arreglo con las citas de esa sucursal filtradas por un estado específico. (Valores válidos para status: `PENDING`, `COMPLETED`, `CANCELED`).
+
+3. **Por Cliente (Customer):** 
+   - **Request:** `GET /api/v1/appointments?customerId={customerId}`
+   - **Retorna:** Un arreglo con el historial completo de citas asociadas a ese cliente en particular.
+
+4. **Por Vehículo (Vehicle):** 
+   - **Request:** `GET /api/v1/appointments?vehicleId={vehicleId}`
+   - **Retorna:** Un arreglo con el historial completo de citas programadas para un vehículo específico.
 
 **📍 Parámetros (URL / Query):**
-- `branchId` (path):  (Requerido: true)
+- `branchId` (query): UUID de la sucursal (Opcional)
+- `status` (query): Estado de la cita (Opcional)
+- `customerId` (query): UUID del cliente (Opcional)
+- `vehicleId` (query): UUID del vehículo (Opcional)
 
 **📥 Qué vas a recibir (Responses):**
 - **Código HTTP 200**: OK
+  ```json
+  [
+    {
+      "id": "string",
+      "branchId": "string",
+      "customerId": "string",
+      "vehicleId": "string",
+      "scheduledStart": "string",
+      "scheduledEnd": "string",
+      "status": "string",
+      "notes": "string"
+    }
+  ]
+  ```
 
 ---
 
@@ -2143,18 +2178,6 @@ A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus p
 
 ---
 
-### `GET /api/v1/appointments/vehicle/{vehicleId}`
-**Propósito:** Get appointments by vehicle
-
-*Returns all appointments for a given vehicle ID*
-
-**📍 Parámetros (URL / Query):**
-- `vehicleId` (path):  (Requerido: true)
-
-**📥 Qué vas a recibir (Responses):**
-- **Código HTTP 200**: OK
-
----
 ### `GET /api/v1/employee-registrations/branch/{branchId}`
 **Propósito:** Get employee registrations by branch
 
@@ -2341,30 +2364,5 @@ A continuación, se detalla **CADA ENDPOINT** disponible en el sistema con sus p
 
 ---
 
-### `GET /api/v1/appointments/vehicle/{vehicleId}`
-**Propósito:** Get appointments by vehicle
 
-*Returns all appointments for a given vehicle ID*
-
-**📍 Parámetros (URL / Query):**
-- `vehicleId` (path):  (Requerido: true)
-
-**📥 Qué vas a recibir (Responses):**
-- **Código HTTP 200**: OK
-  ```json
-  [
-    {
-      "id": "string",
-      "branchId": "string",
-      "customerId": "string",
-      "vehicleId": "string",
-      "scheduledStart": "string",
-      "scheduledEnd": "string",
-      "status": "string",
-      "notes": "string"
-    }
-  ]
-  ```
-
----
 

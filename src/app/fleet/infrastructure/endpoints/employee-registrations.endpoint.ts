@@ -16,7 +16,7 @@ export class EmployeeRegistrationsApiEndpoint {
   constructor(private http: HttpClient) {}
 
   getByBranchId(branchId: string): Observable<EmployeeRegistrationResource[]> {
-    return this.http.get<EmployeeRegistrationResource[]>(this.baseUrl, { params: { branchId } });
+    return this.http.get<EmployeeRegistrationResource[]>(`${this.baseUrl}/branch/${branchId}`);
   }
 
   getByEmployeeId(employeeId: string): Observable<EmployeeRegistrationResource> {
@@ -24,7 +24,7 @@ export class EmployeeRegistrationsApiEndpoint {
   }
 
   getByBranchIdAndStatus(branchId: string, status: string): Observable<EmployeeRegistrationResource[]> {
-    return this.http.get<EmployeeRegistrationResource[]>(this.baseUrl, { params: { branchId, status } });
+    return this.http.get<EmployeeRegistrationResource[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
   }
 
   getById(registrationId: string): Observable<EmployeeRegistrationResource> {
