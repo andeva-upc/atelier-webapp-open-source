@@ -19,6 +19,7 @@ import { UpdateEmployeeCommand } from '../domain/model/commands/update-employee.
 import { CreateBranchCommand } from '../domain/model/commands/create-branch.command';
 import { UpdateBranchCommand } from '../domain/model/commands/update-branch.command';
 import { AssignSubscriptionCommand } from '../domain/model/commands/assign-subscription.command';
+import { CancelSubscriptionCommand } from '../domain/model/commands/cancel-subscription.command';
 
 @Injectable({providedIn: 'root'})
 export class CoreStore {
@@ -86,8 +87,8 @@ export class CoreStore {
     });
   }
 
-  updateCustomer(userId: string, command: UpdateCustomerCommand) {
-    this.coreApi.customers.update(userId, command).subscribe({
+  updateCustomer(customerId: string, command: UpdateCustomerCommand) {
+    this.coreApi.customers.update(customerId, command).subscribe({
       next: (resource) => this.currentCustomerSignal.set(resource),
       error: (err) => console.error('Failed to update customer:', err)
     });
@@ -123,8 +124,8 @@ export class CoreStore {
     });
   }
 
-  updateOwner(userId: string, command: UpdateOwnerCommand) {
-    this.coreApi.owners.update(userId, command).subscribe({
+  updateOwner(ownerId: string, command: UpdateOwnerCommand) {
+    this.coreApi.owners.update(ownerId, command).subscribe({
       next: (resource) => this.currentOwnerSignal.set(resource),
       error: (err) => console.error('Failed to update owner:', err)
     });
@@ -161,8 +162,8 @@ export class CoreStore {
     });
   }
 
-  updateEmployee(userId: string, command: UpdateEmployeeCommand) {
-    this.coreApi.employees.update(userId, command).subscribe({
+  updateEmployee(employeeId: string, command: UpdateEmployeeCommand) {
+    this.coreApi.employees.update(employeeId, command).subscribe({
       next: (resource) => this.currentEmployeeSignal.set(resource),
       error: (err) => console.error('Failed to update employee:', err)
     });
@@ -275,6 +276,15 @@ export class CoreStore {
         console.log('Subscription assigned:', resource);
       },
       error: (err) => console.error('Failed to assign subscription:', err)
+    });
+  }
+
+  cancelSubscription(command: CancelSubscriptionCommand) {
+    this.coreApi.branches.cancelSubscription(command.branchId).subscribe({
+      next: (resource) => {
+        console.log('Subscription cancelled:', resource);
+      },
+      error: (err) => console.error('Failed to cancel subscription:', err)
     });
   }
 }
