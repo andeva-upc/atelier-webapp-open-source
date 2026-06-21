@@ -5,9 +5,8 @@ export class UpdateWorkOrderTaskDetailsRequestAssembler {
   static toRequestFromCommand(command: UpdateWorkOrderTaskDetailsCommand): UpdateWorkOrderTaskDetailsRequest {
     return {
       serviceId: command.serviceId,
-      mechanicId: command.mechanicId,
-      description: command.description,
-      newLaborPrice: command.newLaborPrice
+      assignedMechanicId: command.assignedMechanicId,
+      description: command.description
     };
   }
 }

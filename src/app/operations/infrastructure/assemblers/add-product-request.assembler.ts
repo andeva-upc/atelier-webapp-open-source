@@ -5,8 +5,7 @@ export class AddProductRequestAssembler {
   static toRequestFromCommand(command: AddProductToTaskCommand): AddProductRequest {
     return {
       productId: command.productId,
-      quantity: command.quantity,
-      unitPrice: command.unitPrice
+      quantity: command.quantity
     };
   }
 }
