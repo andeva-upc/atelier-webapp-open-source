@@ -58,6 +58,10 @@
   flex: 1;
 }
 
+.w-100 {
+  width: 100%;
+}
+
 label {
   display: block;
   font-size: 0.875rem;

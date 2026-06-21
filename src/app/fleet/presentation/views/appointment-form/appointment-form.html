@@ -20,6 +20,7 @@
                matInput
                formControlName="customerObj"
                [matAutocomplete]="autoCustomer">
+        <mat-icon matSuffix>arrow_drop_down</mat-icon>
         <mat-autocomplete #autoCustomer="matAutocomplete" [displayWith]="displayCustomer">
           @for (option of filteredCustomers | async; track option.customer.id) {
             <mat-option [value]="option">
@@ -38,6 +39,7 @@
                matInput
                formControlName="vehicleObj"
                [matAutocomplete]="autoVehicle">
+        <mat-icon matSuffix>arrow_drop_down</mat-icon>
         <mat-autocomplete #autoVehicle="matAutocomplete" [displayWith]="displayVehicle">
           @for (option of filteredVehicles | async; track option.id) {
             <mat-option [value]="option">
@@ -52,18 +54,18 @@
       <div class="form-group half-width">
         <mat-form-field appearance="outline" class="w-100">
           <mat-label>{{ 'fleet.appointments.day' | translate }}</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="date" placeholder="DD/MM/YYYY">
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <input matInput type="date" formControlName="date">
         </mat-form-field>
       </div>
 
       <div class="form-group half-width">
-        <label for="time" style="font-size: 0.875rem; font-weight: 600; margin-bottom: 0.5rem; display: block; color: #374151;">{{ 'fleet.appointments.time' | translate }} <span class="required">*</span></label>
-        <input type="time" id="time" formControlName="time" class="form-control" [class.is-invalid]="appointmentForm.get('time')?.invalid && appointmentForm.get('time')?.touched" style="height: 56px;">
-        <div class="invalid-feedback" *ngIf="appointmentForm.get('time')?.invalid && appointmentForm.get('time')?.touched">
-          {{ 'fleet.appointments.error.timeRequired' | translate }}
-        </div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>{{ 'fleet.appointments.time' | translate }}</mat-label>
+          <input matInput type="time" id="time" formControlName="time">
+          <mat-error *ngIf="appointmentForm.get('time')?.invalid && appointmentForm.get('time')?.touched">
+            {{ 'fleet.appointments.error.timeRequired' | translate }}
+          </mat-error>
+        </mat-form-field>
       </div>
     </div>
 
