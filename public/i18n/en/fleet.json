@@ -1,5 +1,46 @@
 {
   "fleet": {
+    "staffList": {
+      "title": "Staff",
+      "subtitle": "Manage staff and technicians for this branch.",
+      "addEmployee": "New Employee",
+      "loadingData": "Loading data...",
+      "salary": "Salary",
+      "edit": "Edit",
+      "emptyState": "No registered employees found in this branch.",
+      "noBranchId": "Current branch not found",
+      "successRegister": "Employee registered successfully",
+      "successUpdate": "Employee updated successfully",
+      "confirmDelete": "Are you sure you want to delete the registration for employee ID: {{id}}?",
+      "successDelete": "Employee registration deleted successfully",
+      "close": "Close"
+    },
+    "staffForm": {
+      "titleEdit": "Edit Staff",
+      "titleNew": "New Staff",
+      "employeeId": "Employee ID (UUID)",
+      "employeeIdPlaceholder": "E.g. 123e4567-e89b-12d3-a456-426614174000",
+      "employeeIdRequired": "Employee ID is required",
+      "speciality": "Speciality",
+      "specialityRequired": "Speciality is required",
+      "roles": {
+        "MECHANIC": "Mechanic",
+        "ELECTRICIAN": "Electrician",
+        "MANAGER": "Manager",
+        "SUPERVISOR": "Supervisor"
+      },
+      "salary": "Salary",
+      "salaryRequired": "Salary is required",
+      "status": "Status",
+      "statusRequired": "Status is required",
+      "statuses": {
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+      },
+      "cancel": "Cancel",
+      "update": "Update",
+      "save": "Save"
+    },
     "customers": {
       "title": "Customers",
       "subtitle": "View and manage the customers registered in your branch",
@@ -54,6 +95,7 @@
       "emptyState": {
         "title": "No scheduled appointments",
         "subtitle": "Start by scheduling your first appointment."
+      }
       }
     }
   }

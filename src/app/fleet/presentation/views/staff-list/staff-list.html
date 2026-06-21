@@ -1,0 +1,53 @@
+<div class="staff-container">
+  <div class="header">
+    <div class="title-section">
+      <h1>{{ 'fleet.staffList.title' | translate }}</h1>
+      <p>{{ 'fleet.staffList.subtitle' | translate }}</p>
+    </div>
+    <button mat-flat-button color="primary" (click)="onAddStaff()">
+      <mat-icon>add</mat-icon>
+      {{ 'fleet.staffList.addEmployee' | translate }}
+    </button>
+  </div>
+  
+  <div class="cards-grid" *ngIf="staffCards().length > 0; else emptyState">
+    @for (staff of staffCards(); track staff.id) {
+      <div class="staff-card" [class.inactive-staff]="staff.status === 'INACTIVE'">
+        
+        <div class="staff-header">
+          <span class="staff-speciality">{{ staff.specialityName }}</span>
+          <span class="staff-status" [class]="staff.status.toLowerCase()">{{ staff.status }}</span>
+        </div>
+        
+        <div class="staff-body">
+          <h3 class="staff-name">
+            {{ staff.firstName && staff.lastName ? staff.firstName + ' ' + staff.lastName : ('fleet.staffList.loadingData' | translate) }}
+          </h3>
+          
+          <div class="staff-stats">
+            <div class="stat-item">
+              <span class="stat-label">{{ 'fleet.staffList.salary' | translate }}</span>
+              <span class="stat-value">{{ staff.salary | currency }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="staff-footer">
+          <button class="action-btn edit-btn" (click)="onEditStaff(staff)">
+            <mat-icon>edit</mat-icon> {{ 'fleet.staffList.edit' | translate }}
+          </button>
+          <button class="action-btn delete-btn" (click)="onDeleteStaff(staff)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <mat-icon class="empty-icon">group_off</mat-icon>
+      <p>{{ 'fleet.staffList.emptyState' | translate }}</p>
+    </div>
+  </ng-template>
+</div>

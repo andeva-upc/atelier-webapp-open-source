@@ -5,6 +5,25 @@
   src: url("/assets/fonts/Zizou-Slab-Medium.otf") format("opentype");
 }
 
+:root {
+  --font-primary: "Mona Sans", sans-serif;
+  --font-secondary: "Arimo", sans-serif;
+}
+
+body, html {
+  font-family: var(--font-primary);
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .mat-mdc-dialog-title {
+  font-family: var(--font-secondary) !important;
+}
+
+* {
+  font-family: inherit;
+}
+
 /* ── Global Material Rounding Overrides (Ultra-Specific) ───────────────── */
 
 /* 1. Target the main wrapper */

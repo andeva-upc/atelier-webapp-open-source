@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>{{ isEditMode ? ('fleet.staffForm.titleEdit' | translate) : ('fleet.staffForm.titleNew' | translate) }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="form" class="staff-form">
+    <!-- Edit mode: Show readonly UUID -->
+    <mat-form-field appearance="outline" class="full-width" *ngIf="isEditMode">
+      <mat-label>{{ 'fleet.staffForm.employeeId' | translate }}</mat-label>
+      <input matInput formControlName="employeeId" [placeholder]="'fleet.staffForm.employeeIdPlaceholder' | translate" readonly>
+    </mat-form-field>
+
+    <!-- Create mode: Show DNI search -->
+    <div class="search-section" *ngIf="!isEditMode">
+      <mat-form-field appearance="outline" class="full-width search-field">
+        <mat-label>DNI / Documento</mat-label>
+        <input matInput formControlName="documentNumber" placeholder="Ej. 70000000" (keyup.enter)="onSearchProfile()">
+        <button mat-icon-button matSuffix (click)="onSearchProfile()" [disabled]="isSearching || !form.get('documentNumber')?.value" type="button">
+          <mat-spinner diameter="20" *ngIf="isSearching"></mat-spinner>
+          <mat-icon *ngIf="!isSearching">search</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="search-feedback success" *ngIf="foundProfileName">
+        <mat-icon>check_circle</mat-icon>
+        <span>Encontrado: <strong>{{ foundProfileName }}</strong></span>
+      </div>
+
+      <div class="search-feedback error" *ngIf="searchError">
+        <mat-icon>error</mat-icon>
+        <span>{{ searchError }}</span>
+      </div>
+
+      <!-- Hidden employeeId used for form submission -->
+      <input type="hidden" formControlName="employeeId">
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'fleet.staffForm.speciality' | translate }}</mat-label>
+      <mat-select formControlName="speciality">
+        <mat-option value="MECHANIC">{{ 'fleet.staffForm.roles.MECHANIC' | translate }}</mat-option>
+        <mat-option value="ELECTRICIAN">{{ 'fleet.staffForm.roles.ELECTRICIAN' | translate }}</mat-option>
+        <mat-option value="MANAGER">{{ 'fleet.staffForm.roles.MANAGER' | translate }}</mat-option>
+        <mat-option value="SUPERVISOR">{{ 'fleet.staffForm.roles.SUPERVISOR' | translate }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('speciality')?.hasError('required')">{{ 'fleet.staffForm.specialityRequired' | translate }}</mat-error>
+    </mat-form-field>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>{{ 'fleet.staffForm.salary' | translate }}</mat-label>
+        <input matInput type="number" formControlName="salary" min="0">
+        <mat-error *ngIf="form.get('salary')?.hasError('required')">{{ 'fleet.staffForm.salaryRequired' | translate }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>{{ 'fleet.staffForm.status' | translate }}</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="ACTIVE">{{ 'fleet.staffForm.statuses.ACTIVE' | translate }}</mat-option>
+          <mat-option value="INACTIVE">{{ 'fleet.staffForm.statuses.INACTIVE' | translate }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('status')?.hasError('required')">{{ 'fleet.staffForm.statusRequired' | translate }}</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">{{ 'fleet.staffForm.cancel' | translate }}</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+    {{ isEditMode ? ('fleet.staffForm.update' | translate) : ('fleet.staffForm.save' | translate) }}
+  </button>
+</mat-dialog-actions>
