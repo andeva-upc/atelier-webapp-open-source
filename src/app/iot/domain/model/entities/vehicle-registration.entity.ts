@@ -1,5 +1,6 @@
-export class VehicleRegistration {
-  id: string;
+import { BaseEntity } from '../../../../shared/domain/model/base-entity';
+
+export class VehicleRegistration extends BaseEntity {
   userId: string;
   vehicleId: string;
   status: string;
@@ -7,7 +8,7 @@ export class VehicleRegistration {
   deletedAt: string;
 
   constructor() {
-    this.id = '';
+    super({ id: '' });
     this.userId = '';
     this.vehicleId = '';
     this.status = '';

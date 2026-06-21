@@ -1,11 +1,12 @@
-export class Obd2Device {
-  id: string;
+import { BaseEntity } from '../../../../shared/domain/model/base-entity';
+
+export class Obd2Device extends BaseEntity {
   branchId: string;
   macAddress: string;
   status: string;
 
   constructor() {
-    this.id = '';
+    super({ id: '' });
     this.branchId = '';
     this.macAddress = '';
     this.status = '';

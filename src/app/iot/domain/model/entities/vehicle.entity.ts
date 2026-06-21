@@ -1,5 +1,6 @@
-export class Vehicle {
-  id: string;
+import { BaseEntity } from '../../../../shared/domain/model/base-entity';
+
+export class Vehicle extends BaseEntity {
   plateNumber: string;
   brand: string;
   model: string;
@@ -7,7 +8,7 @@ export class Vehicle {
   vin: string;
 
   constructor() {
-    this.id = '';
+    super({ id: '' });
     this.plateNumber = '';
     this.brand = '';
     this.model = '';
