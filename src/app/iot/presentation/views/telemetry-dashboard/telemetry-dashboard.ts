@@ -60,6 +60,11 @@ export class TelemetryDashboardComponent implements OnInit {
   });
 
   constructor() {
+    const activeRole = localStorage.getItem('activeRole') || '';
+    this.isCustomer = activeRole.includes('CUSTOMER');
+    this.branchId = localStorage.getItem('tenantBranchId') || '';
+    this.customerId = localStorage.getItem('customerId') || '';
+
     // Reload telemetry and DTCs when selected vehicle or coupling changes
     effect(() => {
       const vehicleId = this.selectedVehicleId();
@@ -77,19 +82,20 @@ export class TelemetryDashboardComponent implements OnInit {
           this.store.loadDtcAlertsForRegistration(coupling.id);
         } else {
           // Clear signals if not linked
-          // We can do this by loading empty or letting store load with invalid/empty
-          // In this case, we just rely on store signals being empty because no load was triggered
         }
       }
     });
+
+    // Auto-select first vehicle once loaded
+    effect(() => {
+      const list = this.isCustomer ? this.store.vehicles() : this.store.branchVehicles();
+      if (list.length > 0 && !this.selectedVehicleId()) {
+        this.selectedVehicleId.set(list[0].id);
+      }
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit(): void {
-    const activeRole = localStorage.getItem('activeRole') || '';
-    this.isCustomer = activeRole.includes('CUSTOMER');
-    this.branchId = localStorage.getItem('tenantBranchId') || '';
-    this.customerId = localStorage.getItem('customerId') || '';
-
     if (this.isCustomer) {
       if (this.customerId) {
         this.store.loadVehiclesByCustomerId(this.customerId);
@@ -101,14 +107,6 @@ export class TelemetryDashboardComponent implements OnInit {
         this.store.loadObd2Devices(this.branchId);
       }
     }
-
-    // Auto-select first vehicle once loaded
-    effect(() => {
-      const list = this.isCustomer ? this.store.vehicles() : this.store.branchVehicles();
-      if (list.length > 0 && !this.selectedVehicleId()) {
-        this.selectedVehicleId.set(list[0].id);
-      }
-    });
   }
 
   onVehicleChange(event: Event): void {
@@ -155,3 +153,4 @@ export class TelemetryDashboardComponent implements OnInit {
     });
   }
 }
+
