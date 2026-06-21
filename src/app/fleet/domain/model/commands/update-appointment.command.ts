@@ -4,6 +4,7 @@ export class UpdateAppointmentCommand {
     public customerId: string,
     public vehicleId: string,
     public scheduledStart: string,
+    public status: string,
     public notes?: string | null
   ) {}
 }

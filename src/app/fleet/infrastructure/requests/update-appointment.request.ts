@@ -3,5 +3,6 @@ export interface UpdateAppointmentRequest {
   customerId: string;
   vehicleId: string;
   scheduledStart: string;
+  status: string;
   notes?: string | null;
 }

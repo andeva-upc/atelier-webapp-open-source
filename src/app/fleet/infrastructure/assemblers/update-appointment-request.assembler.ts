@@ -8,6 +8,7 @@ export class UpdateAppointmentRequestAssembler {
       customerId: command.customerId,
       vehicleId: command.vehicleId,
       scheduledStart: command.scheduledStart,
+      status: command.status,
       notes: command.notes
     };
   }

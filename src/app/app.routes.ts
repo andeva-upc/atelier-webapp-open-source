@@ -61,11 +61,11 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'staff',
+    path: 'fleet',
     component: Home,
     canActivate: [iamGuard],
     children: [
-      { path: '', loadChildren: fleetRoutes }
+      { path: '', loadChildren: () => import('./fleet/fleet.routes').then(m => m.FLEET_ROUTES) }
     ]
   },
   { path: 'role-selection', loadComponent: () => import('./core/presentation/views/role-selection/role-selection').then(m => m.RoleSelectionComponent), canActivate: [iamGuard] },

@@ -40,6 +40,63 @@
       "cancel": "Cancel",
       "update": "Update",
       "save": "Save"
+    },
+    "customers": {
+      "title": "Customers",
+      "subtitle": "View and manage the customers registered in your branch",
+      "searchPlaceholder": "Search by name, document or phone...",
+      "addCustomer": "Add Customer",
+      "corporate": "Company",
+      "personal": "Personal",
+      "loading": "Loading customers...",
+      "emptyState": {
+        "title": "No customers in this branch",
+        "subtitle": "Start by associating your first customer."
+      },
+      "card": {
+        "phone": "Phone",
+        "document": "Document",
+        "date": "Registered",
+        "status": "Status"
+      }
+    },
+    "appointments": {
+      "title": "Appointments",
+      "subtitle": "View and manage scheduled appointments",
+      "searchPlaceholder": "Search appointments...",
+      "allStatuses": "All statuses",
+      "add": "Schedule Appointment",
+      "edit": "Edit",
+      "customer": "Customer",
+      "vehicle": "Vehicle",
+      "day": "Day",
+      "time": "Time",
+      "statusLabel": "Status",
+      "selectCustomer": "Select a customer",
+      "selectVehicle": "Select a vehicle",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "saveChanges": "Save changes",
+      "scheduleBtn": "Schedule Appointment",
+      "newTitle": "Schedule Appointment",
+      "editTitle": "Edit Appointment",
+      "loading": "Loading appointments...",
+      "status": {
+        "PENDING": "Pending",
+        "COMPLETED": "Completed",
+        "CANCELED": "Canceled"
+      },
+      "error": {
+        "customerRequired": "Customer is required",
+        "vehicleRequired": "Vehicle is required",
+        "dateRequired": "Date is required",
+        "timeRequired": "Time is required"
+      },
+      "emptyState": {
+        "title": "No scheduled appointments",
+        "subtitle": "Start by scheduling your first appointment."
+      }
+      }
     }
   }
 }

@@ -40,6 +40,63 @@
       "cancel": "Cancelar",
       "update": "Actualizar",
       "save": "Guardar"
+    },
+    "customers": {
+      "title": "Clientes",
+      "subtitle": "Visualiza y gestiona los clientes registrados en tu sucursal",
+      "searchPlaceholder": "Buscar por nombre, documento o teléfono...",
+      "addCustomer": "Agregar Cliente",
+      "corporate": "Empresa",
+      "personal": "Personal",
+      "loading": "Cargando clientes...",
+      "emptyState": {
+        "title": "No hay clientes en esta sucursal",
+        "subtitle": "Comienza asociando tu primer cliente."
+      },
+      "card": {
+        "phone": "Teléfono",
+        "document": "Documento",
+        "date": "Registrado",
+        "status": "Estado"
+      }
+    },
+    "appointments": {
+      "title": "Citas",
+      "subtitle": "Visualiza y gestiona las citas programadas",
+      "searchPlaceholder": "Buscar citas...",
+      "allStatuses": "Todos los estados",
+      "add": "Agendar Cita",
+      "edit": "Editar",
+      "customer": "Cliente",
+      "vehicle": "Vehículo",
+      "day": "Día",
+      "time": "Hora",
+      "statusLabel": "Estado",
+      "selectCustomer": "Seleccione un cliente",
+      "selectVehicle": "Seleccione un vehículo",
+      "cancel": "Cancelar",
+      "saving": "Guardando...",
+      "saveChanges": "Guardar cambios",
+      "scheduleBtn": "Agendar Cita",
+      "newTitle": "Agendar Cita",
+      "editTitle": "Editar Cita",
+      "loading": "Cargando citas...",
+      "status": {
+        "PENDING": "Pendiente",
+        "COMPLETED": "Completado",
+        "CANCELED": "Cancelado"
+      },
+      "error": {
+        "customerRequired": "El cliente es requerido",
+        "vehicleRequired": "El vehículo es requerido",
+        "dateRequired": "La fecha es requerida",
+        "timeRequired": "La hora es requerida"
+      },
+      "emptyState": {
+        "title": "No hay citas programadas",
+        "subtitle": "Comienza programando tu primera cita."
+      }
+      }
     }
   }
 }
