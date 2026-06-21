@@ -5,6 +5,7 @@ export class UpdateEmployeeRegistrationRequestAssembler {
   static toRequestFromCommand(command: UpdateEmployeeRegistrationCommand): UpdateEmployeeRegistrationRequest {
     return {
       speciality: command.speciality,
+      specialityName: command.specialityName,
       salary: command.salary,
       status: command.status
     };

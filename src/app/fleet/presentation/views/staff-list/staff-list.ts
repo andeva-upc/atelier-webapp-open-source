@@ -115,11 +115,17 @@ export class StaffListComponent implements OnInit {
           branchId: this.currentBranchId,
           employeeId: result.employeeId,
           speciality: result.speciality,
+          specialityName: this.translate.instant(`fleet.staffForm.roles.${result.speciality}`),
           salary: result.salary,
           createdBy: localStorage.getItem('userId') || 'system',
           status: result.status
+        }, 
+        () => {
+          this.snackBar.open(this.translate.instant('fleet.staffList.successRegister'), this.translate.instant('fleet.staffList.close'), { duration: 3000 });
+        },
+        (err) => {
+          this.snackBar.open(`Error al registrar: ${err?.status} - Verifica si el empleado ya está registrado o el ID es correcto`, 'Cerrar', { duration: 5000 });
         });
-        this.snackBar.open(this.translate.instant('fleet.staffList.successRegister'), this.translate.instant('fleet.staffList.close'), { duration: 3000 });
       }
     });
   }
@@ -134,6 +140,7 @@ export class StaffListComponent implements OnInit {
       if (result) {
         this.store.updateEmployeeRegistration(element.id, {
           speciality: result.speciality,
+          specialityName: this.translate.instant(`fleet.staffForm.roles.${result.speciality}`),
           salary: result.salary,
           status: result.status,
           updatedBy: localStorage.getItem('userId') || 'system'

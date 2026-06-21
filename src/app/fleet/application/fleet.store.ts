@@ -215,13 +215,17 @@ export class FleetStore {
     });
   }
 
-  createEmployeeRegistration(command: CreateEmployeeRegistrationCommand) {
+  createEmployeeRegistration(command: CreateEmployeeRegistrationCommand, onSuccess?: () => void, onError?: (err: any) => void) {
     this.api.employeeRegistrations.create(command).subscribe({
       next: (registration) => {
         this.employeeRegistrationsSignal.update((list) => [...list, registration]);
         this.activeEmployeeRegistrationSignal.set(registration);
+        if (onSuccess) onSuccess();
       },
-      error: (err) => console.error('Failed to create employee registration:', err)
+      error: (err) => {
+        console.error('Failed to create employee registration:', err);
+        if (onError) onError(err);
+      }
     });
   }
 
