@@ -6,7 +6,6 @@ import { GeneratePasswordRecoveryTokenCommand } from '../../../domain/model/comm
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
 import { ArrowBack } from '../../../../shared/presentation/components/arrow-back/arrow-back';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -43,14 +42,14 @@ export class ForgotPasswordComponent {
       this.forgotPasswordForm.markAllAsTouched();
       return;
     }
-    
+
     this.isSubmitting.set(true);
     this.successMessage.set(null);
     this.errorMessage.set(null);
-    
+
     const { email } = this.forgotPasswordForm.value;
     const command = new GeneratePasswordRecoveryTokenCommand({ email });
-    
+
     this.iamStore.forgotPassword(command).subscribe({
       next: () => {
         this.isSubmitting.set(false);
@@ -60,13 +59,13 @@ export class ForgotPasswordComponent {
       error: (err) => {
         this.isSubmitting.set(false);
         let errorMsg = 'forgot-password.error_default';
-        
+
         // Check if it's a client error (e.g., 400 Bad Request or 404 Not Found)
         if (err.status >= 400 && err.status < 500) {
            // Backend may send the message directly in err.error or err.error.message
            errorMsg = err.error?.message || (typeof err.error === 'string' ? err.error : 'forgot-password.error_not_found');
         }
-        
+
         this.errorMessage.set(errorMsg);
         console.error('Forgot password error:', err);
       }
