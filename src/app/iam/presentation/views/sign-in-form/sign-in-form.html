@@ -24,8 +24,12 @@
         <mat-form-field appearance="outline" class="full-width">
           <input matInput type="email" formControlName="email" [placeholder]="'sign-in.email_placeholder' | translate">
           <i class="pi pi-envelope suffix-icon" matSuffix></i>
-          <mat-error *ngIf="emailControl?.hasError('required')">{{ 'sign-in.email_required' | translate }}</mat-error>
-          <mat-error *ngIf="emailControl?.hasError('email')">{{ 'sign-in.email_invalid' | translate }}</mat-error>
+          @if (emailControl?.hasError('required')) {
+            <mat-error>{{ 'sign-in.email_required' | translate }}</mat-error>
+          }
+          @if (emailControl?.hasError('email')) {
+            <mat-error>{{ 'sign-in.email_invalid' | translate }}</mat-error>
+          }
         </mat-form-field>
 
         <!-- Password Field -->
@@ -34,8 +38,12 @@
           <button mat-icon-button matSuffix (click)="hidePassword.set(!hidePassword())" type="button" aria-label="Toggle password visibility">
             <i class="pi suffix-icon" [class.pi-eye]="hidePassword()" [class.pi-eye-slash]="!hidePassword()"></i>
           </button>
-          <mat-error *ngIf="passwordControl?.hasError('required')">{{ 'sign-in.password_required' | translate }}</mat-error>
-          <mat-error *ngIf="passwordControl?.hasError('minlength')">{{ 'sign-in.password_min' | translate }}</mat-error>
+          @if (passwordControl?.hasError('required')) {
+            <mat-error>{{ 'sign-in.password_required' | translate }}</mat-error>
+          }
+          @if (passwordControl?.hasError('minlength')) {
+            <mat-error>{{ 'sign-in.password_min' | translate }}</mat-error>
+          }
         </mat-form-field>
 
         <!-- Options Row -->

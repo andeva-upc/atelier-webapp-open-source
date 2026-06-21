@@ -6,13 +6,12 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { IamStore } from '../../../application/iam.store';
 import { Router } from '@angular/router';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { CoreStore } from '../../../../core/application/core.store';
-import { BranchResource } from '../../../../core/infrastructure/responses/branch-response';
+import { CoreMobileBranchMenuItemComponent } from '../../../../core/presentation/components/mobile-branch-menu-item/mobile-branch-menu-item';
 
 @Component({
   selector: 'app-profile',
   imports: [
-    CommonModule, MatToolbarModule, MatMenuModule, MatBadgeModule, TranslateModule
+    CommonModule, MatToolbarModule, MatMenuModule, MatBadgeModule, TranslateModule, CoreMobileBranchMenuItemComponent
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
@@ -22,12 +21,8 @@ export class Profile implements OnInit {
   
   private iamStore = inject(IamStore);
   private router = inject(Router);
-  private coreStore = inject(CoreStore);
   private translate = inject(TranslateService);
-
   activeRole = signal<string>('');
-  currentBranch = this.coreStore.currentBranch;
-  currentWorkshopBranches = this.coreStore.currentWorkshopBranches;
 
   ngOnInit() {
     const role = localStorage.getItem('activeRole') || sessionStorage.getItem('activeRole') || '';
@@ -38,10 +33,6 @@ export class Profile implements OnInit {
 
   switchLanguage(lang: string) {
     this.translate.use(lang);
-  }
-
-  onBranchSelect(branch: BranchResource) {
-    this.coreStore.selectBranch(branch);
   }
 
   userInitials = computed(() => {

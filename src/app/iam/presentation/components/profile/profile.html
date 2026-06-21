@@ -12,14 +12,7 @@
       </span>
     </button>
     <!-- Sub-menu de Sede (Sólo Móvil) -->
-    @if (activeRole().includes('OWNER') && currentBranch()) {
-      <button mat-menu-item [matMenuTriggerFor]="branchSubMenu" class="mobile-only">
-        <span class="menu-item-content">
-          <i class="pi pi-map-marker menu-icon"></i>
-          <span class="menu-text">{{ 'profile.branch' | translate }} {{ currentBranch()?.name }}</span>
-        </span>
-      </button>
-    }
+    <app-core-mobile-branch-menu-item></app-core-mobile-branch-menu-item>
 
     <!-- Sub-menu de Idioma (Sólo Móvil) -->
     <button mat-menu-item [matMenuTriggerFor]="langSubMenu" class="mobile-only">
@@ -38,13 +31,6 @@
   </mat-menu>
 
   <!-- Definición de sub-menus -->
-  <mat-menu #branchSubMenu="matMenu" class="custom-menu">
-    @for (branch of currentWorkshopBranches(); track branch.id) {
-      <button mat-menu-item (click)="onBranchSelect(branch)">
-        <span class="menu-text">{{ branch.name }}</span>
-      </button>
-    }
-  </mat-menu>
 
   <mat-menu #langSubMenu="matMenu" class="custom-menu">
     <button mat-menu-item (click)="switchLanguage('es')">

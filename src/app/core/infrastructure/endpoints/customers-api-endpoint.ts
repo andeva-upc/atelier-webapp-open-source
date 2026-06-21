@@ -1,5 +1,5 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CreateCustomerCommand } from '../../domain/model/commands/create-customer.command';
@@ -24,9 +24,9 @@ export class CustomersApiEndpoint extends BaseApi {
     );
   }
 
-  update(userId: string, command: UpdateCustomerCommand): Observable<CustomerResource> {
+  update(customerId: string, command: UpdateCustomerCommand): Observable<CustomerResource> {
     const request = this.updateAssembler.toRequestFromCommand(command);
-    return this.http.put<CustomerResource>(`${baseUrl}/user/${userId}`, request).pipe(
+    return this.http.put<CustomerResource>(`${baseUrl}/${customerId}`, request).pipe(
       catchError(this.handleError('Failed to update customer'))
     );
   }
@@ -38,13 +38,14 @@ export class CustomersApiEndpoint extends BaseApi {
   }
 
   getByUserId(userId: string): Observable<CustomerResource> {
-    return this.http.get<CustomerResource>(`${baseUrl}/user/${userId}`).pipe(
+    const params = new HttpParams().set('userId', userId);
+    return this.http.get<CustomerResource>(baseUrl, { params }).pipe(
       catchError(this.handleError('Failed to get customer by user id'))
     );
   }
 
-  delete(userId: string): Observable<any> {
-    return this.http.delete(`${baseUrl}/user/${userId}`).pipe(
+  delete(customerId: string): Observable<any> {
+    return this.http.delete(`${baseUrl}/${customerId}`).pipe(
       catchError(this.handleError('Failed to delete customer'))
     );
   }

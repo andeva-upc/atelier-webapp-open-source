@@ -6,10 +6,15 @@
     "no_roles": "You do not have profiles associated with this account.",
     "sign_out": "Sign Out",
     "title": "Which profile do you want to log in with?",
+    "error_nav_blocked": "Error: Navigation was blocked or silently canceled by Angular. Check the console (F12).",
+    "error_nav_exec": "Runtime error while navigating: ",
     "roles": {
       "CUSTOMER": "Customer",
       "OWNER": "Owner",
       "EMPLOYEE": "Mechanic"
     }
+  },
+  "mobile-branch-menu-item": {
+    "branch": "Branch:"
   }
 }

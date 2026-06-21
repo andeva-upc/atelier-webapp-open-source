@@ -10,7 +10,8 @@ export class ProfilesApiEndpoint extends BaseApi {
   constructor(private http: HttpClient) { super(); }
 
   getRolesByUserId(userId: string): Observable<string[]> {
-    return this.http.get<string[]>(`${baseUrl}/users/${userId}/roles`).pipe(
+    const params = new HttpParams().set('userId', userId);
+    return this.http.get<string[]>(`${baseUrl}/roles`, { params }).pipe(
       catchError(this.handleError('Failed to get profile roles'))
     );
   }

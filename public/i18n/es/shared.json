@@ -23,5 +23,12 @@
   },
   "modal": {
     "close": "Cerrar modal"
+  },
+  "home-dashboard": {
+    "title": "Bienvenido a tu Dashboard",
+    "customer_subtitle": "Tu perfil de Cliente está activo",
+    "customer_desc": "Navega a la sección de vehículos para gestionar tu flota o agenda una cita para mantenimiento.",
+    "staff_subtitle": "Tu perfil de Personal está activo",
+    "staff_desc": "Revisa las órdenes de trabajo, el inventario o la facturación desde las opciones del menú lateral."
   }
 }

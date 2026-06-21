@@ -1,0 +1,16 @@
+@if (activeRole.includes('OWNER') && currentBranch()) {
+  <button mat-menu-item [matMenuTriggerFor]="branchSubMenu" class="mobile-only">
+    <span class="menu-item-content">
+      <i class="pi pi-map-marker menu-icon"></i>
+      <span class="menu-text">{{ 'mobile-branch-menu-item.branch' | translate }} {{ currentBranch()?.name }}</span>
+    </span>
+  </button>
+
+  <mat-menu #branchSubMenu="matMenu" class="custom-menu">
+    @for (branch of currentWorkshopBranches(); track branch.id) {
+      <button mat-menu-item (click)="onBranchSelect(branch)">
+        <span class="menu-text">{{ branch.name }}</span>
+      </button>
+    }
+  </mat-menu>
+}

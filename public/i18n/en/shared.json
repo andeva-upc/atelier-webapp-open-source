@@ -23,5 +23,12 @@
   },
   "modal": {
     "close": "Close modal"
+  },
+  "home-dashboard": {
+    "title": "Welcome to your Dashboard",
+    "customer_subtitle": "Your Customer profile is active",
+    "customer_desc": "Navigate to the vehicles section to manage your fleet or schedule an appointment for maintenance.",
+    "staff_subtitle": "Your Staff profile is active",
+    "staff_desc": "Review work orders, inventory, or billing from the side menu options."
   }
 }

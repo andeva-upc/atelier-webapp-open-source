@@ -18,16 +18,24 @@
         <mat-form-field appearance="outline" class="full-width">
           <input matInput type="email" formControlName="email" [placeholder]="'sign-up.email_placeholder' | translate">
           <i class="pi pi-user suffix-icon" matSuffix></i>
-          <mat-error *ngIf="emailControl?.hasError('required')">{{ 'sign-up.email_required' | translate }}</mat-error>
-          <mat-error *ngIf="emailControl?.hasError('email')">{{ 'sign-up.email_invalid' | translate }}</mat-error>
+          @if (emailControl?.hasError('required')) {
+            <mat-error>{{ 'sign-up.email_required' | translate }}</mat-error>
+          }
+          @if (emailControl?.hasError('email')) {
+            <mat-error>{{ 'sign-up.email_invalid' | translate }}</mat-error>
+          }
         </mat-form-field>
 
         <!-- Password Field -->
         <mat-form-field appearance="outline" class="full-width">
           <input matInput type="password" formControlName="password" [placeholder]="'sign-up.password_placeholder' | translate">
           <i class="pi pi-lock suffix-icon" matSuffix></i>
-          <mat-error *ngIf="passwordControl?.hasError('required')">{{ 'sign-up.password_required' | translate }}</mat-error>
-          <mat-error *ngIf="passwordControl?.hasError('minlength')">{{ 'sign-up.password_min' | translate }}</mat-error>
+          @if (passwordControl?.hasError('required')) {
+            <mat-error>{{ 'sign-up.password_required' | translate }}</mat-error>
+          }
+          @if (passwordControl?.hasError('minlength')) {
+            <mat-error>{{ 'sign-up.password_min' | translate }}</mat-error>
+          }
         </mat-form-field>
 
         <!-- Terms and Conditions -->

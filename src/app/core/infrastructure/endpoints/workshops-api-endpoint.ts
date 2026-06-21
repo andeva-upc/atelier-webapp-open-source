@@ -1,5 +1,5 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CreateWorkshopCommand } from '../../domain/model/commands/create-workshop.command';
@@ -38,7 +38,8 @@ export class WorkshopsApiEndpoint extends BaseApi {
   }
 
   getByOwnerId(ownerId: string): Observable<WorkshopResource[]> {
-    return this.http.get<WorkshopResource[]>(`${baseUrl}/owner/${ownerId}`).pipe(
+    const params = new HttpParams().set('ownerId', ownerId);
+    return this.http.get<WorkshopResource[]>(baseUrl, { params }).pipe(
       catchError(this.handleError('Failed to get workshops by owner'))
     );
   }

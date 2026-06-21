@@ -18,7 +18,8 @@ export const environment = {
       owners: '/owners',
       employees: '/employees',
       branches: '/branches',
-      profiles: '/profiles'
+      profiles: '/profiles',
+      subscriptions: '/subscriptions'
     },
     operations: {
       services: '/services',

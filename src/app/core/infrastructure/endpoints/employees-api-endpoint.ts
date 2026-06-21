@@ -1,5 +1,5 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CreateEmployeeCommand } from '../../domain/model/commands/create-employee.command';
@@ -24,9 +24,9 @@ export class EmployeesApiEndpoint extends BaseApi {
     );
   }
 
-  update(userId: string, command: UpdateEmployeeCommand): Observable<EmployeeResource> {
+  update(employeeId: string, command: UpdateEmployeeCommand): Observable<EmployeeResource> {
     const request = this.updateAssembler.toRequestFromCommand(command);
-    return this.http.put<EmployeeResource>(`${baseUrl}/user/${userId}`, request).pipe(
+    return this.http.put<EmployeeResource>(`${baseUrl}/${employeeId}`, request).pipe(
       catchError(this.handleError('Failed to update employee'))
     );
   }
@@ -38,13 +38,14 @@ export class EmployeesApiEndpoint extends BaseApi {
   }
 
   getByUserId(userId: string): Observable<EmployeeResource> {
-    return this.http.get<EmployeeResource>(`${baseUrl}/user/${userId}`).pipe(
+    const params = new HttpParams().set('userId', userId);
+    return this.http.get<EmployeeResource>(baseUrl, { params }).pipe(
       catchError(this.handleError('Failed to get employee by user id'))
     );
   }
 
-  delete(userId: string): Observable<any> {
-    return this.http.delete(`${baseUrl}/user/${userId}`).pipe(
+  delete(employeeId: string): Observable<any> {
+    return this.http.delete(`${baseUrl}/${employeeId}`).pipe(
       catchError(this.handleError('Failed to delete employee'))
     );
   }
