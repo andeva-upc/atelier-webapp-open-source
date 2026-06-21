@@ -10,7 +10,7 @@
     </div>
     
     <div class="action-area">
-      <button type="button" [routerLink]="['/telemetry/odb2_devices/new']" class="btn-primary-gradient">
+      <button type="button" [routerLink]="['/telemetry/obd2-devices/new']" class="btn-primary-gradient">
         <i class="pi pi-plus"></i> {{ 'iot.obd2Dialog.add' | translate }} OBD2
       </button>
     </div>
@@ -62,7 +62,7 @@
                 <td class="actions-cell">
                   <div class="actions-wrapper">
                     @if (device.status === 'AVAILABLE') {
-                      <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ obd2DeviceId: device.id }" class="btn-action-link" title="Vincular">
+                      <a [routerLink]="['/telemetry/obd2-device-registrations/new']" [queryParams]="{ obd2DeviceId: device.id }" class="btn-action-link" title="Vincular">
                         <i class="pi pi-link"></i> Vincular
                       </a>
                     } @else if (device.status === 'LINKED' && device.activeRegId) {
@@ -71,7 +71,7 @@
                       </button>
                     }
 
-                    <a [routerLink]="['/telemetry/odb2_devices', device.id, 'edit']" class="btn-action-edit" title="Editar MAC">
+                    <a [routerLink]="['/telemetry/obd2-devices', device.id, 'edit']" class="btn-action-edit" title="Editar MAC">
                       <i class="pi pi-pencil"></i>
                     </a>
                     <button type="button" (click)="deleteDevice(device.id)" class="btn-action-delete" title="Dar de baja">

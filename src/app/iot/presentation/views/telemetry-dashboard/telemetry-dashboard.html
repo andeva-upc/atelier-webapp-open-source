@@ -39,7 +39,7 @@
                 <span class="static-dot"></span>
                 <span class="status-text">{{ 'iot.dashboard.noObd2Linked' | translate }}</span>
               </div>
-              <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ vehicleId: selectedVehicleId() }" class="btn-link">
+              <a [routerLink]="['/telemetry/obd2-device-registrations/new']" [queryParams]="{ vehicleId: selectedVehicleId() }" class="btn-link">
                 <i class="pi pi-link"></i> {{ 'iot.dashboard.linkBtn' | translate }}
               </a>
             }
@@ -64,7 +64,7 @@
     <!-- Right Controls (Workshop Only) -->
     @if (!isCustomer) {
       <div class="right-controls">
-        <button type="button" [routerLink]="['/telemetry/odb2_devices']" class="btn-manage-obd2">
+        <button type="button" [routerLink]="['/telemetry/obd2-devices']" class="btn-manage-obd2">
           <i class="pi pi-cog"></i> {{ 'iot.dashboard.manageObd2Btn' | translate }}
         </button>
       </div>
@@ -83,7 +83,7 @@
           <i class="pi pi-link-slash empty-icon"></i>
           <h2>No tiene OBD2 conectado</h2>
           <p>Para visualizar las métricas y reportes en tiempo real, vincula un dispositivo OBD2 a este vehículo.</p>
-          <a [routerLink]="['/telemetry/odb2_device_registrations/new']" [queryParams]="{ vehicleId: selectedVehicleId() }" class="btn-primary-gradient">
+          <a [routerLink]="['/telemetry/obd2-device-registrations/new']" [queryParams]="{ vehicleId: selectedVehicleId() }" class="btn-primary-gradient">
             <i class="pi pi-link"></i> Vincular
           </a>
         </div>

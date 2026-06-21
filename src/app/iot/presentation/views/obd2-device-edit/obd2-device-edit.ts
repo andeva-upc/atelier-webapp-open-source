@@ -67,7 +67,7 @@ export class Obd2DeviceEditComponent implements OnInit {
     this.store.updateObd2Device(this.deviceId, command).subscribe({
       next: () => {
         // Redirect to list view on successful update
-        this.router.navigate(['/telemetry/odb2_devices']);
+        this.router.navigate(['/telemetry/obd2-devices']);
       },
       error: (err) => {
         console.error('Failed to update OBD2 device:', err);
@@ -83,6 +83,6 @@ export class Obd2DeviceEditComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/telemetry/odb2_devices']);
+    this.router.navigate(['/telemetry/obd2-devices']);
   }
 }
