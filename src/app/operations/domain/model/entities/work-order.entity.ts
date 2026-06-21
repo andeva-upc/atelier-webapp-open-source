@@ -7,11 +7,14 @@ export class WorkOrder {
   vehicleId: string;
   customerId: string;
   internalNumber: number;
+  formattedNumber: string;
   status: string; // PENDING, IN_PROGRESS, COMPLETED, PAID
   diagnosticSummary: string;
   mileageIn: number;
   totalAmount: number;
   tasks: WorkOrderTask[];
+  createdAt?: Date;
+  updatedAt?: Date;
 
   constructor() {
     this.id = '';
@@ -20,6 +23,7 @@ export class WorkOrder {
     this.vehicleId = '';
     this.customerId = '';
     this.internalNumber = 0;
+    this.formattedNumber = '';
     this.status = 'PENDING';
     this.diagnosticSummary = '';
     this.mileageIn = 0;

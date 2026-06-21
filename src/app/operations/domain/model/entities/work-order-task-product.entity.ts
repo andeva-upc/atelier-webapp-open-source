@@ -5,6 +5,7 @@ export class WorkOrderTaskProduct {
   quantity: number;
   unitPrice: number;
   totalAmount: number;
+  createdAt?: Date;
 
   constructor() {
     this.id = '';
