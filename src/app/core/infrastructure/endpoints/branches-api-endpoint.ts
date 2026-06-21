@@ -1,5 +1,5 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CreateBranchCommand } from '../../domain/model/commands/create-branch.command';
@@ -42,20 +42,21 @@ export class BranchesApiEndpoint extends BaseApi {
   }
 
   getByWorkshopId(workshopId: string): Observable<BranchResource[]> {
-    return this.http.get<BranchResource[]>(`${baseUrl}/workshop/${workshopId}`).pipe(
+    const params = new HttpParams().set('workshopId', workshopId);
+    return this.http.get<BranchResource[]>(baseUrl, { params }).pipe(
       catchError(this.handleError('Failed to get branches by workshop'))
     );
   }
 
   assignSubscription(branchId: string, command: AssignSubscriptionCommand): Observable<BranchSubscriptionResource> {
     const request = this.assignAssembler.toRequestFromCommand(command);
-    return this.http.post<BranchSubscriptionResource>(`${baseUrl}/${branchId}/subscriptions/pay`, request).pipe(
+    return this.http.post<BranchSubscriptionResource>(`${baseUrl}/${branchId}/subscriptions`, request).pipe(
       catchError(this.handleError('Failed to assign subscription'))
     );
   }
 
   cancelSubscription(branchId: string): Observable<BranchSubscriptionResource> {
-    return this.http.delete<BranchSubscriptionResource>(`${baseUrl}/${branchId}/subscriptions/active`).pipe(
+    return this.http.delete<BranchSubscriptionResource>(`${baseUrl}/${branchId}/subscription`).pipe(
       catchError(this.handleError('Failed to cancel subscription'))
     );
   }

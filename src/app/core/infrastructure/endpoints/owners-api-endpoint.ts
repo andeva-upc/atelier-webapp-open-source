@@ -1,5 +1,5 @@
 import { BaseApi } from '../../../shared/infrastructure/base-api';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { CreateOwnerCommand } from '../../domain/model/commands/create-owner.command';
@@ -24,9 +24,9 @@ export class OwnersApiEndpoint extends BaseApi {
     );
   }
 
-  update(userId: string, command: UpdateOwnerCommand): Observable<OwnerResource> {
+  update(ownerId: string, command: UpdateOwnerCommand): Observable<OwnerResource> {
     const request = this.updateAssembler.toRequestFromCommand(command);
-    return this.http.put<OwnerResource>(`${baseUrl}/user/${userId}`, request).pipe(
+    return this.http.put<OwnerResource>(`${baseUrl}/${ownerId}`, request).pipe(
       catchError(this.handleError('Failed to update owner'))
     );
   }
@@ -38,13 +38,14 @@ export class OwnersApiEndpoint extends BaseApi {
   }
 
   getByUserId(userId: string): Observable<OwnerResource> {
-    return this.http.get<OwnerResource>(`${baseUrl}/user/${userId}`).pipe(
+    const params = new HttpParams().set('userId', userId);
+    return this.http.get<OwnerResource>(baseUrl, { params }).pipe(
       catchError(this.handleError('Failed to get owner by user id'))
     );
   }
 
-  delete(userId: string): Observable<any> {
-    return this.http.delete(`${baseUrl}/user/${userId}`).pipe(
+  delete(ownerId: string): Observable<any> {
+    return this.http.delete(`${baseUrl}/${ownerId}`).pipe(
       catchError(this.handleError('Failed to delete owner'))
     );
   }
