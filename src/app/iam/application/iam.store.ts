@@ -8,6 +8,9 @@ import { GeneratePasswordRecoveryTokenCommand } from '../domain/model/commands/g
 import { ResetPasswordCommand } from '../domain/model/commands/reset-password.command';
 import { UpdateUserEmailCommand } from '../domain/model/commands/update-user-email.command';
 import { UpdateUserPasswordCommand } from '../domain/model/commands/update-user-password.command';
+import { AuthenticatedUser } from '../domain/model/entities/authenticated-user.entity';
+import { User } from '../domain/model/entities/user.entity';
+import { UserAssembler } from '../infrastructure/assemblers/user-assembler';
 
 @Injectable({providedIn: 'root'})
 export class IamStore {
@@ -15,11 +18,13 @@ export class IamStore {
   private readonly currentUsernameSignal = signal<string | null>(null);
   private readonly currentUserIdSignal = signal<string | null>(null);
   private readonly signInErrorSignal = signal<string | null>(null);
+  private readonly authenticatedUserSignal = signal<AuthenticatedUser | null>(null);
 
   readonly isSignedIn = this.isSignedInSignal.asReadonly();
   readonly currentUsername = this.currentUsernameSignal.asReadonly();
   readonly currentUserId = this.currentUserIdSignal.asReadonly();
   readonly signInError = this.signInErrorSignal.asReadonly();
+  readonly authenticatedUser = this.authenticatedUserSignal.asReadonly();
 
   readonly currentToken = computed(() => this.isSignedIn() ? (localStorage.getItem('token') || sessionStorage.getItem('token')) : null);
 
@@ -34,6 +39,7 @@ export class IamStore {
       this.isSignedInSignal.set(false);
       this.currentUsernameSignal.set(null);
       this.currentUserIdSignal.set(null);
+      this.authenticatedUserSignal.set(null);
     }
   }
 
@@ -44,9 +50,15 @@ export class IamStore {
         const storage = rememberMe ? localStorage : sessionStorage;
         storage.setItem('token', signInResource.token);
         storage.setItem('userId', signInResource.id.toString());
+        
+        const user = new User({ id: signInResource.id.toString(), email: signInResource.email });
+        const authenticatedUser = new AuthenticatedUser({ id: signInResource.id.toString(), token: signInResource.token, user: user });
+        
         this.isSignedInSignal.set(true);
         this.currentUsernameSignal.set(signInResource.email);
         this.currentUserIdSignal.set(signInResource.id);
+        this.authenticatedUserSignal.set(authenticatedUser);
+        
         router.navigate(['/role-selection']).then();
       },
       error: (err) => {
@@ -54,6 +66,7 @@ export class IamStore {
         this.isSignedInSignal.set(false);
         this.currentUsernameSignal.set(null);
         this.currentUserIdSignal.set(null);
+        this.authenticatedUserSignal.set(null);
         this.signInErrorSignal.set('sign-in.error_invalid_credentials');
       }
     });
@@ -64,9 +77,15 @@ export class IamStore {
       next: (resource) => {
         localStorage.setItem('token', resource.token);
         localStorage.setItem('userId', resource.id.toString());
+        
+        const user = new User({ id: resource.id.toString(), email: resource.email });
+        const authenticatedUser = new AuthenticatedUser({ id: resource.id.toString(), token: resource.token, user: user });
+
         this.isSignedInSignal.set(true);
         this.currentUsernameSignal.set(resource.email);
         this.currentUserIdSignal.set(resource.id);
+        this.authenticatedUserSignal.set(authenticatedUser);
+        
         router.navigate(['/role-selection']).then();
       },
       error: (err) => {
@@ -74,6 +93,7 @@ export class IamStore {
         this.isSignedInSignal.set(false);
         this.currentUsernameSignal.set(null);
         this.currentUserIdSignal.set(null);
+        this.authenticatedUserSignal.set(null);
         router.navigate(['/sign-in']).then();
       }
     });
@@ -90,6 +110,7 @@ export class IamStore {
         this.isSignedInSignal.set(false);
         this.currentUsernameSignal.set(null);
         this.currentUserIdSignal.set(null);
+        this.authenticatedUserSignal.set(null);
         router.navigate(['/sign-up']).then();
       }
     });
@@ -104,9 +125,12 @@ export class IamStore {
     localStorage.removeItem('activeRole');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('userId');
+    
     this.isSignedInSignal.set(false);
     this.currentUsernameSignal.set(null);
     this.currentUserIdSignal.set(null);
+    this.authenticatedUserSignal.set(null);
+    
     router.navigate(['/sign-in']).then();
   }
 
@@ -126,15 +150,25 @@ export class IamStore {
     return this.iamApi.updateUserPassword(command);
   }
 
-  readonly currentUserProfile = signal<any | null>(null);
+  readonly currentUserProfile = signal<User | null>(null);
 
   loadUserProfile(userId: string) {
     this.iamApi.getUserById(userId).subscribe({
       next: (resource) => {
-        this.currentUserProfile.set(resource);
-        this.currentUsernameSignal.set(resource.email);
+        const assembler = new UserAssembler();
+        const userEntity = assembler.toEntityFromResource(resource);
+        this.currentUserProfile.set(userEntity);
+        this.currentUsernameSignal.set(userEntity.email);
+        
+        // Also update authenticatedUser if we have a token
+        const token = this.currentToken();
+        if (token) {
+          const authUser = new AuthenticatedUser({ id: userEntity.id as string, token: token, user: userEntity });
+          this.authenticatedUserSignal.set(authUser);
+        }
       },
       error: (err) => console.error('Failed to load user profile:', err)
     });
   }
 }
+
