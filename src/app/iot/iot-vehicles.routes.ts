@@ -29,4 +29,12 @@ export const VEHICLES_ROUTES: Routes = [
         (m) => m.TelemetryDashboardComponent
       ),
   },
+  {
+    path: ':id/dtc_alerts',
+    loadComponent: () =>
+      import('./presentation/views/vehicle-dtc-alerts/vehicle-dtc-alerts').then(
+        (m) => m.VehicleDtcAlertsComponent
+      ),
+  },
 ];
+
