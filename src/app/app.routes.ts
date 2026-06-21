@@ -60,7 +60,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'customers',
+    path: 'fleet',
     component: Home,
     canActivate: [iamGuard],
     children: [
