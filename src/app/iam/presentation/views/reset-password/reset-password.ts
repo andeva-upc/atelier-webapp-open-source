@@ -1,9 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Router, ActivatedRoute, RouterLink } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IamStore } from '../../../application/iam.store';
 import { ResetPasswordCommand } from '../../../domain/model/commands/reset-password.command';
-import { SignInCommand } from '../../../domain/model/commands/sign-in.command';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -51,7 +50,7 @@ export class ResetPasswordComponent implements OnInit {
   token = signal<string | null>(null);
   errorMessage = signal<string | null>(null);
   isSubmitting = signal<boolean>(false);
-  
+
   hideNewPassword = signal(true);
   hideConfirmPassword = signal(true);
 
@@ -78,13 +77,13 @@ export class ResetPasswordComponent implements OnInit {
       this.resetPasswordForm.markAllAsTouched();
       return;
     }
-    
+
     this.isSubmitting.set(true);
     this.errorMessage.set(null);
-    
+
     const { newPassword } = this.resetPasswordForm.value;
     const command = new ResetPasswordCommand({ token: this.token()!, newPassword });
-    
+
     this.iamStore.resetPassword(command).subscribe({
       next: () => {
         // Redirect to sign in page
