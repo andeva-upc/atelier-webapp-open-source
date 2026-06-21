@@ -17,6 +17,8 @@ export class VehiclesListComponent implements OnInit {
   private readonly customerId: string;
 
   searchQuery = signal<string>('');
+  isModalOpen = signal<boolean>(false);
+  selectedVehicle = signal<VehicleResource | null>(null);
 
   readonly filteredVehicles = computed<VehicleResource[]>(() => {
     const q = this.searchQuery().toLowerCase().trim();
@@ -46,21 +48,52 @@ export class VehiclesListComponent implements OnInit {
     this.searchQuery.set((event.target as HTMLInputElement).value);
   }
 
-  viewTelemetry(vehicleId: string): void {
-    this.router.navigate(['/vehicles', vehicleId, 'telemetry']);
+  openModal(vehicle: VehicleResource): void {
+    this.selectedVehicle.set(vehicle);
+    this.isModalOpen.set(true);
   }
 
-  editVehicle(vehicleId: string): void {
-    this.router.navigate(['/vehicles', vehicleId, 'edit']);
+  closeModal(): void {
+    this.isModalOpen.set(false);
+    this.selectedVehicle.set(null);
   }
 
-  deleteVehicle(vehicleId: string): void {
+  viewTelemetry(): void {
+    const v = this.selectedVehicle();
+    if (v) {
+      this.closeModal();
+      this.router.navigate(['/vehicles', v.id, 'telemetry']);
+    }
+  }
+
+  viewDtcAlerts(): void {
+    const v = this.selectedVehicle();
+    if (v) {
+      this.closeModal();
+      this.router.navigate(['/vehicles', v.id, 'dtc_alerts']);
+    }
+  }
+
+  editVehicle(): void {
+    const v = this.selectedVehicle();
+    if (v) {
+      this.closeModal();
+      this.router.navigate(['/vehicles', v.id, 'edit']);
+    }
+  }
+
+  deleteVehicle(): void {
+    const v = this.selectedVehicle();
+    if (!v) return;
+
     const confirmed = window.confirm(
-      '¿Estás seguro de que deseas eliminar este vehículo? Esta acción no se puede deshacer.'
+      '¿Estás seguro de que deseas desregistrar este vehículo? Esta acción no se puede deshacer.'
     );
     if (!confirmed) return;
-    this.isDeletingId.set(vehicleId);
-    this.store.deleteVehicle(vehicleId);
+    
+    this.isDeletingId.set(v.id);
+    this.store.deleteVehicle(v.id);
+    this.closeModal();
     // Give the store time to update then clear state
     setTimeout(() => this.isDeletingId.set(null), 500);
   }

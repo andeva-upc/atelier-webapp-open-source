@@ -62,12 +62,11 @@
             <th>{{ 'iot.vehicles.colPlate' | translate }}</th>
             <th>{{ 'iot.vehicles.colVin' | translate }}</th>
             <th>{{ 'iot.vehicles.colYear' | translate }}</th>
-            <th class="col-actions">{{ 'iot.vehicles.colActions' | translate }}</th>
           </tr>
         </thead>
         <tbody>
           @for (vehicle of filteredVehicles(); track vehicle.id) {
-            <tr class="vehicle-row" [class.deleting]="isDeletingId() === vehicle.id">
+            <tr class="vehicle-row clickable-row" [class.deleting]="isDeletingId() === vehicle.id" (click)="openModal(vehicle)">
               <td>
                 <div class="brand-cell">
                   <span class="brand-avatar">{{ vehicle.brand[0] }}</span>
@@ -80,41 +79,51 @@
               </td>
               <td class="vin-cell">{{ vehicle.vin }}</td>
               <td class="year-cell">{{ vehicle.year }}</td>
-              <td class="actions-cell">
-                <button
-                  type="button"
-                  class="action-btn telemetry-btn"
-                  [id]="'telemetryBtn-' + vehicle.id"
-                  (click)="viewTelemetry(vehicle.id)"
-                  title="{{ 'iot.vehicles.viewTelemetry' | translate }}"
-                >
-                  <i class="pi pi-chart-line"></i>
-                  <span>{{ 'iot.vehicles.viewTelemetry' | translate }}</span>
-                </button>
-                <button
-                  type="button"
-                  class="action-btn edit-btn"
-                  [id]="'editBtn-' + vehicle.id"
-                  (click)="editVehicle(vehicle.id)"
-                  title="{{ 'iot.vehicles.editBtn' | translate }}"
-                >
-                  <i class="pi pi-pencil"></i>
-                </button>
-                <button
-                  type="button"
-                  class="action-btn delete-btn"
-                  [id]="'deleteBtn-' + vehicle.id"
-                  (click)="deleteVehicle(vehicle.id)"
-                  [disabled]="isDeletingId() === vehicle.id"
-                  title="{{ 'iot.vehicles.deleteBtn' | translate }}"
-                >
-                  <i class="pi pi-trash"></i>
-                </button>
-              </td>
             </tr>
           }
         </tbody>
       </table>
+    </div>
+  }
+
+  <!-- Vehicle Details Modal -->
+  @if (isModalOpen()) {
+    <div class="modal-overlay" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <header class="modal-header">
+          <h3>{{ selectedVehicle()?.brand }} {{ selectedVehicle()?.model }}</h3>
+          <span class="modal-plate-badge">{{ selectedVehicle()?.plateNumber }}</span>
+          <button type="button" class="close-btn" (click)="closeModal()">
+            <i class="pi pi-times"></i>
+          </button>
+        </header>
+        
+        <div class="modal-body">
+          <p class="modal-vin">VIN: {{ selectedVehicle()?.vin }}</p>
+          
+          <div class="modal-actions-container">
+            <button type="button" class="modal-btn modal-btn-edit" (click)="editVehicle()">
+              <i class="pi pi-pencil"></i>
+              {{ 'iot.vehicles.editBtn' | translate }}
+            </button>
+            <button type="button" class="modal-btn modal-btn-danger" (click)="deleteVehicle()">
+              <i class="pi pi-trash"></i>
+              Desregistrar
+            </button>
+          </div>
+
+          <div class="modal-links-container">
+            <a href="javascript:void(0)" class="modal-text-link" (click)="viewDtcAlerts()">
+              <i class="pi pi-exclamation-triangle"></i>
+              Ver dtc_alets
+            </a>
+            <a href="javascript:void(0)" class="modal-text-link" (click)="viewTelemetry()">
+              <i class="pi pi-chart-line"></i>
+              {{ 'iot.vehicles.viewTelemetry' | translate }}
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   }
 </div>
