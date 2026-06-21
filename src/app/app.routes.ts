@@ -19,7 +19,14 @@ const fleetRoutes = () => import('./fleet/fleet.routes').then((m) => m.FLEET_ROU
  * @see https://angular.io/guide/router for more information on Angular routing.
  */
 export const routes: Routes = [
-  { path: 'home', redirectTo: 'telemetry', pathMatch: 'full' },
+  {
+    path: 'home',
+    component: Home,
+    canActivate: [iamGuard],
+    children: [
+      { path: '', loadComponent: () => import('./shared/presentation/views/home-dashboard/home-dashboard').then(m => m.HomeDashboardComponent) }
+    ]
+  },
   {
     path: 'vehicles',
     component: Home,
