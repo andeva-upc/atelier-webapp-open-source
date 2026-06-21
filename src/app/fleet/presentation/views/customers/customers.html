@@ -7,7 +7,7 @@
     
     <div class="header-actions">
       <div class="search-box">
-        <i class="fas fa-search"></i>
+        <span class="material-icons">search</span>
         <input 
           type="text" 
           [ngModel]="searchQuery()" 
@@ -17,7 +17,7 @@
       </div>
       
       <button class="add-customer-btn" (click)="openAddModal()">
-        <i class="fas fa-user-plus"></i>
+        <span class="material-icons">person_add</span>
         {{ 'fleet.customers.addCustomer' | translate }}
       </button>
     </div>
@@ -25,7 +25,7 @@
 
   <ng-container *ngIf="isLoading(); else contentLoaded">
     <div class="loading-state">
-      <i class="fas fa-spinner fa-spin"></i>
+      <span class="material-icons spin-animation">autorenew</span>
       <span>{{ 'fleet.customers.loading' | translate }}</span>
     </div>
   </ng-container>
@@ -33,10 +33,10 @@
   <ng-template #contentLoaded>
     <div class="customers-grid" *ngIf="filteredCustomers() && filteredCustomers().length > 0; else emptyState">
       @for (customer of filteredCustomers(); track customer.registrationId) {
-        <div class="customer-card">
+        <div class="customer-card" [style.z-index]="openDropdownId() === customer.registrationId ? 100 : 1">
           <div class="card-header">
             <span class="customer-badge" [class.corporate-badge]="customer.isCorporate">
-              <i class="fas" [class.fa-building]="customer.isCorporate" [class.fa-user]="!customer.isCorporate"></i>
+              <span class="material-icons" style="font-size: 1rem;">{{ customer.isCorporate ? 'business' : 'person' }}</span>
               {{ (customer.isCorporate ? 'fleet.customers.corporate' : 'fleet.customers.personal') | translate }}
             </span>
           </div>
@@ -62,10 +62,17 @@
             </div>
           </div>
 
+          <!-- Dropdown Action Menu -->
           <div class="card-actions">
-            <button class="btn-card-action">
-              <i class="fas fa-ellipsis-v"></i>
+            <button class="btn-card-action" (click)="toggleDropdown(customer.registrationId, $event)">
+              <span class="material-icons">more_vert</span>
             </button>
+            <div class="dropdown-menu" *ngIf="openDropdownId() === customer.registrationId">
+              <button class="dropdown-item dropdown-item--danger" (click)="openDeregisterModal(customer)">
+                <span class="material-icons" style="font-size: 1.1rem;">person_remove</span>
+                {{ 'fleet.customers.actions.deregister' | translate }}
+              </button>
+            </div>
           </div>
         </div>
       }
@@ -75,7 +82,7 @@
   <ng-template #emptyState>
     <div class="empty-state">
       <div class="empty-icon">
-        <i class="fas fa-users-slash"></i>
+        <span class="material-icons" style="font-size: 4rem;">group_off</span>
       </div>
       <h2>{{ 'fleet.customers.emptyState.title' | translate }}</h2>
       <p>{{ 'fleet.customers.emptyState.subtitle' | translate }}</p>
@@ -88,32 +95,32 @@
       <div class="modal-header">
         <h2>{{ 'fleet.customers.addCustomer' | translate }}</h2>
         <button class="btn-close" (click)="closeAddModal()">
-          <i class="fas fa-times"></i>
+          <span class="material-icons">close</span>
         </button>
       </div>
 
       <div class="modal-body">
         <div class="modal-search-section">
-          <label for="searchId" class="input-label">Buscar por ID de Cliente (UUID)</label>
+          <label for="searchId" class="input-label">{{ 'fleet.customers.addModal.searchLabel' | translate }}</label>
           <div class="modal-search-box">
             <input 
               id="searchId"
               type="text" 
               [ngModel]="searchCustomerId()" 
               (ngModelChange)="searchCustomerId.set($event)" 
-              placeholder="Ej: 123e4567-e89b-12d3-a456-426614174000"
+              [placeholder]="'fleet.customers.addModal.searchPlaceholderInput' | translate"
               (keyup.enter)="onSearchCustomer()"
             >
             <button class="btn-search" (click)="onSearchCustomer()" [disabled]="isSearching() || !searchCustomerId().trim()">
-              <i class="fas" [class.fa-spinner]="isSearching()" [class.fa-spin]="isSearching()" [class.fa-search]="!isSearching()"></i>
-              Buscar
+              <span class="material-icons" [class.spin-animation]="isSearching()" style="font-size: 1.1rem; margin-right: 4px;">{{ isSearching() ? 'autorenew' : 'search' }}</span>
+              {{ 'fleet.customers.addModal.searchBtn' | translate }}
             </button>
           </div>
         </div>
 
         <!-- Mensajes de Error / Advertencia -->
         <div class="modal-error-message" *ngIf="modalErrorMessage()">
-          <i class="fas fa-exclamation-circle"></i>
+          <span class="material-icons" style="font-size: 1.2rem;">error_outline</span>
           <span>{{ modalErrorMessage() }}</span>
         </div>
 
@@ -121,7 +128,7 @@
         <div class="search-result-card" *ngIf="searchedCustomer()">
           <div class="result-header">
             <span class="customer-badge" [class.corporate-badge]="searchedCustomer()!.isCorporate">
-              <i class="fas" [class.fa-building]="searchedCustomer()!.isCorporate" [class.fa-user]="!searchedCustomer()!.isCorporate"></i>
+              <span class="material-icons" style="font-size: 1rem;">{{ searchedCustomer()!.isCorporate ? 'business' : 'person' }}</span>
               {{ (searchedCustomer()!.isCorporate ? 'fleet.customers.corporate' : 'fleet.customers.personal') | translate }}
             </span>
           </div>
@@ -142,15 +149,63 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn-secondary-modal" (click)="closeAddModal()">Cancelar</button>
+        <button class="btn-secondary-modal" (click)="closeAddModal()">{{ 'fleet.customers.addModal.cancel' | translate }}</button>
         <button 
           class="btn-primary-modal" 
           (click)="onRegisterCustomer()" 
           [disabled]="!searchedCustomer() || modalErrorMessage()"
         >
-          Registrar
+          {{ 'fleet.customers.addModal.register' | translate }}
         </button>
       </div>
     </div>
   </div>
+
+  <!-- Modal Desregistrar Cliente -->
+  <div class="modal-overlay" *ngIf="isDeregisterModalOpen()" (click)="closeDeregisterModal()">
+    <div class="modal-card modal-card--sm" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ 'fleet.customers.deregisterModal.title' | translate }}</h2>
+        <button class="btn-close" (click)="closeDeregisterModal()">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+
+      <div class="modal-body" *ngIf="customerToDeregister()">
+        <div class="deregister-info-card">
+          <span class="customer-badge" [class.corporate-badge]="customerToDeregister()!.isCorporate">
+            <span class="material-icons" style="font-size: 1rem;">{{ customerToDeregister()!.isCorporate ? 'business' : 'person' }}</span>
+            {{ (customerToDeregister()!.isCorporate ? 'fleet.customers.corporate' : 'fleet.customers.personal') | translate }}
+          </span>
+          <h4 class="deregister-name">
+            {{ customerToDeregister()!.isCorporate ? customerToDeregister()!.businessName : (customerToDeregister()!.firstName + ' ' + customerToDeregister()!.lastName) }}
+          </h4>
+          <p class="deregister-doc">{{ customerToDeregister()!.documentType }} {{ customerToDeregister()!.documentNumber }}</p>
+        </div>
+        
+        <div class="modal-error-message" *ngIf="deregisterErrorMessage()" style="margin-top: 1rem;">
+          <span class="material-icons" style="font-size: 1.2rem;">error_outline</span>
+          <span>{{ deregisterErrorMessage() }}</span>
+        </div>
+
+        <p class="deregister-warning" *ngIf="!deregisterErrorMessage()">
+          <span class="material-icons" style="font-size: 1.1rem; color: #d97706;">warning</span>
+          {{ 'fleet.customers.deregisterModal.subtitle' | translate }}
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary-modal" (click)="closeDeregisterModal()">
+          {{ 'fleet.customers.deregisterModal.cancel' | translate }}
+        </button>
+        <button class="btn-danger-modal" (click)="onDeregisterCustomer()" [disabled]="isDeregistering()">
+          <span class="material-icons" [class.spin-animation]="isDeregistering()" style="font-size: 1.1rem;">{{ isDeregistering() ? 'autorenew' : 'person_remove' }}</span>
+          {{ 'fleet.customers.deregisterModal.confirm' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backdrop para cerrar dropdown al hacer clic fuera -->
+  <div class="dropdown-backdrop" *ngIf="openDropdownId()" (click)="closeDropdown()"></div>
 </div>

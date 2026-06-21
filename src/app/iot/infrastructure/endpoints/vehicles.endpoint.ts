@@ -19,8 +19,8 @@ export class VehiclesApiEndpoint {
   constructor(private http: HttpClient) {}
 
   getAvailableForLinking(branchId: string): Observable<VehicleResource[]> {
-    return this.http.get<VehicleResource[]>(`${this.baseUrl}/available-for-linking`, {
-      params: { branchId }
+    return this.http.get<VehicleResource[]>(this.baseUrl, {
+      params: { branchId, status: 'available-for-linking' }
     });
   }
 

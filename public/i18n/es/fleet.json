@@ -58,6 +58,24 @@
         "document": "Documento",
         "date": "Registrado",
         "status": "Estado"
+      },
+      "actions": {
+        "deregister": "Desregistrar"
+      },
+      "addModal": {
+        "searchLabel": "Buscar por ID de Cliente (UUID)",
+        "searchPlaceholderInput": "Ej: 123e4567-e89b-12d3-a456-426614174000",
+        "searchBtn": "Buscar",
+        "cancel": "Cancelar",
+        "register": "Registrar",
+        "alreadyRegistered": "El cliente ya está registrado en esta sucursal.",
+        "notFound": "Cliente no encontrado en la plataforma."
+      },
+      "deregisterModal": {
+        "title": "Desregistrar Cliente",
+        "subtitle": "Esta acción desvinculará al cliente de esta sucursal. ¿Deseas continuar?",
+        "confirm": "Desregistrar",
+        "cancel": "Cancelar"
       }
     },
     "appointments": {
@@ -95,7 +113,6 @@
       "emptyState": {
         "title": "No hay citas programadas",
         "subtitle": "Comienza programando tu primera cita."
-      }
       }
     }
   }
