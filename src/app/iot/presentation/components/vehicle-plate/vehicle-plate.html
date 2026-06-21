@@ -1,0 +1,9 @@
+
+    @if (loading()) {
+      <span>Cargando...</span>
+    } @else if (error()) {
+      <span>Desconocido</span>
+    } @else {
+      <span>{{ plate() }}</span>
+    }
+  

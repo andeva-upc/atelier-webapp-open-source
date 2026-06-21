@@ -4,7 +4,6 @@ export class CreateWorkOrderCommand {
     public branchId: string,
     public vehicleId: string,
     public customerId: string,
-    public internalNumber: number,
     public diagnosticSummary: string,
     public mileageIn: number
   ) {}

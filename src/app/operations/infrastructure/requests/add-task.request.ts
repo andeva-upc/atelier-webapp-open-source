@@ -1,6 +1,5 @@
 export interface AddTaskRequest {
   serviceId: string;
-  mechanicId: string;
+  assignedMechanicId: string;
   description: string;
-  laborPrice: number;
 }

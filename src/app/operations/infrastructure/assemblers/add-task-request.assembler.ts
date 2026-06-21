@@ -5,9 +5,8 @@ export class AddTaskRequestAssembler {
   static toRequestFromCommand(command: AddTaskToWorkOrderCommand): AddTaskRequest {
     return {
       serviceId: command.serviceId,
-      mechanicId: command.mechanicId,
-      description: command.description,
-      laborPrice: command.laborPrice
+      assignedMechanicId: command.assignedMechanicId,
+      description: command.description
     };
   }
 }

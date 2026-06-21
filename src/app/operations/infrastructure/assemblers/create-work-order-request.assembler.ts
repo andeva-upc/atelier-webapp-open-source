@@ -8,7 +8,6 @@ export class CreateWorkOrderRequestAssembler {
       branchId: command.branchId,
       vehicleId: command.vehicleId,
       customerId: command.customerId,
-      internalNumber: command.internalNumber,
       diagnosticSummary: command.diagnosticSummary,
       mileageIn: command.mileageIn
     };

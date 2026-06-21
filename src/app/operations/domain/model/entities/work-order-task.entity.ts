@@ -10,6 +10,7 @@ export class WorkOrderTask {
   price: number;
   startedAt?: Date;
   completedAt?: Date;
+  createdAt?: Date;
   products: WorkOrderTaskProduct[];
 
   constructor() {

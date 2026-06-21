@@ -12,75 +12,53 @@
 
    <div class="form-card">
 
-     <!-- Selector de Cliente (Customer) -->
-     <div class="form-group">
-       <label class="form-label">Customer</label>
-       <div class="autocomplete-wrapper">
-         <i class="pi pi-user input-icon"></i>
-         <input
-           type="text"
-           placeholder="Customer V"
-           class="form-control autocomplete-input"
-           [disabled]="isEditMode()"
-           [ngModel]="customerInput()"
-           (ngModelChange)="customerInput.set($event)"
-           (focus)="isCustomerDropdownOpen.set(true)"
-           (blur)="onCustomerBlur()"
-         />
-         @if (!isEditMode() && isCustomerDropdownOpen() && filteredCustomers().length > 0) {
-           <div class="autocomplete-dropdown">
-             @for (cust of filteredCustomers(); track cust.id) {
-               <div class="dropdown-item" (mousedown)="selectCustomer(cust)">
-                 {{ cust.name }}
-               </div>
-             }
-           </div>
+     <!-- Selector de Cita (Appointment) Solo en Modo Creación -->
+     @if (!isEditMode()) {
+       <div class="form-group">
+         @if (branchId()) {
+           <app-appointment-selector
+             [branchId]="branchId()!"
+             [selectedAppointmentId]="selectedAppointmentId()"
+             (appointmentSelected)="onAppointmentSelected($event)"
+           ></app-appointment-selector>
+         } @else {
+           <p>Cargando sucursal...</p>
          }
        </div>
-     </div>
+     }
 
-     <!-- Fila para Vehículo y Kilometraje -->
-     <div class="form-row">
-       <!-- Selector de Vehículo (Vehicle) -->
-       <div class="form-group flex-1">
-         <label class="form-label">Vehicle</label>
-         <div class="autocomplete-wrapper">
-           <i class="pi pi-car input-icon"></i>
-           <input
-             type="text"
-             placeholder="Vehicle V"
-             class="form-control autocomplete-input"
-             [disabled]="isEditMode()"
-             [ngModel]="vehicleInput()"
-             (ngModelChange)="vehicleInput.set($event)"
-             (focus)="isVehicleDropdownOpen.set(true)"
-             (blur)="onVehicleBlur()"
-           />
-           @if (!isEditMode() && isVehicleDropdownOpen() && filteredVehicles().length > 0) {
-             <div class="autocomplete-dropdown">
-               @for (veh of filteredVehicles(); track veh.id) {
-                 <div class="dropdown-item" (mousedown)="selectVehicle(veh)">
-                   {{ veh.name }}
-                 </div>
-               }
-             </div>
-           }
+     <!-- Mostrar Cliente y Vehículo Autocompletados -->
+     @if (selectedCustomerId() && selectedVehicleId()) {
+       <div class="form-row auto-filled-info">
+         <div class="form-group flex-1">
+           <label class="form-label">Customer</label>
+           <div class="read-only-field">
+             <i class="pi pi-user mr-2"></i>
+             <app-customer-name [customerId]="selectedCustomerId()"></app-customer-name>
+           </div>
+         </div>
+         <div class="form-group flex-1">
+           <label class="form-label">Vehicle</label>
+           <div class="read-only-field">
+             <i class="pi pi-car mr-2"></i>
+             <app-vehicle-plate [vehicleId]="selectedVehicleId()"></app-vehicle-plate>
+           </div>
          </div>
        </div>
+     }
 
-       <!-- Kilometraje Actual (Current Mileage) -->
-       <div class="form-group flex-1">
-         <label class="form-label">Current Mileage</label>
-         <div class="input-wrapper">
-           <i class="pi pi-compass input-icon-mileage"></i>
-           <input
-             type="number"
-             placeholder="current mileage"
-             class="form-control mileage-input"
-             [ngModel]="currentMileage()"
-             (ngModelChange)="currentMileage.set($event)"
-           />
-         </div>
+     <!-- Fila para Kilometraje -->
+     <div class="form-group">
+       <label class="form-label">Current Mileage</label>
+       <div class="input-wrapper">
+         <i class="pi pi-compass input-icon-mileage"></i>
+         <input
+           type="number"
+           placeholder="current mileage"
+           class="form-control mileage-input"
+           [ngModel]="currentMileage()"
+           (ngModelChange)="currentMileage.set($event)"
+         />
        </div>
      </div>
 
@@ -123,4 +101,3 @@
      </div>
    </div>
  </div>
-

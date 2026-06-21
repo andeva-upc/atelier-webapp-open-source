@@ -263,6 +263,10 @@ export class IotStore {
     });
   }
 
+  getVehicleByIdObservable(vehicleId: string) {
+    return this.api.vehicles.getById(vehicleId);
+  }
+
   registerVehicle(command: RegisterVehicleCommand, customerId: string) {
     this.api.vehicles.register(command).subscribe({
       next: (registration) => {
