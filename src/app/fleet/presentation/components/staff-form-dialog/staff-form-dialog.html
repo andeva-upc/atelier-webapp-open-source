@@ -2,11 +2,36 @@
 
 <mat-dialog-content>
   <form [formGroup]="form" class="staff-form">
-    <mat-form-field appearance="outline" class="full-width">
+    <!-- Edit mode: Show readonly UUID -->
+    <mat-form-field appearance="outline" class="full-width" *ngIf="isEditMode">
       <mat-label>{{ 'fleet.staffForm.employeeId' | translate }}</mat-label>
-      <input matInput formControlName="employeeId" [placeholder]="'fleet.staffForm.employeeIdPlaceholder' | translate" [readonly]="isEditMode">
-      <mat-error *ngIf="form.get('employeeId')?.hasError('required')">{{ 'fleet.staffForm.employeeIdRequired' | translate }}</mat-error>
+      <input matInput formControlName="employeeId" [placeholder]="'fleet.staffForm.employeeIdPlaceholder' | translate" readonly>
     </mat-form-field>
+
+    <!-- Create mode: Show DNI search -->
+    <div class="search-section" *ngIf="!isEditMode">
+      <mat-form-field appearance="outline" class="full-width search-field">
+        <mat-label>DNI / Documento</mat-label>
+        <input matInput formControlName="documentNumber" placeholder="Ej. 70000000" (keyup.enter)="onSearchProfile()">
+        <button mat-icon-button matSuffix (click)="onSearchProfile()" [disabled]="isSearching || !form.get('documentNumber')?.value" type="button">
+          <mat-spinner diameter="20" *ngIf="isSearching"></mat-spinner>
+          <mat-icon *ngIf="!isSearching">search</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="search-feedback success" *ngIf="foundProfileName">
+        <mat-icon>check_circle</mat-icon>
+        <span>Encontrado: <strong>{{ foundProfileName }}</strong></span>
+      </div>
+
+      <div class="search-feedback error" *ngIf="searchError">
+        <mat-icon>error</mat-icon>
+        <span>{{ searchError }}</span>
+      </div>
+
+      <!-- Hidden employeeId used for form submission -->
+      <input type="hidden" formControlName="employeeId">
+    </div>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{ 'fleet.staffForm.speciality' | translate }}</mat-label>
