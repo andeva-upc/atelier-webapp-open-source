@@ -2,13 +2,16 @@ import { Component, OnInit, signal, computed, inject, effect } from '@angular/co
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { CoreStore } from '../../../../core/application/core.store';
 import { CoreApi } from '../../../../core/infrastructure/core-api';
+import { IamApi } from '../../../../iam/infrastructure/iam-api';
 import { FleetApi } from '../../../infrastructure/fleet-api';
 import { FleetStore } from '../../../application/fleet.store';
 import { CustomerResource } from '../../../../core/infrastructure/responses/customer-response';
+import { CreateCustomerCommand } from '../../../../core/domain/model/commands/create-customer.command';
 import { CreateCustomerRegistrationCommand } from '../../../domain/model/commands/create-customer-registration.command';
 
 export interface CustomerViewModel {
@@ -42,6 +45,7 @@ export interface CustomerViewModel {
 export class CustomersViewComponent implements OnInit {
   private coreStore = inject(CoreStore);
   private coreApi = inject(CoreApi);
+  private iamApi = inject(IamApi);
   private fleetApi = inject(FleetApi);
   private fleetStore = inject(FleetStore);
   private translate = inject(TranslateService);
@@ -52,10 +56,21 @@ export class CustomersViewComponent implements OnInit {
 
   // --- Add Modal State Signals ---
   isAddModalOpen = signal<boolean>(false);
-  searchCustomerId = signal<string>('');
+  searchEmail = signal<string>('');
   searchedCustomer = signal<CustomerResource | null>(null);
+  foundUserId = signal<string | null>(null);
   isSearching = signal<boolean>(false);
   modalErrorMessage = signal<string>('');
+  
+  // --- Create Profile Form Signals ---
+  showCreateProfileForm = signal<boolean>(false);
+  newFirstName = signal<string>('');
+  newLastName = signal<string>('');
+  newDocType = signal<string>('DNI');
+  newDocNumber = signal<string>('');
+  newPhone = signal<string>('');
+  newBusinessName = signal<string>('');
+  newIsCorporate = signal<boolean>(false);
 
   // --- Dropdown State Signals ---
   openDropdownId = signal<string | null>(null);
@@ -89,27 +104,39 @@ export class CustomersViewComponent implements OnInit {
       }
 
       this.isLoading.set(true);
-      const profileRequests = activeRegs.map(r => this.coreApi.customers.getById(r.customerId));
+      const profileRequests = activeRegs.map(r => 
+        this.coreApi.customers.getById(r.customerId).pipe(
+          catchError(err => {
+            console.error('Customer profile not found for ID:', r.customerId, err);
+            return of(null);
+          })
+        )
+      );
       
       forkJoin(profileRequests).subscribe({
-        next: (profiles: CustomerResource[]) => {
-          const mapped: CustomerViewModel[] = activeRegs.map((reg, index) => {
+        next: (profiles) => {
+          const mapped: CustomerViewModel[] = [];
+          
+          activeRegs.forEach((reg, index) => {
             const profile = profiles[index];
-            return {
-              registrationId: reg.id,
-              customerId: reg.customerId,
-              branchId: reg.branchId,
-              status: reg.status,
-              createdAt: reg.createdAt,
-              firstName: profile.firstName || '',
-              lastName: profile.lastName || '',
-              businessName: profile.businessName || '',
-              documentType: profile.documentType || '',
-              documentNumber: profile.documentNumber || '',
-              phone: profile.phone || '',
-              isCorporate: profile.isCorporate || false
-            };
+            if (profile) {
+              mapped.push({
+                registrationId: reg.id,
+                customerId: reg.customerId,
+                branchId: reg.branchId,
+                status: reg.status,
+                createdAt: reg.createdAt,
+                firstName: profile.firstName || '',
+                lastName: profile.lastName || '',
+                businessName: profile.businessName || '',
+                documentType: profile.documentType || '',
+                documentNumber: profile.documentNumber || '',
+                phone: profile.phone || '',
+                isCorporate: profile.isCorporate || false
+              });
+            }
           });
+          
           this.customers.set(mapped);
           this.isLoading.set(false);
         },
@@ -127,8 +154,10 @@ export class CustomersViewComponent implements OnInit {
   
   openAddModal(): void {
     this.isAddModalOpen.set(true);
-    this.searchCustomerId.set('');
+    this.searchEmail.set('');
     this.searchedCustomer.set(null);
+    this.foundUserId.set(null);
+    this.showCreateProfileForm.set(false);
     this.modalErrorMessage.set('');
   }
 
@@ -139,30 +168,43 @@ export class CustomersViewComponent implements OnInit {
   onSearchCustomer(): void {
     this.modalErrorMessage.set('');
     this.searchedCustomer.set(null);
+    this.foundUserId.set(null);
+    this.showCreateProfileForm.set(false);
     
-    const id = this.searchCustomerId().trim();
-    if (!id) {
+    const email = this.searchEmail().trim();
+    if (!email) {
       return;
     }
 
     this.isSearching.set(true);
 
-    // 1. Check local duplicates (already registered in this branch)
-    const isAlreadyRegistered = this.customers().some(c => c.customerId === id);
-    if (isAlreadyRegistered) {
-      this.modalErrorMessage.set(this.translate.instant('fleet.customers.addModal.alreadyRegistered'));
-      this.isSearching.set(false);
-      return;
-    }
-
-    // 2. Query global customer registry
-    this.coreApi.customers.getById(id).subscribe({
-      next: (profile) => {
-        this.searchedCustomer.set(profile);
-        this.isSearching.set(false);
+    // 1. Query global IAM registry by email
+    this.iamApi.getUserByEmail(email).subscribe({
+      next: (user) => {
+        // 2. Si el usuario existe, buscar su perfil de cliente en Core
+        this.coreApi.customers.getByUserId(user.id).subscribe({
+          next: (profile) => {
+            // Check local duplicates (already registered in this branch)
+            const isAlreadyRegistered = this.customers().some(c => c.customerId === profile.id);
+            if (isAlreadyRegistered) {
+              this.modalErrorMessage.set(this.translate.instant('fleet.customers.addModal.alreadyRegistered'));
+            } else {
+              this.searchedCustomer.set(profile);
+            }
+            this.isSearching.set(false);
+          },
+          error: (err) => {
+            console.error('Customer profile not found for user:', err);
+            // El usuario existe pero no tiene perfil de cliente. 
+            this.modalErrorMessage.set(this.translate.instant('fleet.customers.addModal.userHasNoProfile'));
+            this.foundUserId.set(user.id);
+            this.showCreateProfileForm.set(true);
+            this.isSearching.set(false);
+          }
+        });
       },
       error: (err) => {
-        console.error('Customer search failed:', err);
+        console.error('User search by email failed:', err);
         this.modalErrorMessage.set(this.translate.instant('fleet.customers.addModal.notFound'));
         this.isSearching.set(false);
       }
@@ -178,6 +220,36 @@ export class CustomersViewComponent implements OnInit {
     const command = new CreateCustomerRegistrationCommand(profile.id, branch.id.toString());
     this.fleetStore.createCustomerRegistration(command);
     this.closeAddModal();
+  }
+
+  onCreateAndRegisterCustomer(): void {
+    const userId = this.foundUserId();
+    const branch = this.coreStore.currentBranch();
+    
+    if (!userId || !branch?.id) return;
+
+    const command = new CreateCustomerCommand({
+      userId: userId,
+      firstName: this.newFirstName(),
+      lastName: this.newLastName(),
+      businessName: this.newBusinessName(),
+      documentType: this.newDocType(),
+      documentNumber: this.newDocNumber(),
+      phone: this.newPhone(),
+      isCorporate: this.newIsCorporate()
+    });
+
+    this.coreApi.customers.create(command).subscribe({
+      next: (profile) => {
+        const regCommand = new CreateCustomerRegistrationCommand(profile.id, branch.id.toString());
+        this.fleetStore.createCustomerRegistration(regCommand);
+        this.closeAddModal();
+      },
+      error: (err) => {
+        console.error('Error creating customer profile:', err);
+        this.modalErrorMessage.set(this.translate.instant('fleet.customers.addModal.createProfileError'));
+      }
+    });
   }
 
   // --- Dropdown Methods ---

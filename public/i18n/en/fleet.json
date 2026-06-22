@@ -63,13 +63,22 @@
         "deregister": "Deregister"
       },
       "addModal": {
-        "searchLabel": "Search by Customer ID (UUID)",
-        "searchPlaceholderInput": "E.g. 123e4567-e89b-12d3-a456-426614174000",
+        "searchLabel": "Search by Email",
+        "searchPlaceholderInput": "E.g. juan.perez@atelier.com",
         "searchBtn": "Search",
         "cancel": "Cancel",
         "register": "Register",
         "alreadyRegistered": "Customer is already registered in this branch.",
-        "notFound": "Customer not found on the platform."
+        "notFound": "User not found on the platform.",
+        "userHasNoProfile": "User exists but does not have a customer profile yet.",
+        "createProfileTitle": "Complete Customer Profile",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "docType": "Doc. Type",
+        "docNumber": "Document Number",
+        "phone": "Phone",
+        "businessName": "Business Name",
+        "createProfileError": "An error occurred while creating the profile."
       },
       "deregisterModal": {
         "title": "Deregister Customer",
