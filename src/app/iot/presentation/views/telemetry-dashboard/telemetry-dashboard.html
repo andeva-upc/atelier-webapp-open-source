@@ -71,6 +71,11 @@
     <!-- Right Controls (Workshop Only) -->
     @if (!isCustomer) {
       <div class="right-controls">
+        @if (activeCoupling()) {
+          <button type="button" (click)="openTelemetryModal()" class="btn-ingest-telemetry">
+            <i class="pi pi-upload"></i> Simular Telemetría
+          </button>
+        }
         <button type="button" [routerLink]="['/telemetry/obd2-devices']" class="btn-manage-obd2">
           <i class="pi pi-cog"></i> {{ 'iot.dashboard.manageObd2Btn' | translate }}
         </button>
@@ -271,3 +276,74 @@
   [branchId]="branchId"
   (close)="closeObd2Dialog()"
 ></app-obd2-dialog>
+
+<!-- Telemetry Ingestion Modal -->
+@if (showTelemetryModal) {
+  <div class="modal-backdrop" (click)="closeTelemetryModal()">
+    <div class="ingest-modal" (click)="$event.stopPropagation()">
+      <div class="ingest-modal-header">
+        <h3><i class="pi pi-upload"></i> Ingresar Datos de Telemetría</h3>
+        <button type="button" class="btn-close-modal" (click)="closeTelemetryModal()"><i class="pi pi-times"></i></button>
+      </div>
+
+      @if (ingestSuccess) {
+        <div class="ingest-success-banner">
+          <i class="pi pi-check-circle"></i> ¡Snapshot ingresado correctamente! Los datos aparecerán en el historial.
+        </div>
+      }
+
+      <form [formGroup]="telemetryForm" (ngSubmit)="submitTelemetry()" class="ingest-form">
+        <div class="ingest-form-grid">
+
+          <div class="ingest-field">
+            <label for="ingest-rpm">RPM <span class="req">*</span></label>
+            <input id="ingest-rpm" type="number" formControlName="rpm" placeholder="ej. 2500" min="0" max="9000" />
+            <small class="hint">0 – 9000</small>
+          </div>
+
+          <div class="ingest-field">
+            <label for="ingest-temp">Temperatura (°C) <span class="req">*</span></label>
+            <input id="ingest-temp" type="number" formControlName="temperature" placeholder="ej. 90" min="-40" max="200" />
+            <small class="hint">-40 – 200 °C</small>
+          </div>
+
+          <div class="ingest-field">
+            <label for="ingest-speed">Velocidad (km/h)</label>
+            <input id="ingest-speed" type="number" formControlName="speedKmh" placeholder="ej. 60" min="0" max="400" />
+            <small class="hint">Opcional</small>
+          </div>
+
+          <div class="ingest-field">
+            <label for="ingest-odometer">Odómetro (km)</label>
+            <input id="ingest-odometer" type="number" formControlName="odometerKm" placeholder="ej. 15000" min="0" />
+            <small class="hint">Opcional</small>
+          </div>
+
+          <div class="ingest-field full-width">
+            <label for="ingest-fuel">Nivel de Combustible (%) <span class="req">*</span></label>
+            <input id="ingest-fuel" type="number" formControlName="fuelLevelPercent" placeholder="ej. 75" min="0" max="100" step="0.1" />
+            <small class="hint">0 – 100 %</small>
+          </div>
+
+        </div>
+
+        <div class="ingest-disclaimer">
+          <i class="pi pi-info-circle"></i>
+          Los códigos DTC se generan automáticamente si los valores superan los umbrales:
+          <strong>RPM &gt; 7000</strong>, <strong>Temperatura &gt; 110 °C</strong> o <strong>Combustible &lt; 10 %</strong>.
+        </div>
+
+        <div class="ingest-actions">
+          <button type="button" class="btn-cancel-ingest" (click)="closeTelemetryModal()">Cancelar</button>
+          <button type="submit" class="btn-submit-ingest" [disabled]="telemetryForm.invalid || isIngesting">
+            @if (isIngesting) {
+              <i class="pi pi-spin pi-spinner"></i> Enviando...
+            } @else {
+              <i class="pi pi-upload"></i> Ingresar Snapshot
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

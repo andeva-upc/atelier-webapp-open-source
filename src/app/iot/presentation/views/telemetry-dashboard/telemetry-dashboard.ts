@@ -1,9 +1,10 @@
 import { Component, OnInit, inject, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { IotStore } from '../../../application/iot.store';
 import { Obd2DialogComponent } from '../../components/obd2-dialog/obd2-dialog';
+import { IngestTelemetryCommand } from '../../../domain/model/commands/ingest-telemetry.command';
 
 import { VehicleResource } from '../../../infrastructure/responses/vehicle.response';
 import { Obd2DeviceRegistrationResource } from '../../../infrastructure/responses/obd2-registration.response';
@@ -16,6 +17,7 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     TranslateModule,
     Obd2DialogComponent,
     RouterLink
@@ -137,6 +139,69 @@ export class TelemetryDashboardComponent implements OnInit {
 
   closeObd2Dialog(): void {
     this.isObd2DialogOpen = false;
+  }
+
+  // ── Manual Telemetry Ingestion ──
+  showTelemetryModal = false;
+  isIngesting = false;
+  ingestSuccess = false;
+  ingestError = '';
+
+  private fb = inject(FormBuilder);
+
+  telemetryForm = this.fb.group({
+    rpm:              [2000, [Validators.required, Validators.min(0), Validators.max(9000)]],
+    temperature:      [90,   [Validators.required, Validators.min(-40), Validators.max(200)]],
+    speedKmh:         [60,   [Validators.min(0), Validators.max(400)]],
+    odometerKm:       [null as number | null],
+    fuelLevelPercent: [75.0, [Validators.required, Validators.min(0), Validators.max(100)]],
+  });
+
+  openTelemetryModal(): void {
+    this.showTelemetryModal = true;
+    this.ingestSuccess = false;
+    this.ingestError = '';
+    this.telemetryForm.reset({
+      rpm: 2000, temperature: 90, speedKmh: 60, odometerKm: null, fuelLevelPercent: 75.0
+    });
+  }
+
+  closeTelemetryModal(): void {
+    this.showTelemetryModal = false;
+  }
+
+  submitTelemetry(): void {
+    if (this.telemetryForm.invalid || this.isIngesting) return;
+    const coupling = this.activeCoupling();
+    if (!coupling) return;
+
+    this.isIngesting = true;
+    this.ingestError = '';
+    const v = this.telemetryForm.value;
+
+    const command = new IngestTelemetryCommand(
+      coupling.obd2DeviceId,
+      [{
+        rpm:              v.rpm!,
+        temperature:      v.temperature!,
+        speedKmh:         v.speedKmh ?? undefined,
+        odometerKm:       v.odometerKm ?? undefined,
+        fuelLevelPercent: v.fuelLevelPercent!,
+        createdAt:        new Date().toISOString()
+      }]
+    );
+
+    this.store.ingestTelemetry(command);
+
+    // Reload data after a short delay
+    setTimeout(() => {
+      if (coupling) {
+        this.store.loadTelemetrySnapshotsForRegistration(coupling.id);
+        this.store.loadDtcAlertsForRegistration(coupling.id);
+      }
+      this.isIngesting = false;
+      this.ingestSuccess = true;
+    }, 800);
   }
 
   isCreatingTestVehicle = false;
