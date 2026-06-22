@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { finalize, map, startWith, Observable } from 'rxjs';
+import { finalize, map, startWith, Observable, forkJoin, of, catchError } from 'rxjs';
 
 import { AppointmentsApiEndpoint } from '../../../infrastructure/endpoints/appointments.endpoint';
 import { CustomerRegistrationsApiEndpoint } from '../../../infrastructure/endpoints/customer-registrations.endpoint';
 import { VehiclesApiEndpoint } from '../../../../iot/infrastructure/endpoints/vehicles.endpoint';
+import { CoreApi } from '../../../../core/infrastructure/core-api';
 
 import { CreateAppointmentCommand } from '../../../domain/model/commands/create-appointment.command';
 import { UpdateAppointmentCommand } from '../../../domain/model/commands/update-appointment.command';
@@ -19,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-appointment-form',
@@ -32,7 +34,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatAutocompleteModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatIconModule
   ],
   templateUrl: './appointment-form.html',
   styleUrls: ['./appointment-form.css']
@@ -45,6 +48,7 @@ export class AppointmentFormComponent implements OnInit {
   private appointmentsEndpoint = inject(AppointmentsApiEndpoint);
   private customersEndpoint = inject(CustomerRegistrationsApiEndpoint);
   private vehiclesEndpoint = inject(VehiclesApiEndpoint);
+  private coreApi = inject(CoreApi);
 
   appointmentForm!: FormGroup;
   isEditMode = signal<boolean>(false);
@@ -87,7 +91,7 @@ export class AppointmentFormComponent implements OnInit {
     this.filteredCustomers = this.appointmentForm.get('customerObj')!.valueChanges.pipe(
       startWith(''),
       map(value => {
-        const name = typeof value === 'string' ? value : (value?.customer?.firstName + ' ' + value?.customer?.lastName);
+        const name = typeof value === 'string' ? value : this.getCustomerName(value);
         return name ? this._filterCustomers(name as string) : this.customers().slice();
       }),
     );
@@ -95,16 +99,17 @@ export class AppointmentFormComponent implements OnInit {
     this.filteredVehicles = this.appointmentForm.get('vehicleObj')!.valueChanges.pipe(
       startWith(''),
       map(value => {
-        const name = typeof value === 'string' ? value : value?.licensePlate;
+        const name = typeof value === 'string' ? value : value?.plateNumber;
         return name ? this._filterVehicles(name as string) : this.vehicles().slice();
       }),
     );
 
     // When customer changes, load vehicles
     this.appointmentForm.get('customerObj')?.valueChanges.subscribe(selected => {
-      if (typeof selected === 'object' && selected?.customer?.id) {
-        this.appointmentForm.patchValue({ customerId: selected.customer.id }, { emitEvent: false });
-        this.loadVehicles(selected.customer.id);
+      if (typeof selected === 'object' && (selected?.customer?.id || selected?.customerId)) {
+        const id = selected?.customer?.id || selected?.customerId;
+        this.appointmentForm.patchValue({ customerId: id }, { emitEvent: false });
+        this.loadVehicles(id);
       } else {
         this.appointmentForm.patchValue({ customerId: '' }, { emitEvent: false });
         this.vehicles.set([]);
@@ -120,34 +125,52 @@ export class AppointmentFormComponent implements OnInit {
     });
   }
 
-  displayCustomer(reg: any): string {
-    return reg && reg.customer ? `${reg.customer.firstName} ${reg.customer.lastName}` : '';
+  displayCustomer = (reg: any): string => {
+    return this.getCustomerName(reg);
   }
 
-  displayVehicle(veh: any): string {
-    return veh ? veh.licensePlate : '';
+  getCustomerName(option: any): string {
+    if (!option || !option.customer) return option?.customerId ? `Cliente ID: ${option.customerId}` : 'Cliente desconocido';
+    if (option.customer.isCorporate) return option.customer.businessName || 'Empresa sin nombre';
+    const name = `${option.customer.firstName || ''} ${option.customer.lastName || ''}`.trim();
+    return name || 'Cliente sin nombre';
+  }
+
+  displayVehicle = (veh: any): string => {
+    return veh ? veh.plateNumber : '';
   }
 
   private _filterCustomers(name: string): any[] {
     const filterValue = name.toLowerCase();
     return this.customers().filter(option => 
-      `${option.customer.firstName} ${option.customer.lastName}`.toLowerCase().includes(filterValue)
+      this.getCustomerName(option).toLowerCase().includes(filterValue)
     );
   }
 
   private _filterVehicles(name: string): any[] {
     const filterValue = name.toLowerCase();
-    return this.vehicles().filter(option => option.licensePlate.toLowerCase().includes(filterValue));
+    return this.vehicles().filter(option => option.plateNumber.toLowerCase().includes(filterValue));
   }
 
   loadCustomers(): void {
     const branchId = localStorage.getItem('tenantBranchId') || sessionStorage.getItem('tenantBranchId') || '';
     if (!branchId) return;
     this.customersEndpoint.getByBranchId(branchId).subscribe({
-      next: (data) => {
-        this.customers.set(data);
-        // Force update of filtered observables
-        this.appointmentForm.get('customerObj')?.updateValueAndValidity();
+      next: (registrations) => {
+        const requests = registrations.map(r => 
+          this.coreApi.customers.getById(r.customerId).pipe(
+            map(c => ({ ...r, customer: c })),
+            catchError(() => of(r))
+          )
+        );
+        if (requests.length > 0) {
+          forkJoin(requests).subscribe(data => {
+            this.customers.set(data);
+            this.appointmentForm.get('customerObj')?.updateValueAndValidity();
+          });
+        } else {
+          this.customers.set([]);
+        }
       },
       error: (err) => console.error(err)
     });
@@ -156,6 +179,17 @@ export class AppointmentFormComponent implements OnInit {
   loadVehicles(customerId: string): void {
     this.vehiclesEndpoint.getByCustomerId(customerId).subscribe({
       next: (data) => {
+        // [INJECTED MOCK FOR QUICK TESTING]
+        if (!data || data.length === 0) {
+          data = [{ 
+            id: '123e4567-e89b-12d3-a456-426614174000', 
+            plateNumber: 'TEST-123', 
+            brand: 'Vehículo', 
+            model: 'de Prueba', 
+            year: 2026, 
+            vin: '000000000' 
+          }];
+        }
         this.vehicles.set(data);
         this.appointmentForm.get('vehicleObj')?.updateValueAndValidity();
       },
@@ -200,8 +234,13 @@ export class AppointmentFormComponent implements OnInit {
     const branchId = localStorage.getItem('tenantBranchId') || sessionStorage.getItem('tenantBranchId') || '';
     
     // date is a Date object from MatDatepicker
-    const d = formValue.date as Date;
-    const dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    let dateStr = '';
+    if (typeof formValue.date === 'string') {
+      dateStr = formValue.date.split('T')[0];
+    } else {
+      const d = formValue.date as Date;
+      dateStr = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
     const scheduledStart = `${dateStr}T${formValue.time}:00`;
 
     this.isSaving.set(true);

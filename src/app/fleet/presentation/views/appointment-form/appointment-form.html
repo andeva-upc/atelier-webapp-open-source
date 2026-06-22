@@ -16,15 +16,14 @@
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>{{ 'fleet.appointments.customer' | translate }}</mat-label>
         <input type="text"
-               placeholder="Buscar cliente..."
                matInput
                formControlName="customerObj"
                [matAutocomplete]="autoCustomer">
-        <mat-icon matSuffix>arrow_drop_down</mat-icon>
+        <span matSuffix style="padding-right: 8px; color: #6b7280; pointer-events: none;"><i class="fas fa-chevron-down"></i></span>
         <mat-autocomplete #autoCustomer="matAutocomplete" [displayWith]="displayCustomer">
-          @for (option of filteredCustomers | async; track option.customer.id) {
+          @for (option of filteredCustomers | async; track option.customerId) {
             <mat-option [value]="option">
-              {{ option.customer.firstName }} {{ option.customer.lastName }}
+              {{ getCustomerName(option) }}
             </mat-option>
           }
         </mat-autocomplete>
@@ -35,15 +34,14 @@
       <mat-form-field appearance="outline" class="w-100">
         <mat-label>{{ 'fleet.appointments.vehicle' | translate }}</mat-label>
         <input type="text"
-               placeholder="Buscar vehículo..."
                matInput
                formControlName="vehicleObj"
                [matAutocomplete]="autoVehicle">
-        <mat-icon matSuffix>arrow_drop_down</mat-icon>
+        <span matSuffix style="padding-right: 8px; color: #6b7280; pointer-events: none;"><i class="fas fa-chevron-down"></i></span>
         <mat-autocomplete #autoVehicle="matAutocomplete" [displayWith]="displayVehicle">
           @for (option of filteredVehicles | async; track option.id) {
             <mat-option [value]="option">
-              {{ option.licensePlate }}
+              {{ option.plateNumber }}
             </mat-option>
           }
         </mat-autocomplete>
