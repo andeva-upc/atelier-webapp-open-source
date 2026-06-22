@@ -672,3 +672,19 @@
   }
 }
 
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background: white;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-color, #0071EB);
+  box-shadow: 0 0 0 3px rgba(0, 113, 235, 0.1);
+}

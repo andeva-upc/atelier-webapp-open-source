@@ -63,13 +63,22 @@
         "deregister": "Desregistrar"
       },
       "addModal": {
-        "searchLabel": "Buscar por ID de Cliente (UUID)",
-        "searchPlaceholderInput": "Ej: 123e4567-e89b-12d3-a456-426614174000",
+        "searchLabel": "Buscar por Correo Electrónico",
+        "searchPlaceholderInput": "Ej: juan.perez@atelier.com",
         "searchBtn": "Buscar",
         "cancel": "Cancelar",
         "register": "Registrar",
         "alreadyRegistered": "El cliente ya está registrado en esta sucursal.",
-        "notFound": "Cliente no encontrado en la plataforma."
+        "notFound": "Usuario no encontrado en la plataforma.",
+        "userHasNoProfile": "El usuario existe pero aún no tiene un perfil de cliente.",
+        "createProfileTitle": "Completar Datos del Cliente",
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "docType": "Tipo Doc.",
+        "docNumber": "Número Documento",
+        "phone": "Teléfono",
+        "businessName": "Razón Social",
+        "createProfileError": "Ocurrió un error al crear el perfil."
       },
       "deregisterModal": {
         "title": "Desregistrar Cliente",

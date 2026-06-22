@@ -16,4 +16,10 @@ export class UsersApiEndpoint extends BaseApi {
       catchError(this.handleError('Failed to get user by ID'))
     );
   }
+
+  getUserByEmail(email: string): Observable<UserResource> {
+    return this.http.get<UserResource>(usersApiEndpointUrl, { params: { email } }).pipe(
+      catchError(this.handleError('Failed to get user by email'))
+    );
+  }
 }

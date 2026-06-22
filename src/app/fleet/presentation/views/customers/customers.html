@@ -105,13 +105,13 @@
           <div class="modal-search-box">
             <input 
               id="searchId"
-              type="text" 
-              [ngModel]="searchCustomerId()" 
-              (ngModelChange)="searchCustomerId.set($event)" 
+              type="email" 
+              [ngModel]="searchEmail()" 
+              (ngModelChange)="searchEmail.set($event)" 
               [placeholder]="'fleet.customers.addModal.searchPlaceholderInput' | translate"
               (keyup.enter)="onSearchCustomer()"
             >
-            <button class="btn-search" (click)="onSearchCustomer()" [disabled]="isSearching() || !searchCustomerId().trim()">
+            <button class="btn-search" (click)="onSearchCustomer()" [disabled]="isSearching() || !searchEmail().trim()">
               <span class="material-icons" [class.spin-animation]="isSearching()" style="font-size: 1.1rem; margin-right: 4px;">{{ isSearching() ? 'autorenew' : 'search' }}</span>
               {{ 'fleet.customers.addModal.searchBtn' | translate }}
             </button>
@@ -148,12 +148,56 @@
         </div>
       </div>
 
+      <div class="create-profile-form" *ngIf="showCreateProfileForm()">
+        <h4 style="margin-top: 15px; margin-bottom: 10px; font-size: 0.95rem; color: #333;">
+          {{ 'fleet.customers.addModal.createProfileTitle' | translate }}
+        </h4>
+        
+        <div class="form-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <div style="flex: 1;">
+            <label class="input-label">{{ 'fleet.customers.addModal.firstName' | translate }}</label>
+            <input type="text" [ngModel]="newFirstName()" (ngModelChange)="newFirstName.set($event)" class="form-input">
+          </div>
+          <div style="flex: 1;">
+            <label class="input-label">{{ 'fleet.customers.addModal.lastName' | translate }}</label>
+            <input type="text" [ngModel]="newLastName()" (ngModelChange)="newLastName.set($event)" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-row" style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <div style="flex: 1;">
+            <label class="input-label">{{ 'fleet.customers.addModal.docType' | translate }}</label>
+            <select [ngModel]="newDocType()" (ngModelChange)="newDocType.set($event)" class="form-input" style="height: 38px;">
+              <option value="DNI">DNI</option>
+              <option value="CE">CE</option>
+              <option value="RUC">RUC</option>
+              <option value="PASSPORT">Passport</option>
+            </select>
+          </div>
+          <div style="flex: 1;">
+            <label class="input-label">{{ 'fleet.customers.addModal.docNumber' | translate }}</label>
+            <input type="text" [ngModel]="newDocNumber()" (ngModelChange)="newDocNumber.set($event)" class="form-input">
+          </div>
+        </div>
+
+        <div class="form-row" style="display: flex; gap: 10px; margin-bottom: 15px;">
+          <div style="flex: 1;">
+            <label class="input-label">{{ 'fleet.customers.addModal.phone' | translate }}</label>
+            <input type="text" [ngModel]="newPhone()" (ngModelChange)="newPhone.set($event)" class="form-input">
+          </div>
+          <div style="flex: 1;">
+            <label class="input-label">{{ 'fleet.customers.addModal.businessName' | translate }}</label>
+            <input type="text" [ngModel]="newBusinessName()" (ngModelChange)="newBusinessName.set($event)" class="form-input" placeholder="Opcional">
+          </div>
+        </div>
+      </div>
+
       <div class="modal-footer">
-        <button class="btn-secondary-modal" (click)="closeAddModal()">{{ 'fleet.customers.addModal.cancel' | translate }}</button>
+        <button class="btn-cancel" (click)="closeAddModal()">{{ 'fleet.customers.addModal.cancel' | translate }}</button>
         <button 
-          class="btn-primary-modal" 
-          (click)="onRegisterCustomer()" 
-          [disabled]="!searchedCustomer() || modalErrorMessage()"
+          class="btn-submit" 
+          [disabled]="!searchedCustomer() && !showCreateProfileForm()" 
+          (click)="showCreateProfileForm() ? onCreateAndRegisterCustomer() : onRegisterCustomer()"
         >
           {{ 'fleet.customers.addModal.register' | translate }}
         </button>

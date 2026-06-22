@@ -95,4 +95,8 @@ export class IamApi extends BaseApi {
   getUserById(userId: string): Observable<UserResource> {
     return this.usersEndpoint.getUserById(userId);
   }
+
+  getUserByEmail(email: string): Observable<UserResource> {
+    return this.usersEndpoint.getUserByEmail(email);
+  }
 }
