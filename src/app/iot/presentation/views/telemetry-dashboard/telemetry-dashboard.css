@@ -560,3 +560,218 @@
   transform: translateY(0);
 }
 
+/* ─────────────────────────────────────
+   Simular Telemetría Button
+───────────────────────────────────── */
+.btn-ingest-telemetry {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  border: 1.5px solid #10b981;
+  background: #ecfdf5;
+  color: #059669;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.btn-ingest-telemetry:hover {
+  background: #059669;
+  color: #fff;
+  border-color: #059669;
+}
+
+/* ─────────────────────────────────────
+   Telemetry Ingestion Modal
+───────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeInBackdrop 0.2s ease;
+}
+@keyframes fadeInBackdrop {
+  from { opacity: 0; } to { opacity: 1; }
+}
+
+.ingest-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 560px;
+  box-shadow: 0 20px 60px -10px rgba(0,0,0,0.25);
+  animation: slideUpModal 0.25s ease;
+  overflow: hidden;
+}
+@keyframes slideUpModal {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.ingest-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.ingest-modal-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.ingest-modal-header h3 i {
+  color: #10b981;
+}
+
+.btn-close-modal {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 1rem;
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+}
+.btn-close-modal:hover {
+  color: #374151;
+  background: #f3f4f6;
+}
+
+.ingest-success-banner {
+  margin: 1rem 1.5rem 0;
+  padding: 0.75rem 1rem;
+  background: #d1fae5;
+  border: 1px solid #6ee7b7;
+  border-radius: 10px;
+  color: #065f46;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ingest-form {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.ingest-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.ingest-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.ingest-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.ingest-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+}
+.ingest-field label .req {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.ingest-field input {
+  padding: 0.5rem 0.75rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #111827;
+  background: #f9fafb;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+.ingest-field input:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+  background: #fff;
+}
+
+.ingest-field .hint {
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.ingest-disclaimer {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: #1e40af;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.ingest-disclaimer i {
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.ingest-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.btn-cancel-ingest {
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  border: 1.5px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-cancel-ingest:hover {
+  background: #f3f4f6;
+}
+
+.btn-submit-ingest {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.btn-submit-ingest:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+.btn-submit-ingest:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

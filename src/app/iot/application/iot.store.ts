@@ -225,9 +225,30 @@ export class IotStore {
   // VEHICLES
   // ==========================================
 
+  private getLocalVehicles(): VehicleResource[] {
+    const local = localStorage.getItem('local_created_vehicles');
+    return local ? JSON.parse(local) : [];
+  }
+
+  private addLocalVehicle(vehicle: VehicleResource) {
+    const local = this.getLocalVehicles();
+    if (!local.find(v => v.id === vehicle.id)) {
+      local.push(vehicle);
+      localStorage.setItem('local_created_vehicles', JSON.stringify(local));
+    }
+  }
+
   loadAvailableVehicles(branchId: string) {
     this.api.vehicles.getAvailableForLinking(branchId).subscribe({
-      next: (vehicles) => this.availableVehiclesSignal.set(vehicles),
+      next: (vehicles) => {
+        // [WORKAROUND] El backend no asocia los vehículos al branchId correctamente
+        // porque usa el userId del empleado en lugar del customer. 
+        // Agregamos manualmente los vehículos creados localmente para que aparezcan.
+        const allVehicles = [...vehicles, ...this.getLocalVehicles()];
+        // Eliminar duplicados
+        const unique = Array.from(new Map(allVehicles.map(v => [v.id, v])).values());
+        this.availableVehiclesSignal.set(unique);
+      },
       error: (err) => console.error('Failed to load available vehicles:', err)
     });
   }
@@ -243,7 +264,7 @@ export class IotStore {
         
         forkJoin(vehicleRequests).subscribe({
           next: (vehiclesLists) => {
-            const allVehicles = vehiclesLists.flat();
+            const allVehicles = [...vehiclesLists.flat(), ...this.getLocalVehicles()];
             const uniqueVehicles = allVehicles.filter((v, index, self) =>
               self.findIndex(t => t.id === v.id) === index
             );
@@ -258,7 +279,14 @@ export class IotStore {
 
   loadVehiclesByCustomerId(customerId: string) {
     this.api.vehicles.getByCustomerId(customerId).subscribe({
-      next: (vehicles) => this.vehiclesSignal.set(vehicles),
+      next: (vehicles) => {
+        // Persiste todos los vehículos del cliente en localStorage
+        // para que aparezcan también en el dropdown de vincular OBD2
+        vehicles.forEach(v => this.addLocalVehicle(v));
+        const allVehicles = [...vehicles, ...this.getLocalVehicles()];
+        const unique = Array.from(new Map(allVehicles.map(v => [v.id, v])).values());
+        this.vehiclesSignal.set(unique);
+      },
       error: (err) => console.error('Failed to load customer vehicles:', err)
     });
   }
@@ -272,6 +300,17 @@ export class IotStore {
       next: (registration) => {
         this.vehicleRegistrationsSignal.update((list) => [...list, registration]);
         this.activeVehicleRegistrationSignal.set(registration);
+
+        // [WORKAROUND] Guardamos el vehículo localmente
+        const newVehicle: VehicleResource = {
+          id: registration.vehicleId,
+          plateNumber: command.plateNumber,
+          brand: command.brand,
+          model: command.model,
+          year: command.year,
+          vin: command.vin
+        };
+        this.addLocalVehicle(newVehicle);
 
         // Reload the customer's vehicles list so the UI gets the updated list including the new vehicle with its full details
         this.loadVehiclesByCustomerId(customerId);
