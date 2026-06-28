@@ -11,6 +11,26 @@ table {
   border-collapse: collapse;
 }
 
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: var(--billing-surface);
+  border-bottom: 1px solid var(--billing-divider);
+}
+
+.table-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--billing-text-primary);
+  font-family: var(--font-body);
+}
+
 ::ng-deep .table-container th.mat-mdc-header-cell {
   color: var(--billing-text-secondary);
   font-weight: 500;

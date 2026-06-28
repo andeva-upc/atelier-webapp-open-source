@@ -23,7 +23,7 @@
     <div class="transactions-section">
       @switch (currentView()) {
         @case ('quotes') {
-          <app-quote-list [quotes]="store.branchQuotes()"></app-quote-list>
+          <app-quote-list [quotes]="store.branchQuotes()" (openCreateQuote)="openCreateQuoteDialog()"></app-quote-list>
         }
         @case ('vouchers') {
           <app-income-list [incomes]="store.branchVouchers()" (openCheckout)="openCheckoutDialog()"></app-income-list>

@@ -4,22 +4,37 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BillingStore } from '../../application/billing.store';
+import { OperationsStore } from '../../../operations/application/operations.store';
 import { FinancialKpiCardsComponent } from '../components/financial-kpi-cards/financial-kpi-cards';
 import { IncomeExpenseChartComponent } from '../components/income-expense-chart/income-expense-chart';
 import { IncomeListComponent } from '../components/income-list/income-list';
 import { ExpenseListComponent } from '../components/expense-list/expense-list';
 import { QuoteListComponent } from '../components/quote-list/quote-list';
 import { CheckoutDialogComponent } from '../components/checkout-dialog/checkout-dialog';
+import { CreateQuoteDialogComponent } from '../components/create-quote-dialog/create-quote-dialog';
+import { CreateQuoteCommand } from '../../domain/model/commands/quote-commands';
 
 @Component({
   selector: 'app-billing-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, MatButtonToggleModule, MatDialogModule, TranslateModule, FinancialKpiCardsComponent, IncomeExpenseChartComponent, IncomeListComponent, ExpenseListComponent, QuoteListComponent],
+  imports: [
+    CommonModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    TranslateModule,
+    FinancialKpiCardsComponent,
+    IncomeExpenseChartComponent,
+    IncomeListComponent,
+    ExpenseListComponent,
+    QuoteListComponent,
+    CreateQuoteDialogComponent
+  ],
   templateUrl: './billing-dashboard.html',
   styleUrls: ['./billing-dashboard.css']
 })
 export class BillingDashboardComponent implements OnInit {
   store = inject(BillingStore);
+  operationsStore = inject(OperationsStore);
   dialog = inject(MatDialog);
 
   currentView = signal<'quotes' | 'vouchers' | 'expenses'>('quotes');
@@ -29,6 +44,29 @@ export class BillingDashboardComponent implements OnInit {
   ngOnInit() {
     this.store.loadQuotesByBranchId(this.defaultBranchId);
     this.store.loadVouchersByBranchId(this.defaultBranchId);
+    this.operationsStore.loadWorkOrdersByBranchId(this.defaultBranchId);
+  }
+
+  openCreateQuoteDialog() {
+    const completedWorkOrders = this.operationsStore.branchWorkOrders().filter(o => 
+      o.status === 'COMPLETED' && 
+      !this.store.branchQuotes().some(q => q.workOrderId === o.id)
+    );
+
+    const dialogRef = this.dialog.open(CreateQuoteDialogComponent, {
+      width: '500px',
+      data: { completedWorkOrders }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.createQuote(new CreateQuoteCommand(
+          result.workOrderId,
+          this.defaultBranchId,
+          result.discountPercentage
+        ));
+      }
+    });
   }
 
   openCheckoutDialog() {
