@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>{{ 'billing.create_quote.title' | translate }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="quoteForm" class="checkout-form">
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'billing.create_quote.select_work_order' | translate }}</mat-label>
+      <mat-select formControlName="workOrderId">
+        @for (order of data.completedWorkOrders; track order.id) {
+          <mat-option [value]="order.id">
+            {{ order.formattedNumber || ('WO-' + order.internalNumber) }} - {{ order.diagnosticSummary }} ({{ order.totalAmount | currency }})
+          </mat-option>
+        }
+      </mat-select>
+      @if (quoteForm.get('workOrderId')?.hasError('required')) {
+        <mat-error>{{ 'billing.create_quote.work_order_required' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>{{ 'billing.create_quote.discount' | translate }}</mat-label>
+      <input matInput type="number" formControlName="discountPercentage" min="0" max="100" step="0.1">
+      @if (quoteForm.get('discountPercentage')?.hasError('required')) {
+        <mat-error>{{ 'billing.create_quote.discount_invalid' | translate }}</mat-error>
+      }
+      @if (quoteForm.get('discountPercentage')?.hasError('min') || quoteForm.get('discountPercentage')?.hasError('max')) {
+        <mat-error>{{ 'billing.create_quote.discount_invalid' | translate }}</mat-error>
+      }
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">{{ 'billing.create_quote.cancel' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="quoteForm.invalid">
+    {{ 'billing.create_quote.create' | translate }}
+  </button>
+</mat-dialog-actions>

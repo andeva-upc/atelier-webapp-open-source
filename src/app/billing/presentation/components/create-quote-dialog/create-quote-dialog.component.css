@@ -1,0 +1,37 @@
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 16px;
+  min-width: 450px;
+  font-family: var(--font-body);
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep .checkout-form .mat-mdc-text-field-wrapper {
+  background-color: #FFFFFF !important;
+  border-radius: 8px !important;
+}
+
+/* Override primary button */
+::ng-deep mat-dialog-actions .mat-mdc-raised-button.mat-primary {
+  background-color: #111827 !important; /* Premium dark button */
+  color: #FFFFFF !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease;
+  font-family: var(--font-body) !important;
+  letter-spacing: 0.02em;
+}
+
+::ng-deep mat-dialog-actions .mat-mdc-raised-button.mat-primary:not(:disabled):hover {
+  background-color: #374151 !important;
+}
+
+::ng-deep mat-dialog-actions .mat-mdc-button {
+  color: #6B7280 !important;
+  font-family: var(--font-body) !important;
+}

@@ -71,6 +71,16 @@
         "status": "Estado"
       },
       "empty": "No se encontraron cotizaciones."
+    },
+    "create_quote": {
+      "title": "Crear Cotización",
+      "action_btn": "Crear Cotización",
+      "select_work_order": "Seleccionar Orden de Trabajo",
+      "work_order_required": "La orden de trabajo es obligatoria",
+      "discount": "Porcentaje de Descuento",
+      "discount_invalid": "El descuento debe estar entre 0 y 100",
+      "cancel": "Cancelar",
+      "create": "Crear"
     }
   }
 }
