@@ -20,7 +20,7 @@ export class QuotesApiEndpoint {
   }
 
   getQuotesByBranchId(branchId: string): Observable<QuoteResource[]> {
-    return this.http.get<QuoteResource[]>(`${this.basePath}/branch/${branchId}`);
+    return this.http.get<QuoteResource[]>(this.basePath, { params: { branchId } });
   }
 
   updateQuoteDiscount(command: UpdateQuoteDiscountCommand): Observable<QuoteResource> {
@@ -29,10 +29,10 @@ export class QuotesApiEndpoint {
   }
 
   approveQuote(command: ApproveQuoteCommand): Observable<QuoteResource> {
-    return this.http.post<QuoteResource>(`${this.basePath}/${command.quoteId}/approve`, {});
+    return this.http.post<QuoteResource>(`${this.basePath}/${command.quoteId}/approvals`, {});
   }
 
   cancelQuote(command: CancelQuoteCommand): Observable<QuoteResource> {
-    return this.http.post<QuoteResource>(`${this.basePath}/${command.quoteId}/cancel`, {});
+    return this.http.post<QuoteResource>(`${this.basePath}/${command.quoteId}/cancellations`, {});
   }
 }
