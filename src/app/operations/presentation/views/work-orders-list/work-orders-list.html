@@ -115,6 +115,13 @@
                 >
                   Open edit
                 </a>
+                <button 
+                  class="btn btn-secondary btn-create-quote" 
+                  (click)="createQuoteForOrder(order); $event.stopPropagation()"
+                  style="margin-left: 8px;"
+                >
+                  Cotizar
+                </button>
               }
               <button class="btn-toggle-expand" aria-label="Toggle details" (click)="toggleExpand(order.id); $event.stopPropagation()">
                 <i class="pi" [ngClass]="order.isExpanded ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
