@@ -18,9 +18,7 @@
   --billing-radius-sm: 8px;
   --billing-radius-md: 16px;
 
-  /* Typography variables */
-  --font-display: "Arimo", sans-serif;
-  --font-body: "Mona Sans", sans-serif;
+
 
   padding: 40px;
   display: flex;
@@ -39,12 +37,11 @@
 }
 
 .header h1 {
-  margin: 0;
-  font-size: 32px;
-  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 800;
   font-family: var(--font-display);
-  color: var(--billing-text-primary);
-  letter-spacing: -0.02em;
+  color: var(--text-primary, #111827);
 }
 
 .content {

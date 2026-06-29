@@ -9,6 +9,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { QuoteResource } from '../../../infrastructure/responses/billing-responses';
+import { CoreStore } from '../../../../core/application/core.store';
+import { OperationsStore } from '../../../../operations/application/operations.store';
+import { IamApi } from '../../../../iam/infrastructure/iam-api';
 
 export interface CheckoutDialogData {
   approvedQuotes: QuoteResource[];
@@ -33,11 +36,15 @@ export interface CheckoutDialogData {
 })
 export class CheckoutDialogComponent implements OnInit {
   checkoutForm!: FormGroup;
+  customerDocumentType = 'DNI';
 
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<CheckoutDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: CheckoutDialogData
+    @Inject(MAT_DIALOG_DATA) public data: CheckoutDialogData,
+    private coreStore: CoreStore,
+    private operationsStore: OperationsStore,
+    private iamApi: IamApi
   ) {}
 
   ngOnInit() {
@@ -49,6 +56,44 @@ export class CheckoutDialogComponent implements OnInit {
         if (selectedQuote.totalAmount <= 0) {
           this.checkoutForm.get('quoteId')?.setErrors({ zeroTotal: true });
         }
+        
+        // Carga automática del cliente asociado a la orden de trabajo
+        this.operationsStore.getWorkOrderByIdObservable(selectedQuote.workOrderId).subscribe({
+          next: (workOrder) => {
+            if (workOrder && workOrder.customerId) {
+              this.coreStore.getCustomerByIdObservable(workOrder.customerId).subscribe({
+                next: (customer) => {
+                  if (customer) {
+                    this.customerDocumentType = customer.documentType;
+                    const customerName = customer.isCorporate 
+                      ? customer.businessName 
+                      : `${customer.firstName} ${customer.lastName}`;
+                    
+                    this.checkoutForm.patchValue({
+                      customerId: customer.documentNumber,
+                      customerName: customerName
+                    });
+
+                    if (customer.userId) {
+                      this.iamApi.getUserById(customer.userId).subscribe({
+                        next: (user) => {
+                          if (user && user.email) {
+                            this.checkoutForm.patchValue({
+                              customerEmail: user.email
+                            });
+                          }
+                        },
+                        error: (err) => console.error('Failed to load user email:', err)
+                      });
+                    }
+                  }
+                },
+                error: (err) => console.error('Failed to load customer details:', err)
+              });
+            }
+          },
+          error: (err) => console.error('Failed to load work order details:', err)
+        });
       }
     });
   }
@@ -65,7 +110,10 @@ export class CheckoutDialogComponent implements OnInit {
 
   onSubmit() {
     if (this.checkoutForm.valid) {
-      this.dialogRef.close(this.checkoutForm.value);
+      this.dialogRef.close({
+        ...this.checkoutForm.value,
+        customerDocumentType: this.customerDocumentType
+      });
     }
   }
 
