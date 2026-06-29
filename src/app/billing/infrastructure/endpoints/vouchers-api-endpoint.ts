@@ -25,6 +25,6 @@ export class VouchersApiEndpoint {
 
   checkout(command: CheckoutCommand): Observable<VoucherResource> {
     const request = VoucherAssembler.toCheckoutRequestFromCommand(command);
-    return this.http.post<VoucherResource>(`${this.basePath}/checkout`, request);
+    return this.http.post<VoucherResource>(`${environment.apiBaseUrl}/checkouts`, request);
   }
 }

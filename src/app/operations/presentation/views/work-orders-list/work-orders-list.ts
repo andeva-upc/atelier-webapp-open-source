@@ -1,13 +1,15 @@
 import { Component, signal, computed, inject, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 
 import { OperationsStore } from '../../../application/operations.store';
 import { CoreStore } from '../../../../core/application/core.store';
 import { WorkOrderResource } from '../../../infrastructure/responses/work-order.response';
 import { EmployeeNameComponent } from '../../../../core/presentation/components/employee-name/employee-name';
 import { CustomerNameComponent } from '../../../../core/presentation/components/customer-name/customer-name';
+import { BillingStore } from '../../../../billing/application/billing.store';
+import { CreateQuoteCommand } from '../../../../billing/domain/model/commands/quote-commands';
 
 // ---- View Model -------------------------------------------------------
 interface WorkOrderTask {
@@ -42,8 +44,10 @@ interface WorkOrderViewModel {
 })
 export class WorkOrdersListComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private operationsStore = inject(OperationsStore);
   private coreStore = inject(CoreStore);
+  private billingStore = inject(BillingStore);
 
   searchText = signal<string>('');
   selectedStatusFilter = signal<'ALL' | 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'PAID'>('ALL');
@@ -182,5 +186,17 @@ export class WorkOrdersListComponent implements OnInit {
   closeTaskDetails() {
     this.selectedTaskOrderContext.set(null);
     this.selectedTaskForDetails.set(null);
+  }
+
+  createQuoteForOrder(order: WorkOrderViewModel) {
+    const branch = this.coreStore.currentBranch();
+    if (branch?.id) {
+      this.billingStore.createQuote(new CreateQuoteCommand(
+        order.id,
+        branch.id.toString(),
+        0.0
+      ));
+      this.router.navigate(['/billing']).then();
+    }
   }
 }

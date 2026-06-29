@@ -71,6 +71,16 @@
         "status": "Status"
       },
       "empty": "No quotes found."
+    },
+    "create_quote": {
+      "title": "Create Quote",
+      "action_btn": "Create Quote",
+      "select_work_order": "Select Work Order",
+      "work_order_required": "Work order is required",
+      "discount": "Discount Percentage",
+      "discount_invalid": "Discount must be between 0 and 100",
+      "cancel": "Cancel",
+      "create": "Create"
     }
   }
 }

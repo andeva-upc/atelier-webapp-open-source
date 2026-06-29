@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppointmentsList } from './appointments-list';
+import { AppointmentsListComponent } from './appointments-list';
 
 describe('AppointmentsList', () => {
-  let component: AppointmentsList;
-  let fixture: ComponentFixture<AppointmentsList>;
+  let component: AppointmentsListComponent;
+  let fixture: ComponentFixture<AppointmentsListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppointmentsList],
+      imports: [AppointmentsListComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AppointmentsList);
+    fixture = TestBed.createComponent(AppointmentsListComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
@@ -20,3 +20,4 @@ describe('AppointmentsList', () => {
     expect(component).toBeTruthy();
   });
 });
+

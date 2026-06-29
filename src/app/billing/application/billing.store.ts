@@ -1,5 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BillingApi } from '../infrastructure/billing-api';
 import { QuoteResource, VoucherResource } from '../infrastructure/responses/billing-responses';
 import { FinancialStats } from '../domain/model/financial-stats';
@@ -36,7 +37,11 @@ export class BillingStore {
     };
   });
 
-  constructor(private api: BillingApi, private router: Router) {}
+  constructor(
+    private api: BillingApi, 
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   // ==========================================
   // LOADERS
@@ -63,8 +68,12 @@ export class BillingStore {
       next: (quote) => {
         const currentQuotes = this.branchQuotesSignal();
         this.branchQuotesSignal.set([...currentQuotes, quote]);
+        this.snackBar.open('Cotización creada con éxito', 'Cerrar', { duration: 3000 });
       },
-      error: (err) => console.error('Failed to create quote:', err)
+      error: (err) => {
+        console.error('Failed to create quote:', err);
+        this.snackBar.open('Error al crear la cotización', 'Cerrar', { duration: 3000 });
+      }
     });
   }
 
@@ -83,8 +92,12 @@ export class BillingStore {
       next: (quote) => {
         const currentQuotes = this.branchQuotesSignal().map(q => q.id === quote.id ? quote : q);
         this.branchQuotesSignal.set(currentQuotes);
+        this.snackBar.open('Cotización aprobada con éxito', 'Cerrar', { duration: 3000 });
       },
-      error: (err) => console.error('Failed to approve quote:', err)
+      error: (err) => {
+        console.error('Failed to approve quote:', err);
+        this.snackBar.open('Error al aprobar la cotización', 'Cerrar', { duration: 3000 });
+      }
     });
   }
 
@@ -93,8 +106,12 @@ export class BillingStore {
       next: (quote) => {
         const currentQuotes = this.branchQuotesSignal().map(q => q.id === quote.id ? quote : q);
         this.branchQuotesSignal.set(currentQuotes);
+        this.snackBar.open('Cotización cancelada con éxito', 'Cerrar', { duration: 3000 });
       },
-      error: (err) => console.error('Failed to cancel quote:', err)
+      error: (err) => {
+        console.error('Failed to cancel quote:', err);
+        this.snackBar.open('Error al cancelar la cotización', 'Cerrar', { duration: 3000 });
+      }
     });
   }
 
@@ -116,8 +133,22 @@ export class BillingStore {
       next: (voucher) => {
         const currentVouchers = this.branchVouchersSignal();
         this.branchVouchersSignal.set([...currentVouchers, voucher]);
+
+        // Actualizar el estado de la cotización a COMPLETED localmente
+        const updatedQuotes = this.branchQuotesSignal().map(q => {
+          if (q.id === command.quoteId) {
+            return { ...q, status: 'COMPLETED' };
+          }
+          return q;
+        });
+        this.branchQuotesSignal.set(updatedQuotes);
+
+        this.snackBar.open('Comprobante emitido con éxito', 'Cerrar', { duration: 3000 });
       },
-      error: (err) => console.error('Failed to checkout:', err)
+      error: (err) => {
+        console.error('Failed to checkout:', err);
+        this.snackBar.open('Error al emitir el comprobante', 'Cerrar', { duration: 3000 });
+      }
     });
   }
 

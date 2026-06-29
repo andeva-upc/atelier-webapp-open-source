@@ -1,4 +1,8 @@
 <div class="table-container">
+  <div class="table-header">
+    <h3>{{ 'billing.tabs.quotes' | translate }}</h3>
+    <button mat-raised-button color="primary" (click)="onOpenCreateQuote()">{{ 'billing.create_quote.action_btn' | translate }}</button>
+  </div>
   @if (quotes().length > 0) {
     <table mat-table [dataSource]="quotes()" class="precision-table">
       
