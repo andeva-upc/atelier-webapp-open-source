@@ -91,7 +91,10 @@ export class BillingDashboardComponent implements OnInit {
   }
 
   openCheckoutDialog() {
-    const approvedQuotes = this.store.branchQuotes().filter(q => q.status === 'APPROVED');
+    const approvedQuotes = this.store.branchQuotes().filter(q => 
+      q.status === 'APPROVED' && 
+      !this.store.branchVouchers().some(v => v.quoteId === q.id)
+    );
     
     const dialogRef = this.dialog.open(CheckoutDialogComponent, {
       width: '500px',

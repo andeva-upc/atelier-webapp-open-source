@@ -133,6 +133,16 @@ export class BillingStore {
       next: (voucher) => {
         const currentVouchers = this.branchVouchersSignal();
         this.branchVouchersSignal.set([...currentVouchers, voucher]);
+
+        // Actualizar el estado de la cotización a COMPLETED localmente
+        const updatedQuotes = this.branchQuotesSignal().map(q => {
+          if (q.id === command.quoteId) {
+            return { ...q, status: 'COMPLETED' };
+          }
+          return q;
+        });
+        this.branchQuotesSignal.set(updatedQuotes);
+
         this.snackBar.open('Comprobante emitido con éxito', 'Cerrar', { duration: 3000 });
       },
       error: (err) => {
