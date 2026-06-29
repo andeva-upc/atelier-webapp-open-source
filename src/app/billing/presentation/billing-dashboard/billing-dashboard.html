@@ -15,7 +15,6 @@
       <mat-button-toggle-group [value]="currentView()" (change)="currentView.set($event.value)" class="premium-toggle" hideSingleSelectionIndicator="true" [attr.data-active]="currentView()">
         <mat-button-toggle value="quotes">{{ 'billing.tabs.quotes' | translate }}</mat-button-toggle>
         <mat-button-toggle value="vouchers">{{ 'billing.tabs.vouchers' | translate }}</mat-button-toggle>
-        <mat-button-toggle value="expenses">{{ 'billing.tabs.expenses' | translate }}</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
 
@@ -27,9 +26,6 @@
         }
         @case ('vouchers') {
           <app-income-list [incomes]="store.branchVouchers()" (openCheckout)="openCheckoutDialog()"></app-income-list>
-        }
-        @case ('expenses') {
-          <app-expense-list></app-expense-list>
         }
       }
     </div>

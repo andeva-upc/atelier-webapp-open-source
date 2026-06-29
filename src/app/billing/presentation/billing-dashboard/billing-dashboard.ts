@@ -9,7 +9,6 @@ import { CoreStore } from '../../../core/application/core.store';
 import { FinancialKpiCardsComponent } from '../components/financial-kpi-cards/financial-kpi-cards';
 import { IncomeExpenseChartComponent } from '../components/income-expense-chart/income-expense-chart';
 import { IncomeListComponent } from '../components/income-list/income-list';
-import { ExpenseListComponent } from '../components/expense-list/expense-list';
 import { QuoteListComponent } from '../components/quote-list/quote-list';
 import { CheckoutDialogComponent } from '../components/checkout-dialog/checkout-dialog';
 import { CreateQuoteDialogComponent } from '../components/create-quote-dialog/create-quote-dialog';
@@ -27,7 +26,6 @@ import { CheckoutCommand } from '../../domain/model/commands/voucher-commands';
     FinancialKpiCardsComponent,
     IncomeExpenseChartComponent,
     IncomeListComponent,
-    ExpenseListComponent,
     QuoteListComponent
   ],
   templateUrl: './billing-dashboard.html',
@@ -39,7 +37,7 @@ export class BillingDashboardComponent implements OnInit {
   coreStore = inject(CoreStore);
   dialog = inject(MatDialog);
 
-  currentView = signal<'quotes' | 'vouchers' | 'expenses'>('quotes');
+  currentView = signal<'quotes' | 'vouchers'>('quotes');
 
   constructor() {
     effect(() => {
