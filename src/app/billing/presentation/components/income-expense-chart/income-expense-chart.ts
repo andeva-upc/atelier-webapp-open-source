@@ -43,17 +43,33 @@ export class IncomeExpenseChartComponent implements OnDestroy {
     if (!ctx) return;
 
     this.chart = new Chart(ctx, {
-      type: 'doughnut',
+      type: 'bar',
       data: this.getChartData(stats),
       options: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: 'bottom',
+            display: false
           },
           title: {
-            display: false // The title is handled by HTML now
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: '#F3F4F6'
+            },
+            ticks: {
+              callback: (value) => '$' + value
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
           }
         }
       }
@@ -73,10 +89,11 @@ export class IncomeExpenseChartComponent implements OnDestroy {
       datasets: [{
         data: [stats.totalIncome || 0, stats.pendingBalance || 0],
         backgroundColor: [
-          '#0056b3', // Primary Dark for Income
-          '#B3D4F8'  // Primary Light for Pending Balance
+          '#0071EB', // Primary Blue for Income
+          '#FF6D00'  // Accent Orange for Pending Balance
         ],
-        hoverOffset: 4
+        borderRadius: 8,
+        barThickness: 45
       }]
     };
   }
