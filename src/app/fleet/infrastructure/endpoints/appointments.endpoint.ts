@@ -16,11 +16,11 @@ export class AppointmentsApiEndpoint {
   constructor(private http: HttpClient) {}
 
   getByBranchId(branchId: string): Observable<AppointmentResource[]> {
-    return this.http.get<AppointmentResource[]>(`${this.baseUrl}/branch/${branchId}`);
+    return this.http.get<AppointmentResource[]>(this.baseUrl, { params: { branchId } });
   }
 
   getByBranchIdAndStatus(branchId: string, status: string): Observable<AppointmentResource[]> {
-    return this.http.get<AppointmentResource[]>(`${this.baseUrl}/branch/${branchId}/status/${status}`);
+    return this.http.get<AppointmentResource[]>(this.baseUrl, { params: { branchId, status } });
   }
 
   getById(appointmentId: string): Observable<AppointmentResource> {
@@ -28,11 +28,11 @@ export class AppointmentsApiEndpoint {
   }
 
   getByCustomerId(customerId: string): Observable<AppointmentResource[]> {
-    return this.http.get<AppointmentResource[]>(`${this.baseUrl}/customer/${customerId}`);
+    return this.http.get<AppointmentResource[]>(this.baseUrl, { params: { customerId } });
   }
 
   getByVehicleId(vehicleId: string): Observable<AppointmentResource[]> {
-    return this.http.get<AppointmentResource[]>(`${this.baseUrl}/vehicle/${vehicleId}`);
+    return this.http.get<AppointmentResource[]>(this.baseUrl, { params: { vehicleId } });
   }
 
   create(command: CreateAppointmentCommand): Observable<AppointmentResource> {
