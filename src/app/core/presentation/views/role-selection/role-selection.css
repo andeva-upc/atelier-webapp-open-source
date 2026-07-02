@@ -82,6 +82,27 @@
   color: #004FA6; /* Dark Primary Color */
 }
 
+/* Add New Profile Card Styles */
+.add-profile-card .avatar-container {
+  border: 2px dashed #BDBDBD;
+  background-color: transparent;
+}
+
+.add-profile-card .role-icon {
+  color: #BDBDBD;
+}
+
+.add-profile-card:hover .avatar-container {
+  border-color: #0071EB;
+  border-style: solid;
+  background-color: #F4F6F9;
+}
+
+.add-profile-card:hover .role-icon {
+  color: #0071EB;
+  transform: scale(1.1);
+}
+
 /* Empty State / No Roles Found Container */
 .no-roles-container {
   display: flex;
