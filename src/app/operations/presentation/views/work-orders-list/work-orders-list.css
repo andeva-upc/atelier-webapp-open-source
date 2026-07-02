@@ -587,3 +587,39 @@
   box-sizing: border-box;
 }
 
+/* Deletion buttons styling */
+.btn-delete-order {
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+
+.btn-delete-order:hover {
+  background-color: #fef2f2;
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+
+.btn-delete-task {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 0.25rem;
+  font-size: 0.9rem;
+  transition: color 0.15s ease;
+}
+
+.btn-delete-task:hover {
+  color: #ef4444;
+}
+
+

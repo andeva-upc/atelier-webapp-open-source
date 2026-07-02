@@ -208,6 +208,11 @@ export class FleetStore {
     });
   }
 
+  getEmployeeRegistrationByIdObservable(registrationId: string) {
+    return this.api.employeeRegistrations.getById(registrationId);
+  }
+
+
   loadEmployeeRegistrationByEmployeeId(employeeId: string) {
     this.api.employeeRegistrations.getByEmployeeId(employeeId).subscribe({
       next: (registration) => this.activeEmployeeRegistrationSignal.set(registration),

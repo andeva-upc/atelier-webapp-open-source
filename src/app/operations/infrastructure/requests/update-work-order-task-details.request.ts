@@ -3,3 +3,4 @@ export interface UpdateWorkOrderTaskDetailsRequest {
   assignedMechanicId: string;
   description: string;
 }
+

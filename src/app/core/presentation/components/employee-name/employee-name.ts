@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal, inject } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreStore } from '../../../application/core.store';
 
@@ -8,7 +8,7 @@ import { CoreStore } from '../../../application/core.store';
   imports: [CommonModule],
   templateUrl: './employee-name.html'
 })
-export class EmployeeNameComponent implements OnInit {
+export class EmployeeNameComponent implements OnInit, OnChanges {
   @Input({ required: true }) employeeId!: string;
   private coreStore = inject(CoreStore);
 
@@ -17,6 +17,21 @@ export class EmployeeNameComponent implements OnInit {
   error = signal<boolean>(false);
 
   ngOnInit() {
+    this.fetchEmployee();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['employeeId'] && !changes['employeeId'].isFirstChange()) {
+      this.fetchEmployee();
+    }
+  }
+
+  private fetchEmployee() {
+    if (!this.employeeId) return;
+
+    this.loading.set(true);
+    this.error.set(false);
+
     this.coreStore.getEmployeeByIdObservable(this.employeeId).subscribe({
       next: (employee) => {
         this.name.set(`${employee.firstName} ${employee.lastName}`);
@@ -29,3 +44,4 @@ export class EmployeeNameComponent implements OnInit {
     });
   }
 }
+
