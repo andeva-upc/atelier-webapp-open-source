@@ -123,6 +123,13 @@
                   Cotizar
                 </button>
               }
+              <button 
+                class="btn-delete-order" 
+                aria-label="Delete work order" 
+                (click)="deleteWorkOrder(order.id); $event.stopPropagation()"
+              >
+                <i class="pi pi-trash"></i>
+              </button>
               <button class="btn-toggle-expand" aria-label="Toggle details" (click)="toggleExpand(order.id); $event.stopPropagation()">
                 <i class="pi" [ngClass]="order.isExpanded ? 'pi-chevron-up' : 'pi-chevron-down'"></i>
               </button>
@@ -137,7 +144,18 @@
                   <div class="task-card" (click)="openTaskDetails(order, task)">
                     <div class="task-header">
                       <span class="task-title">Work Order Task</span>
-                      <span class="task-number">Task #{{ task.number }}</span>
+                      <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="task-number">Task #{{ task.number }}</span>
+                        @if (order.status !== 'COMPLETED' && order.status !== 'PAID') {
+                          <button 
+                            class="btn-delete-task" 
+                            aria-label="Delete task"
+                            (click)="deleteTask(order.id, task.id); $event.stopPropagation()"
+                          >
+                            <i class="pi pi-trash"></i>
+                          </button>
+                        }
+                      </div>
                     </div>
                     <p class="task-description">{{ task.description }}</p>
                   </div>
@@ -232,12 +250,13 @@
         <span class="detail-label">Mecánico:</span>
         <span class="detail-value">
           @if (selectedTaskForDetails()?.assignedMechanicId) {
-            <app-employee-name [employeeId]="selectedTaskForDetails()!.assignedMechanicId!"></app-employee-name>
+            <app-mechanic-name [mechanicId]="selectedTaskForDetails()!.assignedMechanicId!"></app-mechanic-name>
           } @else {
             No asignado
           }
         </span>
       </div>
+
       <div class="detail-row">
         <span class="detail-label">Descripción:</span>
         <span class="detail-value">{{ selectedTaskForDetails()?.description }}</span>

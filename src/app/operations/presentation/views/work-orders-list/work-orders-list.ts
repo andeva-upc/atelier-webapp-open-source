@@ -6,10 +6,12 @@ import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { OperationsStore } from '../../../application/operations.store';
 import { CoreStore } from '../../../../core/application/core.store';
 import { WorkOrderResource } from '../../../infrastructure/responses/work-order.response';
-import { EmployeeNameComponent } from '../../../../core/presentation/components/employee-name/employee-name';
 import { CustomerNameComponent } from '../../../../core/presentation/components/customer-name/customer-name';
+import { MechanicNameComponent } from '../../../../fleet/presentation/components/mechanic-name/mechanic-name';
 import { BillingStore } from '../../../../billing/application/billing.store';
 import { CreateQuoteCommand } from '../../../../billing/domain/model/commands/quote-commands';
+
+
 
 // ---- View Model -------------------------------------------------------
 interface WorkOrderTask {
@@ -38,10 +40,12 @@ interface WorkOrderViewModel {
 @Component({
   selector: 'app-work-orders-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, EmployeeNameComponent, CustomerNameComponent],
+  imports: [CommonModule, FormsModule, RouterModule, CustomerNameComponent, MechanicNameComponent],
   templateUrl: './work-orders-list.html',
   styleUrl: './work-orders-list.css'
 })
+
+
 export class WorkOrdersListComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
@@ -70,6 +74,11 @@ export class WorkOrdersListComponent implements OnInit {
   }
 
   ngOnInit() {
+    const branch = this.coreStore.currentBranch();
+    if (branch?.id) {
+      this.operationsStore.loadWorkOrdersByBranchId(branch.id.toString());
+    }
+
     this.route.queryParams.subscribe(params => {
       const expandedId = params['expandedOrderId'];
       if (expandedId) {
@@ -79,6 +88,7 @@ export class WorkOrdersListComponent implements OnInit {
       }
     });
   }
+
 
   private mapToViewModel(r: WorkOrderResource): WorkOrderViewModel {
     const internalCode = r.formattedNumber || `WO-${String(r.internalNumber).padStart(4, '0')}`;
@@ -197,6 +207,18 @@ export class WorkOrdersListComponent implements OnInit {
         0.0
       ));
       this.router.navigate(['/billing']).then();
+    }
+  }
+
+  deleteWorkOrder(orderId: string) {
+    if (confirm('¿Estás seguro de que deseas eliminar esta orden de trabajo?')) {
+      this.operationsStore.deleteWorkOrder(orderId);
+    }
+  }
+
+  deleteTask(orderId: string, taskId: string) {
+    if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
+      this.operationsStore.removeTaskFromWorkOrder(orderId, taskId);
     }
   }
 }
