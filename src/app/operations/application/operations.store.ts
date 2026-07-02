@@ -153,24 +153,34 @@ export class OperationsStore {
 
   addTaskToWorkOrder(workOrderId: string, command: AddTaskToWorkOrderCommand) {
     this.api.workOrders.addTask(workOrderId, command).subscribe({
-      next: (order) => this.activeWorkOrderSignal.set(order),
+      next: (order) => {
+        this.activeWorkOrderSignal.set(order);
+        this.branchWorkOrdersSignal.update(orders => orders.map(o => o.id === order.id ? order : o));
+      },
       error: (err) => console.error('Failed to add task:', err)
     });
   }
 
   updateWorkOrderTaskDetails(workOrderId: string, taskId: string, command: UpdateWorkOrderTaskDetailsCommand) {
     this.api.workOrders.updateTaskDetails(workOrderId, taskId, command).subscribe({
-      next: (order) => this.activeWorkOrderSignal.set(order),
+      next: (order) => {
+        this.activeWorkOrderSignal.set(order);
+        this.branchWorkOrdersSignal.update(orders => orders.map(o => o.id === order.id ? order : o));
+      },
       error: (err) => console.error('Failed to update task details:', err)
     });
   }
 
   removeTaskFromWorkOrder(workOrderId: string, taskId: string) {
     this.api.workOrders.removeTask(workOrderId, taskId).subscribe({
-      next: (order) => this.activeWorkOrderSignal.set(order),
+      next: (order) => {
+        this.activeWorkOrderSignal.set(order);
+        this.branchWorkOrdersSignal.update(orders => orders.map(o => o.id === order.id ? order : o));
+      },
       error: (err) => console.error('Failed to remove task:', err)
     });
   }
+
 
   startTask(taskId: string) {
     this.api.workOrderTasks.startTask(taskId).subscribe({
