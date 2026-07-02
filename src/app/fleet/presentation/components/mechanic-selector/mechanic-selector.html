@@ -3,7 +3,7 @@
       <mat-label>Mecánico asignado</mat-label>
       <mat-select [ngModel]="selectedMechanicId" (ngModelChange)="onSelectionChange($event)" [disabled]="disabled">
         @for (reg of fleetStore.employeeRegistrations(); track reg.id) {
-          <mat-option [value]="reg.employeeId">
+          <mat-option [value]="reg.id">
             <app-employee-name [employeeId]="reg.employeeId"></app-employee-name>
           </mat-option>
         }
