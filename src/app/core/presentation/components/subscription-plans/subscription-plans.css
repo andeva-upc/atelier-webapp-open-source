@@ -1,0 +1,236 @@
+.plans-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.plans-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.plans-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.brand-text {
+  color: #007bff;
+}
+
+.billing-toggle {
+  display: flex;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  padding: 0.25rem;
+  border: 1px solid #e5e7eb;
+}
+
+.toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.toggle-btn.active {
+  background-color: #007bff;
+  color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.toggle-btn.inactive {
+  color: #4b5563;
+  background-color: #bfdbfe; /* Light blue from image */
+}
+
+.discount-badge {
+  font-size: 0.75rem;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.plans-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+  width: 100%;
+}
+
+.plan-card {
+  flex: 1;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  background-color: white;
+  border: 1px solid #f3f4f6;
+  transition: transform 0.3s;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+}
+
+.plan-card.recommended {
+  background-color: #007bff;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(0, 123, 255, 0.2);
+  z-index: 1;
+}
+
+.plan-card.recommended:hover {
+  transform: scale(1.05) translateY(-5px);
+}
+
+.plan-header {
+  padding: 2rem 1.5rem 1rem;
+  text-align: center;
+}
+
+.plan-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: inherit; /* Inherits white for recommended, default for others */
+}
+
+.plan-card:not(.recommended) .plan-header h3 {
+  color: #1f2937;
+}
+
+.plan-desc {
+  font-size: 0.85rem;
+  min-height: 40px;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+}
+
+.plan-card:not(.recommended) .plan-desc {
+  color: #6b7280;
+}
+
+.plan-price {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.currency {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-right: 0.25rem;
+}
+
+.amount {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.period {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.plan-body {
+  flex: 1;
+  padding: 1.5rem;
+  background-color: #bfdbfe; /* Light blue background for features on normal cards */
+}
+
+.plan-card.recommended .plan-body {
+  background-color: transparent; /* Keep blue for recommended */
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #1f2937;
+}
+
+.plan-card.recommended .feature-list li {
+  color: white;
+}
+
+.check-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+}
+
+.plan-card.recommended .check-icon {
+  background-color: white;
+  color: #007bff;
+}
+
+.plan-footer {
+  padding: 1.5rem;
+  background-color: #bfdbfe;
+  text-align: center;
+}
+
+.plan-card.recommended .plan-footer {
+  background-color: transparent;
+}
+
+.select-btn {
+  width: 100%;
+  padding: 1.5rem 0 !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+.outline-btn {
+  background-color: white !important;
+  color: #007bff !important;
+  border: 1px solid #007bff !important;
+}
+
+@media (max-width: 900px) {
+  .plans-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .plan-card.recommended {
+    transform: none;
+  }
+  .plan-card.recommended:hover {
+    transform: translateY(-5px);
+  }
+}

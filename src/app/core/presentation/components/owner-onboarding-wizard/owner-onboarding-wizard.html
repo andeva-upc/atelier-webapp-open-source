@@ -1,0 +1,149 @@
+<mat-card class="wizard-card fade-in">
+  <mat-card-header>
+    <mat-card-title>Registro de Propietario</mat-card-title>
+    <mat-card-subtitle>Configura tu taller y adquiere tu plan en pocos pasos</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-stepper [linear]="true" #stepper class="custom-stepper">
+      <!-- Step 1: Owner Info -->
+      <mat-step [stepControl]="ownerForm">
+        <form [formGroup]="ownerForm" class="step-form">
+          <ng-template matStepLabel>Datos Personales</ng-template>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Nombres</mat-label>
+              <input matInput formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Apellidos</mat-label>
+              <input matInput formControlName="lastName">
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Tipo de Documento</mat-label>
+              <mat-select formControlName="documentType">
+                <mat-option value="DNI">DNI</mat-option>
+                <mat-option value="CE">CE</mat-option>
+                <mat-option value="PASSPORT">Pasaporte</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Número de Documento</mat-label>
+              <input matInput formControlName="documentNumber">
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Teléfono</mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <div class="step-actions">
+            <button mat-flat-button color="primary" matStepperNext [disabled]="ownerForm.invalid">Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 2: Workshop Info -->
+      <mat-step [stepControl]="workshopForm">
+        <form [formGroup]="workshopForm" class="step-form">
+          <ng-template matStepLabel>Taller</ng-template>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Razón Social</mat-label>
+            <input matInput formControlName="businessName">
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre Comercial</mat-label>
+            <input matInput formControlName="brandName">
+            <mat-hint>Ej: Taller Mecánico Los Hermanos</mat-hint>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>RUC</mat-label>
+            <input matInput formControlName="taxId">
+          </mat-form-field>
+
+          <div class="step-actions">
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-flat-button color="primary" matStepperNext [disabled]="workshopForm.invalid">Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 3: Branch Info -->
+      <mat-step [stepControl]="branchForm">
+        <form [formGroup]="branchForm" class="step-form">
+          <ng-template matStepLabel>Sucursal Inicial</ng-template>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre de la Sucursal</mat-label>
+            <input matInput formControlName="name">
+            <mat-hint>Ej: Sede Principal Lima</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Código de Sucursal</mat-label>
+              <input matInput formControlName="code">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Teléfono de Sucursal</mat-label>
+              <input matInput formControlName="phone">
+            </mat-form-field>
+          </div>
+
+          <div class="step-actions">
+            <button mat-button matStepperPrevious>Atrás</button>
+            <button mat-flat-button color="primary" matStepperNext [disabled]="branchForm.invalid">Elegir Plan</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 4: Subscription Plan -->
+      <mat-step>
+        <ng-template matStepLabel>Plan</ng-template>
+        <div class="step-content wide-step">
+          <app-subscription-plans (planSelected)="onPlanSelected($event, stepper)"></app-subscription-plans>
+          <div class="step-actions mt-4">
+            <button mat-button matStepperPrevious>Atrás</button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 5: Payment -->
+      <mat-step>
+        <ng-template matStepLabel>Pago</ng-template>
+        <div class="step-content wide-step">
+          @if (selectedPlan) {
+            <app-subscription-payment 
+              [selectedPlan]="selectedPlan"
+              (paymentSubmit)="onPaymentSubmit($event)">
+            </app-subscription-payment>
+          }
+          
+          @if (isSubmitting) {
+            <div class="loading-overlay">
+              <div class="spinner"></div>
+              <p>Creando tu perfil y configurando tu entorno...</p>
+            </div>
+          }
+          <div class="step-actions mt-4">
+            <button mat-button matStepperPrevious [disabled]="isSubmitting">Atrás a Planes</button>
+          </div>
+        </div>
+      </mat-step>
+
+    </mat-stepper>
+  </mat-card-content>
+</mat-card>

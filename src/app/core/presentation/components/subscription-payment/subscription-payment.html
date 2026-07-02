@@ -1,0 +1,121 @@
+<div class="payment-container fade-in">
+  <!-- Left Side: Forms -->
+  <div class="forms-section">
+    <!-- Billing Address -->
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title><span class="step-number">1.</span> Dirección de Facturación</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="billingForm" class="onboarding-form">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Apellidos</mat-label>
+              <input matInput formControlName="lastName">
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>País de residencia</mat-label>
+            <mat-select formControlName="country">
+              <mat-option value="Perú">Perú</mat-option>
+              <mat-option value="Colombia">Colombia</mat-option>
+              <mat-option value="Chile">Chile</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Número Telefónico</mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Dirección</mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Ciudad</mat-label>
+              <input matInput formControlName="city">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Codigo Postal</mat-label>
+              <input matInput formControlName="zipCode">
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Payment Details -->
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title><span class="step-number">2.</span> Pago</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="onboarding-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nombre en la Tarjeta</mat-label>
+            <input matInput formControlName="cardName">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Número de Tarjeta</mat-label>
+            <input matInput placeholder="0000 0000 0000 0000" formControlName="cardNumber">
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Fecha de Expiración</mat-label>
+              <input matInput placeholder="MM/YY" formControlName="expirationDate">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Codigo CVC</mat-label>
+              <input matInput placeholder="CVC" formControlName="cvc">
+            </mat-form-field>
+          </div>
+
+          <button mat-flat-button color="primary" type="submit" class="submit-btn" [disabled]="billingForm.invalid || paymentForm.invalid">
+            Enviar Pago
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Right Side: Order Summary -->
+  <div class="summary-section">
+    <mat-card class="summary-card">
+      <mat-card-header>
+        <mat-card-title class="summary-title">Resumen del pedido</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h3 class="plan-name">Plan {{ selectedPlan.name }}</h3>
+        
+        <div class="summary-row">
+          <span>Mensualmente</span>
+          <span>S/.{{ selectedPlan.price }}</span>
+        </div>
+        
+        <div class="summary-divider"></div>
+        
+        <div class="summary-row">
+          <span>Impuestos</span>
+          <span>S/.0</span>
+        </div>
+        
+        <div class="summary-divider thick"></div>
+        
+        <div class="summary-row total-row">
+          <span>Total</span>
+          <span>S/.{{ selectedPlan.price }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
