@@ -182,6 +182,13 @@
           [ngModel]="tempProductQuantity()"
           (ngModelChange)="tempProductQuantity.set($event)"
         />
+        
+        @if (selectedProductForModal() && tempProductQuantity() > availableStockForModal()) {
+          <div class="stock-warning">
+            <i class="pi pi-exclamation-triangle"></i>
+            <span>Stock insuficiente. Disponible: {{ availableStockForModal() }}</span>
+          </div>
+        }
       </div>
 
       <!-- Precio Total del Producto Automático -->
@@ -191,9 +198,15 @@
       </div>
 
       <!-- Botón de acción del modal -->
-      <button class="btn-modal-action" (click)="saveProductModalChanges()">
+      <button 
+        class="btn-modal-action" 
+        (click)="saveProductModalChanges()"
+        [disabled]="selectedProductForModal() && tempProductQuantity() > availableStockForModal()"
+        [class.disabled]="selectedProductForModal() && tempProductQuantity() > availableStockForModal()"
+      >
         {{ isEditingProduct() ? 'Save Changes' : 'Add Product' }}
       </button>
+
     </div>
   </div>
 }

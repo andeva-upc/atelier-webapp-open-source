@@ -22,6 +22,7 @@ interface AddedProduct {
   price: number;
   quantity: number;
   taskProductId?: string;
+  stockQuantity?: number;
 }
 
 @Component({
@@ -58,7 +59,7 @@ export class TaskFormViewComponent implements OnInit {
 
   isEditingProduct = signal<boolean>(false);
   editingProductIndex = signal<number | null>(null);
-  selectedProductForModal = signal<{ id: string, name: string, price: number } | null>(null);
+  selectedProductForModal = signal<{ id: string, name: string, price: number, stockQuantity: number } | null>(null);
   tempProductQuantity = signal<number>(1);
 
   statusList = ['PENDING', 'IN_PROGRESS', 'COMPLETED'];
@@ -75,6 +76,25 @@ export class TaskFormViewComponent implements OnInit {
     const price = this.selectedProductForModal()?.price || 0;
     return price * this.tempProductQuantity();
   });
+
+  availableStockForModal = computed(() => {
+    const selectedProd = this.selectedProductForModal();
+    if (!selectedProd) return 0;
+
+    const s_db = selectedProd.stockQuantity;
+    const q_db = this.originalProducts.find(o => o.id === selectedProd.id)?.quantity || 0;
+
+    let q_mem = 0;
+    if (this.isEditingProduct()) {
+      q_mem = 0; // replacing the entire item quantity, so we don't subtract it from available stock
+    } else {
+      const existing = this.addedProducts().find(p => p.id === selectedProd.id);
+      q_mem = existing ? existing.quantity : 0;
+    }
+
+    return s_db + q_db - q_mem;
+  });
+
 
   constructor() {
     effect(() => {
@@ -141,7 +161,8 @@ export class TaskFormViewComponent implements OnInit {
                 name: p.name,
                 price: p.salePrice,
                 quantity: task.products[i].quantity,
-                taskProductId: task.products[i].id
+                taskProductId: task.products[i].id,
+                stockQuantity: p.currentStock
               }));
               this.addedProducts.set(addedProds);
               this.originalProducts = [...addedProds];
@@ -186,7 +207,12 @@ export class TaskFormViewComponent implements OnInit {
   openEditProductModal(product: AddedProduct, index: number) {
     this.isEditingProduct.set(true);
     this.editingProductIndex.set(index);
-    this.selectedProductForModal.set({ id: product.id, name: product.name, price: product.price });
+    this.selectedProductForModal.set({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      stockQuantity: product.stockQuantity || 99999
+    });
     this.tempProductQuantity.set(product.quantity);
     this.isProductModalOpen.set(true);
   }
@@ -196,13 +222,24 @@ export class TaskFormViewComponent implements OnInit {
   }
 
   onModalProductSelected(productInfo: {id: string, name: string, stockQuantity: number, price: number}) {
-    this.selectedProductForModal.set({ id: productInfo.id, name: productInfo.name, price: productInfo.price });
+    this.selectedProductForModal.set({
+      id: productInfo.id,
+      name: productInfo.name,
+      price: productInfo.price,
+      stockQuantity: productInfo.stockQuantity
+    });
   }
 
   saveProductModalChanges() {
     const selectedProd = this.selectedProductForModal();
     const qty = this.tempProductQuantity();
+    const available = this.availableStockForModal();
     if (!selectedProd || qty <= 0) return;
+
+    if (qty > available) {
+      alert(`No hay suficiente stock. Stock disponible: ${available}`);
+      return;
+    }
 
     if (this.isEditingProduct()) {
       const idx = this.editingProductIndex();
@@ -217,7 +254,13 @@ export class TaskFormViewComponent implements OnInit {
         if (existing) {
           return products.map(p => p.id === selectedProd.id ? { ...p, quantity: p.quantity + qty } : p);
         } else {
-          return [...products, { id: selectedProd.id, name: selectedProd.name, price: selectedProd.price, quantity: qty }];
+          return [...products, {
+            id: selectedProd.id,
+            name: selectedProd.name,
+            price: selectedProd.price,
+            quantity: qty,
+            stockQuantity: selectedProd.stockQuantity
+          }];
         }
       });
     }
@@ -334,17 +377,12 @@ export class TaskFormViewComponent implements OnInit {
     });
 
     toRemove.forEach(p => {
-      if (p.taskProductId) {
-        calls.push(api.workOrderTasks.removeProductFromTask(this.taskId!, p.taskProductId));
-      }
+      calls.push(api.workOrderTasks.removeProductFromTask(this.taskId!, p.id));
     });
 
     toUpdate.forEach(p => {
-      const orig = original.find(o => o.id === p.id);
-      if (orig?.taskProductId) {
-        const cmd = new UpdateProductQuantityInTaskCommand(p.id, p.quantity);
-        calls.push(api.workOrderTasks.updateProductQuantityInTask(this.taskId!, orig.taskProductId, cmd));
-      }
+      const cmd = new UpdateProductQuantityInTaskCommand(p.id, p.quantity);
+      calls.push(api.workOrderTasks.updateProductQuantityInTask(this.taskId!, p.id, cmd));
     });
 
     if (calls.length === 0) {
@@ -359,6 +397,7 @@ export class TaskFormViewComponent implements OnInit {
         this.goBack();
       }
     });
+
   }
 
   private goBack() {
