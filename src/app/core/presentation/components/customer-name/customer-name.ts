@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal, inject } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreStore } from '../../../application/core.store';
 
@@ -8,7 +8,7 @@ import { CoreStore } from '../../../application/core.store';
   imports: [CommonModule],
   templateUrl: './customer-name.html'
 })
-export class CustomerNameComponent implements OnInit {
+export class CustomerNameComponent implements OnInit, OnChanges {
   @Input({ required: true }) customerId!: string;
   private coreStore = inject(CoreStore);
 
@@ -17,6 +17,21 @@ export class CustomerNameComponent implements OnInit {
   error = signal<boolean>(false);
 
   ngOnInit() {
+    this.fetchCustomer();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['customerId'] && !changes['customerId'].isFirstChange()) {
+      this.fetchCustomer();
+    }
+  }
+
+  private fetchCustomer() {
+    if (!this.customerId) return;
+    
+    this.loading.set(true);
+    this.error.set(false);
+    
     this.coreStore.getCustomerByIdObservable(this.customerId).subscribe({
       next: (customer) => {
         this.name.set(customer.isCorporate ? customer.businessName : `${customer.firstName} ${customer.lastName}`);
