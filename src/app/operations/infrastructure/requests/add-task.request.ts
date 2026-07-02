@@ -3,3 +3,4 @@ export interface AddTaskRequest {
   assignedMechanicId: string;
   description: string;
 }
+
