@@ -4,7 +4,8 @@ import { UpdateProductQuantityInTaskRequest } from '../requests/update-product-q
 export class UpdateProductQuantityInTaskRequestAssembler {
   static toRequestFromCommand(command: UpdateProductQuantityInTaskCommand): UpdateProductQuantityInTaskRequest {
     return {
+      quantity: command.newQuantity,
       newQuantity: command.newQuantity
     };
   }
-}
+}
