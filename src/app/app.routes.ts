@@ -77,6 +77,7 @@ export const routes: Routes = [
     ]
   },
   { path: 'role-selection', loadComponent: () => import('./core/presentation/views/role-selection/role-selection').then(m => m.RoleSelectionComponent), canActivate: [iamGuard] },
+  { path: 'onboarding', loadComponent: () => import('./core/presentation/views/onboarding/onboarding').then(m => m.OnboardingComponent), canActivate: [iamGuard] },
   { path: '',  loadChildren: iamRoutes },
   { path: '',     redirectTo: 'home', pathMatch: 'full'},
   { path: '**',   loadComponent: pageNotFound },
