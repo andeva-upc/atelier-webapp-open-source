@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IamStore } from '../../../application/iam.store';
@@ -34,6 +34,8 @@ export class SignUpComponent {
   private fb = inject(FormBuilder);
   private iamStore = inject(IamStore);
   private router = inject(Router);
+
+  hidePassword = signal(true);
 
   signUpForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
