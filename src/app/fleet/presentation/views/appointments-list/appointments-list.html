@@ -35,8 +35,8 @@
           <span class="date">{{ appointment.scheduledStart | date:'medium' }}</span>
         </div>
         <div class="card-body">
-          <p><strong>{{ 'fleet.appointments.customer' | translate }}:</strong> {{ appointment.customerId }}</p>
-          <p><strong>{{ 'fleet.appointments.vehicle' | translate }}:</strong> {{ appointment.vehicleId }}</p>
+          <p><strong>{{ 'fleet.appointments.customer' | translate }}:</strong> {{ getCustomerDisplay(appointment.customerId) }}</p>
+          <p><strong>{{ 'fleet.appointments.vehicle' | translate }}:</strong> {{ getVehicleDisplay(appointment.vehicleId) }}</p>
         </div>
         <div class="card-footer">
           <button class="edit-btn" (click)="onEdit(appointment)">

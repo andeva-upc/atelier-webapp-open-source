@@ -179,18 +179,7 @@ export class AppointmentFormComponent implements OnInit {
   loadVehicles(customerId: string): void {
     this.vehiclesEndpoint.getByCustomerId(customerId).subscribe({
       next: (data) => {
-        // [INJECTED MOCK FOR QUICK TESTING]
-        if (!data || data.length === 0) {
-          data = [{ 
-            id: '123e4567-e89b-12d3-a456-426614174000', 
-            plateNumber: 'TEST-123', 
-            brand: 'Vehículo', 
-            model: 'de Prueba', 
-            year: 2026, 
-            vin: '000000000' 
-          }];
-        }
-        this.vehicles.set(data);
+        this.vehicles.set(data || []);
         this.appointmentForm.get('vehicleObj')?.updateValueAndValidity();
       },
       error: (err) => console.error(err)
@@ -200,26 +189,53 @@ export class AppointmentFormComponent implements OnInit {
   loadAppointment(id: string): void {
     this.isLoading.set(true);
     this.appointmentsEndpoint.getById(id)
-      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (appointment: AppointmentResource) => {
           const scheduled = new Date(appointment.scheduledStart);
           const timeStr = scheduled.toTimeString().substring(0, 5);
 
-          // We don't have the full customer/vehicle objects easily available synchronously without a specific fetch.
-          // For simplicity in UI, we'll patch the IDs and let the autocomplete show them if they type.
-          // Since it's a dropdown, we will just patch the raw objects.
-          
-          this.appointmentForm.patchValue({
-            customerId: appointment.customerId,
-            vehicleId: appointment.vehicleId,
-            date: scheduled,
-            time: timeStr,
-            status: appointment.status,
-            notes: appointment.notes
+          forkJoin({
+            customerReg: this.customersEndpoint.getByCustomerId(appointment.customerId).pipe(
+              catchError(() => of(null))
+            ),
+            customerDetails: this.coreApi.customers.getById(appointment.customerId).pipe(
+              catchError(() => of(null))
+            ),
+            vehicle: this.vehiclesEndpoint.getById(appointment.vehicleId).pipe(
+              catchError(() => of(null))
+            )
+          }).subscribe({
+            next: (res) => {
+              let customerObj = null;
+              if (res.customerReg) {
+                customerObj = { ...res.customerReg, customer: res.customerDetails };
+              } else if (res.customerDetails) {
+                customerObj = { customerId: appointment.customerId, customer: res.customerDetails };
+              }
+
+              this.appointmentForm.patchValue({
+                customerObj: customerObj,
+                customerId: appointment.customerId,
+                vehicleObj: res.vehicle,
+                vehicleId: appointment.vehicleId,
+                date: scheduled,
+                time: timeStr,
+                status: appointment.status,
+                notes: appointment.notes
+              });
+
+              this.loadVehicles(appointment.customerId);
+              this.isLoading.set(false);
+            },
+            error: () => {
+              this.isLoading.set(false);
+            }
           });
         },
-        error: (err: any) => console.error('Error loading appointment', err)
+        error: (err: any) => {
+          console.error('Error loading appointment', err);
+          this.isLoading.set(false);
+        }
       });
   }
 
@@ -257,7 +273,10 @@ export class AppointmentFormComponent implements OnInit {
       this.appointmentsEndpoint.update(this.appointmentId()!, command)
         .pipe(finalize(() => this.isSaving.set(false)))
         .subscribe({
-          next: () => this.router.navigate(['/fleet/appointments']),
+          next: () => {
+            this.appointmentForm.markAsPristine();
+            this.router.navigate(['/fleet/appointments']);
+          },
           error: (err: any) => console.error('Error updating appointment', err)
         });
     } else {
@@ -271,14 +290,23 @@ export class AppointmentFormComponent implements OnInit {
       this.appointmentsEndpoint.create(command)
         .pipe(finalize(() => this.isSaving.set(false)))
         .subscribe({
-          next: () => this.router.navigate(['/fleet/appointments']),
+          next: () => {
+            this.appointmentForm.markAsPristine();
+            this.router.navigate(['/fleet/appointments']);
+          },
           error: (err: any) => console.error('Error creating appointment', err)
         });
     }
   }
 
   onCancel(): void {
-    this.router.navigate(['/fleet/appointments']);
+    if (this.appointmentForm.dirty) {
+      if (confirm('¿Estás seguro de que deseas salir? Se perderán los cambios no guardados.')) {
+        this.router.navigate(['/fleet/appointments']);
+      }
+    } else {
+      this.router.navigate(['/fleet/appointments']);
+    }
   }
 }
 
