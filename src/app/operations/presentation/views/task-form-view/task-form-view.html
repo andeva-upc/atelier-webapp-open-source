@@ -4,14 +4,14 @@
     <div class="header-left">
       <a class="btn-back" [routerLink]="['/work-orders']" [queryParams]="{ expandedOrderId: workOrderId }">
         <i class="pi pi-arrow-left"></i>
-        Back to Work Orders
+        {{ 'operations.task-form.back' | translate }}
       </a>
-      <h1 class="page-title">{{ isEditMode() ? 'Edit Work Order Task' : 'Create Work Order Task' }}</h1>
+      <h1 class="page-title">{{ isEditMode() ? ('operations.task-form.title-edit' | translate) : ('operations.task-form.title-new' | translate) }}</h1>
     </div>
     
     <!-- Precio Total Automático -->
     <div class="price-display">
-      <span class="price-label">Total Price</span>
+      <span class="price-label">{{ 'operations.task-form.total-price' | translate }}</span>
       <span class="price-value">${{ totalPrice() | number: '1.2-2' }}</span>
     </div>
   </div>
@@ -19,7 +19,7 @@
   @if (isLoading()) {
     <div class="loading-state">
       <i class="pi pi-spin pi-spinner"></i>
-      <span>Cargando datos de la tarea...</span>
+      <span>{{ 'operations.task-form.loading' | translate }}</span>
     </div>
   } @else {
   <div class="form-card">
@@ -38,7 +38,7 @@
     <div class="form-row">
       <!-- Selector de Servicio -->
       <div class="form-group flex-1">
-        <label class="form-label">Service</label>
+        <label class="form-label">{{ 'operations.task-form.labels.service' | translate }}</label>
         <div class="select-wrapper">
           <button
             type="button"
@@ -49,7 +49,7 @@
               @if (selectedService()) {
                 {{ selectedService()?.name }} (${{ selectedService()?.price }})
               } @else {
-                Select service...
+                {{ 'operations.task-form.placeholders.select-service' | translate }}
               }
             </span>
             <i class="pi pi-chevron-down trigger-icon"></i>
@@ -59,7 +59,7 @@
             <div class="select-dropdown">
               @if (servicesList.length === 0) {
                 <div class="select-item" style="color: #888; font-style: italic;">
-                  No hay servicios disponibles en esta sucursal
+                  {{ 'operations.task-form.service-dropdown.empty' | translate }}
                 </div>
               }
               @for (srv of servicesList; track srv.id) {
@@ -76,7 +76,7 @@
       <!-- Selector de Estado (Solo en Modo Edición) -->
       @if (isEditMode()) {
         <div class="form-group flex-1">
-          <label class="form-label">Status</label>
+          <label class="form-label">{{ 'operations.task-form.labels.status' | translate }}</label>
           <div class="select-wrapper">
             <button
               type="button"
@@ -95,9 +95,9 @@
 
     <!-- Descripción -->
     <div class="form-group">
-      <label class="form-label">Description</label>
+      <label class="form-label">{{ 'operations.task-form.labels.description' | translate }}</label>
       <textarea
-        placeholder="Describe the work to be done (min. 5 characters)"
+        [placeholder]="'operations.task-form.placeholders.description' | translate"
         class="form-control textarea-control"
         rows="4"
         [ngModel]="description()"
@@ -107,7 +107,7 @@
 
     <!-- Sección de Productos -->
     <div class="form-group">
-      <label class="form-label">Products &amp; Parts</label>
+      <label class="form-label">{{ 'operations.task-form.labels.products' | translate }}</label>
       <div class="products-panel">
         
         <!-- Listado de productos agregados -->
@@ -117,7 +117,7 @@
               <div class="added-product-row clickable-product-row" (click)="openEditProductModal(prod, i)">
                 <div class="prod-details">
                   <span class="prod-name">{{ prod.name }}</span>
-                  <span class="prod-qty-price">Cantidad: {{ prod.quantity }} &times; ${{ prod.price }}</span>
+                  <span class="prod-qty-price">{{ 'operations.task-form.products.qty-price' | translate:{qty: prod.quantity, price: prod.price} }}</span>
                 </div>
                 <button type="button" class="btn-remove-prod" (click)="removeProduct(prod.id); $event.stopPropagation()">
                   <i class="pi pi-times"></i>
@@ -127,13 +127,13 @@
           </div>
         } @else {
           <div class="no-products-msg">
-            No products added to this task yet.
+            {{ 'operations.task-form.products.empty' | translate }}
           </div>
         }
 
         <!-- Botón Agregar Producto -->
         <button type="button" class="btn btn-secondary btn-add-prod" (click)="openProductModal()">
-          Add Product
+          {{ 'operations.task-form.actions.add-product' | translate }}
         </button>
       </div>
     </div>
@@ -141,7 +141,7 @@
     <!-- Botones de Acción -->
     <div class="form-actions">
       <button class="btn btn-primary btn-save" (click)="saveChanges()">
-        {{ isEditMode() ? 'Save Changes' : 'Create Work Order Task' }}
+        {{ isEditMode() ? ('operations.task-form.actions.save' | translate) : ('operations.task-form.actions.create' | translate) }}
       </button>
     </div>
   </div>
@@ -153,7 +153,7 @@
   <div class="modal-backdrop" (click)="closeProductModal()"></div>
   <div class="modal-dialog">
     <div class="modal-header">
-      <h3>Products</h3>
+      <h3>{{ 'operations.task-form.modals.products-title' | translate }}</h3>
       <button class="btn-close-modal" (click)="closeProductModal()">
         <i class="pi pi-times"></i>
       </button>
@@ -173,12 +173,12 @@
 
       <!-- Cantidad -->
       <div class="form-group">
-        <label class="form-label">Quantity</label>
+        <label class="form-label">{{ 'operations.task-form.labels.quantity' | translate }}</label>
         <input
           type="number"
           min="1"
           class="form-control"
-          placeholder="Quantity"
+          [placeholder]="'operations.task-form.placeholders.quantity' | translate"
           [ngModel]="tempProductQuantity()"
           (ngModelChange)="tempProductQuantity.set($event)"
         />
@@ -186,14 +186,14 @@
         @if (selectedProductForModal() && tempProductQuantity() > availableStockForModal()) {
           <div class="stock-warning">
             <i class="pi pi-exclamation-triangle"></i>
-            <span>Stock insuficiente. Disponible: {{ availableStockForModal() }}</span>
+            <span>{{ 'operations.task-form.products.stock-warning' | translate:{stock: availableStockForModal()} }}</span>
           </div>
         }
       </div>
 
       <!-- Precio Total del Producto Automático -->
       <div class="modal-price-display">
-        <span class="price-label">Total Price</span>
+        <span class="price-label">{{ 'operations.task-form.modals.total-price' | translate }}</span>
         <span class="price-value">${{ modalProductTotalPrice() | number: '1.2-2' }}</span>
       </div>
 
@@ -204,7 +204,7 @@
         [disabled]="selectedProductForModal() && tempProductQuantity() > availableStockForModal()"
         [class.disabled]="selectedProductForModal() && tempProductQuantity() > availableStockForModal()"
       >
-        {{ isEditingProduct() ? 'Save Changes' : 'Add Product' }}
+        {{ isEditingProduct() ? ('operations.task-form.actions.save' | translate) : ('operations.task-form.actions.add-product' | translate) }}
       </button>
 
     </div>

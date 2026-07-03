@@ -1,7 +1,7 @@
 <mat-card class="form-card fade-in">
   <mat-card-header>
-    <mat-card-title>Registro de Empleado</mat-card-title>
-    <mat-card-subtitle>Ingresa tus datos para unirte a un taller</mat-card-subtitle>
+    <mat-card-title>{{ 'employee-onboarding.title' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'employee-onboarding.subtitle' | translate }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
@@ -9,21 +9,21 @@
       
       <div class="form-row">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nombres</mat-label>
+          <mat-label>{{ 'employee-onboarding.firstname' | translate }}</mat-label>
           <input matInput formControlName="firstName">
-          <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">Requerido</mat-error>
+          <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">{{ 'employee-onboarding.required' | translate }}</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Apellidos</mat-label>
+          <mat-label>{{ 'employee-onboarding.lastname' | translate }}</mat-label>
           <input matInput formControlName="lastName">
-          <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">Requerido</mat-error>
+          <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">{{ 'employee-onboarding.required' | translate }}</mat-error>
         </mat-form-field>
       </div>
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Tipo de Documento</mat-label>
+          <mat-label>{{ 'employee-onboarding.document_type' | translate }}</mat-label>
           <mat-select formControlName="documentType">
             <mat-option value="DNI">DNI</mat-option>
             <mat-option value="CE">CE</mat-option>
@@ -31,21 +31,21 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Número de Documento</mat-label>
+          <mat-label>{{ 'employee-onboarding.document_number' | translate }}</mat-label>
           <input matInput formControlName="documentNumber">
-          <mat-error *ngIf="employeeForm.get('documentNumber')?.hasError('required')">Requerido</mat-error>
+          <mat-error *ngIf="employeeForm.get('documentNumber')?.hasError('required')">{{ 'employee-onboarding.required' | translate }}</mat-error>
         </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Teléfono</mat-label>
+        <mat-label>{{ 'employee-onboarding.phone' | translate }}</mat-label>
         <input matInput formControlName="phone">
-        <mat-error *ngIf="employeeForm.get('phone')?.hasError('required')">Requerido</mat-error>
+        <mat-error *ngIf="employeeForm.get('phone')?.hasError('required')">{{ 'employee-onboarding.required' | translate }}</mat-error>
       </mat-form-field>
 
       <div class="action-buttons">
         <button mat-flat-button color="primary" type="submit" class="submit-btn" [disabled]="employeeForm.invalid">
-          Crear Perfil y Unirse
+          {{ 'employee-onboarding.submit_btn' | translate }}
         </button>
       </div>
     </form>

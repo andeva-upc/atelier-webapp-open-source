@@ -1,13 +1,13 @@
 
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Select Pending Appointment</mat-label>
+      <mat-label>{{ 'appointment-selector.label' | translate }}</mat-label>
       <mat-select [ngModel]="selectedAppointmentId" (ngModelChange)="onSelectionChange($event)" [disabled]="disabled">
         @if (fleetStore.appointments().length === 0) {
-          <mat-option disabled>No pending appointments found</mat-option>
+          <mat-option disabled>{{ 'appointment-selector.empty' | translate }}</mat-option>
         }
         @for (appointment of fleetStore.appointments(); track appointment.id) {
           <mat-option [value]="appointment.id">
-            {{ appointment.scheduledStart | date:'short' }} - {{ appointment.notes || 'No notes' }}
+            {{ appointment.scheduledStart | date:'short' }} - {{ appointment.notes || ('appointment-selector.no-notes' | translate) }}
           </mat-option>
         }
       </mat-select>

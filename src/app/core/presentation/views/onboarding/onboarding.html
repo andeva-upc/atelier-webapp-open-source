@@ -1,8 +1,8 @@
 <div class="onboarding-container">
   @if (selectedProfile() === null) {
     <div class="header-section fade-in">
-      <h1 class="title">Bienvenido a <span class="brand-text">atelier.</span></h1>
-      <p class="subtitle">Para comenzar, ¿cómo usarás la plataforma?</p>
+      <h1 class="title">{{ 'onboarding.welcome' | translate }} <span class="brand-text">atelier.</span></h1>
+      <p class="subtitle">{{ 'onboarding.subtitle' | translate }}</p>
     </div>
 
     <div class="cards-grid fade-in">
@@ -13,8 +13,8 @@
             <div class="icon-circle">
               <i class="pi pi-user"></i>
             </div>
-            <h3>Cliente</h3>
-            <p>Deseo agendar citas y ver el estado de mis vehículos.</p>
+            <h3>{{ 'onboarding.customer.title' | translate }}</h3>
+            <p>{{ 'onboarding.customer.desc' | translate }}</p>
           </mat-card-content>
         </mat-card>
       }
@@ -26,8 +26,8 @@
             <div class="icon-circle">
               <i class="pi pi-id-card"></i>
             </div>
-            <h3>Empleado</h3>
-            <p>Trabajo en un taller y necesito gestionar reparaciones e inventario.</p>
+            <h3>{{ 'onboarding.employee.title' | translate }}</h3>
+            <p>{{ 'onboarding.employee.desc' | translate }}</p>
           </mat-card-content>
         </mat-card>
       }
@@ -39,8 +39,8 @@
             <div class="icon-circle">
               <i class="pi pi-shield"></i>
             </div>
-            <h3>Propietario</h3>
-            <p>Soy dueño de un taller y quiero registrar mi negocio.</p>
+            <h3>{{ 'onboarding.owner.title' | translate }}</h3>
+            <p>{{ 'onboarding.owner.desc' | translate }}</p>
           </mat-card-content>
         </mat-card>
       }
@@ -48,7 +48,7 @@
   } @else {
     <div class="form-section slide-up">
       <button mat-button color="primary" class="back-btn" (click)="cancelSelection()">
-        <i class="pi pi-arrow-left"></i> Volver a selección
+        <i class="pi pi-arrow-left"></i> {{ 'onboarding.back_to_selection' | translate }}
       </button>
 
       @switch (selectedProfile()) {

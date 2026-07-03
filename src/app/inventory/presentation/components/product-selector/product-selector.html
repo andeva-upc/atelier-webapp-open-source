@@ -1,10 +1,10 @@
 
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Producto</mat-label>
+      <mat-label>{{ 'product-selector.label' | translate }}</mat-label>
       <mat-select [ngModel]="selectedProductId" (ngModelChange)="onSelectionChange($event)" [disabled]="disabled">
         @for (product of inventoryStore.branchProducts(); track product.id) {
           <mat-option [value]="product.id">
-            {{ product.name }} (Stock: {{ product.currentStock }})
+            {{ product.name }} ({{ 'product-selector.stock' | translate }}: {{ product.currentStock }})
           </mat-option>
         }
       </mat-select>

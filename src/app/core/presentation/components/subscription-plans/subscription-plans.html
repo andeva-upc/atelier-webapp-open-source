@@ -1,9 +1,9 @@
 <div class="plans-container">
   <div class="plans-header">
-    <h2>Seleccione el plan para <span class="brand-text">taller.</span></h2>
+    <h2>{{ 'subscription-plans.title' | translate }} <span class="brand-text">atelier.</span></h2>
     <div class="billing-toggle">
-      <button class="toggle-btn active">Mensual</button>
-      <button class="toggle-btn inactive">Anual <span class="discount-badge">Ahorra 17%</span></button>
+      <button class="toggle-btn active">{{ 'subscription-plans.billing_monthly' | translate }}</button>
+      <button class="toggle-btn inactive">{{ 'subscription-plans.billing_annual' | translate }} <span class="discount-badge">{{ 'subscription-plans.discount_badge' | translate }}</span></button>
     </div>
   </div>
 
@@ -12,13 +12,13 @@
       <div class="plan-card" [class.recommended]="plan.recommended">
         <div class="plan-header">
           <h3>{{ plan.name }}</h3>
-          <p class="plan-desc" *ngIf="plan.name === 'Lite'">Conoce y explora el uso de atelier</p>
-          <p class="plan-desc" *ngIf="plan.name === 'Pro'">Experimenta el poder de infinitas posibilidades</p>
-          <p class="plan-desc" *ngIf="plan.name === 'Max'">Desbloquea el máximo rendimiento de atelier</p>
+          <p class="plan-desc" *ngIf="plan.name === 'Lite'">{{ 'subscription-plans.plan_lite_desc' | translate }}</p>
+          <p class="plan-desc" *ngIf="plan.name === 'Pro'">{{ 'subscription-plans.plan_pro_desc' | translate }}</p>
+          <p class="plan-desc" *ngIf="plan.name === 'Max'">{{ 'subscription-plans.plan_max_desc' | translate }}</p>
           <div class="plan-price">
-            <span class="currency">S/.</span>
+            <span class="currency">{{ 'subscription-plans.price_currency' | translate }}</span>
             <span class="amount">{{ plan.price }}</span>
-            <span class="period">/mes</span>
+            <span class="period">{{ 'subscription-plans.price_period' | translate }}</span>
           </div>
         </div>
 
@@ -39,7 +39,7 @@
           <button mat-flat-button [color]="plan.recommended ? 'primary' : ''" 
                   class="select-btn" [class.outline-btn]="!plan.recommended"
                   (click)="onSelectPlan(plan)">
-            Seleccionar {{ plan.name }}
+            {{ 'subscription-plans.select_btn' | translate }} {{ plan.name }}
           </button>
         </div>
       </div>

@@ -1,6 +1,6 @@
 
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Mecánico asignado</mat-label>
+      <mat-label>{{ 'mechanic-selector.label' | translate }}</mat-label>
       <mat-select [ngModel]="selectedMechanicId" (ngModelChange)="onSelectionChange($event)" [disabled]="disabled">
         @for (reg of fleetStore.employeeRegistrations(); track reg.id) {
           <mat-option [value]="reg.id">

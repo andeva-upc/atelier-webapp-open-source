@@ -1,11 +1,11 @@
 @if (loading()) {
-  <span>Cargando...</span>
+  <span>{{ 'shared.loading' | translate }}</span>
 } @else if (error()) {
-  <span>Desconocido</span>
+  <span>{{ 'shared.unknown' | translate }}</span>
 } @else {
   @if (employeeId()) {
     <app-employee-name [employeeId]="employeeId()"></app-employee-name>
   } @else {
-    <span>Desconocido</span>
+    <span>{{ 'shared.unknown' | translate }}</span>
   }
 }
