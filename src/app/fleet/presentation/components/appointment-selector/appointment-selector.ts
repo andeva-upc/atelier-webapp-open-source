@@ -5,11 +5,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { FleetStore } from '../../../application/fleet.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-appointment-selector',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatSelectModule, MatFormFieldModule],
+  imports: [CommonModule, FormsModule, MatSelectModule, MatFormFieldModule, TranslateModule],
   templateUrl: './appointment-selector.html',
   styleUrl: './appointment-selector.css'
 })

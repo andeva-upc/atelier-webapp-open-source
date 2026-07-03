@@ -123,6 +123,14 @@
         "title": "No hay citas programadas",
         "subtitle": "Comienza programando tu primera cita."
       }
+    },
+    "appointment-selector": {
+      "label": "Seleccionar Cita Pendiente",
+      "empty": "No se encontraron citas pendientes",
+      "no-notes": "Sin notas"
+    },
+    "mechanic-selector": {
+      "label": "Mecánico asignado"
     }
   }
 }

@@ -11,6 +11,7 @@ import { UpdateWorkOrderDetailsCommand } from '../../../domain/model/commands/up
 import { AppointmentSelectorComponent } from '../../../../fleet/presentation/components/appointment-selector/appointment-selector';
 import { CustomerNameComponent } from '../../../../core/presentation/components/customer-name/customer-name';
 import { VehiclePlateComponent } from '../../../../iot/presentation/components/vehicle-plate/vehicle-plate';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-work-order-form-view',
@@ -22,7 +23,7 @@ import { VehiclePlateComponent } from '../../../../iot/presentation/components/v
     AppointmentSelectorComponent,
     CustomerNameComponent,
     VehiclePlateComponent
-  ],
+  , TranslateModule],
   templateUrl: './work-order-form-view.html',
   styleUrl: './work-order-form-view.css'
 })

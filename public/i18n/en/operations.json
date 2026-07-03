@@ -1,1 +1,101 @@
-{}
+{
+  "operations": {
+    "work-orders-list": {
+      "title": "Work Orders",
+      "create": "Create Work Order",
+      "search": "Search work orders...",
+      "status": {
+        "PENDING": "Pending",
+        "IN_PROGRESS": "In progress",
+        "COMPLETED": "Completed",
+        "PAID": "Paid"
+      },
+      "empty": {
+        "no-orders": "No work orders found.",
+        "no-results": "No results found for the search."
+      },
+      "actions": {
+        "open-edit": "Open edit",
+        "quote": "Quote",
+        "delete-order": "Delete order",
+        "delete-task": "Delete task",
+        "add-task": "Add Task",
+        "edit": "Edit"
+      },
+      "card": {
+        "task-title": "Work Order Task",
+        "task-number": "Task #{{number}}"
+      },
+      "modals": {
+        "details-title": "Details",
+        "order": "Order:",
+        "title": "Title:",
+        "customer": "Customer:",
+        "status": "Status:",
+        "date": "Date:",
+        "task": "Task:",
+        "mechanic": "Mechanic:",
+        "mechanic-unassigned": "Unassigned",
+        "description": "Description:"
+      }
+    },
+    "work-order-form": {
+      "title-new": "Create Work Order",
+      "title-edit": "Edit Work Order",
+      "back": "Back to Orders",
+      "loading-branch": "Loading branch...",
+      "labels": {
+        "customer": "Customer",
+        "vehicle": "Vehicle",
+        "mileage": "Current Mileage",
+        "diagnosis": "Diagnosis",
+        "status": "Status"
+      },
+      "placeholders": {
+        "mileage": "current mileage",
+        "diagnosis": "diagnosis"
+      },
+      "actions": {
+        "save": "Save Changes",
+        "create": "Create Work Order"
+      }
+    },
+    "task-form": {
+      "title-new": "Create Work Order Task",
+      "title-edit": "Edit Work Order Task",
+      "back": "Back to Work Orders",
+      "total-price": "Total Price",
+      "loading": "Loading task data...",
+      "labels": {
+        "service": "Service",
+        "status": "Status",
+        "description": "Description",
+        "products": "Products & Parts",
+        "quantity": "Quantity"
+      },
+      "placeholders": {
+        "select-service": "Select service...",
+        "description": "Describe the work to be done (min. 5 characters)",
+        "quantity": "Quantity"
+      },
+      "service-dropdown": {
+        "empty": "No services available in this branch"
+      },
+      "products": {
+        "qty-price": "Quantity: {{qty}} × ${{price}}",
+        "empty": "No products added to this task yet.",
+        "add": "Add Product",
+        "stock-warning": "Insufficient stock. Available: {{stock}}"
+      },
+      "actions": {
+        "save": "Save Changes",
+        "create": "Create Task",
+        "add-product": "Add Product"
+      },
+      "modals": {
+        "products-title": "Products",
+        "total-price": "Total Price"
+      }
+    }
+  }
+}

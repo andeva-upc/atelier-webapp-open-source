@@ -4,9 +4,9 @@
      <div class="header-left">
        <a class="btn-back" [routerLink]="['/work-orders']">
          <i class="pi pi-arrow-left"></i>
-         Back to Orders
+         {{ 'operations.work-order-form.back' | translate }}
        </a>
-       <h1 class="page-title">{{ isEditMode() ? 'Editar Work Order' : 'Create Work Order' }}</h1>
+       <h1 class="page-title">{{ isEditMode() ? ('operations.work-order-form.title-edit' | translate) : ('operations.work-order-form.title-new' | translate) }}</h1>
      </div>
    </div>
 
@@ -22,7 +22,7 @@
              (appointmentSelected)="onAppointmentSelected($event)"
            ></app-appointment-selector>
          } @else {
-           <p>Cargando sucursal...</p>
+           <p>{{ 'operations.work-order-form.loading-branch' | translate }}</p>
          }
        </div>
      }
@@ -31,14 +31,14 @@
      @if (selectedCustomerId() && selectedVehicleId()) {
        <div class="form-row auto-filled-info">
          <div class="form-group flex-1">
-           <label class="form-label">Customer</label>
+           <label class="form-label">{{ 'operations.work-order-form.labels.customer' | translate }}</label>
            <div class="read-only-field">
              <i class="pi pi-user mr-2"></i>
              <app-customer-name [customerId]="selectedCustomerId()"></app-customer-name>
            </div>
          </div>
          <div class="form-group flex-1">
-           <label class="form-label">Vehicle</label>
+           <label class="form-label">{{ 'operations.work-order-form.labels.vehicle' | translate }}</label>
            <div class="read-only-field">
              <i class="pi pi-car mr-2"></i>
              <app-vehicle-plate [vehicleId]="selectedVehicleId()"></app-vehicle-plate>
@@ -49,12 +49,12 @@
 
      <!-- Fila para Kilometraje -->
      <div class="form-group">
-       <label class="form-label">Current Mileage</label>
+       <label class="form-label">{{ 'operations.work-order-form.labels.mileage' | translate }}</label>
        <div class="input-wrapper">
          <i class="pi pi-compass input-icon-mileage"></i>
          <input
            type="number"
-           placeholder="current mileage"
+           [placeholder]="'operations.work-order-form.placeholders.mileage' | translate"
            class="form-control mileage-input"
            [ngModel]="currentMileage()"
            (ngModelChange)="currentMileage.set($event)"
@@ -64,9 +64,9 @@
 
      <!-- Diagnóstico (Diagnosis) -->
      <div class="form-group">
-       <label class="form-label">Diagnosis</label>
+       <label class="form-label">{{ 'operations.work-order-form.labels.diagnosis' | translate }}</label>
        <textarea
-         placeholder="diagnosis"
+         [placeholder]="'operations.work-order-form.placeholders.diagnosis' | translate"
          class="form-control textarea-control"
          rows="4"
          [ngModel]="diagnosis()"
@@ -77,7 +77,7 @@
      <!-- Selector de Estado (Status V) - Solo en Modo Edición (Solo Lectura) -->
      @if (isEditMode()) {
        <div class="form-group">
-         <label class="form-label">Status</label>
+         <label class="form-label">{{ 'operations.work-order-form.labels.status' | translate }}</label>
          <div class="select-wrapper">
            <button
              type="button"
@@ -96,7 +96,7 @@
      <!-- Botones de Acción -->
      <div class="form-actions">
        <button class="btn btn-primary btn-save" (click)="saveWorkOrder()">
-         {{ isEditMode() ? 'Guardar Cambios' : 'Crear Work Order' }}
+         {{ isEditMode() ? ('operations.work-order-form.actions.save' | translate) : ('operations.work-order-form.actions.create' | translate) }}
        </button>
      </div>
    </div>

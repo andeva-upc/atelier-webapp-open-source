@@ -103,15 +103,14 @@ export class IamStore {
     this.iamApi.signUp(signUpCommand).subscribe({
       next: (signUpResource) => {
         console.log('Sign-up successful:', signUpResource);
-        router.navigate(['/sign-in']).then();
+        const signInCommand = new SignInCommand({ email: signUpCommand.email, password: signUpCommand.password });
+        this.signIn(signInCommand, true, router);
       },
       error: (err) => {
-        console.error('Sign-up failed:', err);
-        this.isSignedInSignal.set(false);
-        this.currentUsernameSignal.set(null);
-        this.currentUserIdSignal.set(null);
-        this.authenticatedUserSignal.set(null);
-        router.navigate(['/sign-up']).then();
+        console.error('Sign-up failed, attempting sign-in as fallback:', err);
+        // If the user already exists, attempting to sign in with the provided credentials
+        const signInCommand = new SignInCommand({ email: signUpCommand.email, password: signUpCommand.password });
+        this.signIn(signInCommand, true, router);
       }
     });
   }

@@ -1,8 +1,8 @@
 
     @if (loading()) {
-      <span>Cargando...</span>
+      <span>{{ 'shared.loading' | translate }}</span>
     } @else if (error()) {
-      <span>Desconocido</span>
+      <span>{{ 'shared.unknown' | translate }}</span>
     } @else {
       <span>{{ plate() }}</span>
     }

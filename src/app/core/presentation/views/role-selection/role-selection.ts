@@ -24,9 +24,10 @@ export class RoleSelectionComponent implements OnInit {
       if (roles !== null) {
         setTimeout(() => {
           this.isLoading.set(false);
-          // Bypass rule: If user only has 1 role, select it automatically and skip this screen
-          if (roles.length === 1) {
-            this.selectRole(roles[0]);
+          // Bypass rule disabled: Allow users to see the "Add Profile" button even if they have 1 role
+          if (roles.length === 0) {
+            // New user without any roles
+            this.router.navigate(['/onboarding']).then();
           }
         });
       }
@@ -69,6 +70,15 @@ export class RoleSelectionComponent implements OnInit {
     sessionStorage.removeItem('userId');
     // We navigate to /sign-in
     this.router.navigate(['/sign-in']);
+  }
+
+  goToOnboarding() {
+    this.router.navigate(['/onboarding']);
+  }
+
+  get canAddProfile(): boolean {
+    const roles = this.coreStore.currentRoles();
+    return roles !== null && roles.length < 3;
   }
 
   // Utilidad para limpiar el nombre del rol (ej: ROLE_CUSTOMER -> Customer)

@@ -5,11 +5,12 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { TranslatePipe } from '@ngx-translate/core';
 import { IotStore } from '../../../application/iot.store';
 import { RegisterVehicleCommand } from '../../../domain/model/commands/register-vehicle.command';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vehicle-create',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, TranslatePipe, TranslateModule],
   templateUrl: './vehicle-create.html',
   styleUrl: './vehicle-create.css',
 })

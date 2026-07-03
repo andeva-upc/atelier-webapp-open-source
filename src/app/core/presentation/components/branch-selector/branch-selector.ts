@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { CoreStore } from '../../../application/core.store';
 import { BranchResource } from '../../../infrastructure/responses/branch-response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-core-branch-selector',
   standalone: true,
-  imports: [CommonModule, MatMenuModule],
+  imports: [CommonModule, MatMenuModule, TranslateModule],
   templateUrl: './branch-selector.html',
   styleUrl: './branch-selector.css'
 })

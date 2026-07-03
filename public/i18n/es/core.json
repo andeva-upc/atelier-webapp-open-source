@@ -12,6 +12,133 @@
       "CUSTOMER": "Cliente",
       "OWNER": "Propietario",
       "EMPLOYEE": "Mecánico"
+    },
+    "add_profile": "Añadir Perfil"
+  },
+  "shared": {
+    "loading": "Cargando...",
+    "unknown": "Desconocido"
+  },
+  "onboarding": {
+    "welcome": "Bienvenido a",
+    "subtitle": "Para comenzar, ¿cómo usarás la plataforma?",
+    "customer": {
+      "title": "Cliente",
+      "desc": "Deseo agendar citas y ver el estado de mis vehículos."
+    },
+    "employee": {
+      "title": "Empleado",
+      "desc": "Trabajo en un taller y necesito gestionar reparaciones e inventario."
+    },
+    "owner": {
+      "title": "Propietario",
+      "desc": "Soy dueño de un taller y quiero registrar mi negocio."
+    },
+    "back_to_selection": "Volver a selección"
+  },
+  "customer-onboarding": {
+    "title": "Registro de Cliente",
+    "subtitle": "Ingresa tus datos para completar tu perfil",
+    "is_corporate": "Soy una empresa",
+    "firstname": "Nombres",
+    "lastname": "Apellidos",
+    "business_name": "Razón Social",
+    "document_type": "Tipo de Documento",
+    "document_number": "Número de Documento",
+    "phone": "Teléfono",
+    "required": "Requerido",
+    "submit_btn": "Crear Perfil"
+  },
+  "employee-onboarding": {
+    "title": "Registro de Empleado",
+    "subtitle": "Ingresa tus datos para unirte a un taller",
+    "firstname": "Nombres",
+    "lastname": "Apellidos",
+    "document_type": "Tipo de Documento",
+    "document_number": "Número de Documento",
+    "phone": "Teléfono",
+    "required": "Requerido",
+    "submit_btn": "Crear Perfil y Unirse"
+  },
+  "owner-wizard": {
+    "title": "Registro de Propietario",
+    "subtitle": "Configura tu taller y adquiere tu plan en pocos pasos",
+    "step_personal": "Datos Personales",
+    "step_workshop": "Taller",
+    "step_branch": "Sucursal Inicial",
+    "step_plan": "Plan",
+    "step_payment": "Pago",
+    "personal": {
+      "firstname": "Nombres",
+      "lastname": "Apellidos",
+      "document_type": "Tipo de Documento",
+      "document_number": "Número de Documento",
+      "phone": "Teléfono"
+    },
+    "workshop": {
+      "business_name": "Razón Social",
+      "brand_name": "Nombre Comercial",
+      "brand_hint": "Ej: Taller Mecánico Los Hermanos",
+      "tax_id": "RUC"
+    },
+    "branch": {
+      "name": "Nombre de la Sucursal",
+      "name_hint": "Ej: Sede Principal Lima",
+      "address": "Dirección",
+      "code": "Código de Sucursal",
+      "phone": "Teléfono de Sucursal"
+    },
+    "payment": {
+      "loading": "Creando tu perfil y configurando tu entorno..."
+    },
+    "actions": {
+      "next": "Siguiente",
+      "back": "Atrás",
+      "choose_plan": "Elegir Plan",
+      "back_to_plans": "Atrás a Planes"
+    }
+  },
+  "subscription-plans": {
+    "title": "Seleccione el plan para",
+    "billing_monthly": "Mensual",
+    "billing_annual": "Anual",
+    "discount_badge": "Ahorra 17%",
+    "plan_lite_desc": "Conoce y explora el uso de atelier",
+    "plan_pro_desc": "Experimenta el poder de infinitas posibilidades",
+    "plan_max_desc": "Desbloquea el máximo rendimiento de atelier",
+    "price_currency": "S/.",
+    "price_period": "/mes",
+    "select_btn": "Seleccionar"
+  },
+  "subscription-payment": {
+    "billing_title": "Dirección de Facturación",
+    "payment_title": "Pago",
+    "summary_title": "Resumen del pedido",
+    "billing": {
+      "firstname": "Nombre",
+      "lastname": "Apellidos",
+      "country": "País de residencia",
+      "phone": "Número Telefónico",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "zip_code": "Codigo Postal"
+    },
+    "payment": {
+      "card_name": "Nombre en la Tarjeta",
+      "card_number": "Número de Tarjeta",
+      "card_number_ph": "0000 0000 0000 0000",
+      "expiration": "Fecha de Expiración",
+      "expiration_ph": "MM/YY",
+      "cvc": "Codigo CVC",
+      "cvc_ph": "CVC",
+      "submit_btn": "Enviar Pago"
+    },
+    "summary": {
+      "plan": "Plan",
+      "monthly": "Mensualmente",
+      "taxes": "Impuestos",
+      "total": "Total",
+      "currency_symbol": "S/."
     }
   },
   "mobile-branch-menu-item": {

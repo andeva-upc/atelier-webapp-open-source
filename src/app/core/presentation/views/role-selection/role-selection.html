@@ -23,6 +23,16 @@
             <span class="role-name">{{ 'role-selection.roles.' + role | translate }}</span>
           </div>
         }
+        
+        <!-- Add New Profile Option -->
+        @if (canAddProfile) {
+          <div class="profile-card add-profile-card" (click)="goToOnboarding()">
+            <div class="avatar-container add-icon-container">
+              <i class="pi pi-plus role-icon"></i>
+            </div>
+            <span class="role-name">{{ 'role-selection.add_profile' | translate }}</span>
+          </div>
+        }
       </div>
     }
   }

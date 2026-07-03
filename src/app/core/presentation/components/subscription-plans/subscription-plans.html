@@ -1,0 +1,48 @@
+<div class="plans-container">
+  <div class="plans-header">
+    <h2>{{ 'subscription-plans.title' | translate }} <span class="brand-text">atelier.</span></h2>
+    <div class="billing-toggle">
+      <button class="toggle-btn active">{{ 'subscription-plans.billing_monthly' | translate }}</button>
+      <button class="toggle-btn inactive">{{ 'subscription-plans.billing_annual' | translate }} <span class="discount-badge">{{ 'subscription-plans.discount_badge' | translate }}</span></button>
+    </div>
+  </div>
+
+  <div class="plans-grid">
+    @for (plan of plans; track plan.id) {
+      <div class="plan-card" [class.recommended]="plan.recommended">
+        <div class="plan-header">
+          <h3>{{ plan.name }}</h3>
+          <p class="plan-desc" *ngIf="plan.name === 'Lite'">{{ 'subscription-plans.plan_lite_desc' | translate }}</p>
+          <p class="plan-desc" *ngIf="plan.name === 'Pro'">{{ 'subscription-plans.plan_pro_desc' | translate }}</p>
+          <p class="plan-desc" *ngIf="plan.name === 'Max'">{{ 'subscription-plans.plan_max_desc' | translate }}</p>
+          <div class="plan-price">
+            <span class="currency">{{ 'subscription-plans.price_currency' | translate }}</span>
+            <span class="amount">{{ plan.price }}</span>
+            <span class="period">{{ 'subscription-plans.price_period' | translate }}</span>
+          </div>
+        </div>
+
+        <div class="plan-body">
+          <ul class="feature-list">
+            @for (feature of plan.features; track feature) {
+              <li>
+                <div class="check-icon">
+                  <i class="pi pi-check"></i>
+                </div>
+                <span>{{ feature }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div class="plan-footer">
+          <button mat-flat-button [color]="plan.recommended ? 'primary' : ''" 
+                  class="select-btn" [class.outline-btn]="!plan.recommended"
+                  (click)="onSelectPlan(plan)">
+            {{ 'subscription-plans.select_btn' | translate }} {{ plan.name }}
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

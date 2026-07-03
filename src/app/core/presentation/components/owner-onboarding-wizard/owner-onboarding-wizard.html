@@ -1,0 +1,149 @@
+<mat-card class="wizard-card fade-in">
+  <mat-card-header>
+    <mat-card-title>{{ 'owner-wizard.title' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'owner-wizard.subtitle' | translate }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-stepper [linear]="true" #stepper class="custom-stepper">
+      <!-- Step 1: Owner Info -->
+      <mat-step [stepControl]="ownerForm">
+        <form [formGroup]="ownerForm" class="step-form">
+          <ng-template matStepLabel>{{ 'owner-wizard.step_personal' | translate }}</ng-template>
+          
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'owner-wizard.personal.firstname' | translate }}</mat-label>
+              <input matInput formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ 'owner-wizard.personal.lastname' | translate }}</mat-label>
+              <input matInput formControlName="lastName">
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'owner-wizard.personal.document_type' | translate }}</mat-label>
+              <mat-select formControlName="documentType">
+                <mat-option value="DNI">DNI</mat-option>
+                <mat-option value="CE">CE</mat-option>
+                <mat-option value="PASSPORT">Pasaporte</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'owner-wizard.personal.document_number' | translate }}</mat-label>
+              <input matInput formControlName="documentNumber">
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'owner-wizard.personal.phone' | translate }}</mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <div class="step-actions">
+            <button mat-flat-button color="primary" matStepperNext [disabled]="ownerForm.invalid">{{ 'owner-wizard.actions.next' | translate }}</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 2: Workshop Info -->
+      <mat-step [stepControl]="workshopForm">
+        <form [formGroup]="workshopForm" class="step-form">
+          <ng-template matStepLabel>{{ 'owner-wizard.step_workshop' | translate }}</ng-template>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'owner-wizard.workshop.business_name' | translate }}</mat-label>
+            <input matInput formControlName="businessName">
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'owner-wizard.workshop.brand_name' | translate }}</mat-label>
+            <input matInput formControlName="brandName">
+            <mat-hint>{{ 'owner-wizard.workshop.brand_hint' | translate }}</mat-hint>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'owner-wizard.workshop.tax_id' | translate }}</mat-label>
+            <input matInput formControlName="taxId">
+          </mat-form-field>
+
+          <div class="step-actions">
+            <button mat-button matStepperPrevious>{{ 'owner-wizard.actions.back' | translate }}</button>
+            <button mat-flat-button color="primary" matStepperNext [disabled]="workshopForm.invalid">{{ 'owner-wizard.actions.next' | translate }}</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 3: Branch Info -->
+      <mat-step [stepControl]="branchForm">
+        <form [formGroup]="branchForm" class="step-form">
+          <ng-template matStepLabel>{{ 'owner-wizard.step_branch' | translate }}</ng-template>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'owner-wizard.branch.name' | translate }}</mat-label>
+            <input matInput formControlName="name">
+            <mat-hint>{{ 'owner-wizard.branch.name_hint' | translate }}</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'owner-wizard.branch.address' | translate }}</mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'owner-wizard.branch.code' | translate }}</mat-label>
+              <input matInput formControlName="code">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'owner-wizard.branch.phone' | translate }}</mat-label>
+              <input matInput formControlName="phone">
+            </mat-form-field>
+          </div>
+
+          <div class="step-actions">
+            <button mat-button matStepperPrevious>{{ 'owner-wizard.actions.back' | translate }}</button>
+            <button mat-flat-button color="primary" matStepperNext [disabled]="branchForm.invalid">{{ 'owner-wizard.actions.choose_plan' | translate }}</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <!-- Step 4: Subscription Plan -->
+      <mat-step>
+        <ng-template matStepLabel>{{ 'owner-wizard.step_plan' | translate }}</ng-template>
+        <div class="step-content wide-step">
+          <app-subscription-plans (planSelected)="onPlanSelected($event, stepper)"></app-subscription-plans>
+          <div class="step-actions mt-4">
+            <button mat-button matStepperPrevious>{{ 'owner-wizard.actions.back' | translate }}</button>
+          </div>
+        </div>
+      </mat-step>
+
+      <!-- Step 5: Payment -->
+      <mat-step>
+        <ng-template matStepLabel>{{ 'owner-wizard.step_payment' | translate }}</ng-template>
+        <div class="step-content wide-step">
+          @if (selectedPlan) {
+            <app-subscription-payment 
+              [selectedPlan]="selectedPlan"
+              (paymentSubmit)="onPaymentSubmit($event)">
+            </app-subscription-payment>
+          }
+          
+          @if (isSubmitting) {
+            <div class="loading-overlay">
+              <div class="spinner"></div>
+              <p>{{ 'owner-wizard.payment.loading' | translate }}</p>
+            </div>
+          }
+          <div class="step-actions mt-4">
+            <button mat-button matStepperPrevious [disabled]="isSubmitting">{{ 'owner-wizard.actions.back_to_plans' | translate }}</button>
+          </div>
+        </div>
+      </mat-step>
+
+    </mat-stepper>
+  </mat-card-content>
+</mat-card>

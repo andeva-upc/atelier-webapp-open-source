@@ -1,0 +1,139 @@
+.payment-container {
+  display: flex;
+  gap: 2rem;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  align-items: flex-start;
+  font-family: 'Inter', sans-serif;
+}
+
+.forms-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+mat-card-header {
+  margin-bottom: 1.5rem;
+}
+
+mat-card-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+}
+
+.step-number {
+  color: #007bff;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.onboarding-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  flex: 1;
+}
+
+/* Material Form Overrides */
+::ng-deep .onboarding-form .mdc-text-field--outlined {
+  --mdc-outlined-text-field-container-shape: 8px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1.5rem 0 !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  margin-top: 1rem;
+}
+
+.summary-section {
+  width: 320px;
+  position: sticky;
+  top: 2rem;
+}
+
+.summary-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.summary-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #007bff;
+  margin-bottom: 1.5rem;
+}
+
+.plan-name {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 1.5rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+.summary-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 1rem 0;
+}
+
+.summary-divider.thick {
+  height: 2px;
+}
+
+.total-row {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .payment-container {
+    flex-direction: column;
+  }
+  .summary-section {
+    width: 100%;
+    position: static;
+  }
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

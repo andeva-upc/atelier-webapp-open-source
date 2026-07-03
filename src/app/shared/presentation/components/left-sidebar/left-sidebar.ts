@@ -3,10 +3,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { LayoutService } from '../layout/layout.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-left-sidebar',
-  imports: [RouterLink, RouterLinkActive, TranslatePipe, CommonModule],
+  imports: [RouterLink, RouterLinkActive, TranslatePipe, CommonModule, TranslateModule],
   templateUrl: './left-sidebar.html',
   styleUrl: './left-sidebar.css',
 })

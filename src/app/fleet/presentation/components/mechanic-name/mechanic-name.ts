@@ -2,11 +2,12 @@ import { Component, Input, OnChanges, SimpleChanges, signal, inject } from '@ang
 import { CommonModule } from '@angular/common';
 import { FleetStore } from '../../../application/fleet.store';
 import { EmployeeNameComponent } from '../../../../core/presentation/components/employee-name/employee-name';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-mechanic-name',
   standalone: true,
-  imports: [CommonModule, EmployeeNameComponent],
+  imports: [CommonModule, EmployeeNameComponent, TranslateModule],
   templateUrl: './mechanic-name.html'
 })
 export class MechanicNameComponent implements OnChanges {

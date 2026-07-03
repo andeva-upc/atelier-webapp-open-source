@@ -84,6 +84,14 @@
   font-size: 1.2rem;
 }
 
+.password-toggle-btn {
+  color: #4b5563 !important;
+}
+
+.password-toggle-btn i {
+  font-size: 1.2rem;
+}
+
 .full-width {
   width: 100%;
 }

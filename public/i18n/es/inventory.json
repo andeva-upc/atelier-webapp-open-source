@@ -92,6 +92,10 @@
       "PART": "Repuestos",
       "MOTOR": "Motor",
       "OTHER": "Otros"
+    },
+    "product-selector": {
+      "label": "Producto",
+      "stock": "Stock"
     }
   }
 }

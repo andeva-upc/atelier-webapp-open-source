@@ -1,0 +1,67 @@
+<div class="onboarding-container">
+  @if (selectedProfile() === null) {
+    <div class="header-section fade-in">
+      <h1 class="title">{{ 'onboarding.welcome' | translate }} <span class="brand-text">atelier.</span></h1>
+      <p class="subtitle">{{ 'onboarding.subtitle' | translate }}</p>
+    </div>
+
+    <div class="cards-grid fade-in">
+      <!-- Customer Card -->
+      @if (!hasRole('CUSTOMER')) {
+        <mat-card class="profile-card" (click)="selectProfile('customer')">
+          <mat-card-content class="card-content">
+            <div class="icon-circle">
+              <i class="pi pi-user"></i>
+            </div>
+            <h3>{{ 'onboarding.customer.title' | translate }}</h3>
+            <p>{{ 'onboarding.customer.desc' | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <!-- Employee Card -->
+      @if (!hasRole('EMPLOYEE')) {
+        <mat-card class="profile-card" (click)="selectProfile('employee')">
+          <mat-card-content class="card-content">
+            <div class="icon-circle">
+              <i class="pi pi-id-card"></i>
+            </div>
+            <h3>{{ 'onboarding.employee.title' | translate }}</h3>
+            <p>{{ 'onboarding.employee.desc' | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <!-- Owner Card -->
+      @if (!hasRole('OWNER')) {
+        <mat-card class="profile-card" (click)="selectProfile('owner')">
+          <mat-card-content class="card-content">
+            <div class="icon-circle">
+              <i class="pi pi-shield"></i>
+            </div>
+            <h3>{{ 'onboarding.owner.title' | translate }}</h3>
+            <p>{{ 'onboarding.owner.desc' | translate }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  } @else {
+    <div class="form-section slide-up">
+      <button mat-button color="primary" class="back-btn" (click)="cancelSelection()">
+        <i class="pi pi-arrow-left"></i> {{ 'onboarding.back_to_selection' | translate }}
+      </button>
+
+      @switch (selectedProfile()) {
+        @case ('customer') {
+          <app-customer-onboarding-form></app-customer-onboarding-form>
+        }
+        @case ('employee') {
+          <app-employee-onboarding-form></app-employee-onboarding-form>
+        }
+        @case ('owner') {
+          <app-owner-onboarding-wizard></app-owner-onboarding-wizard>
+        }
+      }
+    </div>
+  }
+</div>

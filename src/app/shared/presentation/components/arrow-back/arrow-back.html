@@ -1,9 +1,9 @@
 @if (isExternalLink) {
-  <a mat-icon-button [href]="link" class="arrow-back-btn" aria-label="Go back">
+  <a mat-icon-button [href]="link" class="arrow-back-btn" [attr.aria-label]="'shared.go_back' | translate">
     <i class="pi pi-arrow-left"></i>
   </a>
 } @else {
-  <a mat-icon-button [routerLink]="link" class="arrow-back-btn" aria-label="Go back">
+  <a mat-icon-button [routerLink]="link" class="arrow-back-btn" [attr.aria-label]="'shared.go_back' | translate">
     <i class="pi pi-arrow-left"></i>
   </a>
 }

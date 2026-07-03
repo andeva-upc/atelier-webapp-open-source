@@ -1,11 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Layout } from './shared/presentation/components/layout/layout';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Layout],
+  imports: [Layout, TranslateModule],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -1,0 +1,53 @@
+<mat-card class="form-card fade-in">
+  <mat-card-header>
+    <mat-card-title>{{ 'employee-onboarding.title' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'employee-onboarding.subtitle' | translate }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="onboarding-form">
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'employee-onboarding.firstname' | translate }}</mat-label>
+          <input matInput formControlName="firstName">
+          <mat-error *ngIf="employeeForm.get('firstName')?.hasError('required')">{{ 'employee-onboarding.required' | translate }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'employee-onboarding.lastname' | translate }}</mat-label>
+          <input matInput formControlName="lastName">
+          <mat-error *ngIf="employeeForm.get('lastName')?.hasError('required')">{{ 'employee-onboarding.required' | translate }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>{{ 'employee-onboarding.document_type' | translate }}</mat-label>
+          <mat-select formControlName="documentType">
+            <mat-option value="DNI">DNI</mat-option>
+            <mat-option value="CE">CE</mat-option>
+            <mat-option value="PASSPORT">Pasaporte</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>{{ 'employee-onboarding.document_number' | translate }}</mat-label>
+          <input matInput formControlName="documentNumber">
+          <mat-error *ngIf="employeeForm.get('documentNumber')?.hasError('required')">{{ 'employee-onboarding.required' | translate }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'employee-onboarding.phone' | translate }}</mat-label>
+        <input matInput formControlName="phone">
+        <mat-error *ngIf="employeeForm.get('phone')?.hasError('required')">{{ 'employee-onboarding.required' | translate }}</mat-error>
+      </mat-form-field>
+
+      <div class="action-buttons">
+        <button mat-flat-button color="primary" type="submit" class="submit-btn" [disabled]="employeeForm.invalid">
+          {{ 'employee-onboarding.submit_btn' | translate }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

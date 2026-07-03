@@ -1,0 +1,121 @@
+<div class="payment-container fade-in">
+  <!-- Left Side: Forms -->
+  <div class="forms-section">
+    <!-- Billing Address -->
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title><span class="step-number">1.</span> {{ 'subscription-payment.billing_title' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="billingForm" class="onboarding-form">
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'subscription-payment.billing.firstname' | translate }}</mat-label>
+              <input matInput formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'subscription-payment.billing.lastname' | translate }}</mat-label>
+              <input matInput formControlName="lastName">
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'subscription-payment.billing.country' | translate }}</mat-label>
+            <mat-select formControlName="country">
+              <mat-option value="Perú">Perú</mat-option>
+              <mat-option value="Colombia">Colombia</mat-option>
+              <mat-option value="Chile">Chile</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'subscription-payment.billing.phone' | translate }}</mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'subscription-payment.billing.address' | translate }}</mat-label>
+            <input matInput formControlName="address">
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'subscription-payment.billing.city' | translate }}</mat-label>
+              <input matInput formControlName="city">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'subscription-payment.billing.zip_code' | translate }}</mat-label>
+              <input matInput formControlName="zipCode">
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Payment Details -->
+    <mat-card class="form-card">
+      <mat-card-header>
+        <mat-card-title><span class="step-number">2.</span> {{ 'subscription-payment.payment_title' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="onboarding-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'subscription-payment.payment.card_name' | translate }}</mat-label>
+            <input matInput formControlName="cardName">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'subscription-payment.payment.card_number' | translate }}</mat-label>
+            <input matInput [placeholder]="'subscription-payment.payment.card_number_ph' | translate" formControlName="cardNumber">
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'subscription-payment.payment.expiration' | translate }}</mat-label>
+              <input matInput [placeholder]="'subscription-payment.payment.expiration_ph' | translate" formControlName="expirationDate">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>{{ 'subscription-payment.payment.cvc' | translate }}</mat-label>
+              <input matInput [placeholder]="'subscription-payment.payment.cvc_ph' | translate" formControlName="cvc">
+            </mat-form-field>
+          </div>
+
+          <button mat-flat-button color="primary" type="submit" class="submit-btn" [disabled]="billingForm.invalid || paymentForm.invalid">
+            {{ 'subscription-payment.payment.submit_btn' | translate }}
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Right Side: Order Summary -->
+  <div class="summary-section">
+    <mat-card class="summary-card">
+      <mat-card-header>
+        <mat-card-title class="summary-title">{{ 'subscription-payment.summary_title' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h3 class="plan-name">{{ 'subscription-payment.summary.plan' | translate }} {{ selectedPlan.name }}</h3>
+        
+        <div class="summary-row">
+          <span>{{ 'subscription-payment.summary.monthly' | translate }}</span>
+          <span>{{ 'subscription-payment.summary.currency_symbol' | translate }}{{ selectedPlan.price }}</span>
+        </div>
+        
+        <div class="summary-divider"></div>
+        
+        <div class="summary-row">
+          <span>{{ 'subscription-payment.summary.taxes' | translate }}</span>
+          <span>{{ 'subscription-payment.summary.currency_symbol' | translate }}0</span>
+        </div>
+        
+        <div class="summary-divider thick"></div>
+        
+        <div class="summary-row total-row">
+          <span>{{ 'subscription-payment.summary.total' | translate }}</span>
+          <span>{{ 'subscription-payment.summary.currency_symbol' | translate }}{{ selectedPlan.price }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

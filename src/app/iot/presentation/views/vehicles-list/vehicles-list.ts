@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IotStore } from '../../../application/iot.store';
 import { VehicleResource } from '../../../infrastructure/responses/vehicle.response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vehicles-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, FormsModule, RouterLink, TranslatePipe, TranslateModule],
   templateUrl: './vehicles-list.html',
   styleUrl: './vehicles-list.css',
 })

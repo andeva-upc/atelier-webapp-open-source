@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FleetStore } from '../../../application/fleet.store';
 import { environment } from '../../../../../environments/environment';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-fleet-branch-indicator',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './branch-indicator.html',
   styleUrl: './branch-indicator.css'
 })

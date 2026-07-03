@@ -1,0 +1,69 @@
+<mat-card class="form-card fade-in">
+  <mat-card-header>
+    <mat-card-title>{{ 'customer-onboarding.title' | translate }}</mat-card-title>
+    <mat-card-subtitle>{{ 'customer-onboarding.subtitle' | translate }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="toggle-container">
+      <mat-slide-toggle color="primary" [checked]="isCorporate" (change)="toggleCorporate()">
+        {{ 'customer-onboarding.is_corporate' | translate }}
+      </mat-slide-toggle>
+    </div>
+
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="onboarding-form">
+      
+      @if (!isCorporate) {
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'customer-onboarding.firstname' | translate }}</mat-label>
+            <input matInput formControlName="firstname">
+            <mat-error *ngIf="customerForm.get('firstname')?.hasError('required')">{{ 'customer-onboarding.required' | translate }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>{{ 'customer-onboarding.lastname' | translate }}</mat-label>
+            <input matInput formControlName="lastname">
+            <mat-error *ngIf="customerForm.get('lastname')?.hasError('required')">{{ 'customer-onboarding.required' | translate }}</mat-error>
+          </mat-form-field>
+        </div>
+      } @else {
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ 'customer-onboarding.business_name' | translate }}</mat-label>
+          <input matInput formControlName="businessName">
+          <mat-error *ngIf="customerForm.get('businessName')?.hasError('required')">{{ 'customer-onboarding.required' | translate }}</mat-error>
+        </mat-form-field>
+      }
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>{{ 'customer-onboarding.document_type' | translate }}</mat-label>
+          <mat-select formControlName="documentType">
+            <mat-option value="DNI" *ngIf="!isCorporate">DNI</mat-option>
+            <mat-option value="CE" *ngIf="!isCorporate">CE</mat-option>
+            <mat-option value="PASSPORT" *ngIf="!isCorporate">Pasaporte</mat-option>
+            <mat-option value="RUC" *ngIf="isCorporate">RUC</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>{{ 'customer-onboarding.document_number' | translate }}</mat-label>
+          <input matInput formControlName="documentNumber">
+          <mat-error *ngIf="customerForm.get('documentNumber')?.hasError('required')">{{ 'customer-onboarding.required' | translate }}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'customer-onboarding.phone' | translate }}</mat-label>
+        <input matInput formControlName="phone">
+        <mat-error *ngIf="customerForm.get('phone')?.hasError('required')">{{ 'customer-onboarding.required' | translate }}</mat-error>
+      </mat-form-field>
+
+      <div class="action-buttons">
+        <button mat-flat-button color="primary" type="submit" class="submit-btn" [disabled]="customerForm.invalid">
+          {{ 'customer-onboarding.submit_btn' | translate }}
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

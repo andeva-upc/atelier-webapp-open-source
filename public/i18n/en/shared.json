@@ -24,6 +24,7 @@
   "modal": {
     "close": "Close modal"
   },
+  "go_back": "Go back",
   "home-dashboard": {
     "title": "Welcome to your Dashboard",
     "customer_subtitle": "Your Customer profile is active",
