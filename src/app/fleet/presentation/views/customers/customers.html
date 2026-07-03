@@ -193,9 +193,10 @@
       </div>
 
       <div class="modal-footer">
-        <button class="btn-cancel" (click)="closeAddModal()">{{ 'fleet.customers.addModal.cancel' | translate }}</button>
+        <button type="button" class="btn-secondary-modal" (click)="closeAddModal()">{{ 'fleet.customers.addModal.cancel' | translate }}</button>
         <button 
-          class="btn-submit" 
+          type="button"
+          class="btn-primary-modal" 
           [disabled]="!searchedCustomer() && !showCreateProfileForm()" 
           (click)="showCreateProfileForm() ? onCreateAndRegisterCustomer() : onRegisterCustomer()"
         >
