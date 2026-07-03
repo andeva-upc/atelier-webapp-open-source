@@ -26,6 +26,7 @@ export class InventoryListComponent implements OnInit {
   // Filters state
   searchQuery = signal<string>('');
   selectedCategory = signal<string>('');
+  sortBy = signal<string>('');
 
   // Computed categories from the store
   categories = computed(() => {
@@ -34,16 +35,34 @@ export class InventoryListComponent implements OnInit {
     return [...new Set(cats)];
   });
 
-  // Filtered products
+  // Filtered and sorted products
   products = computed(() => {
     const allProducts = this.store.branchProducts();
     const query = this.searchQuery().toLowerCase();
     const category = this.selectedCategory();
+    const sort = this.sortBy();
 
-    return allProducts.filter(p => {
+    const filtered = allProducts.filter(p => {
       const matchesSearch = p.name.toLowerCase().includes(query) || p.sku.toLowerCase().includes(query);
       const matchesCategory = category ? p.category === category : true;
       return matchesSearch && matchesCategory;
+    });
+
+    if (!sort) return filtered;
+
+    return [...filtered].sort((a, b) => {
+      switch (sort) {
+        case 'priceAsc':
+          return a.salePrice - b.salePrice;
+        case 'priceDesc':
+          return b.salePrice - a.salePrice;
+        case 'stockAsc':
+          return a.currentStock - b.currentStock;
+        case 'stockDesc':
+          return b.currentStock - a.currentStock;
+        default:
+          return 0;
+      }
     });
   });
 

@@ -107,6 +107,7 @@
       "scheduleBtn": "Schedule Appointment",
       "newTitle": "Schedule Appointment",
       "editTitle": "Edit Appointment",
+      "backToList": "Back to Appointments",
       "loading": "Loading appointments...",
       "status": {
         "PENDING": "Pending",

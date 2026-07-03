@@ -18,6 +18,14 @@
         }
       </select>
 
+      <select [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)" class="sort-select">
+        <option value="">{{ 'inventory.sorting.default' | translate }}</option>
+        <option value="priceAsc">{{ 'inventory.sorting.priceAsc' | translate }}</option>
+        <option value="priceDesc">{{ 'inventory.sorting.priceDesc' | translate }}</option>
+        <option value="stockAsc">{{ 'inventory.sorting.stockAsc' | translate }}</option>
+        <option value="stockDesc">{{ 'inventory.sorting.stockDesc' | translate }}</option>
+      </select>
+
       <button class="add-product-btn" (click)="onAddProduct()">
         <i class="fas fa-plus"></i>
         {{ 'inventory.addProduct' | translate }}

@@ -1,7 +1,8 @@
 <div class="form-container">
   <div class="form-header">
-    <button type="button" class="back-btn" (click)="onCancel()">
+    <button type="button" class="back-btn-text" (click)="onCancel()">
       <i class="fas fa-arrow-left"></i>
+      <span>{{ 'fleet.appointments.backToList' | translate }}</span>
     </button>
     <h2>{{ isEditMode() ? ('fleet.appointments.editTitle' | translate) : ('fleet.appointments.newTitle' | translate) }}</h2>
   </div>

@@ -96,6 +96,13 @@
     "product-selector": {
       "label": "Producto",
       "stock": "Stock"
+    },
+    "sorting": {
+      "default": "Orden predeterminado",
+      "priceAsc": "Precio: de menor a mayor",
+      "priceDesc": "Precio: de mayor a menor",
+      "stockAsc": "Stock: de menor a mayor",
+      "stockDesc": "Stock: de mayor a menor"
     }
   }
 }

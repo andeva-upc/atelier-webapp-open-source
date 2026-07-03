@@ -107,6 +107,7 @@
       "scheduleBtn": "Agendar Cita",
       "newTitle": "Agendar Cita",
       "editTitle": "Editar Cita",
+      "backToList": "Volver a Citas",
       "loading": "Cargando citas...",
       "status": {
         "PENDING": "Pendiente",

@@ -96,6 +96,13 @@
     "product-selector": {
       "label": "Product",
       "stock": "Stock"
+    },
+    "sorting": {
+      "default": "Default sorting",
+      "priceAsc": "Price: low to high",
+      "priceDesc": "Price: high to low",
+      "stockAsc": "Stock: low to high",
+      "stockDesc": "Stock: high to low"
     }
   }
 }
