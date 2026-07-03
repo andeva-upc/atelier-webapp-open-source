@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 export interface SubscriptionPlan {
   id: string;
@@ -15,7 +16,7 @@ export interface SubscriptionPlan {
 @Component({
   selector: 'app-subscription-plans',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, TranslateModule],
   templateUrl: './subscription-plans.html',
   styleUrls: ['./subscription-plans.css']
 })

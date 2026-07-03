@@ -15,6 +15,7 @@ import { UpdateProductQuantityInTaskCommand } from '../../../domain/model/comman
 
 import { MechanicSelectorComponent } from '../../../../fleet/presentation/components/mechanic-selector/mechanic-selector';
 import { ProductSelectorComponent } from '../../../../inventory/presentation/components/product-selector/product-selector';
+import { TranslateModule } from '@ngx-translate/core';
 
 interface AddedProduct {
   id: string;
@@ -28,7 +29,7 @@ interface AddedProduct {
 @Component({
   selector: 'app-task-form-view',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, MechanicSelectorComponent, ProductSelectorComponent],
+  imports: [CommonModule, FormsModule, RouterModule, MechanicSelectorComponent, ProductSelectorComponent, TranslateModule],
   templateUrl: './task-form-view.html',
   styleUrl: './task-form-view.css'
 })

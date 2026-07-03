@@ -4,11 +4,12 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { IotStore } from '../../../application/iot.store';
 import { VehicleResource } from '../../../infrastructure/responses/vehicle.response';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vehicle-dtc-alerts',
   standalone: true,
-  imports: [CommonModule, RouterLink, TranslatePipe],
+  imports: [CommonModule, RouterLink, TranslatePipe, TranslateModule],
   templateUrl: './vehicle-dtc-alerts.html',
   styleUrl: './vehicle-dtc-alerts.css',
 })

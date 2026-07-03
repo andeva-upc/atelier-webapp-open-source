@@ -4,11 +4,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { InventoryStore } from '../../../application/inventory.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-selector',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule, TranslateModule],
   templateUrl: './product-selector.html'
 })
 export class ProductSelectorComponent implements OnInit {

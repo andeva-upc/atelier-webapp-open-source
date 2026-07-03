@@ -5,11 +5,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { FleetStore } from '../../../application/fleet.store';
 import { CustomerNameComponent } from '../../../../core/presentation/components/customer-name/customer-name';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-customer-selector',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule, CustomerNameComponent],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule, CustomerNameComponent, TranslateModule],
   templateUrl: './customer-selector.html'
 })
 export class CustomerSelectorComponent implements OnInit {

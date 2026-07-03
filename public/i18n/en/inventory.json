@@ -90,8 +90,12 @@
     "categories": {
       "FLUID": "Fluids/Oils",
       "PART": "Spare Parts",
-      "MOTOR": "Motor",
+      "MOTOR": "Engine",
       "OTHER": "Other"
+    },
+    "product-selector": {
+      "label": "Product",
+      "stock": "Stock"
     }
   }
 }

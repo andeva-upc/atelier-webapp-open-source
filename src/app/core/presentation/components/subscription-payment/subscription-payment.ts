@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { SubscriptionPlan } from '../subscription-plans/subscription-plans';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-subscription-payment',
@@ -19,7 +20,7 @@ import { SubscriptionPlan } from '../subscription-plans/subscription-plans';
     MatInputModule,
     MatSelectModule,
     MatButtonModule
-  ],
+  , TranslateModule],
   templateUrl: './subscription-payment.html',
   styleUrls: ['./subscription-payment.css']
 })

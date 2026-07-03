@@ -5,11 +5,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { FleetStore } from '../../../application/fleet.store';
 import { EmployeeNameComponent } from '../../../../core/presentation/components/employee-name/employee-name';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-mechanic-selector',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule, EmployeeNameComponent],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule, EmployeeNameComponent, TranslateModule],
   templateUrl: './mechanic-selector.html'
 })
 export class MechanicSelectorComponent implements OnInit {

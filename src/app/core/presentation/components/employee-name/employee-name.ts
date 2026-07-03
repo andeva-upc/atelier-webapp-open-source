@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CoreStore } from '../../../application/core.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-employee-name',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './employee-name.html'
 })
 export class EmployeeNameComponent implements OnInit, OnChanges {

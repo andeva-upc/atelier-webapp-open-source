@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-customer-onboarding-form',
@@ -24,7 +25,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatButtonModule,
     MatSelectModule,
     MatSlideToggleModule
-  ],
+  , TranslateModule],
   templateUrl: './customer-onboarding-form.html',
   styleUrls: ['./customer-onboarding-form.css']
 })

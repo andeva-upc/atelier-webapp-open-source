@@ -4,11 +4,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { IotStore } from '../../../application/iot.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vehicle-selector',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, FormsModule, TranslateModule],
   templateUrl: './vehicle-selector.html'
 })
 export class VehicleSelectorComponent implements OnChanges {

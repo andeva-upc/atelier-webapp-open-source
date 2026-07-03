@@ -120,9 +120,17 @@
         "timeRequired": "Time is required"
       },
       "emptyState": {
-        "title": "No scheduled appointments",
+        "title": "No appointments scheduled",
         "subtitle": "Start by scheduling your first appointment."
       }
+    },
+    "appointment-selector": {
+      "label": "Select Pending Appointment",
+      "empty": "No pending appointments found",
+      "no-notes": "No notes"
+    },
+    "mechanic-selector": {
+      "label": "Assigned mechanic"
     }
   }
 }

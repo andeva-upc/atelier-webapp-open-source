@@ -1,1 +1,101 @@
-{}
+{
+  "operations": {
+    "work-orders-list": {
+      "title": "Órdenes de Trabajo",
+      "create": "Crear Orden de Trabajo",
+      "search": "Buscar órdenes de trabajo...",
+      "status": {
+        "PENDING": "Pendiente",
+        "IN_PROGRESS": "En curso",
+        "COMPLETED": "Completado",
+        "PAID": "Pagado"
+      },
+      "empty": {
+        "no-orders": "No se encontraron órdenes de trabajo.",
+        "no-results": "No se encontraron resultados para la búsqueda."
+      },
+      "actions": {
+        "open-edit": "Abrir edición",
+        "quote": "Cotizar",
+        "delete-order": "Eliminar orden",
+        "delete-task": "Eliminar tarea",
+        "add-task": "Agregar Tarea",
+        "edit": "Editar"
+      },
+      "card": {
+        "task-title": "Tarea de Orden",
+        "task-number": "Tarea #{{number}}"
+      },
+      "modals": {
+        "details-title": "Detalles",
+        "order": "Orden:",
+        "title": "Título:",
+        "customer": "Cliente:",
+        "status": "Estado:",
+        "date": "Fecha:",
+        "task": "Tarea:",
+        "mechanic": "Mecánico:",
+        "mechanic-unassigned": "No asignado",
+        "description": "Descripción:"
+      }
+    },
+    "work-order-form": {
+      "title-new": "Crear Orden de Trabajo",
+      "title-edit": "Editar Orden de Trabajo",
+      "back": "Volver a Órdenes",
+      "loading-branch": "Cargando sucursal...",
+      "labels": {
+        "customer": "Cliente",
+        "vehicle": "Vehículo",
+        "mileage": "Kilometraje Actual",
+        "diagnosis": "Diagnóstico",
+        "status": "Estado"
+      },
+      "placeholders": {
+        "mileage": "kilometraje actual",
+        "diagnosis": "diagnóstico"
+      },
+      "actions": {
+        "save": "Guardar Cambios",
+        "create": "Crear Orden de Trabajo"
+      }
+    },
+    "task-form": {
+      "title-new": "Crear Tarea de Orden",
+      "title-edit": "Editar Tarea de Orden",
+      "back": "Volver a Órdenes de Trabajo",
+      "total-price": "Precio Total",
+      "loading": "Cargando datos de la tarea...",
+      "labels": {
+        "service": "Servicio",
+        "status": "Estado",
+        "description": "Descripción",
+        "products": "Productos y Repuestos",
+        "quantity": "Cantidad"
+      },
+      "placeholders": {
+        "select-service": "Seleccionar servicio...",
+        "description": "Describe el trabajo a realizar (mín. 5 caracteres)",
+        "quantity": "Cantidad"
+      },
+      "service-dropdown": {
+        "empty": "No hay servicios disponibles en esta sucursal"
+      },
+      "products": {
+        "qty-price": "Cantidad: {{qty}} × ${{price}}",
+        "empty": "Aún no se han agregado productos a esta tarea.",
+        "add": "Agregar Producto",
+        "stock-warning": "Stock insuficiente. Disponible: {{stock}}"
+      },
+      "actions": {
+        "save": "Guardar Cambios",
+        "create": "Crear Tarea",
+        "add-product": "Agregar Producto"
+      },
+      "modals": {
+        "products-title": "Productos",
+        "total-price": "Precio Total"
+      }
+    }
+  }
+}

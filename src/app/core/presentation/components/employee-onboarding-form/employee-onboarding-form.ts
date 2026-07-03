@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-employee-onboarding-form',
@@ -22,7 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     MatSelectModule
-  ],
+  , TranslateModule],
   templateUrl: './employee-onboarding-form.html',
   styleUrls: ['./employee-onboarding-form.css']
 })

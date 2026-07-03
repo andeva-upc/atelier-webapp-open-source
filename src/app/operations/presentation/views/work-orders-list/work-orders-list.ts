@@ -10,6 +10,7 @@ import { CustomerNameComponent } from '../../../../core/presentation/components/
 import { MechanicNameComponent } from '../../../../fleet/presentation/components/mechanic-name/mechanic-name';
 import { BillingStore } from '../../../../billing/application/billing.store';
 import { CreateQuoteCommand } from '../../../../billing/domain/model/commands/quote-commands';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -40,7 +41,7 @@ interface WorkOrderViewModel {
 @Component({
   selector: 'app-work-orders-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, CustomerNameComponent, MechanicNameComponent],
+  imports: [CommonModule, FormsModule, RouterModule, CustomerNameComponent, MechanicNameComponent, TranslateModule],
   templateUrl: './work-orders-list.html',
   styleUrl: './work-orders-list.css'
 })

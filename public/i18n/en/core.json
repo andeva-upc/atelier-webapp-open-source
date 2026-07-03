@@ -12,6 +12,133 @@
       "CUSTOMER": "Customer",
       "OWNER": "Owner",
       "EMPLOYEE": "Mechanic"
+    },
+    "add_profile": "Add Profile"
+  },
+  "shared": {
+    "loading": "Loading...",
+    "unknown": "Unknown"
+  },
+  "onboarding": {
+    "welcome": "Welcome to",
+    "subtitle": "To get started, how will you use the platform?",
+    "customer": {
+      "title": "Customer",
+      "desc": "I want to schedule appointments and check the status of my vehicles."
+    },
+    "employee": {
+      "title": "Employee",
+      "desc": "I work in a workshop and need to manage repairs and inventory."
+    },
+    "owner": {
+      "title": "Owner",
+      "desc": "I own a workshop and want to register my business."
+    },
+    "back_to_selection": "Back to selection"
+  },
+  "customer-onboarding": {
+    "title": "Customer Registration",
+    "subtitle": "Enter your details to complete your profile",
+    "is_corporate": "I am a business",
+    "firstname": "First Name",
+    "lastname": "Last Name",
+    "business_name": "Business Name",
+    "document_type": "Document Type",
+    "document_number": "Document Number",
+    "phone": "Phone",
+    "required": "Required",
+    "submit_btn": "Create Profile"
+  },
+  "employee-onboarding": {
+    "title": "Employee Registration",
+    "subtitle": "Enter your details to join a workshop",
+    "firstname": "First Name",
+    "lastname": "Last Name",
+    "document_type": "Document Type",
+    "document_number": "Document Number",
+    "phone": "Phone",
+    "required": "Required",
+    "submit_btn": "Create Profile and Join"
+  },
+  "owner-wizard": {
+    "title": "Owner Registration",
+    "subtitle": "Set up your workshop and get your plan in a few steps",
+    "step_personal": "Personal Info",
+    "step_workshop": "Workshop",
+    "step_branch": "Initial Branch",
+    "step_plan": "Plan",
+    "step_payment": "Payment",
+    "personal": {
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "document_type": "Document Type",
+      "document_number": "Document Number",
+      "phone": "Phone"
+    },
+    "workshop": {
+      "business_name": "Business Name",
+      "brand_name": "Brand Name",
+      "brand_hint": "E.g.: Los Hermanos Mechanics",
+      "tax_id": "Tax ID"
+    },
+    "branch": {
+      "name": "Branch Name",
+      "name_hint": "E.g.: Main Branch Lima",
+      "address": "Address",
+      "code": "Branch Code",
+      "phone": "Branch Phone"
+    },
+    "payment": {
+      "loading": "Creating your profile and setting up your environment..."
+    },
+    "actions": {
+      "next": "Next",
+      "back": "Back",
+      "choose_plan": "Choose Plan",
+      "back_to_plans": "Back to Plans"
+    }
+  },
+  "subscription-plans": {
+    "title": "Select the plan for",
+    "billing_monthly": "Monthly",
+    "billing_annual": "Annually",
+    "discount_badge": "Save 17%",
+    "plan_lite_desc": "Discover and explore using atelier",
+    "plan_pro_desc": "Experience the power of infinite possibilities",
+    "plan_max_desc": "Unlock the maximum performance of atelier",
+    "price_currency": "$",
+    "price_period": "/mo",
+    "select_btn": "Select"
+  },
+  "subscription-payment": {
+    "billing_title": "Billing Address",
+    "payment_title": "Payment",
+    "summary_title": "Order Summary",
+    "billing": {
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "country": "Country of residence",
+      "phone": "Phone Number",
+      "address": "Address",
+      "city": "City",
+      "zip_code": "Zip Code"
+    },
+    "payment": {
+      "card_name": "Name on Card",
+      "card_number": "Card Number",
+      "card_number_ph": "0000 0000 0000 0000",
+      "expiration": "Expiration Date",
+      "expiration_ph": "MM/YY",
+      "cvc": "CVC Code",
+      "cvc_ph": "CVC",
+      "submit_btn": "Submit Payment"
+    },
+    "summary": {
+      "plan": "Plan",
+      "monthly": "Monthly",
+      "taxes": "Taxes",
+      "total": "Total",
+      "currency_symbol": "$"
     }
   },
   "mobile-branch-menu-item": {

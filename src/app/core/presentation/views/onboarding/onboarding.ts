@@ -7,6 +7,7 @@ import { CustomerOnboardingFormComponent } from '../../components/customer-onboa
 import { EmployeeOnboardingFormComponent } from '../../components/employee-onboarding-form/employee-onboarding-form';
 import { OwnerOnboardingWizardComponent } from '../../components/owner-onboarding-wizard/owner-onboarding-wizard';
 import { CoreStore } from '../../../application/core.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 type ProfileType = 'customer' | 'employee' | 'owner' | null;
 
@@ -20,7 +21,7 @@ type ProfileType = 'customer' | 'employee' | 'owner' | null;
     CustomerOnboardingFormComponent,
     EmployeeOnboardingFormComponent,
     OwnerOnboardingWizardComponent
-  ],
+  , TranslateModule],
   templateUrl: './onboarding.html',
   styleUrls: ['./onboarding.css']
 })

@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { SubscriptionPlansComponent, SubscriptionPlan } from '../subscription-plans/subscription-plans';
 import { SubscriptionPaymentComponent } from '../subscription-payment/subscription-payment';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-owner-onboarding-wizard',
@@ -31,7 +32,7 @@ import { SubscriptionPaymentComponent } from '../subscription-payment/subscripti
     MatSelectModule,
     SubscriptionPlansComponent,
     SubscriptionPaymentComponent
-  ],
+  , TranslateModule],
   templateUrl: './owner-onboarding-wizard.html',
   styleUrls: ['./owner-onboarding-wizard.css']
 })

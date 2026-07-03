@@ -1,11 +1,12 @@
 import { Component, Input, OnInit, OnChanges, SimpleChanges, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IotStore } from '../../../application/iot.store';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vehicle-plate',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './vehicle-plate.html'
 })
 export class VehiclePlateComponent implements OnInit, OnChanges {
