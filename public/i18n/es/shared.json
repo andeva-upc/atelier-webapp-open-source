@@ -33,6 +33,8 @@
     "staff_desc": "Revisa las órdenes de trabajo, el inventario o la facturación desde las opciones del menú lateral."
   },
   "customer-dashboard": {
+    "title": "Bienvenido a tu Dashboard",
+    "subtitle": "Tu perfil de Cliente está activo",
     "kpi": {
       "registered_vehicles": {
         "title": "Vehículos Registrados",
@@ -73,6 +75,7 @@
     }
   },
   "admin-dashboard": {
+    "title": "Panel de Administración",
     "kpi": {
       "active_orders": {
         "title": "Órdenes Activas",

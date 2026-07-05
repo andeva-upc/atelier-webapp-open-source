@@ -33,6 +33,8 @@
     "staff_desc": "Review work orders, inventory, or billing from the side menu options."
   },
   "customer-dashboard": {
+    "title": "Welcome to your Dashboard",
+    "subtitle": "Your Customer profile is active",
     "kpi": {
       "registered_vehicles": {
         "title": "Registered Vehicles",
@@ -73,6 +75,7 @@
     }
   },
   "admin-dashboard": {
+    "title": "Admin Dashboard",
     "kpi": {
       "active_orders": {
         "title": "Active Orders",
