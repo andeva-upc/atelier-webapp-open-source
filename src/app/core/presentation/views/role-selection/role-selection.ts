@@ -52,8 +52,13 @@ export class RoleSelectionComponent implements OnInit {
     localStorage.setItem('activeRole', role);
     sessionStorage.setItem('activeRole', role);
     
-    // Redirigir al dashboard general (Sidebar se encargará de mostrar items según el rol)
-    this.router.navigate(['/home']).then(success => {
+    // Redirigir según el rol seleccionado
+    let targetRoute = ['/home'];
+    if (role.includes('CUSTOMER')) {
+      targetRoute = ['/customer/dashboard'];
+    }
+
+    this.router.navigate(targetRoute).then(success => {
       if (!success) {
         alert(this.translate.instant('role-selection.error_nav_blocked'));
       }

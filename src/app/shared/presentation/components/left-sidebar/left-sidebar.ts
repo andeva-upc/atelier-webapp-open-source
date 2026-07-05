@@ -21,7 +21,7 @@ export class LeftSidebar {
     
     if (activeRole.includes('CUSTOMER')) {
       this.options.set([
-        { link: '/home', label: 'option.home', icon: 'pi pi-objects-column' },
+        { link: '/customer/dashboard', label: 'option.home', icon: 'pi pi-objects-column' },
         { link: '/vehicles', label: 'option.vehicles', icon: 'pi pi-car' },
         { link: '/configuration', label: 'option.configuration', icon: 'pi pi-cog' },
       ]);

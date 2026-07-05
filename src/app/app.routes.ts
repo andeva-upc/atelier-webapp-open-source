@@ -29,6 +29,22 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'customer/dashboard',
+    component: Home,
+    canActivate: [iamGuard],
+    children: [
+      { path: '', loadComponent: () => import('./shared/presentation/views/customer-dashboard/customer-dashboard').then(m => m.CustomerDashboardComponent) }
+    ]
+  },
+  {
+    path: 'admin/dashboard',
+    component: Home,
+    canActivate: [iamGuard],
+    children: [
+      { path: '', loadComponent: () => import('./shared/presentation/views/admin-dashboard/admin-dashboard').then(m => m.AdminDashboardComponent) }
+    ]
+  },
+  {
     path: 'vehicles',
     component: Home,
     canActivate: [iamGuard],

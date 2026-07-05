@@ -1,0 +1,99 @@
+<div class="dashboard-container">
+  <div class="kpi-cards">
+    <mat-card class="kpi-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar color="primary">directions_car</mat-icon>
+        <mat-card-title>{{ 'customer-dashboard.kpi.registered_vehicles.title' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'customer-dashboard.kpi.registered_vehicles.subtitle' | translate }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ totalVehicles() }}</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar color="accent">calendar_today</mat-icon>
+        <mat-card-title>{{ 'customer-dashboard.kpi.next_appointment.title' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'customer-dashboard.kpi.next_appointment.subtitle' | translate }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ nextAppointmentDate() ? nextAppointmentDate() : ('customer-dashboard.kpi.next_appointment.none' | translate) }}</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="kpi-card warn">
+      <mat-card-header>
+        <mat-icon mat-card-avatar color="warn">warning</mat-icon>
+        <mat-card-title>{{ 'customer-dashboard.kpi.critical_alerts.title' | translate }}</mat-card-title>
+        <mat-card-subtitle>{{ 'customer-dashboard.kpi.critical_alerts.subtitle' | translate }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <h2 style="color: red;">{{ criticalAlerts() }}</h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="main-content">
+    
+    <mat-card class="chart-card" style="margin-bottom: 24px;">
+      <mat-card-header>
+        <mat-card-title>{{ 'customer-dashboard.charts.usage_history' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div style="display: block;">
+          <canvas baseChart width="400" height="100"
+                  [type]="'line'"
+                  [data]="lineChartData"
+                  [options]="lineChartOptions"
+                  [legend]="lineChartLegend">
+          </canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="table-card">
+      <mat-card-header>
+        <mat-card-title>{{ 'customer-dashboard.tables.my_vehicles' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="vehicles()">
+          
+          <ng-container matColumnDef="plate">
+            <th mat-header-cell *matHeaderCellDef> {{ 'customer-dashboard.tables.columns.plate' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.plateNumber}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="model">
+            <th mat-header-cell *matHeaderCellDef> {{ 'customer-dashboard.tables.columns.model' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.brand}} {{element.model}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> {{ 'customer-dashboard.tables.columns.year' | translate }} </th>
+            <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> {{ 'customer-dashboard.tables.columns.actions' | translate }} </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="primary" aria-label="Ver telemetría">
+                <mat-icon>timeline</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" aria-label="Agendar cita">
+                <mat-icon>event</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4" style="text-align: center; padding: 24px;">{{ 'customer-dashboard.tables.no_vehicles' | translate }}</td>
+          </tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
