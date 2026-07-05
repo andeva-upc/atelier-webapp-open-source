@@ -31,5 +31,90 @@
     "customer_desc": "Navigate to the vehicles section to manage your fleet or schedule an appointment for maintenance.",
     "staff_subtitle": "Your Staff profile is active",
     "staff_desc": "Review work orders, inventory, or billing from the side menu options."
+  },
+  "customer-dashboard": {
+    "kpi": {
+      "registered_vehicles": {
+        "title": "Registered Vehicles",
+        "subtitle": "My active vehicles"
+      },
+      "next_appointment": {
+        "title": "Next Appointment",
+        "subtitle": "Scheduled maintenance",
+        "none": "None"
+      },
+      "critical_alerts": {
+        "title": "Critical Alerts",
+        "subtitle": "Engine faults detected"
+      }
+    },
+    "charts": {
+      "usage_history": "Usage History (Last Week)",
+      "usage_label": "Vehicle Usage (km)",
+      "days": {
+        "mon": "Monday",
+        "tue": "Tuesday",
+        "wed": "Wednesday",
+        "thu": "Thursday",
+        "fri": "Friday",
+        "sat": "Saturday",
+        "sun": "Sunday"
+      }
+    },
+    "tables": {
+      "my_vehicles": "My Vehicles",
+      "no_vehicles": "You have no registered vehicles.",
+      "columns": {
+        "plate": "Plate",
+        "model": "Model",
+        "year": "Year",
+        "actions": "Actions"
+      }
+    }
+  },
+  "admin-dashboard": {
+    "kpi": {
+      "active_orders": {
+        "title": "Active Orders",
+        "subtitle": "In progress or pending"
+      },
+      "staff": {
+        "title": "Staff",
+        "subtitle": "Active employees"
+      },
+      "revenue": {
+        "title": "Revenue",
+        "subtitle": "Current month"
+      }
+    },
+    "charts": {
+      "monthly_revenue": "Monthly Revenue",
+      "revenue_label": "Monthly Revenue ($)",
+      "order_status": "Order Status",
+      "months": {
+        "jan": "Jan",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Apr",
+        "may": "May",
+        "jun": "Jun"
+      },
+      "statuses": {
+        "pending": "Pending",
+        "in_progress": "In Progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    },
+    "tables": {
+      "recent_orders": "Recent Orders",
+      "no_orders": "There are no recent orders.",
+      "columns": {
+        "id": "Order ID",
+        "customer": "Customer",
+        "status": "Status",
+        "amount": "Total"
+      }
+    }
   }
 }

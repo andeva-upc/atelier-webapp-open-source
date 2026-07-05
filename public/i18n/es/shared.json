@@ -31,5 +31,90 @@
     "customer_desc": "Navega a la sección de vehículos para gestionar tu flota o agenda una cita para mantenimiento.",
     "staff_subtitle": "Tu perfil de Personal está activo",
     "staff_desc": "Revisa las órdenes de trabajo, el inventario o la facturación desde las opciones del menú lateral."
+  },
+  "customer-dashboard": {
+    "kpi": {
+      "registered_vehicles": {
+        "title": "Vehículos Registrados",
+        "subtitle": "Mis vehículos activos"
+      },
+      "next_appointment": {
+        "title": "Próxima Cita",
+        "subtitle": "Mantenimiento programado",
+        "none": "Ninguna"
+      },
+      "critical_alerts": {
+        "title": "Alertas Críticas",
+        "subtitle": "Fallas de motor detectadas"
+      }
+    },
+    "charts": {
+      "usage_history": "Histórico de Uso (Última Semana)",
+      "usage_label": "Uso del Vehículo (km)",
+      "days": {
+        "mon": "Lunes",
+        "tue": "Martes",
+        "wed": "Miércoles",
+        "thu": "Jueves",
+        "fri": "Viernes",
+        "sat": "Sábado",
+        "sun": "Domingo"
+      }
+    },
+    "tables": {
+      "my_vehicles": "Mis Vehículos",
+      "no_vehicles": "No tienes vehículos registrados.",
+      "columns": {
+        "plate": "Placa",
+        "model": "Modelo",
+        "year": "Año",
+        "actions": "Acciones"
+      }
+    }
+  },
+  "admin-dashboard": {
+    "kpi": {
+      "active_orders": {
+        "title": "Órdenes Activas",
+        "subtitle": "En progreso o pendientes"
+      },
+      "staff": {
+        "title": "Personal",
+        "subtitle": "Empleados activos"
+      },
+      "revenue": {
+        "title": "Ingresos",
+        "subtitle": "Mes actual"
+      }
+    },
+    "charts": {
+      "monthly_revenue": "Ingresos Mensuales",
+      "revenue_label": "Ingresos Mensuales ($)",
+      "order_status": "Estado de Órdenes",
+      "months": {
+        "jan": "Ene",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Abr",
+        "may": "May",
+        "jun": "Jun"
+      },
+      "statuses": {
+        "pending": "Pendientes",
+        "in_progress": "En Progreso",
+        "completed": "Completadas",
+        "cancelled": "Canceladas"
+      }
+    },
+    "tables": {
+      "recent_orders": "Órdenes Recientes",
+      "no_orders": "No hay órdenes recientes.",
+      "columns": {
+        "id": "ID Orden",
+        "customer": "Cliente",
+        "status": "Estado",
+        "amount": "Total"
+      }
+    }
   }
 }

@@ -1,0 +1,133 @@
+.dashboard-container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.kpi-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+mat-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+  background-color: #ffffff;
+}
+
+.kpi-card {
+  height: 100%;
+  padding: 8px;
+}
+
+::ng-deep .kpi-card .mat-mdc-card-header-text {
+  margin: 0 !important;
+}
+
+::ng-deep .kpi-card .mat-mdc-card-title {
+  color: #6B7280;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+::ng-deep .kpi-card .mat-mdc-card-subtitle {
+  color: #9CA3AF;
+  font-size: 12px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+.kpi-card mat-card-content h2 {
+  font-size: 36px;
+  margin: 16px 0 0 0;
+  text-align: center;
+  font-weight: 500;
+  font-family: var(--font-display, 'Inter', sans-serif);
+  color: #111827;
+}
+
+.charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-card {
+  width: 100%;
+}
+
+::ng-deep .chart-card .mat-mdc-card-title,
+::ng-deep .table-card .mat-mdc-card-title {
+  color: #111827;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  padding: 8px 0;
+}
+
+table {
+  width: 100%;
+  box-shadow: none !important;
+}
+
+.mat-mdc-row {
+  transition: background-color 0.2s ease;
+}
+
+.mat-mdc-row:hover {
+  background-color: #F9FAFB;
+}
+
+::ng-deep .table-card th.mat-mdc-header-cell {
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6B7280;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  border-bottom: 1px solid #E5E7EB;
+  padding: 16px;
+}
+
+::ng-deep .table-card td.mat-mdc-cell {
+  font-size: 14px;
+  color: #111827;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  border-bottom: 1px solid #E5E7EB;
+  padding: 16px;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.completed {
+  background-color: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+}
+
+.status-badge.in_progress {
+  background-color: rgba(52, 152, 219, 0.1);
+  color: #3498db;
+}
+
+.status-badge.cancelled {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+}
