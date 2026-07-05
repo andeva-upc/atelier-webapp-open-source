@@ -1,6 +1,6 @@
-import { Component, ElementRef, OnDestroy, ChangeDetectionStrategy, input, viewChild, effect } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ChangeDetectionStrategy, input, viewChild, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FinancialStats } from '../../../domain/model/financial-stats';
 import Chart from 'chart.js/auto';
 
@@ -14,8 +14,10 @@ import Chart from 'chart.js/auto';
 export class IncomeExpenseChartComponent implements OnDestroy {
   stats = input.required<FinancialStats>();
   chartCanvas = viewChild.required<ElementRef<HTMLCanvasElement>>('chartCanvas');
+  translate = inject(TranslateService);
   
   private chart: Chart | null = null;
+  private langSub: any;
 
   constructor() {
     effect(() => {
@@ -30,11 +32,24 @@ export class IncomeExpenseChartComponent implements OnDestroy {
         }
       }
     });
+
+    this.langSub = this.translate.onLangChange.subscribe(() => {
+      if (this.chart) {
+        this.chart.data.labels = [
+          this.translate.instant('billing.kpi.income'),
+          this.translate.instant('billing.kpi.pending_balance')
+        ];
+        this.chart.update();
+      }
+    });
   }
 
   ngOnDestroy() {
     if (this.chart) {
       this.chart.destroy();
+    }
+    if (this.langSub) {
+      this.langSub.unsubscribe();
     }
   }
 
@@ -48,6 +63,9 @@ export class IncomeExpenseChartComponent implements OnDestroy {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: {
+          duration: 500 // reduce animation time to fix bug on load
+        },
         plugins: {
           legend: {
             display: false
@@ -85,7 +103,10 @@ export class IncomeExpenseChartComponent implements OnDestroy {
 
   private getChartData(stats: FinancialStats) {
     return {
-      labels: ['Income', 'Pending Balance'],
+      labels: [
+        this.translate.instant('billing.kpi.income') || 'Income', 
+        this.translate.instant('billing.kpi.pending_balance') || 'Pending Balance'
+      ],
       datasets: [{
         data: [stats.totalIncome || 0, stats.pendingBalance || 0],
         backgroundColor: [
