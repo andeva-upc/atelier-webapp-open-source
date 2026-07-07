@@ -184,21 +184,30 @@ export class OperationsStore {
 
   startTask(taskId: string) {
     this.api.workOrderTasks.startTask(taskId).subscribe({
-      next: (order) => this.activeWorkOrderSignal.set(order),
+      next: (order) => {
+        this.activeWorkOrderSignal.set(order);
+        this.branchWorkOrdersSignal.update(orders => orders.map(o => o.id === order.id ? order : o));
+      },
       error: (err) => console.error('Failed to start task:', err)
     });
   }
 
   completeTask(taskId: string) {
     this.api.workOrderTasks.completeTask(taskId).subscribe({
-      next: (order) => this.activeWorkOrderSignal.set(order),
+      next: (order) => {
+        this.activeWorkOrderSignal.set(order);
+        this.branchWorkOrdersSignal.update(orders => orders.map(o => o.id === order.id ? order : o));
+      },
       error: (err) => console.error('Failed to complete task:', err)
     });
   }
 
   reopenTask(taskId: string) {
     this.api.workOrderTasks.reopenTask(taskId).subscribe({
-      next: (order) => this.activeWorkOrderSignal.set(order),
+      next: (order) => {
+        this.activeWorkOrderSignal.set(order);
+        this.branchWorkOrdersSignal.update(orders => orders.map(o => o.id === order.id ? order : o));
+      },
       error: (err) => console.error('Failed to reopen task:', err)
     });
   }

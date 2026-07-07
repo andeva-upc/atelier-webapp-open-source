@@ -179,7 +179,14 @@ export class AppointmentFormComponent implements OnInit {
   loadVehicles(customerId: string): void {
     this.vehiclesEndpoint.getByCustomerId(customerId).subscribe({
       next: (data) => {
-        this.vehicles.set(data || []);
+        const localVehiclesStr = localStorage.getItem('local_created_vehicles');
+        const localVehicles = localVehiclesStr ? JSON.parse(localVehiclesStr) : [];
+        const customerLocalVehicles = localVehicles.filter((v: any) => v.customerId === customerId);
+        
+        const allVehicles = [...(data || []), ...customerLocalVehicles];
+        const unique = Array.from(new Map(allVehicles.map(v => [v.id, v])).values());
+        
+        this.vehicles.set(unique);
         this.appointmentForm.get('vehicleObj')?.updateValueAndValidity();
       },
       error: (err) => console.error(err)

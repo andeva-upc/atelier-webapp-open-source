@@ -225,15 +225,20 @@ export class IotStore {
   // VEHICLES
   // ==========================================
 
-  private getLocalVehicles(): VehicleResource[] {
+  private getLocalVehicles(): any[] {
     const local = localStorage.getItem('local_created_vehicles');
     return local ? JSON.parse(local) : [];
   }
 
-  private addLocalVehicle(vehicle: VehicleResource) {
+  private addLocalVehicle(vehicle: any, customerId?: string) {
     const local = this.getLocalVehicles();
-    if (!local.find(v => v.id === vehicle.id)) {
-      local.push(vehicle);
+    const vToSave = customerId ? { ...vehicle, customerId } : vehicle;
+    const existingIdx = local.findIndex(v => v.id === vehicle.id);
+    if (existingIdx === -1) {
+      local.push(vToSave);
+      localStorage.setItem('local_created_vehicles', JSON.stringify(local));
+    } else if (customerId && !local[existingIdx].customerId) {
+      local[existingIdx].customerId = customerId;
       localStorage.setItem('local_created_vehicles', JSON.stringify(local));
     }
   }
@@ -282,8 +287,13 @@ export class IotStore {
       next: (vehicles) => {
         // Persiste todos los vehículos del cliente en localStorage
         // para que aparezcan también en el dropdown de vincular OBD2
-        vehicles.forEach(v => this.addLocalVehicle(v));
-        const allVehicles = [...vehicles, ...this.getLocalVehicles()];
+        vehicles.forEach(v => this.addLocalVehicle(v, customerId));
+        
+        const local = this.getLocalVehicles();
+        // Filtra los locales por customerId (si tienen la propiedad asignada)
+        const customerLocal = local.filter(v => v.customerId === customerId);
+        
+        const allVehicles = [...vehicles, ...customerLocal];
         const unique = Array.from(new Map(allVehicles.map(v => [v.id, v])).values());
         this.vehiclesSignal.set(unique);
       },
@@ -302,15 +312,16 @@ export class IotStore {
         this.activeVehicleRegistrationSignal.set(registration);
 
         // [WORKAROUND] Guardamos el vehículo localmente
-        const newVehicle: VehicleResource = {
+        const newVehicle: any = {
           id: registration.vehicleId,
           plateNumber: command.plateNumber,
           brand: command.brand,
           model: command.model,
           year: command.year,
-          vin: command.vin
+          vin: command.vin,
+          customerId: customerId
         };
-        this.addLocalVehicle(newVehicle);
+        this.addLocalVehicle(newVehicle, customerId);
 
         // Reload the customer's vehicles list so the UI gets the updated list including the new vehicle with its full details
         this.loadVehiclesByCustomerId(customerId);

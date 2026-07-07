@@ -6,6 +6,7 @@
       "search": "Search work orders...",
       "status": {
         "PENDING": "Pending",
+        "DOING": "Doing",
         "IN_PROGRESS": "In progress",
         "COMPLETED": "Completed",
         "PAID": "Paid"
@@ -20,7 +21,10 @@
         "delete-order": "Delete order",
         "delete-task": "Delete task",
         "add-task": "Add Task",
-        "edit": "Edit"
+        "edit": "Edit",
+        "start-task": "Start",
+        "complete-task": "Complete",
+        "reopen-task": "Reopen"
       },
       "card": {
         "task-title": "Work Order Task",

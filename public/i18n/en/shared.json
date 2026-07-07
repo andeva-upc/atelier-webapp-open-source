@@ -119,5 +119,17 @@
         "amount": "Total"
       }
     }
+  },
+  "appointment-selector": {
+    "label": "Select Appointment",
+    "empty": "No appointments available",
+    "no-notes": "No description"
+  },
+  "product-selector": {
+    "label": "Select Product",
+    "stock": "Stock"
+  },
+  "mechanic-selector": {
+    "label": "Select Mechanic"
   }
 }

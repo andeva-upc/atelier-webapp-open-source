@@ -104,17 +104,17 @@
                     {{ order.date }}
                   </span>
                 }
+                @if (order.totalAmount !== undefined) {
+                  <span class="meta-item price-meta">
+                    <i class="pi pi-dollar icon-meta"></i>
+                    {{ order.totalAmount | currency }}
+                  </span>
+                }
               </div>
             </div>
             <div class="header-right-actions">
               @if (order.status === 'COMPLETED') {
-                <a 
-                  class="btn btn-primary btn-open-edit" 
-                  [routerLink]="['/work-orders', order.id]"
-                  (click)="$event.stopPropagation()"
-                >
-                  {{ 'operations.work-orders-list.actions.open-edit' | translate }}
-                </a>
+
                 <button 
                   class="btn btn-secondary btn-create-quote" 
                   (click)="createQuoteForOrder(order); $event.stopPropagation()"
@@ -158,6 +158,23 @@
                       </div>
                     </div>
                     <p class="task-description">{{ task.description }}</p>
+                    <div class="task-actions" style="display: flex; justify-content: flex-end; margin-top: 0.5rem; gap: 0.5rem;">
+                      @if (task.status === 'PENDING') {
+                        <button class="btn btn-secondary btn-sm" (click)="startTask(task.id); $event.stopPropagation()">
+                          {{ 'operations.work-orders-list.actions.start-task' | translate }}
+                        </button>
+                      }
+                      @if (task.status === 'DOING' || task.status === 'IN_PROGRESS') {
+                        <button class="btn btn-primary btn-sm" (click)="completeTask(task.id); $event.stopPropagation()">
+                          {{ 'operations.work-orders-list.actions.complete-task' | translate }}
+                        </button>
+                      }
+                      @if (task.status === 'COMPLETED') {
+                        <button class="btn btn-secondary btn-sm" (click)="reopenTask(task.id); $event.stopPropagation()">
+                          {{ 'operations.work-orders-list.actions.reopen-task' | translate }}
+                        </button>
+                      }
+                    </div>
                   </div>
                 }
 
@@ -262,7 +279,7 @@
         <span class="detail-value">{{ selectedTaskForDetails()?.description }}</span>
       </div>
     </div>
-    @if (selectedTaskOrderContext()?.status !== 'COMPLETED' && selectedTaskOrderContext()?.status !== 'PAID') {
+    @if (selectedTaskOrderContext()?.status !== 'PAID' && selectedTaskForDetails()?.status !== 'COMPLETED') {
       <div class="modal-footer">
         <a 
           class="btn btn-primary btn-edit-order" 
