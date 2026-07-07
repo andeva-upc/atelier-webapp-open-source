@@ -68,7 +68,12 @@
         "subtotal": "Subtotal",
         "discount": "Descuento",
         "total_amount": "Monto Total",
-        "status": "Estado"
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "actions": {
+        "approve": "Aprobar",
+        "cancel": "Cancelar"
       },
       "empty": "No se encontraron cotizaciones."
     },

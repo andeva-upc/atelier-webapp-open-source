@@ -91,3 +91,18 @@ table {
 .canceled { background-color: rgba(239, 68, 68, 0.05) !important; border-color: rgba(239, 68, 68, 0.1) !important; color: var(--billing-failure) !important; }
 .in_progress { background-color: rgba(255, 109, 0, 0.05) !important; border-color: rgba(255, 109, 0, 0.1) !important; color: var(--billing-accent) !important; }
 .completed { background-color: rgba(16, 185, 129, 0.05) !important; border-color: rgba(16, 185, 129, 0.1) !important; color: var(--billing-success) !important; }
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.approve-btn {
+  background-color: var(--billing-primary) !important;
+  color: white !important;
+}
+
+.cancel-btn {
+  border-color: var(--billing-failure) !important;
+  color: var(--billing-failure) !important;
+}

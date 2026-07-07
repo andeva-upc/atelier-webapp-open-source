@@ -16,10 +16,20 @@ import { QuoteResource } from '../../../infrastructure/responses/billing-respons
 export class QuoteListComponent {
   quotes = input.required<QuoteResource[]>();
   openCreateQuote = output<void>();
+  approveQuote = output<string>();
+  cancelQuote = output<string>();
   
-  displayedColumns: string[] = ['id', 'workOrderId', 'subtotalAmount', 'discountPercentage', 'totalAmount', 'status'];
+  displayedColumns: string[] = ['id', 'workOrderId', 'subtotalAmount', 'discountPercentage', 'totalAmount', 'status', 'actions'];
 
   onOpenCreateQuote() {
     this.openCreateQuote.emit();
+  }
+
+  onApprove(id: string) {
+    this.approveQuote.emit(id);
+  }
+
+  onCancel(id: string) {
+    this.cancelQuote.emit(id);
   }
 }

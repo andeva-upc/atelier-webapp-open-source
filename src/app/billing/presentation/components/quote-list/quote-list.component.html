@@ -49,6 +49,23 @@
         </td>
       </ng-container>
 
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> {{ 'billing.quote_list.columns.actions' | translate }} </th>
+        <td mat-cell *matCellDef="let quote">
+          @if (quote.status === 'DRAFT') {
+            <div class="action-buttons">
+              <button mat-flat-button class="approve-btn" (click)="onApprove(quote.id)">
+                {{ 'billing.quote_list.actions.approve' | translate }}
+              </button>
+              <button mat-stroked-button color="warn" class="cancel-btn" (click)="onCancel(quote.id)">
+                {{ 'billing.quote_list.actions.cancel' | translate }}
+              </button>
+            </div>
+          }
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>

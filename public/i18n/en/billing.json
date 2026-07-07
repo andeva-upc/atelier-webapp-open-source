@@ -68,7 +68,12 @@
         "subtotal": "Subtotal",
         "discount": "Discount",
         "total_amount": "Total Amount",
-        "status": "Status"
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "approve": "Approve",
+        "cancel": "Cancel"
       },
       "empty": "No quotes found."
     },
