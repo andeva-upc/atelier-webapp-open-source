@@ -119,5 +119,17 @@
         "amount": "Total"
       }
     }
+  },
+  "appointment-selector": {
+    "label": "Seleccionar Cita",
+    "empty": "No hay citas disponibles",
+    "no-notes": "Sin descripción"
+  },
+  "product-selector": {
+    "label": "Seleccionar Producto",
+    "stock": "Stock"
+  },
+  "mechanic-selector": {
+    "label": "Seleccionar Mecánico"
   }
 }

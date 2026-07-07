@@ -47,6 +47,7 @@ export class CoreStore {
 
   // Profiles (Roles)
   loadRolesByUserId(userId: string) {
+    this.currentRolesSignal.set(null);
     this.coreApi.profiles.getRolesByUserId(userId).subscribe({
       next: (roles) => this.currentRolesSignal.set(roles),
       error: (err) => {
@@ -61,6 +62,8 @@ export class CoreStore {
     this.coreApi.customers.create(command).subscribe({
       next: (resource) => {
         this.currentCustomerSignal.set(resource);
+        localStorage.setItem('activeRole', 'ROLE_CUSTOMER');
+        sessionStorage.setItem('activeRole', 'ROLE_CUSTOMER');
         router.navigate(['/home']).then();
       },
       error: (err) => console.error('Failed to create customer:', err)
@@ -79,6 +82,7 @@ export class CoreStore {
   }
 
   loadCustomerByUserId(userId: string) {
+    this.currentCustomerSignal.set(null);
     this.coreApi.customers.getByUserId(userId).subscribe({
       next: (resource) => {
         this.currentCustomerSignal.set(resource);
@@ -103,6 +107,8 @@ export class CoreStore {
     this.coreApi.owners.create(command).subscribe({
       next: (resource) => {
         this.currentOwnerSignal.set(resource);
+        localStorage.setItem('activeRole', 'ROLE_OWNER');
+        sessionStorage.setItem('activeRole', 'ROLE_OWNER');
         router.navigate(['/home']).then();
       },
       error: (err) => console.error('Failed to create owner:', err)
@@ -117,6 +123,7 @@ export class CoreStore {
   }
 
   loadOwnerByUserId(userId: string) {
+    this.currentOwnerSignal.set(null);
     this.coreApi.owners.getByUserId(userId).subscribe({
       next: (resource) => {
         this.currentOwnerSignal.set(resource);
@@ -140,6 +147,8 @@ export class CoreStore {
     this.coreApi.employees.create(command).subscribe({
       next: (resource) => {
         this.currentEmployeeSignal.set(resource);
+        localStorage.setItem('activeRole', 'ROLE_EMPLOYEE');
+        sessionStorage.setItem('activeRole', 'ROLE_EMPLOYEE');
         router.navigate(['/home']).then();
       },
       error: (err) => console.error('Failed to create employee:', err)
@@ -158,6 +167,7 @@ export class CoreStore {
   }
 
   loadEmployeeByUserId(userId: string) {
+    this.currentEmployeeSignal.set(null);
     this.coreApi.employees.getByUserId(userId).subscribe({
       next: (resource) => {
         this.currentEmployeeSignal.set(resource);

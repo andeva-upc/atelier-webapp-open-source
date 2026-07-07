@@ -55,7 +55,7 @@ export class WorkOrdersListComponent implements OnInit {
   private billingStore = inject(BillingStore);
 
   searchText = signal<string>('');
-  selectedStatusFilter = signal<'ALL' | 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'PAID'>('ALL');
+  selectedStatusFilter = signal<'ALL' | 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'PAID'>('IN_PROGRESS');
   isSearchDropdownOpen = signal<boolean>(false);
   selectedOrderForDetails = signal<WorkOrderViewModel | null>(null);
   selectedTaskForDetails = signal<WorkOrderTask | null>(null);
@@ -221,5 +221,17 @@ export class WorkOrdersListComponent implements OnInit {
     if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
       this.operationsStore.removeTaskFromWorkOrder(orderId, taskId);
     }
+  }
+
+  startTask(taskId: string) {
+    this.operationsStore.startTask(taskId);
+  }
+
+  completeTask(taskId: string) {
+    this.operationsStore.completeTask(taskId);
+  }
+
+  reopenTask(taskId: string) {
+    this.operationsStore.reopenTask(taskId);
   }
 }
