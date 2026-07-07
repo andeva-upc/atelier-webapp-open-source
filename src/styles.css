@@ -10,6 +10,17 @@
   --font-secondary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Dashboard Premium Colors */
+  --dash-bg-slate-50: #F8FAFC;
+  --dash-card-bg: #FFFFFF;
+  --dash-text-slate-900: #0F172A;
+  --dash-text-slate-500: #64748B;
+  --dash-accent-indigo-500: #6366F1;
+  --dash-accent-indigo-600: #4F46E5;
+  --dash-status-emerald: #10B981;
+  --dash-status-amber: #F59E0B;
+  --dash-status-red: #EF4444;
 }
 
 body, html, input, select, textarea, button, .mat-mdc-select, .mat-mdc-option, .mat-mdc-dialog-container, .mat-mdc-form-field, .mat-mdc-select-value {
