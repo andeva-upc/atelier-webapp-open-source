@@ -1,18 +1,75 @@
-<div class="dashboard-container">
-  <div class="header">
-    <h1>{{ 'admin-dashboard.title' | translate }}</h1>
-  </div>
-  
-  <div class="content">
-    <app-financial-kpi-cards [stats]="billingStore.financialStats()"></app-financial-kpi-cards>
-    
-    <div class="charts-section">
-      <app-income-expense-chart [stats]="billingStore.financialStats()"></app-income-expense-chart>
+<div class="dashboard-wrapper">
+
+  <!-- KPI Section -->
+  <div class="kpi-row">
+
+    <!-- Órdenes Activas -->
+    <div class="kpi-card">
+      <div class="icon-container blue">
+        <i class="pi pi-wrench"></i>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-title">{{ 'admin-dashboard.kpi.active_orders.title' | translate }}</span>
+        <span class="kpi-subtitle">{{ 'admin-dashboard.kpi.active_orders.subtitle' | translate }}</span>
+        <div class="kpi-value">{{ activeOrdersCount() }}</div>
+      </div>
     </div>
 
-    <!-- WORK ORDERS LIST CONTAINER -->
-    <div class="transactions-section">
-      <app-work-orders-list></app-work-orders-list>
+    <!-- Personal -->
+    <div class="kpi-card">
+      <div class="icon-container pink">
+        <i class="pi pi-users"></i>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-title">{{ 'admin-dashboard.kpi.staff.title' | translate }}</span>
+        <span class="kpi-subtitle">{{ 'admin-dashboard.kpi.staff.subtitle' | translate }}</span>
+        <div class="kpi-value">{{ staffCount() }}</div>
+      </div>
     </div>
+
+    <!-- Ingresos -->
+    <div class="kpi-card">
+      <div class="icon-container green">
+        <i class="pi pi-dollar"></i>
+      </div>
+      <div class="kpi-info">
+        <span class="kpi-title">{{ 'admin-dashboard.kpi.revenue.title' | translate }}</span>
+        <span class="kpi-subtitle">{{ 'admin-dashboard.kpi.revenue.subtitle' | translate }}</span>
+        <div class="kpi-value success">${{ billingStore.financialStats().totalIncome | number:'1.2-2' }}</div>
+      </div>
+    </div>
+
   </div>
+
+  <!-- Chart Area -->
+  <div class="charts-grid">
+
+    <div class="chart-card">
+      <h3 class="card-title">{{ 'admin-dashboard.charts.monthly_revenue' | translate }}</h3>
+      <div class="chart-content">
+        <div class="mock-chart">
+          <canvas baseChart
+                  [data]="barChartData"
+                  [options]="barChartOptions"
+                  [type]="'bar'">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3 class="card-title">{{ 'admin-dashboard.charts.order_status' | translate }}</h3>
+      <div class="chart-content">
+        <div class="mock-chart">
+          <canvas baseChart
+                  [data]="doughnutChartData"
+                  [options]="doughnutChartOptions"
+                  [type]="'doughnut'">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
